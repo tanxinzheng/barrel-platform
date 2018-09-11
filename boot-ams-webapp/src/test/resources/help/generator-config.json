@@ -1,0 +1,22 @@
+{
+  "dataSource":{
+    "dialect":"MySQL",
+    "driver":"com.mysql.jdbc.Driver",
+    "url":"jdbc:mysql://localhost:3306/xmo_demo?useUnicode=true&amp;characterEncoding=utf8",
+    "username":"root",
+    "password":"123456"
+  },
+  "metadata":{
+    "ignoreKeywordValidate":true,
+    "templateTypes":["MapperXml"]
+  },
+  "tables":[
+    {
+      "domainObjectName":"AppInfo",
+      "tableComment":"应用信息",
+      "tableName":"xmo_app_info",
+      "modulePackage":"com.github.tanxinzheng.ams.module.appInfo",
+      "restMapping":"/appInfo"
+    }
+  ]
+}

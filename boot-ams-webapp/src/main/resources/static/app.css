@@ -1,0 +1,16 @@
+body {
+    background-color: #F2F2F2;
+}
+
+.layui-card-body{
+    height: 80px;
+}
+.layui-nav-item {
+    width: 200px;
+    text-align: center;
+}
+
+.data-list {
+    width: 1140px;
+    margin: 50px auto;
+}
