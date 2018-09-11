@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
@@ -54,11 +53,11 @@ public class RestExceptionResolver extends SimpleMappingExceptionResolver {
             restError.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
             restError.setMessage(MessageFormat.format("文件上传限制最大不能超过{0}M" , (maxUploadSize/1024)/1024));
         }
-        if(ex instanceof AuthenticationCredentialsNotFoundException){
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            restError.setStatus(HttpStatus.FORBIDDEN.value());
-            restError.setMessage("权限不足");
-        }
+//        if(ex instanceof AuthenticationCredentialsNotFoundException){
+//            response.setStatus(HttpStatus.FORBIDDEN.value());
+//            restError.setStatus(HttpStatus.FORBIDDEN.value());
+//            restError.setMessage("权限不足");
+//        }
         try {
             response.getWriter().write(JSONObject.toJSONString(restError));
         } catch (IOException e) {

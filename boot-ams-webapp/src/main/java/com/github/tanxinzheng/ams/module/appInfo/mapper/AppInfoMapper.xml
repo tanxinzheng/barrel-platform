@@ -176,7 +176,11 @@
     <sql id="Update_By_Query_Where_Clause">
         <where>
             <if test="keyword">
-                AND id LIKE CONCAT('%', #{keyword}, '%')
+                AND (
+                app_name LIKE CONCAT('%', #{keyword}, '%')
+                OR app_code LIKE CONCAT('%', #{keyword}, '%')
+                OR description LIKE CONCAT('%', #{keyword}, '%')
+                )
             </if>
             <if test="id">
                 AND id = #{id}

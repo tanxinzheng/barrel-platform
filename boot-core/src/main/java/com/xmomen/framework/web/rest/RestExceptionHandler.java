@@ -7,8 +7,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+//import org.springframework.security.access.AccessDeniedException;
+//import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.file.AccessDeniedException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +55,6 @@ public class RestExceptionHandler {
                 ex instanceof BusinessException){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             restError.setStatus(HttpStatus.BAD_REQUEST.value());
-        }else if(ex instanceof AuthenticationCredentialsNotFoundException){
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            restError.setStatus(HttpStatus.UNAUTHORIZED.value());
-            restError.setMessage("Requires authentication");
         }else if(ex instanceof DuplicateKeyException){
             response.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
             restError.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());

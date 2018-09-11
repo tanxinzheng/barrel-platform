@@ -1,8 +1,7 @@
 package com.xmomen.framework.web.handler;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.slf4j.MDC;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -35,12 +34,13 @@ public class LogbackMDCInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
-        Authentication subject = SecurityContextHolder.getContext().getAuthentication();
-        if(subject != null && subject.getPrincipal() != null){
-            String username = subject.getPrincipal().toString();
-            // 放SessionId
-            MDC.put(USER_ID, username);
-        }
+        // TODO 添加Log适配器接口
+//        Authentication subject = SecurityContextHolder.getContext().getAuthentication();
+//        if(subject != null && subject.getPrincipal() != null){
+//            String username = subject.getPrincipal().toString();
+//            // 放SessionId
+//            MDC.put(USER_ID, username);
+//        }
         return true;
     }
 

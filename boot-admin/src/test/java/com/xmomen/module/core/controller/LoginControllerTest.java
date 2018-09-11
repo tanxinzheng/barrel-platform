@@ -1,6 +1,5 @@
 package com.xmomen.module.core.controller;
 
-import com.xmomen.module.security.JwtTokenServiceImpl;
 import com.xmomen.module.test.BaseTestController;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -40,7 +39,7 @@ public class LoginControllerTest extends BaseTestController {
                 .param("password", "111111")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-        String token = loginActions.andReturn().getResponse().getHeader(JwtTokenServiceImpl.HEADER_AUTHORIZATION_NAME);
+        String token = loginActions.andReturn().getResponse().getHeader("Authorization");
         Claims claims = Jwts.parser().parseClaimsJws(token).getBody();
         Date expiration = claims.getExpiration();
         System.out.println(DateFormatUtils.ISO_DATETIME_TIME_ZONE_FORMAT.format(expiration));

@@ -3,19 +3,16 @@ package com.github.tanxinzheng.ams.module.appInfo.controller;
 import io.swagger.annotations.ApiOperation;
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoQuery;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoModel;
 import com.github.tanxinzheng.ams.module.appInfo.service.AppInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.apache.commons.lang3.StringUtils;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author  tanxinzheng
@@ -24,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/appInfo")
-public class AppInfoController extends BaseRestController {
+public class AppInfoController {
 
     private static Logger logger = LoggerFactory.getLogger(AppInfoController.class);
 
@@ -38,7 +35,6 @@ public class AppInfoController extends BaseRestController {
      */
     @ApiOperation(value = "查询应用信息列表")
     @ActionLog(actionName = "查询应用信息列表")
-    @PreAuthorize("hasAuthority('APPINFO:VIEW')")
     @RequestMapping(method = RequestMethod.GET)
     public Page<AppInfoModel> getAppInfoList(AppInfoQuery appInfoQuery){
         return appInfoService.getAppInfoModelPage(appInfoQuery);
@@ -51,7 +47,6 @@ public class AppInfoController extends BaseRestController {
      */
     @ApiOperation(value = "查询应用信息")
     @ActionLog(actionName = "查询应用信息")
-    @PreAuthorize("hasAuthority('APPINFO:VIEW')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public AppInfoModel getAppInfoById(@PathVariable(value = "id") String id){
         return appInfoService.getOneAppInfoModel(id);
@@ -64,7 +59,6 @@ public class AppInfoController extends BaseRestController {
      */
     @ApiOperation(value = "新增应用信息")
     @ActionLog(actionName = "新增应用信息")
-    @PreAuthorize("hasAuthority('APPINFO:CREATE')")
     @RequestMapping(method = RequestMethod.POST)
     public AppInfoModel createAppInfo(@RequestBody @Valid AppInfoModel appInfoModel) {
         return appInfoService.createAppInfo(appInfoModel);
@@ -78,7 +72,6 @@ public class AppInfoController extends BaseRestController {
      */
     @ApiOperation(value = "更新应用信息")
     @ActionLog(actionName = "更新应用信息")
-    @PreAuthorize("hasAuthority('APPINFO:UPDATE')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public AppInfoModel updateAppInfo(@PathVariable(value = "id") String id,
                            @RequestBody @Valid AppInfoModel appInfoModel){
@@ -95,7 +88,6 @@ public class AppInfoController extends BaseRestController {
      */
     @ApiOperation(value = "删除单个应用信息")
     @ActionLog(actionName = "删除单个应用信息")
-    @PreAuthorize("hasAuthority('APPINFO:DELETE')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteAppInfo(@PathVariable(value = "id") String id){
         appInfoService.deleteAppInfo(id);
@@ -107,7 +99,6 @@ public class AppInfoController extends BaseRestController {
      */
     @ApiOperation(value = "批量删除应用信息")
     @ActionLog(actionName = "批量删除应用信息")
-    @PreAuthorize("hasAuthority('APPINFO:DELETE')")
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteAppInfos(AppInfoQuery appInfoQuery){
         appInfoService.deleteAppInfo(appInfoQuery.getIds());

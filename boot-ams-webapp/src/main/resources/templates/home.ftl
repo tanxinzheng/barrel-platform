@@ -30,7 +30,9 @@
 </div>
 <div class="layui-fluid data-list">
     <div class="layui-row">
-        <input type="text" name="title" placeholder="请输入应用名称，应用代码或描述" autocomplete="off" class="layui-input"/>
+        <form action="" id="searchForm">
+        <input type="text" id="keyword" name="keyword" value="${RequestParameters["keyword"]}" placeholder="请输入应用名称，应用代码或描述" autocomplete="off" class="layui-input"/>
+        </form>
     </div>
     <br>
     <div class="layui-row layui-col-space10 data-list-body">
@@ -39,7 +41,7 @@
         <div class="layui-col-md3">
             <div class="layui-card">
                 <div class="layui-card-header layui-bg-blue">
-                    <a style="color: #fff;" target="_blank" href="${app.url}">${app.name}<span>（${app.code}）</span></a>
+                    <a style="color: #fff;" target="_blank" href="${app.url}">${app.appName}<span>（${app.appCode}）</span></a>
                 </div>
                 <div class="layui-card-body">
                     ${app.description}
@@ -56,6 +58,11 @@
     layui.use('element', function(){
         var element = layui.element;
     });
+    $("#keyword").keydown(function (e) {
+        if(e.keyCode==13){
+            $('#searchForm).submit();
+        }
+    })
 </script>
 </body>
 </html>

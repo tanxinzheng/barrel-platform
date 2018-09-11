@@ -8,11 +8,11 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<modules>
 		<module>boot-core</module>
-		<module>sso-client-jwt</module>
-		<module>sso-cas</module>
-        <module>sso-client-springboot-security</module>
 		<module>boot-admin</module>
 		<module>boot-ams-webapp</module>
+		<module>sso-client-jwt</module>
+		<module>sso-cas</module>
+		<module>sso-client-springboot-security</module>
 		<!--<module>boot-jwt</module>-->
 	</modules>
 	<packaging>pom</packaging>

@@ -3,23 +3,18 @@ package com.xmomen.module.mail.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.xmomen.module.mail.model.EmailModel;
-import com.xmomen.module.security.JwtTokenServiceImpl;
 import com.xmomen.module.test.BaseTestController;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.assertj.core.util.Lists;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

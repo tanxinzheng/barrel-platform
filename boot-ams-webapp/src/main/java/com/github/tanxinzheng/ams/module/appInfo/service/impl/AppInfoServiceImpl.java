@@ -9,7 +9,6 @@ import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoQuery;
 import com.github.tanxinzheng.ams.module.appInfo.service.AppInfoService;
 import com.github.pagehelper.Page;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
