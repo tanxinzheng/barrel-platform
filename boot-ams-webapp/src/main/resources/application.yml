@@ -1,5 +1,3 @@
-
-
 spring:
   profiles:
     active: dev
@@ -15,6 +13,7 @@ spring:
     request-context-attribute: ctx
     enabled: true
     template-loader-path: classpath:/templates/
+    classic_compatible: true
 
 mybatis:
   typeAliasesPackage: com.**.model

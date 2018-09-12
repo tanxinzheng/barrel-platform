@@ -11,27 +11,27 @@
 <div class="layui-header layui-bg-black">
     <div class="layui-main layui-fluid">
         <ul class="layui-nav" lay-filter="">
-            <li class="layui-nav-item"><a href="">产品中心</a></li>
-            <li class="layui-nav-item"><a href="">产品分类</a></li>
-            <li class="layui-nav-item"><a href="">文   档</a></li>
-            <li class="layui-nav-item">
-                <a href="">登录</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+            <li class="layui-nav-item">应用平台列表</li>
+            <#--<li class="layui-nav-item"><a href="">产品分类</a></li>-->
+            <#--<li class="layui-nav-item"><a href="">文   档</a></li>-->
+            <#--<li class="layui-nav-item">-->
+                <#--<a href="">登录</a>-->
+            <#--</li>-->
+            <#--<li class="layui-nav-item">-->
+                <#--<a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>-->
                 <#--<dl class="layui-nav-child">-->
                     <#--<dd><a href="javascript:;">修改信息</a></dd>-->
                     <#--<dd><a href="javascript:;">安全管理</a></dd>-->
                     <#--<dd><a href="javascript:;">退了</a></dd>-->
                 <#--</dl>-->
-            </li>
+            <#--</li>-->
         </ul>
     </div>
 </div>
 <div class="layui-fluid data-list">
     <div class="layui-row">
         <form action="" id="searchForm">
-        <input type="text" id="keyword" name="keyword" value="${RequestParameters["keyword"]}" placeholder="请输入应用名称，应用代码或描述" autocomplete="off" class="layui-input"/>
+        <input type="text" id="keyword" name="keyword" value="${RequestParameters["keyword"]!}" placeholder="请输入应用名称，应用代码或描述" autocomplete="off" class="layui-input"/>
         </form>
     </div>
     <br>
@@ -53,16 +53,5 @@
 </div>
 
 <script src="${ctx.contextPath}/vendor/layui/layui.js"></script>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
-    });
-    $("#keyword").keydown(function (e) {
-        if(e.keyCode==13){
-            $('#searchForm).submit();
-        }
-    })
-</script>
 </body>
 </html>
