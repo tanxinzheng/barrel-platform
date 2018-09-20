@@ -1,7 +1,7 @@
-package com.xmomen.framework.fss;
+package com.github.tanxinzheng.fss.service;
 
-import com.xmomen.framework.fss.model.FileStorageInfo;
-import com.xmomen.framework.fss.model.FileStorageResult;
+import com.github.tanxinzheng.fss.model.FileStorageInfo;
+import com.github.tanxinzheng.fss.model.FileStorageResult;
 
 import java.io.IOException;
 

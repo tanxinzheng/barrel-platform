@@ -1,4 +1,4 @@
-package com.xmomen.adapters.fss;
+package com.github.tanxinzheng.fss.service;
 
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
@@ -6,71 +6,26 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
-import com.xmomen.framework.fss.FileStoreService;
-import com.xmomen.framework.fss.model.FileStorageInfo;
-import com.xmomen.framework.fss.model.FileStorageResult;
+import com.github.tanxinzheng.fss.FssConfigProperties;
+import com.github.tanxinzheng.fss.model.FileStorageInfo;
+import com.github.tanxinzheng.fss.model.FileStorageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.Assert;
 
 /**
  * 注：图片等静态资源存储在公共读类的bucket，而私密性文件应存储在私有类的bucket
  * Created by Jeng on 15/6/24.
  */
 @Slf4j
-public class FileStoreServiceByOss implements FileStoreService, InitializingBean {
+public class FileStoreServiceByOss implements FileStoreService {
 
-    @Value(value = "${oss.accessKeyId}")
-    private String accessKeyId;
-    @Value(value = "${oss.accessKeySecret}")
-    private String accessKeySecret;
-    @Value(value = "${oss.endpoint}")
-    private String endpoint;
-    @Value(value = "${oss.bucketName}")
-    private String bucketName;
-
-    public String getAccessKeyId() {
-        return accessKeyId;
-    }
-
-    public void setAccessKeyId(String accessKeyId) {
-        this.accessKeyId = accessKeyId;
-    }
-
-    public String getAccessKeySecret() {
-        return accessKeySecret;
-    }
-
-    public void setAccessKeySecret(String accessKeySecret) {
-        this.accessKeySecret = accessKeySecret;
-    }
-
-    public String getEndpoint() {
-        return endpoint;
-    }
-
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
-    }
-
-    public String getBucketName() {
-        return bucketName;
-    }
-
-    public void setBucketName(String bucketName) {
-        this.bucketName = bucketName;
-    }
 
     private static OSSClient client;
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        Assert.hasText(accessKeyId, "accessKeyId must be not null or empty");
-        Assert.hasText(accessKeySecret, "accessKeyId must be not null or empty");
-        Assert.hasText(endpoint, "accessKeyId must be not null or empty");
-        Assert.hasText(bucketName, "accessKeyId must be not null or empty");
+    private FssConfigProperties fssConfigProperties;
+
+    public FileStoreServiceByOss(FssConfigProperties fssConfigProperties) {
+        this.fssConfigProperties = fssConfigProperties;
     }
 
     private void reconnectionOSSClient() {
@@ -82,16 +37,14 @@ public class FileStoreServiceByOss implements FileStoreService, InitializingBean
      * 创建ossClient连接
      */
     private void createOSSClientConnection() {
-        Assert.hasText(accessKeyId, "accessKeyId must be not null or empty");
-        Assert.hasText(accessKeySecret, "accessKeyId must be not null or empty");
-        Assert.hasText(endpoint, "accessKeyId must be not null or empty");
-        Assert.hasText(bucketName, "accessKeyId must be not null or empty");
         ClientConfiguration conf = new ClientConfiguration();
         conf.setMaxConnections(3500);
         conf.setConnectionTimeout(3500);
         conf.setMaxErrorRetry(6);
         if(client == null){
-            client = new OSSClient(endpoint, accessKeyId, accessKeySecret, conf);
+            client = new OSSClient(fssConfigProperties.getEndpoint(),
+                    fssConfigProperties.getAccessKeyId(),
+                    fssConfigProperties.getAccessKeySecret(), conf);
         }
     }
 
@@ -109,7 +62,7 @@ public class FileStoreServiceByOss implements FileStoreService, InitializingBean
         }
         reconnectionOSSClient();
         try{
-            OSSObject ossObject = getClient().getObject(bucketName, filePath);
+            OSSObject ossObject = getClient().getObject(fssConfigProperties.getBucketName(), filePath);
             if(ossObject != null){
                 return true;
             }
@@ -123,7 +76,7 @@ public class FileStoreServiceByOss implements FileStoreService, InitializingBean
     public FileStorageResult getFile(String filePath) {
         try {
             createOSSClientConnection();
-            OSSObject ossObject = getClient().getObject(bucketName, filePath);
+            OSSObject ossObject = getClient().getObject(fssConfigProperties.getBucketName(), filePath);
             return FileStorageResult.SUCCESS(filePath, ossObject.getObjectContent());
         } catch (Exception e) {
             log.error("OSSClient getObject fail, filePath: {}, error message: {}", filePath, e.getMessage(), e);
@@ -136,7 +89,7 @@ public class FileStoreServiceByOss implements FileStoreService, InitializingBean
         try {
             ObjectMetadata meta = new ObjectMetadata();
             meta.setContentLength(fileStorageInfo.getContent().length);
-            PutObjectResult result = getClient().putObject(bucketName,
+            PutObjectResult result = getClient().putObject(fssConfigProperties.getBucketName(),
                     fileStorageInfo.getFullPath(),
                     fileStorageInfo.getInputStream(), meta);
             return FileStorageResult.SUCCESS(fileStorageInfo.getFullPath());
@@ -155,7 +108,7 @@ public class FileStoreServiceByOss implements FileStoreService, InitializingBean
     public boolean deleteFile(String filePathAndName) {
         log.debug("OSSClient delete file, file path: {}", filePathAndName);
         try {
-            client.deleteObject(bucketName, filePathAndName);
+            client.deleteObject(fssConfigProperties.getBucketName(), filePathAndName);
             return Boolean.TRUE;
         } catch (Exception e){
             log.error("OSSClient delete file fail, file path: {}, message: {}", filePathAndName, e.getMessage(), e);

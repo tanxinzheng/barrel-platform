@@ -1,4 +1,4 @@
-package com.xmomen.framework.fss.model;
+package com.github.tanxinzheng.fss.model;
 
 import lombok.Data;
 

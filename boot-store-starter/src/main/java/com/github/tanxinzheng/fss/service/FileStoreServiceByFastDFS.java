@@ -1,8 +1,7 @@
-package com.xmomen.adapters;
+package com.github.tanxinzheng.fss.service;
 
-import com.xmomen.framework.fss.FileStoreService;
-import com.xmomen.framework.fss.model.FileStorageInfo;
-import com.xmomen.framework.fss.model.FileStorageResult;
+import com.github.tanxinzheng.fss.model.FileStorageInfo;
+import com.github.tanxinzheng.fss.model.FileStorageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

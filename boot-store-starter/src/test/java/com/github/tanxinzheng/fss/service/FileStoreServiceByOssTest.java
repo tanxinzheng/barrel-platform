@@ -1,8 +1,8 @@
-package com.xmomen.framework.fss.adapters;
+package com.github.tanxinzheng.fss.service;
 
-import com.xmomen.adapters.fss.FileStoreServiceByOss;
-import com.xmomen.framework.fss.model.FileStorageInfo;
-import com.xmomen.framework.fss.model.FileStorageResult;
+import com.github.tanxinzheng.fss.FssConfigProperties;
+import com.github.tanxinzheng.fss.model.FileStorageInfo;
+import com.github.tanxinzheng.fss.model.FileStorageResult;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,13 +23,12 @@ public class FileStoreServiceByOssTest {
     private FileStorageResult result;
     @Before
     public void setUp() throws Exception {
-        if(fileOperation == null){
-            fileOperation = new FileStoreServiceByOss();
-            fileOperation.setAccessKeyId("LTAIQ9tAnQKgixOa");
-            fileOperation.setAccessKeySecret("SvUzBFGETJ3k9DUY0krXEKLYEpOsFF");
-            fileOperation.setBucketName("xmomen-test");
-            fileOperation.setEndpoint("oss-cn-hangzhou.aliyuncs.com");
-        }
+        FssConfigProperties fssConfigProperties = new FssConfigProperties();
+        fssConfigProperties.setAccessKeyId("LTAIQ9tAnQKgixOa");
+        fssConfigProperties.setAccessKeySecret("SvUzBFGETJ3k9DUY0krXEKLYEpOsFF");
+        fssConfigProperties.setBucketName("xmomen-test");
+        fssConfigProperties.setEndpoint("oss-cn-hangzhou.aliyuncs.com");
+        fileOperation = new FileStoreServiceByOss(fssConfigProperties);
         String demoFile = "/Users/jeng/xmomen-repo/webapp/overlays-simple-template-webapp/src/test/resources/demo/logo.png";
         inputStream = new FileInputStream(new File(demoFile));
     }
