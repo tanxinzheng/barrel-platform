@@ -2,6 +2,7 @@ package com.xmomen.module.scheduler.mapper;
 
 import com.xmomen.module.scheduler.model.ScheduleTaskModel;
 import com.xmomen.module.scheduler.model.ScheduleTaskQuery;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @date    2017-8-6 15:56:07
  * @version 1.0.0
  */
+@Mapper
 public interface ScheduleTaskMapper {
 
 

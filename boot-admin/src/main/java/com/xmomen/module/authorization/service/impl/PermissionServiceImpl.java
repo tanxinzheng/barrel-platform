@@ -72,11 +72,11 @@ public class PermissionServiceImpl implements PermissionService {
     */
     @Override
     @Transactional
-    public List<PermissionModel> createPermissions(List<PermissionModel> permissionModels, String createdUserId) {
+    public List<PermissionModel> createPermissions(List<PermissionModel> permissionModels) {
         for (PermissionModel permissionModel : permissionModels) {
             permissionModel.setId(UUIDGenerator.getInstance().getUUID());
-            permissionModel.setCreatedUserId(createdUserId);
-            permissionModel.setUpdatedUserId(createdUserId);
+//            permissionModel.setCreatedUserId(createdUserId);
+//            permissionModel.setUpdatedUserId(createdUserId);
             permissionModel.setPermissionCode(permissionModel.getPermissionCode().toUpperCase());
         }
         permissionMapper.insertByBatch(permissionModels);

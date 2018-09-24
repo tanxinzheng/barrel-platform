@@ -3,6 +3,7 @@ package com.xmomen.module.system.mapper;
 import com.xmomen.module.system.model.Dictionary;
 import com.xmomen.module.system.model.DictionaryModel;
 import com.xmomen.module.system.model.DictionaryQuery;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date    2017-6-11 1:07:45
  * @version 1.0.0
  */
+@Mapper
 public interface DictionaryMapper {
 
     List<Dictionary> select(DictionaryQuery dictionaryQuery);

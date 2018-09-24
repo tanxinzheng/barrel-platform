@@ -3,6 +3,7 @@ package com.xmomen.module.authorization.mapper;
 import com.xmomen.module.authorization.model.User;
 import com.xmomen.module.authorization.model.UserModel;
 import com.xmomen.module.authorization.model.UserQuery;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date    2017-6-16 22:59:53
  * @version 1.0.0
  */
+@Mapper
 public interface UserMapper {
 
     List<User> select(UserQuery userQuery);

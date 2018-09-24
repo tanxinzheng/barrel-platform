@@ -2,7 +2,8 @@ package com.xmomen.module.notification.controller;
 
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
+
+import com.xmomen.framework.web.authentication.CurrentAccountService;
 import com.xmomen.module.notification.model.NotificationSend;
 import com.xmomen.module.notification.model.NotificationSendModel;
 import com.xmomen.module.notification.model.NotificationSendQuery;
@@ -24,12 +25,15 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(value = "/notification_send")
-public class NotificationSendController extends BaseRestController {
+public class NotificationSendController {
 
     private static Logger logger = LoggerFactory.getLogger(NotificationSendController.class);
 
     @Autowired
     NotificationSendService notificationSendService;
+
+    @Autowired
+    CurrentAccountService currentAccountService;
 
     /**
      * 通知发送人列表
@@ -67,7 +71,7 @@ public class NotificationSendController extends BaseRestController {
     //@PreAuthorize("hasAuthority('NOTIFICATIONSEND:CREATE')")
     @RequestMapping(method = RequestMethod.POST)
     public NotificationSend createNotificationSend(@RequestBody @Valid NotificationSendModel notificationSendModel) {
-        notificationSendModel.setSender(getCurrentUserId());
+        notificationSendModel.setSender(currentAccountService.getAccountId());
         return notificationSendService.createNotificationSend(notificationSendModel.getEntity());
     }
 

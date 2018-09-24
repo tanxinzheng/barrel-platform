@@ -4,7 +4,8 @@ import com.github.pagehelper.Page;
 import com.google.common.collect.Lists;
 import com.xmomen.framework.logger.ActionLog;
 import com.xmomen.framework.poi.ExcelUtils;
-import com.xmomen.framework.web.controller.BaseRestController;
+
+import com.xmomen.framework.web.authentication.CurrentAccountService;
 import com.xmomen.framework.web.rest.ImportExcelResponse;
 import com.xmomen.module.system.model.DictionaryModel;
 import com.xmomen.module.system.model.DictionaryQuery;
@@ -32,10 +33,13 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/dictionary")
 @Slf4j
-public class DictionaryController extends BaseRestController {
+public class DictionaryController {
 
     @Autowired
     DictionaryService dictionaryService;
+
+    @Autowired
+    CurrentAccountService currentAccountService;
 
     /**
      * 数据字典列表
@@ -73,8 +77,8 @@ public class DictionaryController extends BaseRestController {
     //@PreAuthorize("hasAuthority('DICTIONARY:CREATE')")
     @RequestMapping(method = RequestMethod.POST)
     public DictionaryModel createDictionary(@RequestBody @Valid DictionaryModel dictionaryModel) {
-        dictionaryModel.setCreatedUserId(getCurrentUserId());
-        dictionaryModel.setUpdatedUserId(getCurrentUserId());
+        dictionaryModel.setCreatedUserId(currentAccountService.getAccountId());
+        dictionaryModel.setUpdatedUserId(currentAccountService.getAccountId());
         return dictionaryService.createDictionary(dictionaryModel);
     }
 
@@ -93,8 +97,8 @@ public class DictionaryController extends BaseRestController {
         if(StringUtils.isNotBlank(id)){
             dictionaryModel.setId(id);
         }
-        dictionaryModel.setCreatedUserId(getCurrentUserId());
-        dictionaryModel.setUpdatedUserId(getCurrentUserId());
+        dictionaryModel.setCreatedUserId(currentAccountService.getAccountId());
+        dictionaryModel.setUpdatedUserId(currentAccountService.getAccountId());
         dictionaryService.updateDictionary(dictionaryModel);
         return dictionaryService.getOneDictionaryModel(id);
     }

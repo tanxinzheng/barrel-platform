@@ -11,7 +11,7 @@ public class JwtTokenServiceImplTest {
 
     @Test
     public void createToken() throws Exception {
-        JwtTokenServiceImpl jwtTokenService = new JwtTokenServiceImpl();
+//        JwtTokenServiceImpl jwtTokenService = new JwtTokenServiceImpl();
     }
 
 }

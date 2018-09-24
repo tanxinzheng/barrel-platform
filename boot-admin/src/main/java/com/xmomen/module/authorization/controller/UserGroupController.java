@@ -2,7 +2,7 @@ package com.xmomen.module.authorization.controller;
 
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
+
 import com.xmomen.module.authorization.model.UserGroupModel;
 import com.xmomen.module.authorization.model.UserGroupQuery;
 import com.xmomen.module.authorization.service.UserGroupService;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(value = "/user/group")
-public class UserGroupController extends BaseRestController {
+public class UserGroupController {
 
     @Autowired
     UserGroupService userGroupService;

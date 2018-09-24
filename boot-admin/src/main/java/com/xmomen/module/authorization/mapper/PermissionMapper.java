@@ -3,6 +3,7 @@ package com.xmomen.module.authorization.mapper;
 import com.xmomen.module.authorization.model.Permission;
 import com.xmomen.module.authorization.model.PermissionModel;
 import com.xmomen.module.authorization.model.PermissionQuery;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date    2017-7-25 1:52:35
  * @version 1.0.0
  */
+@Mapper
 public interface PermissionMapper {
 
     List<Permission> select(PermissionQuery permissionQuery);

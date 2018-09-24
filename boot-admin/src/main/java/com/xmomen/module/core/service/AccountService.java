@@ -1,9 +1,8 @@
 package com.xmomen.module.core.service;
 
+import com.xmomen.framework.utils.PasswordHelper;
 import com.xmomen.framework.utils.UUIDGenerator;
 import com.xmomen.framework.validator.PhoneValidator;
-import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreterService;
 import com.xmomen.module.authorization.model.*;
 import com.xmomen.module.authorization.service.UserGroupService;
 import com.xmomen.module.authorization.service.UserPermissionService;
@@ -11,11 +10,9 @@ import com.xmomen.module.authorization.service.UserService;
 import com.xmomen.module.core.model.AccountModel;
 import com.xmomen.module.core.model.Register;
 import com.xmomen.module.core.model.UserGroupEnum;
-import com.xmomen.framework.utils.PasswordHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by tanxinzheng on 16/9/2.
@@ -167,27 +167,4 @@ public class AccountService {
         }
         return permissions;
     }
-//
-//    /**
-//     * 翻译
-//     *
-//     * @param dictionaryType 字典类型
-//     * @param userId 用户ID
-//     * @return
-//     */
-//    @Cacheable(cacheNames = DictionaryIndex.DICTIONARY_CACHE_NAME_KEY)
-//    @Override
-//    public Map<String, Object> translateDictionary(DictionaryIndex dictionaryType, String userId) {
-//        return getAccountModelByUserId(userId);
-//    }
-//
-//    /**
-//     * 字典索引
-//     *
-//     * @return
-//     */
-//    @Override
-//    public DictionaryIndex getDictionaryIndex() {
-//        return DictionaryIndex.ACCOUNT;
-//    }
 }

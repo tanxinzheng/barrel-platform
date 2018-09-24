@@ -3,7 +3,7 @@ package ${targetPackage};
 import io.swagger.annotations.ApiOperation;
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
+
 import ${modulePackage}.model.${domainObjectClassName}Query;
 import ${modulePackage}.model.${domainObjectClassName}Model;
 import ${modulePackage}.service.${domainObjectClassName}Service;
@@ -20,7 +20,7 @@ import java.util.List;
 <#include "header.ftl">
 @RestController
 @RequestMapping(value = "${restMapping}")
-public class ${domainObjectClassName}Controller extends BaseRestController {
+public class ${domainObjectClassName}Controller {
 
     private static Logger logger = LoggerFactory.getLogger(${domainObjectClassName}Controller.class);
 

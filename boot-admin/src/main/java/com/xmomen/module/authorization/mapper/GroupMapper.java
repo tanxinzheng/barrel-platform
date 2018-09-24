@@ -4,6 +4,7 @@ import com.xmomen.module.authorization.model.Group;
 import com.xmomen.module.authorization.model.GroupModel;
 import com.xmomen.module.authorization.model.GroupQuery;
 import com.xmomen.module.authorization.model.UserGroupQuery;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
@@ -15,6 +16,7 @@ import java.util.List;
  * @date    2017-7-25 0:51:13
  * @version 1.0.0
  */
+@Mapper
 public interface GroupMapper {
 
     List<Group> select(GroupQuery groupQuery);

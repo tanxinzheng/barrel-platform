@@ -2,7 +2,7 @@ package com.xmomen.module.attachment.controller;
 
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
+
 import com.xmomen.module.attachment.model.AttachmentModel;
 import com.xmomen.module.attachment.model.AttachmentQuery;
 import com.xmomen.module.attachment.service.AttachmentService;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(value = "/attachment")
-public class AttachmentController extends BaseRestController {
+public class AttachmentController {
 
     @Autowired
     AttachmentService attachmentService;

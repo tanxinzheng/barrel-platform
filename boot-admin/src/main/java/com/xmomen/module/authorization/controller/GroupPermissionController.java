@@ -2,7 +2,7 @@ package com.xmomen.module.authorization.controller;
 
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
+
 import com.xmomen.module.authorization.model.GroupPermissionModel;
 import com.xmomen.module.authorization.model.GroupPermissionQuery;
 import com.xmomen.module.authorization.service.GroupPermissionService;
@@ -22,7 +22,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(value = "/group/permission")
-public class GroupPermissionController extends BaseRestController {
+public class GroupPermissionController {
 
     @Autowired
     GroupPermissionService groupPermissionService;

@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/xmo_demo?useUnicode:true&amp;characterEncoding:utf8
+    username: root
+    password: 123456
+  freemarker:
+    cache: false
+    charset: UTF-8
+    content-type: text/html
+    request-context-attribute: ctx
+    enabled: true
+    template-loader-path: classpath:/templates/
+    classic_compatible: true
+mybatis:
+  type-aliases-package: com.**.model
+  mapper-locations: classpath*:com/**/mapper/*.xml
+  config-location: classpath:mybatis-config.xml
+server:
+  port: 20000
+cas:
+  server-url: http://localhost:20001
+  server-login-url: ${cas.server-url}/login
+  server-logout-url: ${cas.server-url}/logout?service=${cas.app-server-url}
+  app-server-url: http://localhost:${server.port}
+  app-login-url: /login
+  app-logout-url: /logout
+  permit-urls: /

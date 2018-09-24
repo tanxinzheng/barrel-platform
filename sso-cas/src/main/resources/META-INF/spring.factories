@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    com.github.tanxinzheng.ams.cas.CasConfig,\
-    com.github.tanxinzheng.ams.cas.CustomerAuthWebflowConfiguration

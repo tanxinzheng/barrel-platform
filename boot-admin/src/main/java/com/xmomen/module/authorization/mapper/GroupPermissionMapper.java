@@ -4,6 +4,7 @@ import com.xmomen.module.authorization.model.GroupPermission;
 import com.xmomen.module.authorization.model.GroupPermissionModel;
 import com.xmomen.module.authorization.model.GroupPermissionQuery;
 import com.xmomen.module.authorization.model.PermissionModel;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @date    2017-7-25 1:52:35
  * @version 1.0.0
  */
+@Mapper
 public interface GroupPermissionMapper {
 
     List<GroupPermission> select(GroupPermissionQuery groupPermissionQuery);

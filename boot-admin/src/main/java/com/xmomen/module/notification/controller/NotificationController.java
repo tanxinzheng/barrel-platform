@@ -2,8 +2,7 @@ package com.xmomen.module.notification.controller;
 
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
-import com.xmomen.module.notification.model.Notification;
+import com.xmomen.framework.web.authentication.CurrentAccountService;
 import com.xmomen.module.notification.model.NotificationModel;
 import com.xmomen.module.notification.model.NotificationQuery;
 import com.xmomen.module.notification.model.SendNotification;
@@ -14,10 +13,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+//import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * @author  tanxinzheng
@@ -26,12 +26,15 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(value = "/notification")
-public class NotificationController extends BaseRestController {
+public class NotificationController {
 
     private static Logger logger = LoggerFactory.getLogger(NotificationController.class);
 
     @Autowired
     NotificationService notificationService;
+
+    @Autowired
+    CurrentAccountService currentAccountService;
 
     /**
      * 通知列表
@@ -98,7 +101,7 @@ public class NotificationController extends BaseRestController {
     @ApiOperation(value = "更新通知")
     @RequestMapping(value = "/{id}/read", method = RequestMethod.PUT)
     public void readNotification(@PathVariable(value = "id") String id){
-        notificationService.read(id, getCurrentUserId());
+        notificationService.read(id, currentAccountService.getAccountId());
     }
 
     /**

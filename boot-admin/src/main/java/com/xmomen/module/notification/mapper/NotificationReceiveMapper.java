@@ -1,6 +1,7 @@
 package com.xmomen.module.notification.mapper;
 
 import com.xmomen.module.notification.model.*;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * @date    2017-8-24 17:42:48
  * @version 1.0.0
  */
+@Mapper
 public interface NotificationReceiveMapper {
 
     List<NotificationReceive> select(NotificationReceiveQuery notificationReceiveQuery);

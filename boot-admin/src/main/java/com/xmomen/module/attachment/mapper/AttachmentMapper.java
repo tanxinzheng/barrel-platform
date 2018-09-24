@@ -3,6 +3,7 @@ package com.xmomen.module.attachment.mapper;
 import com.xmomen.module.attachment.model.Attachment;
 import com.xmomen.module.attachment.model.AttachmentModel;
 import com.xmomen.module.attachment.model.AttachmentQuery;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date    2017-8-6 15:56:07
  * @version 1.0.0
  */
+@Mapper
 public interface AttachmentMapper {
 
     List<Attachment> select(AttachmentQuery attachmentQuery);

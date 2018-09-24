@@ -2,8 +2,8 @@ package com.xmomen.module.core.controller;
 
 import com.aliyun.oss.common.utils.IOUtils;
 import com.xmomen.framework.exception.BusinessException;
-import com.xmomen.framework.fss.FileStoreService;
-import com.xmomen.framework.fss.model.FileStorageResult;
+import com.xmomen.module.fss.service.FileStoreService;
+import com.xmomen.module.fss.model.FileStorageResult;
 import com.xmomen.module.attachment.model.AttachmentModel;
 import com.xmomen.module.attachment.model.AttachmentQuery;
 import com.xmomen.module.attachment.service.AttachmentService;

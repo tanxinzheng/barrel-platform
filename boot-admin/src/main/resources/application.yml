@@ -48,25 +48,16 @@ druid:
   maxPoolPreparedStatementPerConnectionSize: 20
   filters: wall,stat
 
-# oss
-oss:
-  accessKeyId: LTAIQ9tAnQKgixOa
-  accessKeySecret: SvUzBFGETJ3k9DUY0krXEKLYEpOsFF
-  bucketName: xmomen-test
-  endpoint: oss-cn-hangzhou.aliyuncs.com
-
 # mybatis
 mybatis:
-  typeAliasesPackage: com.**.entity
-  mapperLocations: classpath*:com/**/mapper/*.xml
-  configLocation: classpath:config/mybatis-config.xml
+  type-aliases-package: com.**.model
+  mapper-locations: classpath*:com/**/mapper/*.xml
+  config-location: classpath:config/mybatis-config.xml
 
 # security
 jwt:
   secret: xmomen
   expiration: 1800
-security:
-  remember-me.key: xmomen_remember_me
 
 jog:
   cron:

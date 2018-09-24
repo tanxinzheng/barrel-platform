@@ -3,7 +3,7 @@ package com.xmomen.module.notification.controller;
 import io.swagger.annotations.ApiOperation;
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
+
 import com.xmomen.module.notification.model.NotificationReceiveQuery;
 import com.xmomen.module.notification.model.NotificationReceiveModel;
 import com.xmomen.module.notification.service.NotificationReceiveService;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/notification_receive")
-public class NotificationReceiveController extends BaseRestController {
+public class NotificationReceiveController {
 
     private static Logger logger = LoggerFactory.getLogger(NotificationReceiveController.class);
 

@@ -1,29 +1,34 @@
 package com.xmomen.framework.web.handler;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 /**
  * Created by tanxinzheng on 18/2/9.
  */
+@Slf4j
 public class LogbackMDCInterceptor extends HandlerInterceptorAdapter {
 
     /**
      * 会话ID
      */
-    private final static String USER_ID = "userId";
+    private final static String USERNAME = "username";
+    private final static String REQUEST_ID = "requestId";
 
     @Override
     public void afterCompletion(HttpServletRequest arg0,
                                 HttpServletResponse arg1, Object arg2, Exception arg3)
             throws Exception {
         // 删除
-        MDC.remove(USER_ID);
+        MDC.remove(USERNAME);
+        MDC.remove(REQUEST_ID);
     }
 
     @Override
@@ -35,12 +40,15 @@ public class LogbackMDCInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
         // TODO 添加Log适配器接口
-//        Authentication subject = SecurityContextHolder.getContext().getAuthentication();
-//        if(subject != null && subject.getPrincipal() != null){
-//            String username = subject.getPrincipal().toString();
-//            // 放SessionId
-//            MDC.put(USER_ID, username);
-//        }
+        if(request.getUserPrincipal() == null){
+            return true;
+        }
+        String username = request.getUserPrincipal().getName();
+        if(StringUtils.isNotBlank(username)){
+            MDC.put(USERNAME, username);
+        }
+        MDC.put(REQUEST_ID, request.getRequestedSessionId());
+        log.debug("The user[?] current request_id : ?", username, request.getRequestedSessionId());
         return true;
     }
 

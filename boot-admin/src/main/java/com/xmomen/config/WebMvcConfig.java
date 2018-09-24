@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.xmomen.framework.fss.FileStoreService;
-import com.xmomen.adapters.fss.FileStoreServiceByOss;
 import com.xmomen.framework.web.handler.LogbackMDCInterceptor;
 import com.xmomen.framework.web.json.CustomDateDeserialize;
 import com.xmomen.framework.web.json.DictionaryAnnotationIntrospector;
 import com.xmomen.framework.web.support.DateConverter;
+import com.xmomen.module.fss.EnableFSSAliyun;
 import com.xmomen.module.logger.aspect.LoggerAspect;
 import org.jeecgframework.poi.excel.view.JeecgMapExcelView;
 import org.jeecgframework.poi.excel.view.JeecgSingleExcelView;
@@ -43,10 +42,8 @@ import java.util.Date;
 @Configuration
 @ComponentScan(value = "com.xmomen.**")
 @EnableAutoConfiguration(exclude={MultipartAutoConfiguration.class})
+@EnableFSSAliyun
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-
-    @Autowired
-    private Environment env;
 
     @Autowired
     ApplicationContext applicationContext;
@@ -137,11 +134,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         factory.setMaxFileSize("128KB");
         factory.setMaxRequestSize("128KB");
         return factory.createMultipartConfig();
-    }
-
-    @Bean
-    public FileStoreService getFileStoreService(){
-        return new FileStoreServiceByOss();
     }
 
 }

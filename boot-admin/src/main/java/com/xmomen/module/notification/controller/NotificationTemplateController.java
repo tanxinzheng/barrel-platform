@@ -3,7 +3,7 @@ package com.xmomen.module.notification.controller;
 import io.swagger.annotations.ApiOperation;
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
+
 import com.xmomen.module.notification.model.NotificationTemplateQuery;
 import com.xmomen.module.notification.model.NotificationTemplateModel;
 import com.xmomen.module.notification.service.NotificationTemplateService;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/notification_template")
-public class NotificationTemplateController extends BaseRestController {
+public class NotificationTemplateController {
 
     private static Logger logger = LoggerFactory.getLogger(NotificationTemplateController.class);
 

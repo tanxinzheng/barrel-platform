@@ -3,6 +3,7 @@ package com.xmomen.module.notification.mapper;
 import com.xmomen.module.notification.model.NotificationTemplate;
 import com.xmomen.module.notification.model.NotificationTemplateModel;
 import com.xmomen.module.notification.model.NotificationTemplateQuery;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date    2017-8-24 17:42:47
  * @version 1.0.0
  */
+@Mapper
 public interface NotificationTemplateMapper {
 
     List<NotificationTemplate> select(NotificationTemplateQuery notificationTemplateQuery);

@@ -4,7 +4,7 @@ import com.github.pagehelper.Page;
 import com.google.common.collect.Lists;
 import com.xmomen.framework.logger.ActionLog;
 import com.xmomen.framework.poi.ExcelUtils;
-import com.xmomen.framework.web.controller.BaseRestController;
+
 import com.xmomen.module.authorization.model.PermissionModel;
 import com.xmomen.module.authorization.model.PermissionQuery;
 import com.xmomen.module.authorization.service.PermissionService;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/permission")
-public class PermissionController extends BaseRestController {
+public class PermissionController {
 
     @Autowired
     private PermissionService permissionService;
@@ -152,7 +152,7 @@ public class PermissionController extends BaseRestController {
         if(CollectionUtils.isEmpty(list)){
             return;
         }
-        permissionService.createPermissions(list, getCurrentUserId());
+        permissionService.createPermissions(list);
     }
 
 

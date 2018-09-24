@@ -22,7 +22,7 @@ public class RestError extends RestResult {
     }
 
     public RestError(String message) {
-        RestResult.OK(message);
+        OK(message);
     }
 
     public RestError(Exception ex) {

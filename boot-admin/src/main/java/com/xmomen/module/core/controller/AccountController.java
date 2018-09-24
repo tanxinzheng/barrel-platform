@@ -4,7 +4,8 @@ import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
 import com.xmomen.framework.utils.UUIDGenerator;
 import com.xmomen.framework.validator.PhoneValidator;
-import com.xmomen.framework.web.controller.BaseRestController;
+
+import com.xmomen.framework.web.authentication.CurrentAccountService;
 import com.xmomen.module.authorization.model.User;
 import com.xmomen.module.authorization.model.UserModel;
 import com.xmomen.module.authorization.service.UserService;
@@ -26,6 +27,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -42,10 +44,13 @@ import static com.xmomen.module.core.controller.AccessController.FIND_TYPE_PHONE
 @RestController
 @Api(value = "当前用户相关信息", description = "当前用户简要信息，权限等相关接口")
 @RequestMapping(value = "/account")
-public class AccountController extends BaseRestController {
+public class AccountController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    CurrentAccountService currentAccountService;
 
     @Autowired
     UserService userService;
@@ -70,7 +75,7 @@ public class AccountController extends BaseRestController {
     @ApiOperation(value = "查询当前用户资料信息")
     @ActionLog(actionName = "查询当前用户资料信息")
     public AccountModel accountSetting(){
-        return getCurrentAccount();
+        return accountService.getCurrentAccount();
     }
 
     /**
@@ -84,7 +89,7 @@ public class AccountController extends BaseRestController {
         if(notificationQuery == null){
             notificationQuery = new NotificationQuery();
         }
-        notificationQuery.setUserId(getCurrentUserId());
+        notificationQuery.setUserId(currentAccountService.getAccountId());
         return notificationReceiveService.selectNotification(notificationQuery);
     }
 
@@ -110,7 +115,7 @@ public class AccountController extends BaseRestController {
         if(notificationQuery == null){
             notificationQuery = new NotificationQuery();
         }
-        notificationQuery.setUserId(getCurrentUserId());
+        notificationQuery.setUserId(currentAccountService.getAccountId());
         return notificationService.countNotificationState(notificationQuery);
     }
 
@@ -125,7 +130,7 @@ public class AccountController extends BaseRestController {
         if(notificationQuery == null){
             notificationQuery = new NotificationQuery();
         }
-        notificationQuery.setUserId(getCurrentUserId());
+        notificationQuery.setUserId(currentAccountService.getAccountId());
         List<NotificationStateCount> list = notificationService.countNotificationState(notificationQuery);
         if(CollectionUtils.isEmpty(list)){
             return new NotificationStateCount();
@@ -147,7 +152,7 @@ public class AccountController extends BaseRestController {
     @ApiOperation(value = "查询当前用户权限")
     @ActionLog(actionName = "查询当前用户权限")
     public Map getAccountPermission(){
-        String userId = getCurrentUserId();
+        String userId = currentAccountService.getAccountId();
         Set<String> roles = accountService.findRoles(userId);
         Set<String> permissions = accountService.findPermissions(userId);
         Map rolesMap = new HashMap();
@@ -166,15 +171,15 @@ public class AccountController extends BaseRestController {
     @ActionLog(actionName = "当前用户修改密码")
     public void updatePassword(@RequestParam(value = "oldPassword") String oldPassword,
                               @RequestParam(value = "password") String password){
-        AccountModel accountModel = getCurrentAccount();
-        UserModel userModel = userService.getOneUserModel(accountModel.getUserId());
+        String userId = currentAccountService.getAccountId();
+        UserModel userModel = userService.getOneUserModel(userId);
         Assert.notNull(userModel, "未找到当前用户帐号");
         String encryptPassword = PasswordHelper.encryptPassword(oldPassword, userModel.getSalt());
         Assert.isTrue(encryptPassword.equals(userModel.getPassword()), "输入的旧密码不正确");
         String salt = UUIDGenerator.getInstance().getUUID();
         String newEncryptPassword = PasswordHelper.encryptPassword(password, userModel.getSalt());
         User user = new User();
-        user.setId(accountModel.getUserId());
+        user.setId(userId);
         user.setSalt(salt);
         user.setPassword(newEncryptPassword);
         userService.updateUser(user);
@@ -206,7 +211,7 @@ public class AccountController extends BaseRestController {
             Assert.isNull(userModel, "该手机号码已被绑定");
             user.setPhoneNumber(receiver);
         }
-        user.setId(getCurrentUserId());
+        user.setId(currentAccountService.getAccountId());
         userService.updateUser(user);
         validationCodeService.cleanCode(receiver);
     }
@@ -222,7 +227,7 @@ public class AccountController extends BaseRestController {
         if(file.isEmpty()){
             return;
         }
-        String userId = getCurrentUserId();
+        String userId = currentAccountService.getAccountId();
         userService.updateAvatar(userId, file);
     }
 
@@ -235,7 +240,7 @@ public class AccountController extends BaseRestController {
     @ApiOperation(value = "当前用户操作日志")
     public Page<LogModel> getAccountActionLog(ActionLogQuery actionLogQuery){
         actionLogQuery.setDefaultPage();
-        actionLogQuery.setUserId(getCurrentUserId());
+        actionLogQuery.setUserId(currentAccountService.getAccountId());
         return loggerService.getActionLogPage(actionLogQuery);
     }
 

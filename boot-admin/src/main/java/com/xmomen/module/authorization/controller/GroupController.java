@@ -2,7 +2,7 @@ package com.xmomen.module.authorization.controller;
 
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.controller.BaseRestController;
+
 import com.xmomen.module.authorization.model.*;
 import com.xmomen.module.authorization.service.GroupPermissionService;
 import com.xmomen.module.authorization.service.GroupService;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/group")
-public class GroupController extends BaseRestController {
+public class GroupController {
 
     @Autowired
     GroupService groupService;

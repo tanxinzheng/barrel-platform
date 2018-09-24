@@ -31,7 +31,7 @@ public class CacheController {
     @Autowired
     CacheManager cacheManager;
 
-    Map<SelectIndex, SelectService> selectServiceMap = Maps.newConcurrentMap();
+    Map<SelectIndex, SelectService> selectServiceMap = Maps.newHashMap();
 
     @Autowired
     public void register(List<SelectService> serviceList){

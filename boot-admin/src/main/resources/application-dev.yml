@@ -1,13 +1,12 @@
 logging:
   config: classpath:logback.xml
 
-casServerUrlPrefix: http://localhost:9000
-cas:
-  prefixUrl: http://localhost:9000
-  loginUrl: ${cas.prefixUrl}/login
-  logoutUrl: ${cas.prefixUrl}/logout
-  centralLogout: ${cas.prefixUrl}/logout
-  serviceUrl: http://localhost:${server.port}
-  callbackUrl: ${cas.serviceUrl}/callback
 jwt:
   salt: cas
+
+# oss
+oss:
+  accessKeyId: LTAIQ9tAnQKgixOa
+  accessKeySecret: SvUzBFGETJ3k9DUY0krXEKLYEpOsFF
+  bucketName: xmomen-test
+  endpoint: oss-cn-hangzhou.aliyuncs.com
