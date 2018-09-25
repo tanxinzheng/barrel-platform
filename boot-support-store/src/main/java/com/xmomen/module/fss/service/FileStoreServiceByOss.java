@@ -10,6 +10,8 @@ import com.xmomen.module.fss.FssConfigProperties;
 import com.xmomen.module.fss.model.FileStorageInfo;
 import com.xmomen.module.fss.model.FileStorageResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -88,11 +90,16 @@ public class FileStoreServiceByOss implements FileStoreService {
     public FileStorageResult newFile(FileStorageInfo fileStorageInfo) {
         try {
             ObjectMetadata meta = new ObjectMetadata();
+            if(ArrayUtils.isNotEmpty(fileStorageInfo.getMateList())){
+                for (FileStorageInfo.FileStorageNameValuePair fileStorageNameValuePair : fileStorageInfo.getMateList()) {
+                    meta.addUserMetadata(fileStorageNameValuePair.getName(), fileStorageNameValuePair.getValue());
+                }
+            }
             meta.setContentLength(fileStorageInfo.getContent().length);
             PutObjectResult result = getClient().putObject(fssConfigProperties.getBucketName(),
                     fileStorageInfo.getFullPath(),
                     fileStorageInfo.getInputStream(), meta);
-            return FileStorageResult.SUCCESS(fileStorageInfo.getFullPath());
+            return FileStorageResult.SUCCESS(fileStorageInfo.getFullPath(), fileStorageInfo.getInputStream());
         } catch (Exception e) {
             log.error("OSSClient delete file fail, file path: {}, message: {}", fileStorageInfo.getFullPath(), e.getMessage(), e);
         }

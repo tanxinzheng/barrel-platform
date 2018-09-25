@@ -21,9 +21,6 @@ public class FileStorageInfo {
     private String contentType;
     private FileStorageNameValuePair[] mateList;
 
-    public FileStorageInfo() {
-    }
-
     public FileStorageInfo(MultipartFile multipartFile) {
         try {
             this.content = multipartFile.getBytes();
@@ -37,7 +34,8 @@ public class FileStorageInfo {
         this.contentType = multipartFile.getContentType();
     }
 
-    public FileStorageInfo(String fileExt, InputStream inputStream) throws IOException {
+    public FileStorageInfo(String fileName, String fileExt, InputStream inputStream) throws IOException {
+        this.fileName = fileName;
         this.fileExt = fileExt;
         if(inputStream != null){
             int len1 = inputStream.available();
@@ -55,11 +53,7 @@ public class FileStorageInfo {
     }
 
     public String getFullPath(){
-        return fileName + File.pathSeparator + fileExt;
-    }
-
-    public String[] parserFullPath(String fullPath){
-        return fullPath.split(File.separator);
+        return fileName + "." + fileExt;
     }
 
     @Data

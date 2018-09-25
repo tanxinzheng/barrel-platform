@@ -1,13 +1,18 @@
-package com.xmomen.framework.service;
+package com.xmomen.module.fss;
 
-import com.xmomen.module.fss.FssConfigProperties;
 import com.xmomen.module.fss.model.FileStorageInfo;
 import com.xmomen.module.fss.model.FileStorageResult;
-import com.xmomen.module.fss.service.FileStoreServiceByOss;
+import com.xmomen.module.fss.service.FileStoreService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,22 +21,22 @@ import java.io.InputStream;
 /**
  * Created by tanxinzheng on 2018/7/23.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = FSSStartApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class FileStoreServiceByOssTest {
 
-    private FileStoreServiceByOss fileOperation;
+    @Autowired
+    private FileStoreService fileOperation;
 
     private InputStream inputStream;
+    private FileStorageInfo fileStorageInfo;
     private FileStorageResult result;
     @Before
     public void setUp() throws Exception {
-        FssConfigProperties fssConfigProperties = new FssConfigProperties();
-        fssConfigProperties.setAccessKeyId("LTAIQ9tAnQKgixOa");
-        fssConfigProperties.setAccessKeySecret("SvUzBFGETJ3k9DUY0krXEKLYEpOsFF");
-        fssConfigProperties.setBucketName("xmomen-test");
-        fssConfigProperties.setEndpoint("oss-cn-hangzhou.aliyuncs.com");
-        fileOperation = new FileStoreServiceByOss(fssConfigProperties);
-        String demoFile = "/Users/jeng/xmomen-repo/webapp/overlays-simple-template-webapp/src/test/resources/demo/logo.png";
+        String demoFile = this.getClass().getClassLoader().getResource("demo/test.json").getPath();
         inputStream = new FileInputStream(new File(demoFile));
+        fileStorageInfo = new FileStorageInfo("demo/test.1", "json", inputStream);
     }
 
     @After
@@ -43,7 +48,6 @@ public class FileStoreServiceByOssTest {
 
     @Test
     public void existFile() throws Exception {
-        FileStorageInfo fileStorageInfo = new FileStorageInfo("png", inputStream);
         FileStorageResult result = fileOperation.newFile(fileStorageInfo);
         Assert.assertTrue(result.isSuccess());
         Boolean isSuccess = fileOperation.existFile(result.getStoragePath());
@@ -52,7 +56,6 @@ public class FileStoreServiceByOssTest {
 
     @Test
     public void getFile() throws Exception {
-        FileStorageInfo fileStorageInfo = new FileStorageInfo("png", inputStream);
         FileStorageResult result = fileOperation.newFile(fileStorageInfo);
         Assert.assertTrue(result.isSuccess());
         result = fileOperation.getFile(result.getStoragePath());
@@ -61,7 +64,6 @@ public class FileStoreServiceByOssTest {
 
     @Test
     public void newFile() throws Exception {
-        FileStorageInfo fileStorageInfo = new FileStorageInfo("png", inputStream);
         FileStorageResult result = fileOperation.newFile(fileStorageInfo);
         Assert.assertTrue(result.isSuccess());
     }

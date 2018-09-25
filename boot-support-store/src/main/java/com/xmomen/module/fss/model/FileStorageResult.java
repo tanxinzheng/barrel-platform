@@ -26,6 +26,10 @@ public class FileStorageResult {
 
     public static FileStorageResult SUCCESS(String storagePath) {
         FileStorageResult fileStorageResult = new FileStorageResult();
+        String name = storagePath.substring(0, storagePath.lastIndexOf("."));
+        String prefix = storagePath.substring(storagePath.lastIndexOf(".")+1);
+        fileStorageResult.setFileName(name);
+        fileStorageResult.setFileExt(prefix);
         fileStorageResult.setStoragePath(storagePath);
         fileStorageResult.setSuccess(Boolean.TRUE);
         fileStorageResult.setMessage("文件上传成功");
@@ -46,8 +50,9 @@ public class FileStorageResult {
             }
             inputStream.close();
             result.setContent(bytes);
+            result.setFileSize(bytes.length);
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
         return result;
     }

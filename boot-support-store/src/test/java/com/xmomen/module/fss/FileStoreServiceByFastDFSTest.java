@@ -1,4 +1,4 @@
-package com.xmomen.framework.service;
+package com.xmomen.module.fss;
 
 import com.xmomen.module.fss.model.FileStorageInfo;
 import com.xmomen.module.fss.model.FileStorageResult;
@@ -33,7 +33,7 @@ public class FileStoreServiceByFastDFSTest {
     public void setUp() throws Exception {
         fileStoreService = new FileStoreServiceByFastDFS();
         inputStream = new FileInputStream(new File(demoFile));
-        fileStorageInfo = new FileStorageInfo("png", inputStream);
+        fileStorageInfo = new FileStorageInfo("demo", "png", inputStream);
     }
 
     @After
@@ -45,8 +45,6 @@ public class FileStoreServiceByFastDFSTest {
 
     @Test
     public void newFile() throws Exception {
-        InputStream inputStream = new FileInputStream(new File(demoFile));
-        FileStorageInfo fileStorageInfo = new FileStorageInfo("png", inputStream);
         FileStorageResult result = fileStoreService.newFile(fileStorageInfo);
         Assert.assertTrue(result.isSuccess());
     }
