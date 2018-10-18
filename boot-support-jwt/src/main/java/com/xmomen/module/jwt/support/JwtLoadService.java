@@ -1,19 +1,24 @@
 package com.xmomen.module.jwt.support;
 
-import java.util.Set;
-
 /**
  * Created by tanxinzheng on 2018/9/23.
  */
-public interface JwtLoadService {
+public interface JwtLoadService<T extends JwtUserDetails> {
 
     /**
-     *
+     * 查询用户信息
      * @param username
      * @return
      */
-    JwtUserDetails loadUserDetail(String username);
+    T loadUserDetail(String username);
 
+
+    /**
+     * 加载用户角色，权限
+     * @param jwtUserDetails
+     * @return
+     */
+    T loadAuthorities(T jwtUserDetails);
 
     /**
      * 验证密码是否正确
@@ -21,6 +26,6 @@ public interface JwtLoadService {
      * @param userDetails
      * @return
      */
-    boolean matchPassword(String rawPassword, JwtUserDetails userDetails);
+    boolean matchPassword(String rawPassword, T userDetails);
 
 }

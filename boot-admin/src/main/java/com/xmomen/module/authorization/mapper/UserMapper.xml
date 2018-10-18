@@ -30,8 +30,8 @@
                 <if test="avatar != null" >
                     AVATAR,
                 </if>
-                <if test="locked != null" >
-                    LOCKED,
+                <if test="disable != null" >
+                    DISABLE,
                 </if>
                 <if test="createdTime != null" >
                     CREATED_TIME,
@@ -63,8 +63,8 @@
                 <if test="avatar != null" >
                 #{avatar, jdbcType=VARCHAR},
                 </if>
-                <if test="locked != null" >
-                #{locked, jdbcType=CHAR},
+                <if test="disable != null" >
+                #{disable, jdbcType=CHAR},
                 </if>
                 <if test="createdTime != null" >
                 #{createdTime, jdbcType=TIMESTAMP},
@@ -113,8 +113,8 @@
             <if test="avatar != null" >
             AVATAR = #{avatar, jdbcType=VARCHAR},
             </if>
-            <if test="locked != null" >
-            LOCKED = #{locked, jdbcType=CHAR},
+            <if test="disable != null" >
+            DISABLE = #{disable, jdbcType=CHAR},
             </if>
             <if test="createdTime != null" >
             CREATED_TIME = #{createdTime, jdbcType=TIMESTAMP},
@@ -153,8 +153,8 @@
             <if test="avatar != null" >
             AVATAR = #{avatar, jdbcType=VARCHAR},
             </if>
-            <if test="record.locked != null" >
-            LOCKED = #{locked, jdbcType=CHAR},
+            <if test="record.disable != null" >
+            DISABLE = #{disable, jdbcType=CHAR},
             </if>
             <if test="record.createdTime != null" >
             CREATED_TIME = #{createdTime, jdbcType=TIMESTAMP},
@@ -200,7 +200,11 @@
     <sql id="Update_By_Query_Where_Clause">
         <where>
             <if test="keyword">
-                AND ID LIKE CONCAT('%', #{keyword}, '%')
+                AND (
+                NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                OR EMAIL LIKE CONCAT('%', #{keyword}, '%')
+                OR PHONE_NUMBER LIKE CONCAT('%', #{keyword}, '%')
+                )
             </if>
             <if test="id">
                 AND ID = #{id}

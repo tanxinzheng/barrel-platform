@@ -19,7 +19,7 @@ public class LogbackMDCInterceptor extends HandlerInterceptorAdapter {
     /**
      * 会话ID
      */
-    private final static String USERNAME = "username";
+    private final static String USERNAME = "userId";
     private final static String REQUEST_ID = "requestId";
 
     @Override
@@ -40,6 +40,8 @@ public class LogbackMDCInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
         // TODO 添加Log适配器接口
+        MDC.put(REQUEST_ID, request.getRequestedSessionId());
+        log.debug("The current request_id : ?", request.getRequestedSessionId());
         if(request.getUserPrincipal() == null){
             return true;
         }
@@ -47,8 +49,6 @@ public class LogbackMDCInterceptor extends HandlerInterceptorAdapter {
         if(StringUtils.isNotBlank(username)){
             MDC.put(USERNAME, username);
         }
-        MDC.put(REQUEST_ID, request.getRequestedSessionId());
-        log.debug("The user[?] current request_id : ?", username, request.getRequestedSessionId());
         return true;
     }
 

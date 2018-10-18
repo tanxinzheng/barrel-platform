@@ -32,10 +32,10 @@ public @Data class User extends BaseEntity implements Serializable {
     private String phoneNumber;
     /** 头像 */
     private String avatar;
-    /** 锁定 */
-    private Boolean locked;
+    /** 禁用 */
+    private Boolean disable;
     /** 注册时间 */
-    private Date createDate;
+    private Date createdTime;
     /** 最后登录时间 */
     private Date lastLoginTime;
 

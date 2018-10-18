@@ -43,15 +43,17 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
             chain.doFilter(request, response);
-        } catch (ExpiredJwtException e) {
-            throw new IllegalArgumentException("token is expired");
         } catch (Exception e){
             logger.debug(e.getMessage(), e);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
             Map<String, Object> data = new HashMap<>();
             data.put("timestamp", new Date().getTime());
-            data.put("message", e.getMessage());
+            if(e instanceof ExpiredJwtException){
+                data.put("message", "token is expired");
+            }else {
+                data.put("message", e.getMessage());
+            }
             data.put("code", HttpStatus.UNAUTHORIZED.value());
             data.put("path",   request.getRequestURI());
             data.put("requestId", request.getRequestedSessionId());

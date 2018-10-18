@@ -1,6 +1,5 @@
 package com.xmomen.config;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -22,7 +21,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -59,14 +57,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Primary
     public ObjectMapper objectMapper() {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-        builder.serializationInclusion(JsonInclude.Include.NON_EMPTY);
+//        builder.serializationInclusion(JsonInclude.Include.NON_EMPTY);
         builder.timeZone("GMT+8");
         builder.simpleDateFormat("yyyy-MM-dd HH:mm:ss");
         builder.deserializerByType(Date.class, new CustomDateDeserialize());
         builder.featuresToDisable(
                 SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS,
-                DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES
-//                DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
+                DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES,
+                DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
         );
         builder.annotationIntrospector(getDictionaryIntrospector());
         builder.featuresToEnable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);

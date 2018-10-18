@@ -83,6 +83,8 @@ public class UserServiceImpl implements UserService, DictionaryInterpreterServic
     @Override
     @Transactional
     public User createUser(User user) {
+        user.setCreatedTime(new Date());
+        user.setDisable(false);
         userMapper.insertSelective(user);
         return user;
     }

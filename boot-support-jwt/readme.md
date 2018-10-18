@@ -1,4 +1,4 @@
-# JWT token 认证
+# JWT token认证服务
 使用jwt token认证协议，并结合redis缓存机制，实现分布式集群认证
 
 ## 使用指引
@@ -45,13 +45,11 @@ public class JwtAuthConfig extends JwtConfigAdapter {
 ```java
 @EnableJWT
 @SpringBootApplication
-...
 public class JwtStartApp {
 
     public static void main(String[] args) {
         SpringApplication.run(JwtStartApp.class, args);
     }
-    ...
-
+    
 }
 ```

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -71,7 +72,7 @@ public class AccountService {
 
     private AccountModel setAccountModel(UserModel user){
         AccountModel accountModel = new AccountModel();
-        accountModel.setLocked(user.getLocked());
+        accountModel.setLocked(false);
         accountModel.setUsername(user.getUsername());
         accountModel.setEmail(user.getEmail());
         accountModel.setNickname(user.getNickname());
@@ -127,12 +128,19 @@ public class AccountService {
      * @return
      */
     public AccountModel getCurrentAccount(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null || !authentication.isAuthenticated()){
-            throw new BadCredentialsException("authentication is null");
+        AccountModel accountModel = getAccountModelByUsername(getUsername());
+        return accountModel;
+    }
+
+    private String getUsername(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = null;
+        if (principal instanceof UserDetails) {
+             username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
         }
-        String username = (String) authentication.getPrincipal();
-        return getAccountModelByUsername(username);
+        return username;
     }
 
     /**

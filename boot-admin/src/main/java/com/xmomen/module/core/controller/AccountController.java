@@ -2,10 +2,11 @@ package com.xmomen.module.core.controller;
 
 import com.github.pagehelper.Page;
 import com.xmomen.framework.logger.ActionLog;
+import com.xmomen.framework.utils.PasswordHelper;
 import com.xmomen.framework.utils.UUIDGenerator;
 import com.xmomen.framework.validator.PhoneValidator;
-
 import com.xmomen.framework.web.authentication.CurrentAccountService;
+import com.xmomen.framework.web.rest.RestResult;
 import com.xmomen.module.authorization.model.User;
 import com.xmomen.module.authorization.model.UserModel;
 import com.xmomen.module.authorization.service.UserService;
@@ -21,13 +22,10 @@ import com.xmomen.module.notification.model.NotificationQuery;
 import com.xmomen.module.notification.model.NotificationStateCount;
 import com.xmomen.module.notification.service.NotificationReceiveService;
 import com.xmomen.module.notification.service.NotificationService;
-import com.xmomen.framework.utils.PasswordHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -148,13 +146,12 @@ public class AccountController {
      * 当前用户权限
      * @return
      */
-    @RequestMapping(value = "/permissions", method = RequestMethod.GET)
+    @RequestMapping(value = "/authorities", method = RequestMethod.GET)
     @ApiOperation(value = "查询当前用户权限")
     @ActionLog(actionName = "查询当前用户权限")
-    public Map getAccountPermission(){
-        String userId = currentAccountService.getAccountId();
-        Set<String> roles = accountService.findRoles(userId);
-        Set<String> permissions = accountService.findPermissions(userId);
+    public Map getAccountAuthorities(){
+        Set<String> roles = currentAccountService.getRoles();
+        Set<String> permissions = currentAccountService.getPermissions();
         Map rolesMap = new HashMap();
         rolesMap.put("roles", roles);
         rolesMap.put("permissions", permissions);

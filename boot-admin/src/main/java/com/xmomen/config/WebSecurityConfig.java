@@ -1,168 +1,97 @@
-//package com.xmomen.config;
-//
-//import com.xmomen.module.authorization.service.UserService;
-//import com.xmomen.module.security.*;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.web.servlet.FilterRegistrationBean;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.context.annotation.Primary;
-//import org.springframework.context.annotation.Profile;
-//import org.springframework.core.env.Environment;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import org.springframework.security.config.http.SessionCreationPolicy;
-//import org.springframework.security.web.authentication.RememberMeServices;
-//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-//import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
-//import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-//import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-//import org.springframework.web.cors.CorsConfiguration;
-//import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-//import org.springframework.web.filter.CorsFilter;
-//
-///**
-// * Created by tanxinzheng on 17/8/18.
-// */
-////@Configuration
-////@EnableWebSecurity
-////@EnableGlobalMethodSecurity(prePostEnabled = true)
-//public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-//
-//    @Bean
-//    public JwtAuthenticationProvider getJwtAuthenticationProvider(){
-//        return new JwtAuthenticationProvider();
-//    }
-//
-//    @Autowired
-//    Environment environment;
-//
-//    @Override
-//    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//        authenticationManagerBuilder
-//                .authenticationProvider(getJwtAuthenticationProvider())
-//                .userDetailsService(getUserDetailService());
-//    }
-//    // 装载BCrypt密码编码器
-//
-//    @Bean
-//    public JwtUserDetailService getUserDetailService(){
-//        return new JwtUserDetailService();
-//    }
-//
-//
-//    @Bean
-//    @Primary
-//    public JwtTokenService getJwtTokenService(){
-//        return new JwtTokenServiceImpl();
-//    }
-//
-//    @Bean
-//    public FilterRegistrationBean corsFilter() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowCredentials(true);
-//        // 设置你要允许的网站域名，如果全允许则设为 *
-//        config.addAllowedOrigin("*");
-//        // 如果要限制 HEADER 或 METHOD 请自行更改
-//        config.addAllowedHeader("*");
-//        config.addAllowedMethod("*");
-//        source.registerCorsConfiguration("/**", config);
-//        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-//        // 这个顺序很重要哦，为避免麻烦请设置在最前
-//        bean.setOrder(0);
-//        return bean;
-//    }
-//
-//    @Autowired
-//    UserService userService;
-//
-//    @Bean
-//    public JwtAuthenticationSuccessHandler getJwtAuthenticationSuccessHandler(){
-//        return new JwtAuthenticationSuccessHandler(userService);
-//    }
-//
-//    @Bean
-//    public JwtAuthenticationFailureHandler getJwtAuthenticationFailureHandler(){
-//        return new JwtAuthenticationFailureHandler();
-//    }
-//
-//    @Bean
-//    public JwtAuthenticationFilter getJwtAuthenticationFilter() throws Exception {
-//        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManagerBean(), getJwtTokenService());
-//        jwtAuthenticationFilter.setPostOnly(false);
-//        jwtAuthenticationFilter.setAuthenticationSuccessHandler(getJwtAuthenticationSuccessHandler());
-//        jwtAuthenticationFilter.setAuthenticationFailureHandler(getJwtAuthenticationFailureHandler());
-//        jwtAuthenticationFilter.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login"));
-//        return jwtAuthenticationFilter;
-//    }
-//
-//    @Bean
-//    public JwtAuthorizationFilter getJwtAuthorizationFilter() throws Exception {
-//        return new JwtAuthorizationFilter(authenticationManagerBean(), getJwtTokenService());
-//    }
-//
-//    @Bean
-//    public RememberMeServices getRememberMeService(){
-//        TokenBasedRememberMeServices tokenBasedRememberMeServices = new TokenBasedRememberMeServices(environment.getProperty("security.remember-me.key"), getUserDetailService());
-//        tokenBasedRememberMeServices.setParameter("rememberMe");
-//        return tokenBasedRememberMeServices;
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity
-//                .headers()
-//                // 允许frame（支持iframe下载功能）
-//                .frameOptions().sameOrigin()
-//                .and()
-//                // 由于使用的是JWT，我们这里不需要csrf
-//                .csrf().disable()
-////                .anonymous().disable()
-//                // 基于token，所以不需要session
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//                .authorizeRequests()
-//                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-//                // 对于获取token的rest api要允许匿名访问
-//                .antMatchers(
-//                        "/access/**",
-//                        "/ws/**",
-//                        "/static/**",
-//                        "/swagger-ui.html",
-//                        "/swagger-resources/**",
-//                        "/v2/**",
-//                        "/webjars/**",
-//                        "/**/*.js",
-//                        "/**/*.woff",
-//                        "/**/*.woff2",
-//                        "/**/*.ttf",
-//                        "/**/*.html",
-//                        "/**/*.css",
-//                        "/**/*.png",
-//                        "/favicon.ico")
-//                .permitAll()
-//                .anyRequest().authenticated()
-//                // 除上面外的所有请求全部需要鉴权认证
-//                .and()
-////                .addFilterBefore(getJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterAt(getJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterAt(getJwtAuthorizationFilter(), BasicAuthenticationFilter.class)
-//                .formLogin()
-//                .and()
-//                .rememberMe()
-//                .rememberMeServices(getRememberMeService())
-//                .and()
-//                .exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint())
-//                .and()
-//                // 禁用缓存
-//                .logout()
-//                .logoutSuccessHandler(new JwtLogoutSuccessHandler())
-//                .addLogoutHandler(new JwtLogoutHandler(getJwtTokenService()))
-//                .and()
-//                .headers().cacheControl();
-//    }
-//
-//}
+package com.xmomen.config;
+
+import com.xmomen.framework.utils.PasswordHelper;
+import com.xmomen.module.authorization.model.*;
+import com.xmomen.module.authorization.service.GroupService;
+import com.xmomen.module.authorization.service.UserGroupService;
+import com.xmomen.module.authorization.service.UserPermissionService;
+import com.xmomen.module.authorization.service.UserService;
+import com.xmomen.module.jwt.JwtConfigAdapter;
+import com.xmomen.module.jwt.support.JwtLoadService;
+import com.xmomen.module.jwt.support.JwtUser;
+import org.apache.commons.collections.CollectionUtils;
+import org.assertj.core.util.Sets;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+import java.util.Set;
+
+/**
+ * Created by tanxinzheng on 17/8/18.
+ */
+@Configuration
+public class WebSecurityConfig extends JwtConfigAdapter {
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    UserGroupService userGroupService;
+
+    @Autowired
+    UserPermissionService userPermissionService;
+
+    @Bean
+    @Override
+    public JwtLoadService getJwtLoadService() {
+        return new JwtLoadService<JwtUser>() {
+            @Override
+            public JwtUser loadUserDetail(String username) {
+                UserModel userModel = userService.getOneUserModelByUsername(username);
+                if(userModel == null){
+                    return null;
+                }
+                JwtUser jwtUser = new JwtUser();
+                jwtUser.setId(userModel.getId());
+                jwtUser.setUsername(userModel.getUsername());
+                jwtUser.setPassword(userModel.getPassword());
+                jwtUser.setName(userModel.getNickname());
+                jwtUser.setEmail(userModel.getEmail());
+                return jwtUser;
+            }
+
+            /**
+             * 加载用户角色，权限
+             *
+             * @param jwtUser
+             * @return
+             */
+            @Override
+            public JwtUser loadAuthorities(JwtUser jwtUser) {
+                UserGroupQuery userGroupQuery = new UserGroupQuery();
+                userGroupQuery.setUserId(jwtUser.getId());
+                List<GroupModel> list = userGroupService.getUserGroups(userGroupQuery);
+                Set<String> roles = Sets.newHashSet();
+                roles.add("ROLE_USER");
+                if(CollectionUtils.isNotEmpty(list)){
+                    list.stream().forEach(groupModel -> {
+                        roles.add(groupModel.getGroupCode());
+                    });
+                }
+                jwtUser.setRoles(roles);
+                Set<String> permissions = Sets.newHashSet();
+                UserPermissionQuery userPermissionQuery = new UserPermissionQuery();
+                userPermissionQuery.setUserId(jwtUser.getId());
+                List<PermissionModel> permissionList = userPermissionService.getUserPermissions(userPermissionQuery);
+                if(CollectionUtils.isNotEmpty(permissionList)){
+                    permissionList.stream().forEach(permissionModel -> {
+                        permissions.add(permissionModel.getPermissionCode());
+                    });
+                }
+                jwtUser.setPermissions(permissions);
+                return jwtUser;
+            }
+
+            @Override
+            public boolean matchPassword(String rawPassword, JwtUser userDetails) {
+                UserModel userModel = userService.getOneUserModelByUsername(userDetails.getUsername());
+                if(PasswordHelper.encryptPassword(rawPassword, userModel.getSalt()).equals(userDetails.getPassword())){
+                    return true;
+                }
+                return false;
+            }
+        };
+    }
+}

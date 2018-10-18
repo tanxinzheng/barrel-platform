@@ -21,6 +21,12 @@ public class RestResult implements Serializable {
     public RestResult() {
     }
 
+    public static RestResult OK(Object data) {
+        RestResult restResult = OK("SUCCESS");
+        restResult.setData(data);
+        return restResult;
+    }
+
     public static RestResult OK(String message) {
         RestResult restResult = new RestResult();
         restResult.setMessage(message);

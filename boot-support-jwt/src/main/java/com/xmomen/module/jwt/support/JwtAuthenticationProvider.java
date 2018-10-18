@@ -51,6 +51,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                 jwtConfigProperties.getExpiration());
         userDetails.setToken(token);
         userDetails.setRefreshToken(refreshToken);
+
+        userDetails = jwtLoadService.loadAuthorities(userDetails);
+
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(
                 userDetails.getUsername(),
                 token,

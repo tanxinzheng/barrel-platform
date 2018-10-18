@@ -60,9 +60,9 @@ public @Data class UserModel extends BaseModel implements Serializable {
     /** 头像 */
     @DictionaryInterpreter(index = DictionaryIndex.ATTACHMENT_KEY, fieldName = "avatarUrl")
     private String avatar;
-    /** 锁定 */
-    @Excel(name = "锁定")
-    private Boolean locked;
+    /** 禁用 */
+    @Excel(name = "禁用")
+    private Boolean disable;
     /** 注册时间 */
     @Excel(name = "注册时间")
     private Date createdTime;
