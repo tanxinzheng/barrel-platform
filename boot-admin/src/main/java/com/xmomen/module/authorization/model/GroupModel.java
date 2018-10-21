@@ -24,12 +24,14 @@ import java.io.Serializable;
 @ExcelTarget(value = "GroupModel")
 public @Data class GroupModel extends BaseModel implements Serializable {
 
+    public static final String GROUP_TYPE_SYSTEM = "GROUP_TYPE_SYSTEM";
+    public static final String GROUP_TYPE_CUSTOM = "GROUP_TYPE_CUSTOM";
+
     /** 主键 */
     @Length(max = 32, message = "主键字符长度限制[0,32]")
     private String id;
     /** 用户组类型 */
     @Excel(name = "用户组类型")
-    @NotBlank(message = "用户组类型为必填项")
     @Length(max = 100, message = "用户组类型字符长度限制[1,100]")
     @DictionaryInterpreter(index = DictionaryIndex.USER_GROUP)
     private String groupType;

@@ -39,15 +39,15 @@ public class LogbackMDCInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
-        // TODO 添加Log适配器接口
         MDC.put(REQUEST_ID, request.getRequestedSessionId());
-        log.debug("The current request_id : ?", request.getRequestedSessionId());
         if(request.getUserPrincipal() == null){
             return true;
         }
         String username = request.getUserPrincipal().getName();
         if(StringUtils.isNotBlank(username)){
             MDC.put(USERNAME, username);
+        }else{
+            MDC.put(USERNAME, "-");
         }
         return true;
     }

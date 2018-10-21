@@ -216,4 +216,9 @@ public class PermissionServiceImpl implements PermissionService {
         }
         return permissionModelList.get(0);
     }
+
+    @Override
+    public void autoInitPermissions() {
+
+    }
 }

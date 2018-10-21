@@ -30,8 +30,6 @@ import java.util.List;
 @Service
 public class GroupServiceImpl implements GroupService, SelectService {
 
-    private static final String SYSTEM_GROUP_TYPE_NAME = "SYSTEM_GROUP";
-
     @Autowired
     GroupMapper groupMapper;
     @Autowired
@@ -137,7 +135,7 @@ public class GroupServiceImpl implements GroupService, SelectService {
         }
         GroupQuery groupQuery = new GroupQuery();
         groupQuery.setIds(ids);
-        groupQuery.setGroupType(SYSTEM_GROUP_TYPE_NAME);
+        groupQuery.setGroupType(GroupModel.GROUP_TYPE_SYSTEM);
         List<Group> list = groupMapper.select(groupQuery);
         if(CollectionUtils.isNotEmpty(list)){
             throw new BusinessException("禁止删除系统用户组");
@@ -160,7 +158,7 @@ public class GroupServiceImpl implements GroupService, SelectService {
             throw new BusinessException("该用户组下已绑定用户，请移除用户后重新操作。");
         }
         GroupQuery groupQuery = new GroupQuery();
-        groupQuery.setGroupType(SYSTEM_GROUP_TYPE_NAME);
+        groupQuery.setGroupType(GroupModel.GROUP_TYPE_SYSTEM);
         groupQuery.setId(id);
         List<Group> groups = groupMapper.select(groupQuery);
         if(CollectionUtils.isNotEmpty(groups)){

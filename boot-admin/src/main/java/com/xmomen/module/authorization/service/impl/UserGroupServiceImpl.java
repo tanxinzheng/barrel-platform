@@ -9,6 +9,9 @@ import com.xmomen.module.authorization.model.*;
 import com.xmomen.module.authorization.service.UserGroupService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,23 +70,32 @@ public class UserGroupServiceImpl implements UserGroupService {
     */
     @Override
     @Transactional
-    public void createUserGroups(String userId, String... groupIds) {
-        for (String groupId : groupIds) {
+    public void createUserGroups(String userId,
+                                 String... groupIds) {
+        if(StringUtils.isBlank(userId) || ArrayUtils.isEmpty(groupIds)){
+            return;
+        }
+        Arrays.stream(groupIds).forEach(groupId -> {
             UserGroup userGroup = new UserGroup();
             userGroup.setUserId(userId);
             userGroup.setGroupId(groupId);
             createUserGroup(userGroup);
-        }
+        });
     }
 
+    @Transactional
     @Override
-    public void bindUsers2Group(String groupId, String... userIds) {
-        for (String userId : userIds) {
+    public void bindUsers2Group(String groupId,
+                                String... userIds) {
+        if(StringUtils.isBlank(groupId) && ArrayUtils.isEmpty(userIds)){
+            return;
+        }
+        Arrays.stream(userIds).forEach(userId -> {
             UserGroup userGroup = new UserGroup();
             userGroup.setUserId(userId);
             userGroup.setGroupId(groupId);
             createUserGroup(userGroup);
-        }
+        });
     }
 
     @Override

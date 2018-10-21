@@ -47,6 +47,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             logger.debug(e.getMessage(), e);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
             Map<String, Object> data = new HashMap<>();
             data.put("timestamp", new Date().getTime());
             if(e instanceof ExpiredJwtException){

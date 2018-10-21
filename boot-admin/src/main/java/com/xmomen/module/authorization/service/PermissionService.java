@@ -103,4 +103,9 @@ public interface PermissionService {
      * @return PermissionModel 权限领域对象
      */
     public PermissionModel getOnePermissionModel(PermissionQuery permissionQuery);
+
+    /**
+     * 自动初始化权限数据
+     */
+    void autoInitPermissions();
 }

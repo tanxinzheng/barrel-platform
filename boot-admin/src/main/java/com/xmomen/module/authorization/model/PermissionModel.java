@@ -30,6 +30,8 @@ public @Data class PermissionModel extends BaseModel implements Serializable {
     /** 主键 */
     @Length(max = 32, message = "主键字符长度限制[0,32]")
     private String id;
+    /** 资源URL */
+    private String permissionUrl;
     /** 权限代码 */
     @Excel(name = "权限代码")
     @NotBlank(message = "权限代码为必填项")

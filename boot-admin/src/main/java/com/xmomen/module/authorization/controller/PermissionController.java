@@ -2,9 +2,12 @@ package com.xmomen.module.authorization.controller;
 
 import com.github.pagehelper.Page;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.xmomen.framework.logger.ActionLog;
 import com.xmomen.framework.poi.ExcelUtils;
 
+import com.xmomen.framework.web.authentication.PermissionResourceKey;
+import com.xmomen.module.authorization.constant.PermissionAction;
 import com.xmomen.module.authorization.model.PermissionModel;
 import com.xmomen.module.authorization.model.PermissionQuery;
 import com.xmomen.module.authorization.service.PermissionService;
@@ -14,13 +17,21 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  * @author  tanxinzheng
@@ -41,7 +52,7 @@ public class PermissionController {
      */
     @ApiOperation(value = "查询权限列表")
     //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:VIEW')")
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = GET)
     public Page<PermissionModel> getPermissionList(final PermissionQuery permissionQuery) {
         return permissionService.getPermissionModelPage(permissionQuery);
     }
@@ -53,7 +64,7 @@ public class PermissionController {
      */
     @ApiOperation(value = "查询权限")
     //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:VIEW')")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = GET)
     public PermissionModel getPermissionById(@PathVariable(value = "id") String id) {
         return permissionService.getOnePermissionModel(id);
     }
@@ -66,7 +77,7 @@ public class PermissionController {
     @ApiOperation(value = "新增权限")
     @ActionLog(actionName = "新增权限")
     //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:CREATE')")
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = POST)
     public PermissionModel createPermission(@RequestBody @Valid PermissionModel permissionModel) {
         return permissionService.createPermission(permissionModel);
     }
@@ -80,7 +91,7 @@ public class PermissionController {
     @ApiOperation(value = "更新权限")
     @ActionLog(actionName = "更新权限")
     //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:UPDATE')")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = PUT)
     public PermissionModel updatePermission(@PathVariable(value = "id") String id,
                            @RequestBody @Valid PermissionModel permissionModel){
         if(StringUtils.isNotBlank(id)){
@@ -97,7 +108,7 @@ public class PermissionController {
     @ApiOperation(value = "删除单个权限")
     @ActionLog(actionName = "删除单个权限")
     //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:DELETE')")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = DELETE)
     public void deletePermission(@PathVariable(value = "id") String id){
         permissionService.deletePermission(id);
     }
@@ -109,7 +120,7 @@ public class PermissionController {
     @ApiOperation(value = "批量删除权限")
     @ActionLog(actionName = "批量删除权限")
     //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:DELETE')")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(method = DELETE)
     public void deletePermissions(final PermissionQuery permissionQuery){
         permissionService.deletePermission(permissionQuery.getIds());
     }
@@ -117,7 +128,7 @@ public class PermissionController {
     /**
      * 下载Excel模板
      */
-    @RequestMapping(value="/template", method = RequestMethod.GET)
+    @RequestMapping(value="/template", method = GET)
     public void downloadTemplate(HttpServletRequest request,
                                  HttpServletResponse response) {
         List<PermissionModel> list = Lists.newArrayList();
@@ -131,7 +142,7 @@ public class PermissionController {
     @ApiOperation(value = "导出权限")
     @ActionLog(actionName = "导出权限")
     //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:VIEW')")
-    @RequestMapping(value="/export", method = RequestMethod.GET)
+    @RequestMapping(value="/export", method = GET)
     public void exportDictionaries(HttpServletRequest request,
                                            HttpServletResponse response,
                                            PermissionQuery permissionQuery) {
@@ -146,13 +157,67 @@ public class PermissionController {
     @ApiOperation(value = "批量导入权限")
     @ActionLog(actionName = "批量导入权限")
     //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:CREATE')")
-    @RequestMapping(value="/import", method = RequestMethod.POST)
+    @RequestMapping(value="/import", method = POST)
     public void importDictionaries(@RequestParam("file") MultipartFile file) throws IOException {
         List<PermissionModel> list = ExcelUtils.transform(file, PermissionModel.class);
         if(CollectionUtils.isEmpty(list)){
             return;
         }
         permissionService.createPermissions(list);
+    }
+
+    /**
+     * 获取所有RequestMappingInfo
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/url")
+    public List getAllUrl(HttpServletRequest request) {
+        WebApplicationContext wc = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
+        RequestMappingHandlerMapping rmhp = wc.getBean(RequestMappingHandlerMapping.class);
+        Map<RequestMappingInfo, HandlerMethod> map = rmhp.getHandlerMethods();
+        Map<String, List> res = Maps.newHashMap();
+        for(RequestMappingInfo info : map.keySet()){
+            String key = map.get(info).getBean().toString();
+            if(CollectionUtils.isNotEmpty(res.get(key))){
+                res.get(key).add(info);
+            }else{
+                res.put(key, Lists.newArrayList(info));
+            }
+        }
+
+        Map<String, Object> permissionControllerMaps = wc.getBeansWithAnnotation(PermissionResourceKey.class);
+        List permissionModelList = Lists.newArrayList();
+        for (String controllerName : permissionControllerMaps.keySet()) {
+            Object contrl = permissionControllerMaps.get(controllerName);
+            PermissionResourceKey permissionResourceKey = contrl.getClass().getAnnotation(PermissionResourceKey.class);
+            List<RequestMappingInfo> actions = res.get(controllerName);
+            actions.stream().forEach(requestMappingInfo -> {
+                PermissionModel permissionModel = new PermissionModel();
+                PermissionAction action = method2Action(requestMappingInfo.getMethodsCondition().getMethods().stream().findFirst().get());
+                permissionModel.setPermissionUrl(requestMappingInfo.getPatternsCondition().toString());
+                permissionModel.setPermissionName(permissionResourceKey.description() + ":" + action.getDesc());
+                permissionModel.setPermissionCode(permissionResourceKey.code() + ":" + action.name());
+                permissionModel.setActive(Boolean.TRUE);
+                permissionModelList.add(permissionModel);
+            });
+        }
+        return permissionModelList;
+    }
+
+    private PermissionAction method2Action(RequestMethod requestMethod){
+        switch (requestMethod){
+            case GET:
+                return PermissionAction.VIEW;
+            case DELETE:
+                return PermissionAction.REMOVE;
+            case POST:
+                return PermissionAction.ADD;
+            case PUT:
+                return PermissionAction.EDIT;
+            default:
+                return null;
+        }
     }
 
 

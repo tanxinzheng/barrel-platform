@@ -10,8 +10,10 @@ import com.xmomen.module.authorization.service.PermissionService;
 import com.xmomen.module.authorization.service.UserGroupService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -72,6 +74,7 @@ public class GroupController {
     //@PreAuthorize(value = "hasAnyAuthority('GROUP:CREATE')")
     @RequestMapping(method = RequestMethod.POST)
     public GroupModel createGroup(@RequestBody @Valid GroupModel groupModel) {
+        groupModel.setGroupType(GroupModel.GROUP_TYPE_CUSTOM);
         return groupService.createGroup(groupModel);
     }
 
@@ -100,7 +103,6 @@ public class GroupController {
      */
     @ApiOperation(value = "删除单个用户组")
     @ActionLog(actionName = "删除单个用户组")
-    //@PreAuthorize(value = "hasAnyAuthority('GROUP:DELETE')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteGroup(@PathVariable(value = "id") String id){
         groupService.deleteGroup(id);
@@ -112,7 +114,7 @@ public class GroupController {
      */
     @ApiOperation(value = "批量删除用户组")
     @ActionLog(actionName = "批量删除用户组")
-    //@PreAuthorize(value = "hasAnyAuthority('GROUP:DELETE')")
+    @PreAuthorize(value = "hasAnyAuthority({'GROUP:DELETE'})")
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteGroups(@RequestBody GroupQuery groupQuery){
         groupService.deleteGroup(groupQuery.getIds());
@@ -126,7 +128,7 @@ public class GroupController {
      */
     @ApiOperation(value = "批量删除用户组")
     @ActionLog(actionName = "新增组权限")
-    @RequestMapping(value = "/{groupId}/permission", method = RequestMethod.POST)
+    @RequestMapping(value = "/{groupId}/permissions", method = RequestMethod.POST)
     public void createGroupPermission(
             @PathVariable(value = "groupId") String groupId,
             @RequestParam(value = "permissionIds") String[] permissionIds){
@@ -140,7 +142,7 @@ public class GroupController {
      * @return
      */
     @ApiOperation(value = "查询用户组所属权限")
-    @RequestMapping(value = "/{groupId}/permission", method = RequestMethod.GET)
+    @RequestMapping(value = "/{groupId}/permissions", method = RequestMethod.GET)
     public Page<PermissionModel> findPermissionByGroup(@PathVariable(value = "groupId") String groupId,
                                                        GroupPermissionQuery groupPermissionQuery){
         return groupPermissionService.getGroupPermissions(groupPermissionQuery);
@@ -152,8 +154,8 @@ public class GroupController {
      * @param userGroupQuery
      * @return
      */
-    @ApiOperation(value = "查询用户组所属权限")
-    @RequestMapping(value = "/{groupId}/user", method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户组已绑定用户")
+    @RequestMapping(value = "/{groupId}/users", method = RequestMethod.GET)
     public List<UserGroupModel> findUserByGroup(@PathVariable(value = "groupId") String groupId,
                                                       UserGroupQuery userGroupQuery){
         userGroupQuery.setGroupId(groupId);
@@ -161,16 +163,28 @@ public class GroupController {
     }
 
     /**
-     * 查询用户组所属权限
+     * 用户组批量绑定用户
      * @param groupId
      * @param userIds
      * @return
      */
-    @ApiOperation(value = "查询用户组所属权限")
-    @RequestMapping(value = "/{groupId}/user", method = RequestMethod.POST)
+    @ApiOperation(value = "用户组批量绑定用户")
+    @RequestMapping(value = "/{groupId}/users", method = RequestMethod.POST)
     public void bindUser2Group(@PathVariable(value = "groupId") String groupId,
-                               @RequestBody String[] userIds){
+                               @RequestBody @NotEmpty String[] userIds){
         userGroupService.bindUsers2Group(groupId, userIds);
+    }
+
+    /**
+     * 用户组批量解绑用户
+     * @param groupId
+     * @param relationIds
+     */
+    @ApiOperation(value = "用户组解绑用户")
+    @RequestMapping(value = "/{groupId}/users", method = RequestMethod.DELETE)
+    public void unbindUser2Group(@PathVariable(value = "groupId") String groupId,
+                               @RequestBody @NotEmpty String[] relationIds){
+        userGroupService.deleteUserGroup(relationIds);
     }
 
     /**
@@ -178,7 +192,7 @@ public class GroupController {
      * @param groupId
      * @return
      */
-    @RequestMapping(value = "/{groupId}/user/unbind", method = RequestMethod.GET)
+    @RequestMapping(value = "/{groupId}/users/unbind", method = RequestMethod.GET)
     public List<UserModel> findPermissionByGroup(@PathVariable(value = "groupId") String groupId){
         return userGroupService.getUnbindUsers(groupId);
     }
