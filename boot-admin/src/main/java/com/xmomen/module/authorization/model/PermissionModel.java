@@ -1,23 +1,18 @@
 package com.xmomen.module.authorization.model;
 
-import com.xmomen.framework.model.BaseModel;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xmomen.module.authorization.constant.PermissionAction;
+import com.xmomen.framework.model.BaseModel;
 import com.xmomen.module.authorization.model.Permission;
 import lombok.Data;
-import org.hibernate.validator.constraints.*;
-import javax.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 import org.springframework.beans.BeanUtils;
 
-import java.lang.Boolean;
-import java.lang.String;
-import java.lang.Integer;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 /**
  * @author  tanxinzheng
@@ -30,34 +25,64 @@ public @Data class PermissionModel extends BaseModel implements Serializable {
     /** 主键 */
     @Length(max = 32, message = "主键字符长度限制[0,32]")
     private String id;
-    /** 资源URL */
+
+    private String groupCode;
+
+    private String groupId;
+
+    /** 权限类型：菜单，请求 */
+    @Excel(name = "权限类型：菜单，请求")
+    @Length(max = 10, message = "权限类型：菜单，请求字符长度限制[0,10]")
+    private String permissionType;
+
+    private String permissionKey;
+    /** 权限组 */
+    @Excel(name = "权限组")
+    @NotBlank(message = "权限组为必填项")
+    @Length(max = 100, message = "权限组字符长度限制[0,100]")
+    private String permissionGroup;
+    /** 权限URL */
+    @Excel(name = "权限URL")
+    @NotBlank(message = "权限URL为必填项")
+    @Length(max = 100, message = "权限URL字符长度限制[0,100]")
     private String permissionUrl;
-    /** 权限代码 */
-    @Excel(name = "权限代码")
-    @NotBlank(message = "权限代码为必填项")
-    @Length(max = 50, message = "权限代码字符长度限制[0,50]")
-    private String permissionCode;
-    /** 权限名称 */
-    @Excel(name = "权限名称")
-    @NotBlank(message = "权限名称为必填项")
-    @Length(max = 100, message = "权限名称字符长度限制[0,100]")
-    private String permissionName;
+    /** 权限ACTION */
+    @Excel(name = "权限ACTION")
+    @NotBlank(message = "权限ACTION为必填项")
+    @Length(max = 100, message = "权限ACTION字符长度限制[0,100]")
+    private String permissionAction;
     /** 权限描述 */
     @Excel(name = "权限描述")
     @NotBlank(message = "权限描述为必填项")
     @Length(max = 200, message = "权限描述字符长度限制[0,200]")
     private String description;
     /** 激活 */
-    @Excel(name = "激活", replace = { "是_true", "否_false" })
-    @NotNull(message = "激活为必填项")
+    @Excel(name = "激活")
+    @NotBlank(message = "激活为必填项")
+    @Length(max = 1, message = "激活字符长度限制[0,1]")
     private Boolean active;
-
-    public void setPermissionCode(String permissionCode) {
-        if(permissionCode != null){
-            this.permissionCode = permissionCode.toUpperCase();
-        }
-        this.permissionCode = permissionCode;
-    }
+    /** 父节点 */
+    @Excel(name = "父节点")
+    @Length(max = 50, message = "父节点字符长度限制[0,50]")
+    private String parentId;
+    /** 创建人 */
+    @Excel(name = "创建人")
+    @NotBlank(message = "创建人为必填项")
+    @Length(max = 32, message = "创建人字符长度限制[0,32]")
+    private String createdUserId;
+    /** 创建时间 */
+    @Excel(name = "创建时间")
+    @NotNull(message = "创建时间为必填项")
+    private Date createdTime;
+    /** 更新人 */
+    @Excel(name = "更新人")
+    @NotBlank(message = "更新人为必填项")
+    @Length(max = 32, message = "更新人字符长度限制[0,32]")
+    private String updatedUserId;
+    /** 更新时间 */
+    @Excel(name = "更新时间")
+    @NotNull(message = "更新时间为必填项")
+    private Date updatedTime;
 
     /**
     * Get Permission Entity Object

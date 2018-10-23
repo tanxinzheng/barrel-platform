@@ -4,10 +4,12 @@ import com.github.pagehelper.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.xmomen.framework.logger.ActionLog;
+import com.xmomen.framework.model.TreeModel;
 import com.xmomen.framework.poi.ExcelUtils;
 
 import com.xmomen.framework.web.authentication.PermissionResourceKey;
 import com.xmomen.module.authorization.constant.PermissionAction;
+import com.xmomen.module.authorization.model.PermissionCreate;
 import com.xmomen.module.authorization.model.PermissionModel;
 import com.xmomen.module.authorization.model.PermissionQuery;
 import com.xmomen.module.authorization.service.PermissionService;
@@ -53,8 +55,8 @@ public class PermissionController {
     @ApiOperation(value = "查询权限列表")
     //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:VIEW')")
     @RequestMapping(method = GET)
-    public Page<PermissionModel> getPermissionList(final PermissionQuery permissionQuery) {
-        return permissionService.getPermissionModelPage(permissionQuery);
+    public List<PermissionModel> getPermissionList(final PermissionQuery permissionQuery) {
+        return permissionService.getPermissionModelList(permissionQuery);
     }
 
     /**
@@ -71,15 +73,25 @@ public class PermissionController {
 
     /**
      * 新增权限
-     * @param   permissionModel  新增对象参数
+     * @param   permissionCreate  新增对象参数
      * @return  PermissionModel   权限领域对象
      */
     @ApiOperation(value = "新增权限")
     @ActionLog(actionName = "新增权限")
-    //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:CREATE')")
     @RequestMapping(method = POST)
-    public PermissionModel createPermission(@RequestBody @Valid PermissionModel permissionModel) {
-        return permissionService.createPermission(permissionModel);
+    public void createPermission(@RequestBody @Valid PermissionCreate permissionCreate) {
+        List<PermissionModel> list = Lists.newArrayList();
+        for (PermissionAction action : PermissionAction.values()) {
+            PermissionModel permissionModel = new PermissionModel();
+            permissionModel.setPermissionGroup(permissionCreate.getPermissionGroup().toUpperCase());
+            permissionModel.setPermissionUrl(permissionCreate.getPermissionUrl());
+            permissionModel.setDescription(permissionCreate.getDescription() + ":" + action.getDesc());
+            permissionModel.setActive(permissionCreate.getActive());
+            permissionModel.setPermissionAction(action.name());
+            permissionModel.setPermissionKey(permissionCreate.getPermissionGroup().toUpperCase() + ":" + action.name());
+            list.add(permissionModel);
+        }
+        permissionService.createPermissions(list);
     }
 
     /**
@@ -196,8 +208,8 @@ public class PermissionController {
                 PermissionModel permissionModel = new PermissionModel();
                 PermissionAction action = method2Action(requestMappingInfo.getMethodsCondition().getMethods().stream().findFirst().get());
                 permissionModel.setPermissionUrl(requestMappingInfo.getPatternsCondition().toString());
-                permissionModel.setPermissionName(permissionResourceKey.description() + ":" + action.getDesc());
-                permissionModel.setPermissionCode(permissionResourceKey.code() + ":" + action.name());
+//                permissionModel.setPermissionName(permissionResourceKey.description() + ":" + action.getDesc());
+//                permissionModel.setPermissionCode(permissionResourceKey.code() + ":" + action.name());
                 permissionModel.setActive(Boolean.TRUE);
                 permissionModelList.add(permissionModel);
             });

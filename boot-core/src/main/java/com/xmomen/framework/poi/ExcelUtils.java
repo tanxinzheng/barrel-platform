@@ -253,9 +253,9 @@ public class ExcelUtils extends MiniAbstractExcelView {
         } else {
             codedFileName += XSSF;
         }
-        if (isIE(request)) {
-            codedFileName = URLEncoder.encode(codedFileName, CharEncoding.UTF_8);
-        }
+//        if (isIE(request)) {
+//            codedFileName = URLEncoder.encode(codedFileName, CharEncoding.UTF_8);
+//        }
         response.setHeader("content-disposition", "attachment;filename=" + encodingFileName(codedFileName));
         response.setHeader("filename", encodingFileName(codedFileName));
         ServletOutputStream out = response.getOutputStream();

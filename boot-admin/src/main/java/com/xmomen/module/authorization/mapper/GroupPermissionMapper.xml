@@ -126,27 +126,23 @@
 
     <select id="selectGroupPermissions" resultType="com.xmomen.module.authorization.model.PermissionModel"
             parameterType="com.xmomen.module.authorization.model.GroupPermissionQuery">
-        SELECT t.* FROM xmo_permission t
+        SELECT
+        g.group_code,
+        t.*
+        FROM xmo_permission t
         LEFT JOIN xmo_group_permission ug
         ON ug.PERMISSION_ID=t.ID
+        LEFT JOIN xmo_group g
+        ON g.id = ug.group_id
         <where>
+            AND ug.group_id IS NOT NULL
+            <if test="groupId">
+                AND ug.GROUP_ID = #{groupId}
+            </if>
             <if test="keyword">
                 AND (t.PERMISSION_CODE LIKE CONCAT('%', #{keyword}, '%')
                 OR t.PERMISSION_NAME LIKE CONCAT('%', #{keyword}, '%')
                 OR t.DESCRIPTION LIKE CONCAT('%', #{keyword}, '%'))
-            </if>
-            <if test="groupId and hasBindPermission">
-                AND ug.GROUP_ID = #{groupId}
-            </if>
-            <if test="groupId and !hasBindPermission">
-                AND t.ID NOT IN
-                (SELECT
-                g.ID AS permissionId
-                FROM
-                xmo_permission g
-                LEFT JOIN xmo_group_permission ug
-                ON g.ID = ug.PERMISSION_ID
-                WHERE ug.GROUP_ID = #{groupId})
             </if>
         </where>
         ORDER BY t.id

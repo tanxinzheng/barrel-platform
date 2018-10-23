@@ -6,12 +6,10 @@ import com.xmomen.framework.logger.ActionLog;
 import com.xmomen.module.authorization.model.*;
 import com.xmomen.module.authorization.service.PermissionService;
 import com.xmomen.module.authorization.service.UserGroupService;
-import com.xmomen.module.authorization.service.UserPermissionService;
 import com.xmomen.module.authorization.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -107,9 +105,6 @@ public class UserController {
     @Autowired
     PermissionService permissionService;
 
-    @Autowired
-    UserPermissionService userPermissionService;
-
     /**
      * 查询用户组权限
      * @param userId    用户主键
@@ -121,7 +116,8 @@ public class UserController {
             @PathVariable(value = "userId") String userId,
             UserPermissionQuery userPermissionQuery){
         userPermissionQuery.setUserId(userId);
-        return userPermissionService.getUserPermissions(userPermissionQuery);
+//        return userPermissionService.getUserPermissions(userPermissionQuery);
+        return null;
     }
 
     /**

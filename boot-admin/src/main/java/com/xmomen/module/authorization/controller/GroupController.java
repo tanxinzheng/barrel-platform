@@ -114,7 +114,6 @@ public class GroupController {
      */
     @ApiOperation(value = "批量删除用户组")
     @ActionLog(actionName = "批量删除用户组")
-    @PreAuthorize(value = "hasAnyAuthority({'GROUP:DELETE'})")
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteGroups(@RequestBody GroupQuery groupQuery){
         groupService.deleteGroup(groupQuery.getIds());
@@ -126,13 +125,28 @@ public class GroupController {
      * @param permissionIds     权限主键集
      * @return List<GroupPermission>    组权限对象集
      */
-    @ApiOperation(value = "批量删除用户组")
-    @ActionLog(actionName = "新增组权限")
+    @ApiOperation(value = "绑定组权限")
+    @ActionLog(actionName = "绑定组权限")
     @RequestMapping(value = "/{groupId}/permissions", method = RequestMethod.POST)
     public void createGroupPermission(
             @PathVariable(value = "groupId") String groupId,
-            @RequestParam(value = "permissionIds") String[] permissionIds){
+            @RequestBody String[] permissionIds){
         groupPermissionService.createGroupPermissions(groupId, permissionIds);
+    }
+
+    /**
+     * 批量新增用户组所属权限
+     * @param groupId   组主键
+     * @param permissionIds     权限主键集
+     * @return List<GroupPermission>    组权限对象集
+     */
+    @ApiOperation(value = "移除用户组权限")
+    @ActionLog(actionName = "移除用户组权限")
+    @RequestMapping(value = "/{groupId}/permissions", method = RequestMethod.DELETE)
+    public void deleteGroupPermission(
+            @PathVariable(value = "groupId") String groupId,
+            @RequestBody String[] permissionIds){
+        groupPermissionService.deleteGroupPermissions(groupId, permissionIds);
     }
 
     /**
@@ -143,8 +157,9 @@ public class GroupController {
      */
     @ApiOperation(value = "查询用户组所属权限")
     @RequestMapping(value = "/{groupId}/permissions", method = RequestMethod.GET)
-    public Page<PermissionModel> findPermissionByGroup(@PathVariable(value = "groupId") String groupId,
+    public List<PermissionModel> findPermissionByGroup(@PathVariable(value = "groupId") String groupId,
                                                        GroupPermissionQuery groupPermissionQuery){
+        groupPermissionQuery.setGroupId(groupId);
         return groupPermissionService.getGroupPermissions(groupPermissionQuery);
     }
 

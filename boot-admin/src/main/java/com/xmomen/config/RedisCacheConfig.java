@@ -14,6 +14,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.jackson2.SimpleGrantedAuthorityMixin;
 
 import java.lang.reflect.Method;
 
@@ -56,6 +58,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        // 兼容序列化到redis中
+        om.addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityMixin.class);
         jackson2JsonRedisSerializer.setObjectMapper(om);
         template.setValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();

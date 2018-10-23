@@ -5,7 +5,6 @@ import com.xmomen.framework.utils.UUIDGenerator;
 import com.xmomen.framework.validator.PhoneValidator;
 import com.xmomen.module.authorization.model.*;
 import com.xmomen.module.authorization.service.UserGroupService;
-import com.xmomen.module.authorization.service.UserPermissionService;
 import com.xmomen.module.authorization.service.UserService;
 import com.xmomen.module.core.model.AccountModel;
 import com.xmomen.module.core.model.Register;
@@ -13,8 +12,6 @@ import com.xmomen.module.core.model.UserGroupEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -41,8 +38,8 @@ public class AccountService {
     @Autowired
     UserGroupService userGroupService;
 
-    @Autowired
-    UserPermissionService userPermissionService;
+//    @Autowired
+//    UserPermissionService userPermissionService;
 
     /**
      * 查询帐号
@@ -168,11 +165,11 @@ public class AccountService {
     public Set<String> findPermissions(String userId){
         UserPermissionQuery userPermissionQuery = new UserPermissionQuery();
         userPermissionQuery.setUserId(userId);
-        List<PermissionModel> permissionModelList = userPermissionService.getUserPermissions(userPermissionQuery);
+//        List<PermissionModel> permissionModelList = userPermissionService.getUserPermissions(userPermissionQuery);
         Set<String> permissions = new HashSet<>();
-        for (PermissionModel permissionModel : permissionModelList) {
-            permissions.add(permissionModel.getPermissionCode());
-        }
+//        for (PermissionModel permissionModel : permissionModelList) {
+//            permissions.add(permissionModel.getPermissionCode());
+//        }
         return permissions;
     }
 }

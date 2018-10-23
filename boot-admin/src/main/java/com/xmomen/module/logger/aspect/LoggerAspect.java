@@ -1,5 +1,6 @@
 package com.xmomen.module.logger.aspect;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,8 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
@@ -120,8 +123,13 @@ public class LoggerAspect {
                 if(annotation instanceof RequestBody){
                     try {
                         String str = objectMapper.writeValueAsString(args[i]);
-                        Map data = JSONObject.parseObject(str, Map.class);
-                        params.put(args[i].getClass().getSimpleName(), data);
+                        if(args[i].getClass().isArray()){
+                            JSONArray data = JSONObject.parseArray(str);
+                            params.put(args[i].getClass().getSimpleName(), data);
+                        }else{
+                            Map data = JSONObject.parseObject(str, Map.class);
+                            params.put(args[i].getClass().getSimpleName(), data);
+                        }
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }

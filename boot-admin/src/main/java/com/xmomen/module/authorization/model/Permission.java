@@ -1,13 +1,10 @@
 package com.xmomen.module.authorization.model;
 
-import lombok.Data;
 import com.xmomen.framework.model.BaseEntity;
+import lombok.Data;
 
-import java.lang.Boolean;
-import java.lang.String;
-import java.lang.Integer;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author  tanxinzheng
@@ -18,14 +15,22 @@ public @Data class Permission extends BaseEntity implements Serializable {
 
     /** 主键 */
     private String id;
-    /** 权限代码 */
-    private String permissionCode;
-    /** 权限名称 */
-    private String permissionName;
+    /** 权限类型：菜单，请求 */
+    private String permissionType;
+
+    private String permissionKey;
+    /** 权限组 */
+    private String permissionGroup;
+    /** 权限URL */
+    private String permissionUrl;
+    /** 权限ACTION */
+    private String permissionAction;
     /** 权限描述 */
     private String description;
     /** 激活 */
-    private Boolean active;
+    private String active;
+    /** 父节点 */
+    private String parentId;
     /** 创建人 */
     private String createdUserId;
     /** 创建时间 */
@@ -37,10 +42,10 @@ public @Data class Permission extends BaseEntity implements Serializable {
     /** 数据版本号 */
     private Integer dataVersion;
 
-    public void setPermissionCode(String permissionCode) {
-        if(permissionCode != null){
-            this.permissionCode = permissionCode.toUpperCase();
+    public void setPermissionAction(String permissionAction) {
+        this.permissionAction = permissionAction;
+        if(permissionAction != null){
+            this.permissionAction = permissionAction.toUpperCase();
         }
-        this.permissionCode = permissionCode;
     }
 }

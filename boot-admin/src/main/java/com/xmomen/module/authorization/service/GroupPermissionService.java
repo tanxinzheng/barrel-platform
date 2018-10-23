@@ -118,5 +118,6 @@ public interface GroupPermissionService {
      * @param groupPermissionQuery
      * @return
      */
-    public Page<PermissionModel> getGroupPermissions(GroupPermissionQuery groupPermissionQuery);
+    public List<PermissionModel> getGroupPermissions(GroupPermissionQuery groupPermissionQuery);
+
 }

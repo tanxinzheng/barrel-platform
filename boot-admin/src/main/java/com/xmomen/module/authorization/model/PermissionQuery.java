@@ -17,5 +17,6 @@ public @Data class PermissionQuery extends BaseQuery implements Serializable {
     private String[] ids;
     private String[] excludeIds;
     private String userId;
+    private Boolean active;
 
 }

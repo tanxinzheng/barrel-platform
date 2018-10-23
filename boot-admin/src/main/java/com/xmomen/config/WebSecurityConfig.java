@@ -1,19 +1,21 @@
 package com.xmomen.config;
 
+import com.xmomen.config.adapter.JwtSecurityMetadataHandler;
 import com.xmomen.framework.utils.PasswordHelper;
 import com.xmomen.module.authorization.model.*;
-import com.xmomen.module.authorization.service.GroupService;
 import com.xmomen.module.authorization.service.UserGroupService;
-import com.xmomen.module.authorization.service.UserPermissionService;
 import com.xmomen.module.authorization.service.UserService;
 import com.xmomen.module.jwt.JwtConfigAdapter;
 import com.xmomen.module.jwt.support.JwtLoadService;
 import com.xmomen.module.jwt.support.JwtUser;
+import com.xmomen.module.jwt.support.access.SecurityMetadataHandler;
 import org.apache.commons.collections.CollectionUtils;
+import org.assertj.core.util.Lists;
 import org.assertj.core.util.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 import java.util.Set;
@@ -29,9 +31,6 @@ public class WebSecurityConfig extends JwtConfigAdapter {
 
     @Autowired
     UserGroupService userGroupService;
-
-    @Autowired
-    UserPermissionService userPermissionService;
 
     @Bean
     @Override
@@ -71,16 +70,23 @@ public class WebSecurityConfig extends JwtConfigAdapter {
                     });
                 }
                 jwtUser.setRoles(roles);
-                Set<String> permissions = Sets.newHashSet();
-                UserPermissionQuery userPermissionQuery = new UserPermissionQuery();
-                userPermissionQuery.setUserId(jwtUser.getId());
-                List<PermissionModel> permissionList = userPermissionService.getUserPermissions(userPermissionQuery);
-                if(CollectionUtils.isNotEmpty(permissionList)){
-                    permissionList.stream().forEach(permissionModel -> {
-                        permissions.add(permissionModel.getPermissionCode());
-                    });
-                }
-                jwtUser.setPermissions(permissions);
+//                Set<String> permissions = Sets.newHashSet();
+//                UserPermissionQuery userPermissionQuery = new UserPermissionQuery();
+//                userPermissionQuery.setUserId(jwtUser.getId());
+//                List<PermissionModel> permissionList = userPermissionService.getUserPermissions(userPermissionQuery);
+//                List<PermissionModel> permissionList = Lists.newArrayList();
+//                if(CollectionUtils.isNotEmpty(permissionList)){
+//                    permissionList.stream().forEach(permissionModel -> {
+//                        permissions.add(permissionModel.getPermissionCode());
+//                    });
+//                }
+//                jwtUser.setPermissions(permissions);
+
+                List<SimpleGrantedAuthority> authorityList = Lists.newArrayList();
+                jwtUser.getRoles().stream().forEach(role -> {
+                    authorityList.add(new SimpleGrantedAuthority(role));
+                });
+                jwtUser.setAuthorities(authorityList);
                 return jwtUser;
             }
 
@@ -93,5 +99,11 @@ public class WebSecurityConfig extends JwtConfigAdapter {
                 return false;
             }
         };
+    }
+
+    @Bean
+    @Override
+    public SecurityMetadataHandler getSecurityMetadataHandler() {
+        return new JwtSecurityMetadataHandler();
     }
 }

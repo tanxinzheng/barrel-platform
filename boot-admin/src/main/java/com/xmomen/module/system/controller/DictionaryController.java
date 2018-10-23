@@ -6,8 +6,6 @@ import com.xmomen.framework.logger.ActionLog;
 import com.xmomen.framework.poi.ExcelUtils;
 
 import com.xmomen.framework.web.authentication.CurrentAccountService;
-import com.xmomen.framework.web.authentication.PermissionResourceAction;
-import com.xmomen.framework.web.authentication.PermissionResourceKey;
 import com.xmomen.framework.web.rest.ImportExcelResponse;
 import com.xmomen.module.system.model.DictionaryModel;
 import com.xmomen.module.system.model.DictionaryQuery;
@@ -17,9 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,7 +31,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/dictionary")
-@PermissionResourceKey(code = "DICTIONARY", description = "数据字典")
 @Slf4j
 public class DictionaryController {
 
@@ -161,7 +156,6 @@ public class DictionaryController {
      * @param file
      */
     @ActionLog(actionName = "导入数据字典")
-    @PermissionResourceAction(code = "IMPORT", description = "导入")
     //@PreAuthorize("hasAuthority('DICTIONARY:CREATE')")
     @RequestMapping(value="/import", method = RequestMethod.POST)
     public ImportExcelResponse importDictionaries(@RequestParam("file") MultipartFile file) {

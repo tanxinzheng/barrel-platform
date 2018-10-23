@@ -2,6 +2,7 @@ package com.xmomen.module.jwt;
 
 import com.xmomen.module.jwt.support.JwtLoadService;
 import com.xmomen.module.jwt.support.TestJwtLoadService;
+import com.xmomen.module.jwt.support.access.SecurityMetadataHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,5 +16,10 @@ public class JwtAuthConfig extends JwtConfigAdapter {
     @Override
     public JwtLoadService getJwtLoadService() {
         return new TestJwtLoadService();
+    }
+
+    @Override
+    public SecurityMetadataHandler getSecurityMetadataHandler() {
+        return null;
     }
 }

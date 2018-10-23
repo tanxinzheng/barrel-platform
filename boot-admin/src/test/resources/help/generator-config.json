@@ -5,13 +5,16 @@
     "username":"root",
     "password":"root"
   },
+  "metadata":{
+    "templateTypes":["Query", "Entity", "Mapper", "MapperXml"]
+  },
   "tables":[
     {
-      "domainObjectName":"dictionary",
-      "tableComment":"数据字典",
-      "tableName":"xmo_dictionary",
-      "modulePackage":"com.xmomen.module.system",
-      "restMapping":"/dictionary"
+      "domainObjectName":"permission",
+      "tableComment":"权限",
+      "tableName":"xmo_permission",
+      "modulePackage":"com.xmomen.module.authorization",
+      "restMapping":"/permission"
     }
   ]
 }

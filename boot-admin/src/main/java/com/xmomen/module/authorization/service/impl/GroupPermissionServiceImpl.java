@@ -11,6 +11,8 @@ import com.xmomen.module.authorization.model.PermissionModel;
 import com.xmomen.module.authorization.service.GroupPermissionService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,11 +60,11 @@ public class GroupPermissionServiceImpl implements GroupPermissionService {
     }
 
     /**
-    * 批量新增组权限
-    *
-    * @param groupPermissionModels 新增组权限对象集合参数
-    * @return List<GroupPermissionModel>    组权限领域对象集合
-    */
+     * 批量新增组权限
+     * @param groupId
+     * @param permissionIds
+     */
+    @CacheEvict(value = "ALL_GROUP_PERMISSIONS", allEntries = true)
     @Override
     @Transactional
     public void createGroupPermissions(String groupId, String... permissionIds) {
@@ -137,6 +139,7 @@ public class GroupPermissionServiceImpl implements GroupPermissionService {
      * @param groupId
      * @param permissionIds
      */
+    @CacheEvict(value = "ALL_GROUP_PERMISSIONS", allEntries = true)
     @Override
     public void deleteGroupPermissions(String groupId, String... permissionIds) {
         groupPermissionMapper.deleteGroupPermissions(groupId, Arrays.asList(permissionIds));
@@ -215,9 +218,8 @@ public class GroupPermissionServiceImpl implements GroupPermissionService {
      * @return
      */
     @Override
-    public Page<PermissionModel> getGroupPermissions(GroupPermissionQuery groupPermissionQuery) {
-        PageInterceptor.startPage(groupPermissionQuery);
-        groupPermissionMapper.selectGroupPermissions(groupPermissionQuery);
-        return PageInterceptor.endPage();
+    public List<PermissionModel> getGroupPermissions(GroupPermissionQuery groupPermissionQuery) {
+        return groupPermissionMapper.selectGroupPermissions(groupPermissionQuery);
     }
+
 }
