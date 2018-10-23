@@ -3,6 +3,8 @@ package com.xmomen.config;
 import com.xmomen.config.adapter.JwtSecurityMetadataHandler;
 import com.xmomen.framework.utils.PasswordHelper;
 import com.xmomen.module.authorization.model.*;
+import com.xmomen.module.authorization.service.GroupPermissionService;
+import com.xmomen.module.authorization.service.GroupService;
 import com.xmomen.module.authorization.service.UserGroupService;
 import com.xmomen.module.authorization.service.UserService;
 import com.xmomen.module.jwt.JwtConfigAdapter;
@@ -30,7 +32,10 @@ public class WebSecurityConfig extends JwtConfigAdapter {
     UserService userService;
 
     @Autowired
-    UserGroupService userGroupService;
+    UserGroupService userGroupService;;
+
+    @Autowired
+    GroupPermissionService groupPermissionService;
 
     @Bean
     @Override
@@ -70,18 +75,16 @@ public class WebSecurityConfig extends JwtConfigAdapter {
                     });
                 }
                 jwtUser.setRoles(roles);
-//                Set<String> permissions = Sets.newHashSet();
-//                UserPermissionQuery userPermissionQuery = new UserPermissionQuery();
-//                userPermissionQuery.setUserId(jwtUser.getId());
-//                List<PermissionModel> permissionList = userPermissionService.getUserPermissions(userPermissionQuery);
-//                List<PermissionModel> permissionList = Lists.newArrayList();
-//                if(CollectionUtils.isNotEmpty(permissionList)){
-//                    permissionList.stream().forEach(permissionModel -> {
-//                        permissions.add(permissionModel.getPermissionCode());
-//                    });
-//                }
-//                jwtUser.setPermissions(permissions);
-
+                Set<String> permissions = Sets.newHashSet();
+                GroupPermissionQuery groupPermissionQuery = new GroupPermissionQuery();
+                groupPermissionQuery.setGroupCodes(roles.toArray(new String[roles.size()]));
+                List<PermissionModel> permissionList = groupPermissionService.getGroupPermissions(groupPermissionQuery);
+                if(CollectionUtils.isNotEmpty(permissionList)){
+                    permissionList.stream().forEach(permissionModel -> {
+                        permissions.add(permissionModel.getPermissionKey());
+                    });
+                }
+                jwtUser.setPermissions(permissions);
                 List<SimpleGrantedAuthority> authorityList = Lists.newArrayList();
                 jwtUser.getRoles().stream().forEach(role -> {
                     authorityList.add(new SimpleGrantedAuthority(role));

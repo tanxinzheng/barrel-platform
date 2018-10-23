@@ -139,6 +139,12 @@
             <if test="groupId">
                 AND ug.GROUP_ID = #{groupId}
             </if>
+            <if test="groupCodes">
+                AND g.group_code IN
+                <foreach collection="groupCodes" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
             <if test="keyword">
                 AND (t.PERMISSION_CODE LIKE CONCAT('%', #{keyword}, '%')
                 OR t.PERMISSION_NAME LIKE CONCAT('%', #{keyword}, '%')

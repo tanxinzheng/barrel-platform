@@ -43,6 +43,9 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         String requestUrl = fi.getRequestUrl();
         String requestMethod = fi.getRequest().getMethod();
         authorityList = securityMetadataHandler.loadAllPermission();
+        if(CollectionUtils.isEmpty(authorityList)){
+            return Lists.newArrayList();
+        }
         for (PermissionGrantedAuthority permissionGrantedAuthority : authorityList) {
             if(antPathMatcher.match(permissionGrantedAuthority.getUrl(), requestUrl)
                     && permissionGrantedAuthority.getRequestMethod().equals(requestMethod)){
