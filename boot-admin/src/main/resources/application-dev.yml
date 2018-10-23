@@ -1,23 +1,18 @@
 logging:
   config: classpath:logback.xml
 
-#cas:
-#  server-url: http://localhost:20001
-#  server-login-url: ${cas.server-url}/login
-#  server-logout-url: ${cas.server-url}/logout?service=${cas.app-server-url}
-#  app-server-url: http://localhost:${server.port}
-#  app-login-url: /login
-#  app-logout-url: /logout
-#  permit-urls: /access,/anonymous # 不需要登录即可访问URL，通过,分割
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/xmo_demo?useUnicode:true&amp;characterEncoding:utf8
+    username: root
+    password: 123456
+
+redis:
+  host: localhost
+  port: 6379
 
 jwt:
   secret: 123456
   expiration: 2 # 以小时为时间单位
   permit-urls: /nologin,/anonymous # 不需要登录即可访问URL，通过逗号分割
-
-# oss
-oss:
-  accessKeyId: LTAIQ9tAnQKgixOa
-  accessKeySecret: SvUzBFGETJ3k9DUY0krXEKLYEpOsFF
-  bucketName: xmomen-test
-  endpoint: oss-cn-hangzhou.aliyuncs.com

@@ -2,17 +2,9 @@ server:
   port: 8000
 #  context-path: /api
 
-logging:
-  config: logback.xml
-
 spring:
   profiles:
-    active: dev
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/xmo_demo?useUnicode:true&amp;characterEncoding:utf8
-    username: root
-    password: 123456
+    active: ${build.profile.id}
   servlet:
     multipart:
       max-file-size: 20971520
@@ -28,9 +20,6 @@ spring:
           port: 25
   cache:
     type: redis
-  redis:
-    host: localhost
-    port: 6379
 
 #druid datasource
 druid:
@@ -62,3 +51,10 @@ jwt:
 jog:
   cron:
     simpleJob: 0/5 * * * * ?
+
+# oss
+oss:
+  accessKeyId: LTAIQ9tAnQKgixOa
+  accessKeySecret: SvUzBFGETJ3k9DUY0krXEKLYEpOsFF
+  bucketName: xmomen-test
+  endpoint: oss-cn-hangzhou.aliyuncs.com

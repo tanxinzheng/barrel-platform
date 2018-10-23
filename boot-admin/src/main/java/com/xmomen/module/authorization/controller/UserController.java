@@ -59,6 +59,7 @@ public class UserController {
     @ActionLog(actionName = "新增用户")
     @RequestMapping(method = RequestMethod.POST)
     public UserModel createUser(@RequestBody @Valid UserModel userModel) {
+        userModel.setPassword("123456");
         return userService.createUser(userModel);
     }
 

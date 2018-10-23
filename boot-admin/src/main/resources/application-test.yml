@@ -1,2 +1,18 @@
 logging:
-  config: classpath:logback-test.xml
+  config: classpath:logback-${build.profile.id}.xml
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.21.0.2:3306/xmo_demo?useUnicode:true&amp;characterEncoding:utf8
+    username: root
+    password: 123456
+
+redis:
+  host: 172.17.0.3
+  port: 6379
+
+jwt:
+  secret: 123456
+  expiration: 2 # 以小时为时间单位
+  permit-urls: /nologin,/anonymous # 不需要登录即可访问URL，通过逗号分割
