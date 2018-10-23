@@ -100,7 +100,6 @@ public class DefaultJwtTokenService implements JwtTokenService {
      */
     @Override
     public boolean validToken(String token) throws ExpiredJwtException {
-        log.debug("From request get token value: ?", token);
         if(token == null){
             return false;
         }
