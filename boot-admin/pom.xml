@@ -40,8 +40,17 @@
         <!--<finalName>app-${version}</finalName>-->
         <filters>
             <filter>src/main/resources/application-${build.profile.id}.yml</filter>
+            <filter>src/main/docker/Dockerfile</filter>
         </filters>
         <resources>
+            <!--<resource>-->
+                <!--<directory>src/main/docker</directory>-->
+                <!--<includes>-->
+                    <!--<include>Dockerfile</include>-->
+                <!--</includes>-->
+                <!--&lt;!&ndash;<targetPath>${project.build.outputDirectory}/docker</targetPath>&ndash;&gt;-->
+                <!--<filtering>true</filtering>-->
+            <!--</resource>-->
             <resource>
                 <directory>src/main/java</directory>
                 <excludes>
@@ -105,9 +114,8 @@
                 <configuration>
                     <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
                     <!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
+                    <dockerDirectory>src/main/docker</dockerDirectory>
                     <imageName>boot-admin-app</imageName>
-                    <baseImage>java:alpine</baseImage>
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>

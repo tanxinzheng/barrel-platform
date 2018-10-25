@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  boot-admin-app:
+    restart: always
+    image: boot-admin-app:latest
+    ports:
+    - "10001:8000"

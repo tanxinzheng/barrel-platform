@@ -8,3 +8,7 @@
 - [ ] 菜单管理
 - [ ] 待办管理
 - [ ] 通知管理
+
+
+docker-compose up
+docker-compose down
