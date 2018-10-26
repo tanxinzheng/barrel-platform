@@ -1,5 +1,6 @@
 package com.xmomen.module.jwt;
 
+import com.google.common.collect.Lists;
 import com.xmomen.module.jwt.support.*;
 import com.xmomen.module.jwt.support.access.MyAccessDecisionManager;
 import com.xmomen.module.jwt.support.access.MyFilterInvocationSecurityMetadataSource;
@@ -16,21 +17,19 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.List;
 
 /**
  * Created by tanxinzheng on 2018/9/20.
@@ -97,6 +96,12 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+        String[] permitUrls = jwtConfigProperties.getPermitUrls();
+        List<String> list = Lists.newArrayList(permitUrls);
+        list.add("/**.css");
+        list.add("/**.js");
+        String[] data = list.toArray(new String[list.size()]);
         httpSecurity
                 .headers()
                 // 允许frame（支持iframe下载功能）
@@ -111,18 +116,18 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 对于获取token的rest api要允许匿名访问
-                .antMatchers(jwtConfigProperties.getPermitUrls())
+                .antMatchers(data)
                 .permitAll()
                 .anyRequest().authenticated()
                 // 用于动态URL权限控制
-                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-                    public <O extends FilterSecurityInterceptor> O postProcess(
-                            O fsi) {
-                        fsi.setSecurityMetadataSource(mySecurityMetadataSource());
-                        fsi.setAccessDecisionManager(myAccessDecisionManager());
-                        return fsi;
-                    }
-                })
+//                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+//                    public <O extends FilterSecurityInterceptor> O postProcess(
+//                            O fsi) {
+//                        fsi.setSecurityMetadataSource(mySecurityMetadataSource());
+//                        fsi.setAccessDecisionManager(myAccessDecisionManager());
+//                        return fsi;
+//                    }
+//                })
                 // 除上面外的所有请求全部需要鉴权认证
                 .and()
 //                .addFilterBefore(getJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
