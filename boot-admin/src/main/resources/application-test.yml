@@ -17,3 +17,7 @@ jwt:
   expiration: 2 # 以小时为时间单位
   permit-urls:
     - /index.html
+    - /swagger-ui.html
+    - /swagger-resources/**
+    - /v2/**
+    - /webjars/**

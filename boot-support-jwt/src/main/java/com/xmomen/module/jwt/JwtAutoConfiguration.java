@@ -105,6 +105,9 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
         List<String> list = Lists.newArrayList(permitUrls);
         list.add("/**.css");
         list.add("/**.js");
+        list.add("/**/*.css");
+        list.add("/**/*.js");
+        list.add("/favicon.ico");
         String[] data = list.toArray(new String[list.size()]);
         return data;
     }
