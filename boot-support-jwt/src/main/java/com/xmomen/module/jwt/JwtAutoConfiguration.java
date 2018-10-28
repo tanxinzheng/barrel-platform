@@ -21,6 +21,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -55,6 +56,11 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationProvider(jwtLoadService, getJwtTokenService(), jwtConfigProperties);
     }
 
+
+    @Override
+    public void configure(WebSecurity webSecurity) throws Exception {
+        webSecurity.ignoring().antMatchers(getStaticResourcesUrl());
+    }
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -94,14 +100,19 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
         return new JwtAuthorizationFilter(authenticationManagerBean(), getJwtTokenService());
     }
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-
+    private String[] getStaticResourcesUrl(){
         String[] permitUrls = jwtConfigProperties.getPermitUrls();
         List<String> list = Lists.newArrayList(permitUrls);
         list.add("/**.css");
         list.add("/**.js");
         String[] data = list.toArray(new String[list.size()]);
+        return data;
+    }
+
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity
                 .headers()
                 // 允许frame（支持iframe下载功能）
@@ -116,7 +127,7 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 对于获取token的rest api要允许匿名访问
-                .antMatchers(data)
+                .antMatchers(getStaticResourcesUrl())
                 .permitAll()
                 .anyRequest().authenticated()
                 // 用于动态URL权限控制

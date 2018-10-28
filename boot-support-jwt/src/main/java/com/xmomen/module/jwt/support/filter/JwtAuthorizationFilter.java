@@ -51,6 +51,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             Map<String, Object> data = new HashMap<>();
             data.put("timestamp", new Date().getTime());
             if(e instanceof ExpiredJwtException){
+                jwtTokenService.removeToken(request, response);
                 data.put("message", "token is expired");
             }else {
                 data.put("message", e.getMessage());
