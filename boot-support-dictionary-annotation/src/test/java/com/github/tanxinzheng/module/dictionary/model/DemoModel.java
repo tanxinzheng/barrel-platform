@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.dictionary.model;
 
+import com.github.tanxinzheng.module.dictionary.web.DictionaryInterpreter;
 import lombok.Data;
 
 /**
@@ -9,10 +10,10 @@ import lombok.Data;
 public class DemoModel {
 
     private String id;
-//    @DictionaryInterpreter(index = "USER", fieldName = "account")
+    @DictionaryInterpreter(index = "USER", fieldName = "account")
     private String userId;
-//    @DictionaryInterpreter(index = "SEX")
+    @DictionaryInterpreter(index = "SEX")
     private String sex;
-//    @DictionaryInterpreter(index = "DISABLE", fieldName = "disableName")
+    @DictionaryInterpreter(index = "DISABLE", fieldName = "disableName")
     private String disable;
 }
