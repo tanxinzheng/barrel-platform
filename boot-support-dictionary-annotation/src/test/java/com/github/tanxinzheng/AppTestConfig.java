@@ -97,7 +97,7 @@ public class AppTestConfig extends WebMvcConfigurerAdapter {
              * @return
              */
             @Override
-            public Map<String, Object> translateAccount(String userId) {
+            public Object translateAccount(String userId) {
                 Map<String, Object> data = Maps.newHashMap();
                 Map<String, String> user = Maps.newHashMap();
                 user.put("userId", "1");
@@ -109,7 +109,7 @@ public class AppTestConfig extends WebMvcConfigurerAdapter {
                 user2.put("userName", "用户");
                 user2.put("link", "http://avatar.xxx.com/avatar/2.jpg");
                 data.put("2", user2);
-                return data;
+                return data.get(userId);
             }
         };
     }
