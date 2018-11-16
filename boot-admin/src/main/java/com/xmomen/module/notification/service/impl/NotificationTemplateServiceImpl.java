@@ -1,11 +1,11 @@
 package com.xmomen.module.notification.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransferService;
 import com.google.common.collect.Maps;
 import com.xmomen.framework.exception.BusinessException;
 import com.xmomen.framework.mybatis.page.PageInterceptor;
 import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreterService;
 import com.xmomen.module.core.model.SelectIndex;
 import com.xmomen.module.core.model.SelectOptionModel;
 import com.xmomen.module.core.model.SelectOptionQuery;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  */
 @Service
-public class NotificationTemplateServiceImpl implements NotificationTemplateService, DictionaryInterpreterService, SelectService {
+public class NotificationTemplateServiceImpl implements NotificationTemplateService, DictionaryTransferService, SelectService {
 
     @Autowired
     NotificationTemplateMapper notificationTemplateMapper;
@@ -218,7 +218,7 @@ public class NotificationTemplateServiceImpl implements NotificationTemplateServ
      * @return
      */
     @Override
-    public Map<String, Object> translateDictionary(DictionaryIndex dictionaryType, String dictionaryCode) {
+    public Map<String, Object> translate(String dictionaryType, String dictionaryCode) {
         NotificationTemplateQuery notificationTemplateQuery = new NotificationTemplateQuery();
         List<NotificationTemplateModel> notificationTemplateModelList = getNotificationTemplateModelList(notificationTemplateQuery);
         if(CollectionUtils.isNotEmpty(notificationTemplateModelList)){
@@ -233,7 +233,7 @@ public class NotificationTemplateServiceImpl implements NotificationTemplateServ
      * @return
      */
     @Override
-    public DictionaryIndex getDictionaryIndex() {
+    public String getDictionaryIndex() {
         return DictionaryIndex.NOTIFICATION_TEMPLATE;
     }
 

@@ -1,10 +1,8 @@
 package com.xmomen.module.system.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.tanxinzheng.module.dictionary.web.AccountField;
 import com.xmomen.framework.model.BaseModel;
-import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreter;
-import com.xmomen.framework.web.json.TransferFormatType;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -68,7 +66,7 @@ public @Data class DictionaryModel extends BaseModel implements Serializable {
     /** 创建人 */
 //    @Excel(name = "创建人")
     @Length(max = 32, message = "创建人字符长度限制[0,32]")
-    @DictionaryInterpreter(index = DictionaryIndex.USER_ID, outFormat = TransferFormatType.Object)
+    @AccountField
     private String createdUserId;
     /** 创建时间 */
 //    @Excel(name = "创建时间")
@@ -76,7 +74,7 @@ public @Data class DictionaryModel extends BaseModel implements Serializable {
     /** 更新人 */
 //    @Excel(name = "更新人")
     @Length(max = 32, message = "更新人字符长度限制[0,32]")
-    @DictionaryInterpreter(index = DictionaryIndex.USER_ID, outFormat = TransferFormatType.Object)
+    @AccountField
     private String updatedUserId;
     /** 更新时间 */
 //    @Excel(name = "更新时间")

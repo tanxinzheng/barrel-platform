@@ -1,9 +1,5 @@
 package com.xmomen.framework.model;
 
-import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreter;
-import com.xmomen.framework.web.json.TransferFormatType;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,12 +9,10 @@ import java.util.Date;
 public class BaseModel implements Serializable {
 
     /** 创建人 */
-    @DictionaryInterpreter(fieldName = "createdUserName", index = DictionaryIndex.USER_ID, outFormat = TransferFormatType.Object)
     private String createdUserId;
     /** 创建时间 */
     private Date createdTime;
     /** 更新人 */
-    @DictionaryInterpreter(fieldName = "updatedUserName", index = DictionaryIndex.USER_ID, outFormat = TransferFormatType.Object)
     private String updatedUserId;
     /** 更新时间 */
     private Date updatedTime;

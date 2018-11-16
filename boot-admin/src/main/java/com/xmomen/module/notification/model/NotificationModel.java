@@ -1,10 +1,12 @@
 package com.xmomen.module.notification.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.tanxinzheng.module.dictionary.web.AccountField;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import com.xmomen.framework.model.BaseModel;
 import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreter;
-import com.xmomen.framework.web.json.TransferFormatType;
+import com.xmomen.framework.web.json.DictionaryIndex;
+
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -32,10 +34,10 @@ public @Data class NotificationModel extends BaseModel implements Serializable {
     @Length(max = 32, message = "模板主键字符长度限制[0,32]")
     private String templateId;
 
-    @DictionaryInterpreter(index = DictionaryIndex.USER_ID, fieldName = "senderName", outFormat = TransferFormatType.Object)
+    @AccountField(fieldName = "senderName")
     private String sender;
     private Date sendTime;
-    @DictionaryInterpreter(index = DictionaryIndex.NOTIFICATION_DATA_STATE, fieldName = "dataStateName")
+    @DictionaryTransfer(index = DictionaryIndex.NOTIFICATION_DATA_STATE, fieldName = "dataStateName")
     private String dataState;
     /** 标题 */
     @Excel(name = "标题")

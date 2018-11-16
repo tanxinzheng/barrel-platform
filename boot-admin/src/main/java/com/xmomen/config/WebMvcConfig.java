@@ -3,9 +3,9 @@ package com.xmomen.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryAnnotationIntrospector;
 import com.xmomen.framework.web.handler.LogbackMDCInterceptor;
 import com.xmomen.framework.web.json.CustomDateDeserialize;
-import com.xmomen.framework.web.json.DictionaryAnnotationIntrospector;
 import com.xmomen.framework.web.support.DateConverter;
 import com.xmomen.module.fss.EnableFSSAliyun;
 import com.xmomen.module.logger.aspect.LoggerAspect;
@@ -24,8 +24,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.jackson2.SimpleGrantedAuthorityMixin;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -40,7 +38,7 @@ import java.util.Date;
  * Created by tanxinzheng on 17/8/23.
  */
 @Configuration
-@ComponentScan(value = "com.xmomen.**")
+@ComponentScan(value = {"com.xmomen.**", "com.github.**"})
 @EnableAutoConfiguration(exclude={MultipartAutoConfiguration.class})
 @EnableFSSAliyun
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -118,8 +116,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.enableContentNegotiation(false, new MappingJackson2JsonView());
         registry.enableContentNegotiation(
                 new MappingJackson2JsonView()
-//                new XlsxView(),
-//                new XlsxStreamingView()
         );
     }
 

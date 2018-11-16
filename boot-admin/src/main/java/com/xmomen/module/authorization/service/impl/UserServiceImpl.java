@@ -1,6 +1,7 @@
 package com.xmomen.module.authorization.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.tanxinzheng.module.dictionary.web.AccountInterpreterService;
 import com.google.common.collect.Maps;
 import com.xmomen.framework.exception.BusinessException;
 import com.xmomen.module.fss.service.FileStoreService;
@@ -9,7 +10,6 @@ import com.xmomen.module.fss.model.FileStorageResult;
 import com.xmomen.framework.mybatis.page.PageInterceptor;
 import com.xmomen.framework.utils.UUIDGenerator;
 import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreterService;
 import com.xmomen.module.attachment.model.Attachment;
 import com.xmomen.module.attachment.service.AttachmentService;
 import com.xmomen.module.authorization.mapper.UserMapper;
@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  */
 @Service
-public class UserServiceImpl implements UserService, DictionaryInterpreterService, SelectService {
+public class UserServiceImpl implements UserService, AccountInterpreterService, SelectService {
 
     private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -296,23 +296,13 @@ public class UserServiceImpl implements UserService, DictionaryInterpreterServic
      */
     @Cacheable(cacheNames = DictionaryIndex.DICTIONARY_CACHE_NAME_KEY)
     @Override
-    public Map<String, Object> translateDictionary(DictionaryIndex dictionaryType, String dictionaryCode) {
+    public Map<String, Object> translateAccount(String dictionaryCode) {
         UserQuery userQuery = new UserQuery();
         List<UserModel> userList = getUserModelList(userQuery);
         if(CollectionUtils.isNotEmpty(userList)){
             return userList.stream().collect(Collectors.toMap(UserModel::getId, userModel -> userModel));
         }
         return Maps.newHashMap();
-    }
-
-    /**
-     * 字典索引
-     *
-     * @return
-     */
-    @Override
-    public DictionaryIndex getDictionaryIndex() {
-        return DictionaryIndex.USER_ID;
     }
 
     /**
@@ -332,7 +322,7 @@ public class UserServiceImpl implements UserService, DictionaryInterpreterServic
         List<SelectOptionModel> selectOptionModelList = Lists.newArrayList();
         for (UserModel userModel : userModelList) {
             SelectOptionModel selectOptionModel = new SelectOptionModel(
-                    DictionaryIndex.USER_ID.name(),
+                    DictionaryIndex.USER_ID,
                     "用户",
                     userModel.getId(),
                     userModel.getNickname(),

@@ -1,11 +1,12 @@
 package com.xmomen.module.attachment.model;
 
+import com.github.tanxinzheng.module.dictionary.web.AccountField;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import com.xmomen.framework.model.BaseModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreter;
-import com.xmomen.framework.web.json.TransferFormatType;
+
 import lombok.Data;
 import org.hibernate.validator.constraints.*;
 import javax.validation.constraints.*;
@@ -37,7 +38,7 @@ public @Data class AttachmentModel extends BaseModel implements Serializable {
     @Excel(name = "附件KEY")
     @NotBlank(message = "附件KEY为必填项")
     @Length(max = 50, message = "附件KEY字符长度限制[0,50]")
-    @DictionaryInterpreter(index = DictionaryIndex.ATTACHMENT_KEY, fieldName = "attachmentUrl")
+    @DictionaryTransfer(index = DictionaryIndex.ATTACHMENT_KEY, fieldName = "attachmentUrl")
     private String attachmentKey;
     /** 附件大小 */
     @Excel(name = "附件大小")
@@ -66,7 +67,7 @@ public @Data class AttachmentModel extends BaseModel implements Serializable {
     @Excel(name = "上传人ID")
     @NotBlank(message = "上传人ID为必填项")
     @Length(max = 32, message = "上传人ID字符长度限制[0,32]")
-    @DictionaryInterpreter(fieldName = "uploadUserName", index = DictionaryIndex.USER_ID, outFormat = TransferFormatType.Object)
+    @AccountField
     private String uploadUserId;
     /** 关联ID */
     @Excel(name = "关联ID")

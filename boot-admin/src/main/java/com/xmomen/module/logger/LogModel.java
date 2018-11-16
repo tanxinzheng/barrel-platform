@@ -1,8 +1,9 @@
 package com.xmomen.module.logger;
 
+import com.github.tanxinzheng.module.dictionary.web.AccountField;
 import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreter;
-import com.xmomen.framework.web.json.TransferFormatType;
+import com.xmomen.framework.web.json.DictionaryIndex;
+
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 public @Data
 class LogModel implements Serializable{
 
-    @DictionaryInterpreter(index = DictionaryIndex.USER_ID, outFormat = TransferFormatType.Object)
+    @AccountField
     private String userId;
     private String actionName;
     @DateTimeFormat

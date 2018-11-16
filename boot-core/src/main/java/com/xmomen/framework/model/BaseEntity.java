@@ -1,8 +1,5 @@
 package com.xmomen.framework.model;
 
-import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreter;
-import com.xmomen.framework.web.json.TransferFormatType;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,10 +11,8 @@ import java.util.Date;
 @Data
 public class BaseEntity implements Serializable {
 
-    @DictionaryInterpreter(fieldName = "createdUserName", index = DictionaryIndex.USER_ID, outFormat = TransferFormatType.Object)
     private String createdUserId;
     private Date createdTime;
-    @DictionaryInterpreter(fieldName = "updatedUserName", index = DictionaryIndex.USER_ID, outFormat = TransferFormatType.Object)
     private String updatedUserId;
     private Date updatedTime;
     private Integer dataVersion;

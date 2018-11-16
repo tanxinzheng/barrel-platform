@@ -1,6 +1,6 @@
 package com.xmomen.module.authorization.model;
 
-import com.xmomen.framework.web.json.DictionaryInterpreter;
+import com.xmomen.framework.web.json.DictionaryIndex;
 import lombok.Data;
 import com.xmomen.framework.model.BaseEntity;
 

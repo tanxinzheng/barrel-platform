@@ -1,6 +1,7 @@
 package com.xmomen.module.attachment.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransferService;
 import com.google.common.collect.Maps;
 import com.xmomen.framework.exception.BusinessException;
 import com.xmomen.module.fss.service.FileStoreService;
@@ -9,7 +10,6 @@ import com.xmomen.module.fss.model.FileStorageResult;
 import com.xmomen.framework.mybatis.page.PageInterceptor;
 import com.xmomen.framework.utils.UUIDGenerator;
 import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreterService;
 import com.xmomen.module.attachment.mapper.AttachmentMapper;
 import com.xmomen.module.attachment.model.Attachment;
 import com.xmomen.module.attachment.model.AttachmentModel;
@@ -41,7 +41,7 @@ import java.util.Map;
  * @version 1.0.0
  */
 @Service
-public class AttachmentServiceImpl implements AttachmentService, DictionaryInterpreterService {
+public class AttachmentServiceImpl implements AttachmentService, DictionaryTransferService {
 
     private static final String DEFAULT_GROUP = "DEFAULT";
 
@@ -298,7 +298,7 @@ public class AttachmentServiceImpl implements AttachmentService, DictionaryInter
      * @return
      */
     @Override
-    public Map<String, Object> translateDictionary(DictionaryIndex dictionaryType, String dictionaryCode) {
+    public Map<String, Object> translate(String dictionaryType, String dictionaryCode) {
         Authentication subject = SecurityContextHolder.getContext().getAuthentication();
         String token = (String) subject.getCredentials();
         String contextPath = request.getScheme() +"://" + request.getServerName()  + ":" +request.getServerPort() +request.getContextPath();
@@ -314,7 +314,7 @@ public class AttachmentServiceImpl implements AttachmentService, DictionaryInter
      * @return
      */
     @Override
-    public DictionaryIndex getDictionaryIndex() {
+    public String getDictionaryIndex() {
         return DictionaryIndex.ATTACHMENT_KEY;
     }
 }

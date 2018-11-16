@@ -1,7 +1,7 @@
 package com.xmomen.module.notification.model;
 
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreter;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 public class NotificationStateCount implements Serializable {
 
-    @DictionaryInterpreter(index = DictionaryIndex.NOTIFICATION_DATA_STATE, fieldName = "dataStateDesc")
+    @DictionaryTransfer(index = DictionaryIndex.NOTIFICATION_DATA_STATE, fieldName = "dataStateDesc")
     private String dataState;
     private int number;
 }

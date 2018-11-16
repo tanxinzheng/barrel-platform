@@ -35,13 +35,7 @@ public class DictionaryAnnotationIntrospector extends JacksonAnnotationIntrospec
                 }
             }
         }
-        DictionaryTransfer dictionaryTransfer = a.getAnnotation(DictionaryTransfer.class);
-        if(dictionaryTransfer != null) {
-            DictionaryJsonSerializer dictionaryJsonSerializer = applicationContext.getBean(DictionaryJsonSerializer.class, dictionaryTransfer);
-            return dictionaryJsonSerializer;
-        }else {
-            return super.findSerializer(a);
-        }
+        return super.findSerializer(a);
     }
 
     /**

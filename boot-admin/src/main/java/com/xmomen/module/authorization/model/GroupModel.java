@@ -1,10 +1,11 @@
 package com.xmomen.module.authorization.model;
 
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import com.xmomen.framework.model.BaseModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreter;
+import com.xmomen.framework.web.json.DictionaryIndex;
 import com.xmomen.module.authorization.model.Group;
 import lombok.Data;
 import org.hibernate.validator.constraints.*;
@@ -33,7 +34,7 @@ public @Data class GroupModel extends BaseModel implements Serializable {
     /** 用户组类型 */
     @Excel(name = "用户组类型")
     @Length(max = 100, message = "用户组类型字符长度限制[1,100]")
-    @DictionaryInterpreter(index = DictionaryIndex.USER_GROUP)
+    @DictionaryTransfer(index = DictionaryIndex.USER_GROUP)
     private String groupType;
     /** 用户组代码 */
     @Excel(name = "用户组代码")

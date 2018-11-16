@@ -6,20 +6,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.module.core.model.AccountModel;
-import com.xmomen.module.core.service.AccountService;
+import com.xmomen.framework.web.authentication.CurrentAccountService;
 import com.xmomen.module.logger.LogModel;
 import com.xmomen.module.logger.service.LoggerService;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.*;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,10 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
@@ -38,9 +33,8 @@ import java.util.Map;
  * Created by Jeng on 16/3/20.
  */
 @Aspect
+@Slf4j
 public class LoggerAspect {
-
-    private static Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 
     @Autowired
     HttpServletRequest request;
@@ -49,7 +43,7 @@ public class LoggerAspect {
     private LoggerService loggerService;
 
     @Autowired
-    private AccountService accountService;
+    private CurrentAccountService accountService;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -89,11 +83,11 @@ public class LoggerAspect {
             logModel.setActionName(format(methodName, getAnnotationParamsByMethod(method, args)));
             logModel.setUserId(userId);
             logModel.setClientIp(getRemoteHost(request));
-            logger.debug("User action record info -> {0}", JSONObject.toJSONString(logModel));
+            log.debug("User action record info -> {0}", JSONObject.toJSONString(logModel));
             loggerService.setLogInfo(logModel);
         }
-        if (logger.isDebugEnabled()) {
-            logger.debug("Entering method [{}] with arguments [{}]", methodName, arguments);
+        if (log.isDebugEnabled()) {
+            log.debug("Entering method [{}] with arguments [{}]", methodName, arguments);
         }
         return returnVal;
     }
@@ -154,11 +148,7 @@ public class LoggerAspect {
      * @return
      */
     public String getUserId(){
-        AccountModel accountModel = accountService.getCurrentAccount();
-        if(accountModel == null){
-            return null;
-        }
-        return accountModel.getUserId();
+        return accountService.getAccountId();
     }
 
     /**
@@ -203,10 +193,10 @@ public class LoggerAspect {
             template.process(data, stringWriter);
             return stringWriter.toString();
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             e.printStackTrace();
         } catch (TemplateException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             e.printStackTrace();
         }
         return string;

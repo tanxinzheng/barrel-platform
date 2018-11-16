@@ -9,7 +9,7 @@ import com.xmomen.module.attachment.service.AttachmentService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,7 +32,7 @@ public class AttachmentController {
      * @return  Page<AttachmentModel> 附件领域分页对象
      */
     @ApiOperation(value = "查询附件列表")
-    //@PreAuthorize(value = "hasAnyAuthority('ATTACHMENT:VIEW')")
+    @PreAuthorize(value = "hasAnyAuthority('ATTACHMENT:VIEW')")
     @RequestMapping(method = RequestMethod.GET)
     public Page<AttachmentModel> getAttachmentList(AttachmentQuery attachmentQuery){
         return attachmentService.getAttachmentModelPage(attachmentQuery);

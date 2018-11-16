@@ -1,6 +1,12 @@
 # JWT token认证服务
 使用jwt token认证协议，并结合redis缓存机制，实现分布式集群认证
 
+## Requirement
+
+- JDK 1.8
+- Maven
+- Redis
+
 ## 使用指引
 
 - 添加Maven依赖

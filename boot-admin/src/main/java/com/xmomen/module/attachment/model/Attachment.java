@@ -1,8 +1,9 @@
 package com.xmomen.module.attachment.model;
 
+import com.github.tanxinzheng.module.dictionary.web.AccountField;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryInterpreter;
-import com.xmomen.framework.web.json.TransferFormatType;
+
 import lombok.Data;
 import com.xmomen.framework.model.BaseEntity;
 
@@ -21,7 +22,7 @@ public @Data class Attachment extends BaseEntity implements Serializable {
     /** 附件所属组 */
     private String attachmentGroup;
     /** 附件KEY */
-    @DictionaryInterpreter(index = DictionaryIndex.ATTACHMENT_KEY, fieldName = "attachmentUrl")
+    @DictionaryTransfer(index = DictionaryIndex.ATTACHMENT_KEY, fieldName = "attachmentUrl")
     private String attachmentKey;
     /** 附件大小 */
     private Long attachmentSize;
@@ -34,7 +35,7 @@ public @Data class Attachment extends BaseEntity implements Serializable {
     /** 上传时间 */
     private Date uploadTime;
     /** 上传人ID */
-    @DictionaryInterpreter(fieldName = "uploadUserName", index = DictionaryIndex.USER_ID, outFormat = TransferFormatType.Object)
+    @AccountField
     private String uploadUserId;
     /** 关联ID */
     private String relationId;
