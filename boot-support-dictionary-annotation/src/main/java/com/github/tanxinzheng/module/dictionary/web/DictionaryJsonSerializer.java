@@ -26,7 +26,7 @@ public class DictionaryJsonSerializer extends JsonSerializer<Object>{
 
     private Map<String, DictionaryTransferService> dictionaryInterpreterServiceMap = Maps.newConcurrentMap();
 
-    @Autowired
+    @Autowired(required = false)
     private DictionaryInterpreterService dictionaryInterpreterService;
 
     @Autowired

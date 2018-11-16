@@ -1,7 +1,5 @@
 package com.github.tanxinzheng.module.dictionary.web;
 
-import java.util.Map;
-
 /**
  * Created by tanxinzheng on 16/10/20.
  */

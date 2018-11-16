@@ -133,24 +133,5 @@ public class AppTestConfig extends WebMvcConfigurerAdapter {
         builder.annotationIntrospector(getDictionaryIntrospector());
         return builder.build();
     }
-//
-//    @Override
-//    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-//        configurer
-//                .defaultContentType(MediaType.APPLICATION_JSON_UTF8)
-//                .parameterName("format")
-//                .favorParameter(true)
-//                .ignoreUnknownPathExtensions(false)
-//                .ignoreAcceptHeader(false)
-//                .useJaf(true);
-//    }
-//
-//    @Override
-//    public void configureViewResolvers(ViewResolverRegistry registry) {
-//        registry.enableContentNegotiation(false, new MappingJackson2JsonView());
-//        registry.enableContentNegotiation(
-//                new MappingJackson2JsonView()
-//        );
-//    }
 
 }
