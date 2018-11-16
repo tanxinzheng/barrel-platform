@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +39,7 @@ public class DictionaryJsonSerializer extends JsonSerializer<Object>{
     /**
      * 字典翻译器
      */
-    private DictionaryInterpreter dictionaryInterpreter;
+    private DictionaryTransfer dictionaryTransfer;
 
     @Override
     public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
@@ -49,21 +48,21 @@ public class DictionaryJsonSerializer extends JsonSerializer<Object>{
         }
         jsonGenerator.writeObject(value);
         try {
-            DictionaryTransferService transferService = dictionaryInterpreterServiceMap.get(dictionaryInterpreter.index());
-            Map<String, Object> dictionaryMapLabel;
+            DictionaryTransferService transferService = dictionaryInterpreterServiceMap.get(dictionaryTransfer.index());
+            Map<String, Object> dictionaryMapLabel = Maps.newHashMap();
             if(transferService != null){
-                dictionaryMapLabel = transferService.translate(dictionaryInterpreter.index(), (String) value);
-            }else {
-                dictionaryMapLabel = dictionaryInterpreterService.translateDictionary(dictionaryInterpreter.index(), (String) value);
+                dictionaryMapLabel = transferService.translate(dictionaryTransfer.index(), (String) value);
+            }else if(dictionaryInterpreterService != null){
+                dictionaryMapLabel = dictionaryInterpreterService.translateDictionary(dictionaryTransfer.index(), (String) value);
             }
             String currentName = jsonGenerator.getOutputContext().getCurrentName();
-            Object dictionaryLabel = dictionaryInterpreter.outputFormat().newInstance();
+            Object dictionaryLabel = dictionaryTransfer.outputFormat().newInstance();
             if(MapUtils.isNotEmpty(dictionaryMapLabel)){
                 dictionaryLabel = dictionaryMapLabel.get(value);
             }
             String fieldName = currentName + "Desc";
-            if(StringUtils.trimToNull(dictionaryInterpreter.fieldName()) != null){
-                fieldName = dictionaryInterpreter.fieldName();
+            if(StringUtils.trimToNull(dictionaryTransfer.fieldName()) != null){
+                fieldName = dictionaryTransfer.fieldName();
             }
             if(dictionaryLabel instanceof String){
                 jsonGenerator.writeStringField(fieldName, (String) dictionaryLabel);
@@ -76,8 +75,8 @@ public class DictionaryJsonSerializer extends JsonSerializer<Object>{
 
     }
 
-    public DictionaryJsonSerializer(DictionaryInterpreter dictionaryInterpreter) {
-        this.dictionaryInterpreter = dictionaryInterpreter;
+    public DictionaryJsonSerializer(DictionaryTransfer dictionaryTransfer) {
+        this.dictionaryTransfer = dictionaryTransfer;
     }
 
 }

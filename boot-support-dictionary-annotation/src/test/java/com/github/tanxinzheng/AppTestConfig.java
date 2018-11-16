@@ -3,9 +3,7 @@ package com.github.tanxinzheng;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryAnnotationIntrospector;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryInterpreterService;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryTransferService;
+import com.github.tanxinzheng.module.dictionary.web.*;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -15,8 +13,10 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -87,6 +87,34 @@ public class AppTestConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public AccountInterpreterService getAccountInterpreterService(){
+        return new AccountInterpreterService() {
+
+            /**
+             * 翻译
+             *
+             * @param userId
+             * @return
+             */
+            @Override
+            public Map<String, Object> translateAccount(String userId) {
+                Map<String, Object> data = Maps.newHashMap();
+                Map<String, String> user = Maps.newHashMap();
+                user.put("userId", "1");
+                user.put("userName", "管理员");
+                user.put("link", "http://avatar.xxx.com/avatar/1.jpg");
+                data.put("1", user);
+                Map<String, String> user2 = Maps.newHashMap();
+                user2.put("userId", "2");
+                user2.put("userName", "用户");
+                user2.put("link", "http://avatar.xxx.com/avatar/2.jpg");
+                data.put("2", user2);
+                return data;
+            }
+        };
+    }
+
+    @Bean
     public DictionaryAnnotationIntrospector getDictionaryIntrospector(){
         DictionaryAnnotationIntrospector dictionaryAnnotationIntrospector = new DictionaryAnnotationIntrospector();
         dictionaryAnnotationIntrospector.setApplicationContext(applicationContext);
@@ -105,24 +133,24 @@ public class AppTestConfig extends WebMvcConfigurerAdapter {
         builder.annotationIntrospector(getDictionaryIntrospector());
         return builder.build();
     }
-
-    @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer
-                .defaultContentType(MediaType.APPLICATION_JSON_UTF8)
-                .parameterName("format")
-                .favorParameter(true)
-                .ignoreUnknownPathExtensions(false)
-                .ignoreAcceptHeader(false)
-                .useJaf(true);
-    }
-
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        registry.enableContentNegotiation(false, new MappingJackson2JsonView());
-        registry.enableContentNegotiation(
-                new MappingJackson2JsonView()
-        );
-    }
+//
+//    @Override
+//    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+//        configurer
+//                .defaultContentType(MediaType.APPLICATION_JSON_UTF8)
+//                .parameterName("format")
+//                .favorParameter(true)
+//                .ignoreUnknownPathExtensions(false)
+//                .ignoreAcceptHeader(false)
+//                .useJaf(true);
+//    }
+//
+//    @Override
+//    public void configureViewResolvers(ViewResolverRegistry registry) {
+//        registry.enableContentNegotiation(false, new MappingJackson2JsonView());
+//        registry.enableContentNegotiation(
+//                new MappingJackson2JsonView()
+//        );
+//    }
 
 }

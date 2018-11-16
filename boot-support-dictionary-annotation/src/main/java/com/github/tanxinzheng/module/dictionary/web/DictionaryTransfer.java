@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface DictionaryInterpreter {
+public @interface DictionaryTransfer {
 
     /**
      * 字典类型

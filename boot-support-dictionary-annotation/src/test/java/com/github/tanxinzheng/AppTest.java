@@ -36,7 +36,7 @@ public class AppTest {
     }
 
     @Test
-    public void testDictionaryInterprenter() throws Exception {
+    public void testDictionaryTransfer() throws Exception {
         ResultActions actions = mockMvc.perform(get("/demo")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -49,6 +49,6 @@ public class AppTest {
         Assert.isTrue(jsonArray.getJSONObject(1).get("sexDesc").equals("男"), "测试不通过");
         Assert.isTrue(jsonArray.getJSONObject(0).get("disableName").equals("启用"), "测试不通过");
         Assert.isTrue(jsonArray.getJSONObject(1).get("disableName").equals("禁用"), "测试不通过");
-        Assert.isTrue(jsonArray.getJSONObject(0).getJSONObject("account").get("userName").equals("管理员"), "测试不通过");
+        Assert.isTrue(jsonArray.getJSONObject(0).getJSONObject("userIdDetail").get("userName").equals("管理员"), "测试不通过");
     }
 }
