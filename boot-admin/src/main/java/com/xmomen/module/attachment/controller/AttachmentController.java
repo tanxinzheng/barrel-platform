@@ -1,7 +1,7 @@
 package com.xmomen.module.attachment.controller;
 
 import com.github.pagehelper.Page;
-import com.xmomen.framework.logger.ActionLog;
+import com.github.tanxinzheng.framework.logger.ActionLog;
 
 import com.xmomen.module.attachment.model.AttachmentModel;
 import com.xmomen.module.attachment.model.AttachmentQuery;

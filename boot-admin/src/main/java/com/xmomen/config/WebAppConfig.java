@@ -1,8 +1,8 @@
 package com.xmomen.config;
 
-import com.xmomen.framework.adapter.WebAppConfigurerAdapter;
-import com.xmomen.framework.web.authentication.CurrentAccountService;
-import com.xmomen.module.core.service.impl.CurrentAccountServiceImpl;
+import com.github.tanxinzheng.framework.adapter.WebAppConfigurerAdapter;
+import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.framework.core.service.impl.CurrentAccountServiceImpl;
 import com.xmomen.module.jwt.support.JwtUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

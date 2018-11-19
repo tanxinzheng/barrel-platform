@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.ams.module.appInfo.model;
 
 import lombok.Data;
-import com.xmomen.framework.model.BaseEntity;
+import com.github.tanxinzheng.framework.model.BaseEntity;
 
 import java.lang.Integer;
 import java.lang.String;

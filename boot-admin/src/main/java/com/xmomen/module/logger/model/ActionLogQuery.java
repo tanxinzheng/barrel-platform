@@ -1,6 +1,6 @@
 package com.xmomen.module.logger.model;
 
-import com.xmomen.framework.model.BaseQuery;
+import com.github.tanxinzheng.framework.model.BaseQuery;
 import lombok.Data;
 
 import java.util.Date;

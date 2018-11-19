@@ -2,7 +2,7 @@ package com.github.tanxinzheng.ams.module.appInfo.controller;
 
 import io.swagger.annotations.ApiOperation;
 import com.github.pagehelper.Page;
-import com.xmomen.framework.logger.ActionLog;
+import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoQuery;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoModel;
 import com.github.tanxinzheng.ams.module.appInfo.service.AppInfoService;

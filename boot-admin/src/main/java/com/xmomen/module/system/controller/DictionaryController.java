@@ -2,11 +2,11 @@ package com.xmomen.module.system.controller;
 
 import com.github.pagehelper.Page;
 import com.google.common.collect.Lists;
-import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.poi.ExcelUtils;
+import com.github.tanxinzheng.framework.logger.ActionLog;
+import com.github.tanxinzheng.framework.poi.ExcelUtils;
 
-import com.xmomen.framework.web.authentication.CurrentAccountService;
-import com.xmomen.framework.web.rest.ImportExcelResponse;
+import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.framework.web.rest.ImportExcelResponse;
 import com.xmomen.module.system.model.DictionaryModel;
 import com.xmomen.module.system.model.DictionaryQuery;
 import com.xmomen.module.system.service.DictionaryService;

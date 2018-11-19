@@ -1,9 +1,6 @@
 package com.xmomen.module.logger;
 
 import com.github.tanxinzheng.module.dictionary.web.AccountField;
-import com.xmomen.framework.web.json.DictionaryIndex;
-import com.xmomen.framework.web.json.DictionaryIndex;
-
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 

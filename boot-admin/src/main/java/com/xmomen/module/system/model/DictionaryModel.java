@@ -2,7 +2,7 @@ package com.xmomen.module.system.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.tanxinzheng.module.dictionary.web.AccountField;
-import com.xmomen.framework.model.BaseModel;
+import com.github.tanxinzheng.framework.model.BaseModel;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;

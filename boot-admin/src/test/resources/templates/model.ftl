@@ -1,6 +1,6 @@
 package ${targetPackage};
 
-import com.xmomen.framework.model.BaseModel;
+import BaseModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ${modulePackage}.model.${domainObjectClassName};

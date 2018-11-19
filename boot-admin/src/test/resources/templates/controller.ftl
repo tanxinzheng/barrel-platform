@@ -2,7 +2,7 @@ package ${targetPackage};
 
 import io.swagger.annotations.ApiOperation;
 import com.github.pagehelper.Page;
-import com.xmomen.framework.logger.ActionLog;
+import ActionLog;
 
 import ${modulePackage}.model.${domainObjectClassName}Query;
 import ${modulePackage}.model.${domainObjectClassName}Model;

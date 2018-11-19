@@ -2,10 +2,10 @@ package com.xmomen.module.attachment.model;
 
 import com.github.tanxinzheng.module.dictionary.web.AccountField;
 import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
-import com.xmomen.framework.web.json.DictionaryIndex;
+import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
 
 import lombok.Data;
-import com.xmomen.framework.model.BaseEntity;
+import com.github.tanxinzheng.framework.model.BaseEntity;
 
 import java.util.Date;
 import java.io.Serializable;

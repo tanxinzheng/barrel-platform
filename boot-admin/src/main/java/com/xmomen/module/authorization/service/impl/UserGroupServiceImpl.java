@@ -1,8 +1,8 @@
 package com.xmomen.module.authorization.service.impl;
 
 import com.github.pagehelper.Page;
-import com.xmomen.framework.exception.BusinessException;
-import com.xmomen.framework.mybatis.page.PageInterceptor;
+import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.xmomen.module.authorization.mapper.UserGroupMapper;
 import com.xmomen.module.authorization.mapper.UserMapper;
 import com.xmomen.module.authorization.model.*;
@@ -10,8 +10,6 @@ import com.xmomen.module.authorization.service.UserGroupService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

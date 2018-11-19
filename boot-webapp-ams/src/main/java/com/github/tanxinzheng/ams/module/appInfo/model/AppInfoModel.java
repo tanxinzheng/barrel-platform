@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.ams.module.appInfo.model;
 
-import com.xmomen.framework.model.BaseModel;
+import com.github.tanxinzheng.framework.model.BaseModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

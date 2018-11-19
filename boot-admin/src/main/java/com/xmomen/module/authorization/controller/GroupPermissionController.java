@@ -1,7 +1,7 @@
 package com.xmomen.module.authorization.controller;
 
 import com.github.pagehelper.Page;
-import com.xmomen.framework.logger.ActionLog;
+import com.github.tanxinzheng.framework.logger.ActionLog;
 
 import com.xmomen.module.authorization.model.GroupPermissionModel;
 import com.xmomen.module.authorization.model.GroupPermissionQuery;

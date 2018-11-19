@@ -1,6 +1,6 @@
 package com.xmomen.module.authorization.model;
 
-import com.xmomen.framework.model.BaseEntity;
+import com.github.tanxinzheng.framework.model.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;

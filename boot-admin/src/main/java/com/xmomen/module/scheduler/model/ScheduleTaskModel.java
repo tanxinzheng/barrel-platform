@@ -1,7 +1,7 @@
 package com.xmomen.module.scheduler.model;
 
 import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
-import com.xmomen.framework.web.json.DictionaryIndex;
+import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

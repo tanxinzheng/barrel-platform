@@ -1,16 +1,16 @@
 package com.xmomen.module.authorization.service.impl;
 
 import com.github.pagehelper.Page;
-import com.xmomen.framework.exception.BusinessException;
-import com.xmomen.framework.mybatis.page.PageInterceptor;
+import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.xmomen.module.authorization.mapper.GroupMapper;
 import com.xmomen.module.authorization.mapper.UserGroupMapper;
 import com.xmomen.module.authorization.model.*;
 import com.xmomen.module.authorization.service.GroupService;
-import com.xmomen.module.core.model.SelectIndex;
-import com.xmomen.module.core.model.SelectOptionModel;
-import com.xmomen.module.core.model.SelectOptionQuery;
-import com.xmomen.module.core.service.SelectService;
+import com.github.tanxinzheng.framework.core.model.SelectIndex;
+import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
+import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
+import com.github.tanxinzheng.framework.core.service.SelectService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.assertj.core.util.Lists;

@@ -1,6 +1,6 @@
 package com.xmomen.module.mail.controller;
 
-import com.xmomen.framework.web.rest.RestResult;
+import com.github.tanxinzheng.framework.web.rest.RestResult;
 import com.xmomen.module.mail.model.EmailModel;
 import com.xmomen.module.mail.service.EmailService;
 import io.swagger.annotations.ApiOperation;

@@ -1,7 +1,7 @@
 package ${targetPackage};
 
 import lombok.Data;
-import com.xmomen.framework.model.BaseEntity;
+import BaseEntity;
 
 <#if importClassList?exists>
     <#list importClassList?keys as mykey>

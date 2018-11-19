@@ -1,7 +1,7 @@
 package ${targetPackage};
 
 import lombok.Data;
-import com.xmomen.framework.model.BaseQuery;
+import BaseQuery;
 
 import java.io.Serializable;
 

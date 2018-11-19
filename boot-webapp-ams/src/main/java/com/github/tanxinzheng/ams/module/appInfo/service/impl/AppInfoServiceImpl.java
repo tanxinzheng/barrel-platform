@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.ams.module.appInfo.service.impl;
 
-import com.xmomen.framework.exception.BusinessException;
-import com.xmomen.framework.mybatis.page.PageInterceptor;
+import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfo;
 import com.github.tanxinzheng.ams.module.appInfo.mapper.AppInfoMapper;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoModel;

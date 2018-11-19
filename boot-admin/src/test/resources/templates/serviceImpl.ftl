@@ -1,6 +1,6 @@
 package ${targetPackage};
 
-import com.xmomen.framework.mybatis.page.PageInterceptor;
+import PageInterceptor;
 import ${modulePackage}.model.${domainObjectClassName};
 import ${modulePackage}.mapper.${domainObjectClassName}Mapper;
 import ${modulePackage}.model.${domainObjectClassName}Model;

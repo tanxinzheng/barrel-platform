@@ -20,7 +20,8 @@
         <module>boot-webapp-ums</module>
         <module>boot-support-dictionary-annotation</module>
         <module>boot-support-test</module>
-    </modules>
+		<module>boot-module-notification</module>
+	</modules>
 	<packaging>pom</packaging>
 
 	<name>boot</name>

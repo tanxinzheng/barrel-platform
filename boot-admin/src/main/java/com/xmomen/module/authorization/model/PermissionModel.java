@@ -1,8 +1,7 @@
 package com.xmomen.module.authorization.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xmomen.framework.model.BaseModel;
-import com.xmomen.module.authorization.model.Permission;
+import com.github.tanxinzheng.framework.model.BaseModel;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;

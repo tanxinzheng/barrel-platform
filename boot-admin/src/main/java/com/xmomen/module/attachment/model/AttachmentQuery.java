@@ -1,7 +1,7 @@
 package com.xmomen.module.attachment.model;
 
 import lombok.Data;
-import com.xmomen.framework.model.BaseQuery;
+import com.github.tanxinzheng.framework.model.BaseQuery;
 
 import java.io.Serializable;
 

@@ -1,10 +1,9 @@
 package com.xmomen.config;
 
 import com.xmomen.config.adapter.JwtSecurityMetadataHandler;
-import com.xmomen.framework.utils.PasswordHelper;
+import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.xmomen.module.authorization.model.*;
 import com.xmomen.module.authorization.service.GroupPermissionService;
-import com.xmomen.module.authorization.service.GroupService;
 import com.xmomen.module.authorization.service.UserGroupService;
 import com.xmomen.module.authorization.service.UserService;
 import com.xmomen.module.jwt.JwtConfigAdapter;

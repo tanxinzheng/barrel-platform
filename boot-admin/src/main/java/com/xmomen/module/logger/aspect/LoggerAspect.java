@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
-import com.xmomen.framework.logger.ActionLog;
-import com.xmomen.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.framework.logger.ActionLog;
+import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
 import com.xmomen.module.logger.LogModel;
 import com.xmomen.module.logger.service.LoggerService;
 import freemarker.cache.StringTemplateLoader;
@@ -52,7 +52,7 @@ public class LoggerAspect {
     /**
      * 日志逻辑切入点
      */
-    @Pointcut("@annotation(com.xmomen.framework.logger.ActionLog)")
+    @Pointcut("@annotation(com.github.tanxinzheng.framework.logger.ActionLog)")
     public void getLogInfo() { }
 
     @Around(value = "getLogInfo()")

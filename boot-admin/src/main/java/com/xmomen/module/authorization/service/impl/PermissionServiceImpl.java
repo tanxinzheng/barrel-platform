@@ -1,10 +1,9 @@
 package com.xmomen.module.authorization.service.impl;
 
 import com.google.common.collect.Lists;
-import com.xmomen.framework.exception.BusinessException;
-import com.xmomen.framework.mybatis.page.PageInterceptor;
-import com.xmomen.framework.utils.UUIDGenerator;
-import com.xmomen.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
+import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
 import com.xmomen.module.authorization.mapper.GroupPermissionMapper;
 import com.xmomen.module.authorization.model.Permission;
 import com.xmomen.module.authorization.mapper.PermissionMapper;
@@ -15,7 +14,6 @@ import com.github.pagehelper.Page;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

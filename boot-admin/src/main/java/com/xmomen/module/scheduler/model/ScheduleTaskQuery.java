@@ -1,6 +1,6 @@
 package com.xmomen.module.scheduler.model;
 
-import com.xmomen.framework.model.BaseQuery;
+import com.github.tanxinzheng.framework.model.BaseQuery;
 import lombok.Data;
 
 import java.io.Serializable;

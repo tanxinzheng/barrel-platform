@@ -2,7 +2,7 @@ package com.xmomen.module.mail.service.impl;
 
 import com.alibaba.druid.util.IOUtils;
 import com.alibaba.fastjson.JSONObject;
-import com.xmomen.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.xmomen.module.fss.service.FileStoreService;
 import com.xmomen.module.fss.model.FileStorageResult;
 import com.xmomen.module.attachment.model.AttachmentModel;
@@ -10,8 +10,6 @@ import com.xmomen.module.attachment.model.AttachmentQuery;
 import com.xmomen.module.attachment.service.AttachmentService;
 import com.xmomen.module.mail.model.EmailModel;
 import com.xmomen.module.mail.service.EmailService;
-import com.xmomen.module.notification.model.NotificationTemplateModel;
-import com.xmomen.module.notification.service.NotificationTemplateLoader;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -151,8 +149,8 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-    @Autowired
-    NotificationTemplateLoader notificationTemplateLoader;
+//    @Autowired
+//    NotificationTemplateLoader notificationTemplateLoader;
 
 
     /**
@@ -163,29 +161,29 @@ public class EmailServiceImpl implements EmailService {
         if (StringUtils.isBlank(emailModel.getTemplateCode())) {
             return;
         }
-        NotificationTemplateModel notificationTemplateModel = null;
-        try {
-            notificationTemplateModel = notificationTemplateLoader.findTemplateSource(emailModel.getTemplateCode());
-            if(notificationTemplateModel == null){
-                return;
-            }
-            Configuration configuration = configurer.getConfiguration();
-            StringTemplateLoader stl = new StringTemplateLoader();
-            String templateBody = notificationTemplateModel.getTemplateBody();
-            String templateTitle = notificationTemplateModel.getTemplateTitle();
-            stl.putTemplate(notificationTemplateModel.getTemplateCode(), templateBody);
-            stl.putTemplate(notificationTemplateModel.getTemplateCode()+ "_TITLE", templateTitle);
-            configuration.setTemplateLoader(stl);
-            Template template1 = configuration.getTemplate(notificationTemplateModel.getTemplateCode());
-            Template template2 = configuration.getTemplate(notificationTemplateModel.getTemplateCode()+ "_TITLE");
-            StringWriter writerBody= new StringWriter();
-            StringWriter writerTitle = new StringWriter();
-            template1.process(emailModel.getTemplateData(), writerBody);
-            emailModel.setText(writerBody.toString());
-            template2.process(emailModel.getTemplateData(), writerTitle);
-            emailModel.setSubject(writerTitle.toString());
-        } catch (IOException | TemplateException e) {
-            log.error(e.getMessage(), e);
-        }
+//        NotificationTemplateModel notificationTemplateModel = null;
+//        try {
+//            notificationTemplateModel = notificationTemplateLoader.findTemplateSource(emailModel.getTemplateCode());
+//            if(notificationTemplateModel == null){
+//                return;
+//            }
+//            Configuration configuration = configurer.getConfiguration();
+//            StringTemplateLoader stl = new StringTemplateLoader();
+//            String templateBody = notificationTemplateModel.getTemplateBody();
+//            String templateTitle = notificationTemplateModel.getTemplateTitle();
+//            stl.putTemplate(notificationTemplateModel.getTemplateCode(), templateBody);
+//            stl.putTemplate(notificationTemplateModel.getTemplateCode()+ "_TITLE", templateTitle);
+//            configuration.setTemplateLoader(stl);
+//            Template template1 = configuration.getTemplate(notificationTemplateModel.getTemplateCode());
+//            Template template2 = configuration.getTemplate(notificationTemplateModel.getTemplateCode()+ "_TITLE");
+//            StringWriter writerBody= new StringWriter();
+//            StringWriter writerTitle = new StringWriter();
+//            template1.process(emailModel.getTemplateData(), writerBody);
+//            emailModel.setText(writerBody.toString());
+//            template2.process(emailModel.getTemplateData(), writerTitle);
+//            emailModel.setSubject(writerTitle.toString());
+//        } catch (IOException | TemplateException e) {
+//            log.error(e.getMessage(), e);
+//        }
     }
 }

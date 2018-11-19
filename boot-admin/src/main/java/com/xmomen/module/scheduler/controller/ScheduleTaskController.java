@@ -1,7 +1,7 @@
 package com.xmomen.module.scheduler.controller;
 
 import io.swagger.annotations.ApiOperation;
-import com.xmomen.framework.logger.ActionLog;
+import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.pagehelper.Page;
 import com.xmomen.module.scheduler.QuartzManager;
 import com.xmomen.module.scheduler.model.ScheduleTaskModel;
