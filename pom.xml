@@ -18,7 +18,7 @@
 		<module>boot-admin</module>
 		<module>boot-webapp-ams</module>
         <module>boot-webapp-ums</module>
-        <module>boot-support-dictionary-annotation</module>
+        <module>boot-support-annotation</module>
         <module>boot-support-test</module>
 		<module>boot-module-notification</module>
 	</modules>

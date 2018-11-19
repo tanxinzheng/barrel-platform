@@ -2,18 +2,13 @@
 在开发过程中，有许多字段在对象类中是对应的字典表中的代码，比如字典代码，各种状态代码等，而在前端界面展示时，应该转换为字典中翻译的代码描述，
 常规操作下，我们需要在sql中关联字典表将代码转译为代码描述，但是每次都写sql的话会有很大的工作量，该工具包可直接使用注解直接将代码转译为代码描述。
 
-## 依赖
-- JDK1.8+
-- Maven
-- Spring Boot
-
 ## 使用指南
 
 - 添加maven依赖
 ```
 <dependency>
     <groupId>com.github.tanxinzheng</groupId>
-    <artifactId>boot-support-dictionary-annotation</artifactId>
+    <artifactId>boot-support-annotation</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```

@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>boot-support-dictionary-annotation</artifactId>
+    <artifactId>boot-support-annotation</artifactId>
 
-    <name>boot-support-dictionary-annotation</name>
+    <name>boot-support-annotation</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

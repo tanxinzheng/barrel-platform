@@ -189,7 +189,7 @@
 
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-support-dictionary-annotation</artifactId>
+            <artifactId>boot-support-annotation</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
