@@ -2,21 +2,28 @@ package com.github.tanxinzheng.module.dictionary.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.tanxinzheng.module.dictionary.model.Dictionary;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
 import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
 import com.github.tanxinzheng.test.TestAppController;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.Assert;
+import org.springframework.test.web.servlet.ResultHandler;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -77,8 +84,8 @@ public class DictionaryControllerTest extends TestAppController {
     public void test0createDictionary() throws Exception {
         String resultJson = create();
         JSONObject resultObj = JSONObject.parseObject(resultJson);
-        Assert.notEmpty(resultObj, "新增数据字典，测试不通过");
-        Assert.notNull(resultObj.get("id"), "新增数据字典，测试不通过");
+        Assert.assertNotNull("新增数据字典，测试不通过", resultObj);
+        Assert.assertNotNull("新增数据字典，测试不通过", resultObj.get("id"));
     }
 
     @Test
@@ -90,7 +97,7 @@ public class DictionaryControllerTest extends TestAppController {
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
         JSONArray jsonArray = JSONArray.parseArray(resultJson);
-        Assert.notEmpty(jsonArray, "查询数据字典列表，测试不通过");
+        Assert.assertNotNull("新增数据字典，测试不通过", jsonArray);
     }
 
     @Test
@@ -103,8 +110,8 @@ public class DictionaryControllerTest extends TestAppController {
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
         JSONObject resultObj = JSONObject.parseObject(resultJson);
-        Assert.notEmpty(resultObj, "查询数据字典，测试不通过");
-        Assert.notNull(resultObj.get("id"), "查询数据字典，测试不通过");
+        Assert.assertNotNull("查询数据字典，测试不通过", resultObj);
+        Assert.assertNotNull("查询数据字典，测试不通过",resultObj.get("id"));
     }
 
     @Test
@@ -121,12 +128,28 @@ public class DictionaryControllerTest extends TestAppController {
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
         JSONObject resultObj = JSONObject.parseObject(resultJson);
-        Assert.notEmpty(resultObj, "新增数据字典，测试不通过");
-        Assert.isTrue(resultObj.get("dictionaryName").equals(name), "新增数据字典，测试不通过");
+        Assert.assertNotNull("新增数据字典，测试不通过", resultObj);
+        Assert.assertTrue("新增数据字典，测试不通过", resultObj.get("dictionaryName").equals(name));
     }
 
     @Test
     public void test6downloadTemplate() throws Exception {
+//        ResultActions actions = mockMvc.perform(get("/dictionary/template")
+//                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                .accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+//                .andDo(print())
+//                .andExpect(status().isOk());
+//        actions.andDo(new ResultHandler() {
+//            @Override
+//            public void handle(MvcResult result) throws Exception {
+//                result.getResponse().setCharacterEncoding("UTF-8");
+//                MockHttpServletResponse contentRespon = result.getResponse();
+//                InputStream contentInStream = new ByteArrayInputStream(
+//                        contentRespon.getContentAsByteArray());
+//                FileUtils.copyInputStreamToFile(contentInStream, new File("./src/test/resource/ddd.xls"));
+//                Assert.assertEquals("application/ms-excel", contentRespon.getContentType());
+//            }
+//        });
     }
 
     @Test
