@@ -93,6 +93,7 @@ public class AccessController {
      * @param type      类型：1-手机，2-邮箱
      * @param receiver  手机号码或邮箱
      */
+    @ApiOperation(value = "发送验证码")
     @RequestMapping(value = "/code", method = RequestMethod.POST)
     @ResponseBody
     public void setValidateCode(@RequestParam(value = "type") Integer type,
@@ -101,10 +102,11 @@ public class AccessController {
                 type.equals(FIND_TYPE_PHONE), "找回方式仅支持：1-邮箱找回，2-手机找回");
         if(type.equals(FIND_TYPE_PHONE)){
             Assert.isTrue(PhoneValidator.getInstance().isValid(receiver), "请输入正确格式的手机号码");
+            validationCodeService.sendCode(receiver);
         }else if(type.equals(FIND_TYPE_EMAIL)){
             Assert.isTrue(EmailValidator.getInstance().isValid(receiver), "请输入正确格式的邮箱");
+            // TODO 待适配邮件接口服务
         }
-        validationCodeService.sendCode(receiver);
     }
 
 

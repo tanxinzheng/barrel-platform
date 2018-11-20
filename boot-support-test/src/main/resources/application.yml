@@ -11,6 +11,10 @@ spring:
   cache:
     type: redis
 
+redis:
+  host: localhost
+  port: 6379
+
 #druid datasource
 druid:
   initialSize: 10

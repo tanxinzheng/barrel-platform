@@ -28,11 +28,12 @@ public class ValidationCodeServiceImpl implements ValidationCodeService {
      * @param receiver
      */
     @Override
-    public void sendCode(String receiver) {
+    public boolean sendCode(String receiver) {
         Cache cache = cacheManager.getCache(VALIDATE_CODE_CACHE_NAME);
         String code = RandomStringUtils.randomNumeric(6);
         log.debug("The validation code stored to cache , Receiver Key: {}, Cache Key: {} ", receiver, code);
         cache.put(receiver, code);
+        return Boolean.TRUE;
     }
 
     /**
@@ -46,7 +47,7 @@ public class ValidationCodeServiceImpl implements ValidationCodeService {
     public boolean validateCode(String receiver, String code) {
         try {
             Cache cache = cacheManager.getCache(VALIDATE_CODE_CACHE_NAME);
-            Assert.notNull(cache);
+            Assert.notNull(cache, "校验码不能为空");
             String cacheCode = cache.get(receiver, String.class);
             Assert.notNull(cacheCode);
             Assert.isTrue(cacheCode.equals(code));
@@ -63,11 +64,12 @@ public class ValidationCodeServiceImpl implements ValidationCodeService {
      * @param receiver
      */
     @Override
-    public void cleanCode(String receiver) {
+    public boolean cleanCode(String receiver) {
         Cache cache = cacheManager.getCache(VALIDATE_CODE_CACHE_NAME);
         if(cache == null){
-            return;
+            return Boolean.FALSE;
         }
         cache.put(receiver, null);
+        return Boolean.TRUE;
     }
 }
