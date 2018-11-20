@@ -1,6 +1,7 @@
-package com.xmomen.module.system.service.impl;
+package com.github.tanxinzheng.module.dictionary.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.tanxinzheng.module.dictionary.mapper.DictionaryMapper;
 import com.google.common.collect.Lists;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
@@ -9,12 +10,9 @@ import com.github.tanxinzheng.framework.core.model.SelectIndex;
 import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
 import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
 import com.github.tanxinzheng.framework.core.service.SelectService;
-import com.xmomen.module.system.mapper.DictionaryMapper;
-import com.xmomen.module.system.model.Dictionary;
-import com.xmomen.module.system.model.DictionaryModel;
-import com.xmomen.module.system.model.DictionaryQuery;
-import com.xmomen.module.system.service.DictionaryService;
-import io.jsonwebtoken.lang.Assert;
+import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
+import com.github.tanxinzheng.module.dictionary.model.DictionaryQuery;
+import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -46,7 +44,7 @@ public class DictionaryServiceImpl implements DictionaryService, SelectService {
     @Override
     @Transactional
     public DictionaryModel createDictionary(DictionaryModel dictionaryModel) {
-        Dictionary dictionary = createDictionary(dictionaryModel.getEntity());
+        com.github.tanxinzheng.module.dictionary.model.Dictionary dictionary = createDictionary(dictionaryModel.getEntity());
         if(dictionary != null){
             return getOneDictionaryModel(dictionary.getId());
         }
@@ -61,7 +59,7 @@ public class DictionaryServiceImpl implements DictionaryService, SelectService {
      */
     @Override
     @Transactional
-    public Dictionary createDictionary(Dictionary dictionary) {
+    public com.github.tanxinzheng.module.dictionary.model.Dictionary createDictionary(com.github.tanxinzheng.module.dictionary.model.Dictionary dictionary) {
         dictionary.setCreatedTime(new Date());
         dictionary.setUpdatedTime(new Date());
         dictionary.setDataVersion(1);
@@ -123,7 +121,7 @@ public class DictionaryServiceImpl implements DictionaryService, SelectService {
     @Override
     @Transactional
     @CacheEvict(cacheNames = "dictionariesCache", key = "#dictionary.groupCode")
-    public void updateDictionary(Dictionary dictionary) {
+    public void updateDictionary(com.github.tanxinzheng.module.dictionary.model.Dictionary dictionary) {
         dictionaryMapper.updateSelective(dictionary);
     }
 
@@ -194,7 +192,7 @@ public class DictionaryServiceImpl implements DictionaryService, SelectService {
      * @return Dictionary 数据字典实体对象
      */
     @Override
-    public Dictionary getOneDictionary(String id) {
+    public com.github.tanxinzheng.module.dictionary.model.Dictionary getOneDictionary(String id) {
         if(StringUtils.isBlank(id)){
             return null;
         }
@@ -237,8 +235,9 @@ public class DictionaryServiceImpl implements DictionaryService, SelectService {
     @Cacheable(cacheNames = DictionaryIndex.DICTIONARY_CACHE_NAME_KEY)
     @Override
     public List<SelectOptionModel> selectOptionModels(SelectOptionQuery selectOptionQuery) {
-        Assert.notNull(selectOptionQuery);
-        Assert.notNull(selectOptionQuery.getTypeCode(), "typeCode不能为空");
+        if(selectOptionQuery ==  null || StringUtils.isBlank(selectOptionQuery.getTypeCode())){
+            return Lists.newArrayList();
+        }
         List<SelectOptionModel> selectOptionModelList = new ArrayList<>();
         DictionaryQuery dictionaryQuery = new DictionaryQuery();
         dictionaryQuery.setType(selectOptionQuery.getTypeCode());

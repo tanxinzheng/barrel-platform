@@ -1,4 +1,4 @@
-package com.xmomen.module.system.model;
+package com.github.tanxinzheng.module.dictionary.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.tanxinzheng.module.dictionary.web.AccountField;
@@ -48,13 +48,11 @@ public @Data class DictionaryModel extends BaseModel implements Serializable {
     private String dictionaryCode;
     /** 排序 */
     @Excel(name = "排序")
-    @NotNull(message = "排序为必填项")
     @Range(max = 999999999, min = -999999999, message = "排序数值范围[999999999,-999999999]")
-    private Integer sort;
+    private int sort;
     /** 激活 */
     @Excel(name = "激活", replace = { "是_true", "否_false" })
-    @NotNull(message = "激活为必填项")
-    private Boolean active;
+    private boolean active;
     /** 父节点 */
 //    @Excel(name = "父节点")
     @Length(max = 32, message = "父节点字符长度限制[0,32]")
@@ -62,7 +60,7 @@ public @Data class DictionaryModel extends BaseModel implements Serializable {
     /** 显示 */
     @Excel(name = "显示", replace = { "是_true", "否_false" })
     @NotNull(message = "显示为必填项")
-    private Boolean isShow;
+    private boolean isShow;
     /** 创建人 */
 //    @Excel(name = "创建人")
     @Length(max = 32, message = "创建人字符长度限制[0,32]")

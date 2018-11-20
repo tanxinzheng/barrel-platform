@@ -1,4 +1,4 @@
-package com.xmomen.module.system.model;
+package com.github.tanxinzheng.module.dictionary.model;
 
 import lombok.Data;
 import com.github.tanxinzheng.framework.model.BaseQuery;

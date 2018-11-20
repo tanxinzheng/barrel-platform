@@ -1,10 +1,9 @@
-package com.xmomen.module.system.service;
+package com.github.tanxinzheng.module.dictionary.service;
 
 import com.github.pagehelper.Page;
-import com.xmomen.module.system.model.DictionaryQuery;
-import com.xmomen.module.system.model.DictionaryModel;
-import com.xmomen.module.system.model.Dictionary;
-import org.apache.ibatis.exceptions.TooManyResultsException;
+import com.github.tanxinzheng.module.dictionary.model.Dictionary;
+import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
+import com.github.tanxinzheng.module.dictionary.model.DictionaryQuery;
 
 import java.util.List;
 
