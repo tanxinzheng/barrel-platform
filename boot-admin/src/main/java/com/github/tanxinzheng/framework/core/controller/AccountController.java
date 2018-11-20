@@ -8,10 +8,10 @@ import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
 import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
 import com.xmomen.module.authorization.model.User;
 import com.xmomen.module.authorization.model.UserModel;
 import com.xmomen.module.authorization.service.UserService;
-import com.github.tanxinzheng.framework.core.service.ValidationCodeService;
 import com.xmomen.module.logger.LogModel;
 import com.xmomen.module.logger.model.ActionLogQuery;
 import com.xmomen.module.logger.service.LoggerService;
@@ -50,8 +50,8 @@ public class AccountController {
     UserService userService;
 
     @Autowired
-    ValidationCodeService validationCodeService;
-    
+    VerificationCodeService verificationCodeService;
+
     @Autowired
     NotificationService notificationService;
 
@@ -190,7 +190,7 @@ public class AccountController {
                      @RequestParam(value = "receiver") String receiver,
                      @RequestParam(value = "code") String code){
         Assert.isTrue(type.equals(AccessController.FIND_TYPE_EMAIL) || type.equals(AccessController.FIND_TYPE_PHONE), "找回方式仅支持：1-邮箱找回，2-手机找回");
-        validationCodeService.validateCode(receiver, code);
+        verificationCodeService.checkCode(receiver, code);
         UserModel userModel;
         User user = new User();
         if(type.equals(AccessController.FIND_TYPE_EMAIL)){
@@ -206,7 +206,7 @@ public class AccountController {
         }
         user.setId(currentAccountService.getAccountId());
         userService.updateUser(user);
-        validationCodeService.cleanCode(receiver);
+        verificationCodeService.cleanCode(receiver);
     }
 
     /**

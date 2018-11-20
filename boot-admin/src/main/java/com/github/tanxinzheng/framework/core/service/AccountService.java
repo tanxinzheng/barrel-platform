@@ -4,6 +4,7 @@ import com.github.tanxinzheng.framework.core.model.Register;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
+import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
 import com.xmomen.module.authorization.model.*;
 import com.xmomen.module.authorization.service.UserGroupService;
 import com.xmomen.module.authorization.service.UserService;
@@ -33,7 +34,7 @@ public class AccountService {
     UserService userService;
 
     @Autowired
-    ValidationCodeService validationCodeService;
+    VerificationCodeService verificationCodeService;
 
     @Autowired
     UserGroupService userGroupService;
@@ -91,12 +92,12 @@ public class AccountService {
         UserModel checkUser = userService.getOneUserModelByUsername(register.getUsername());
         Assert.isNull(checkUser, "该用户名已被注册");
         if(register.getType().equals("2") && StringUtils.isNotBlank(register.getEmail())){
-            validationCodeService.validateCode(register.getEmail(), register.getCode());
+            verificationCodeService.checkCode(register.getEmail(), register.getCode());
             Assert.isTrue(EmailValidator.getInstance().isValid(register.getEmail()), "请输入正确格式的邮箱");
             UserModel emailUser = userService.getOneUserModelByUsername(register.getEmail());
             Assert.isNull(emailUser, "该邮箱已被注册");
         }else if(register.getType().equals("1") && StringUtils.isNotBlank(register.getPhoneNumber())){
-            validationCodeService.validateCode(register.getPhoneNumber(), register.getCode());
+            verificationCodeService.checkCode(register.getPhoneNumber(), register.getCode());
             Assert.isTrue(PhoneValidator.getInstance().isValid(register.getPhoneNumber()), "请输入正确格式的手机号码");
             UserModel phoneUser = userService.getOneUserModelByUsername(register.getPhoneNumber());
             Assert.isNull(phoneUser, "该手机号码已被注册");

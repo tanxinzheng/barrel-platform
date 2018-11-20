@@ -2,12 +2,12 @@ package com.github.tanxinzheng.framework.core.controller;
 
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
+import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
 import com.xmomen.module.authorization.model.User;
 import com.xmomen.module.authorization.model.UserModel;
 import com.xmomen.module.authorization.service.UserService;
 import com.github.tanxinzheng.framework.core.model.Register;
 import com.github.tanxinzheng.framework.core.service.AccountService;
-import com.github.tanxinzheng.framework.core.service.ValidationCodeService;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class AccessController {
     UserService userService;
 
     @Autowired
-    ValidationCodeService validationCodeService;
+    VerificationCodeService verificationCodeService;
 
     public static final int FIND_TYPE_PHONE = 1;
     public static final int FIND_TYPE_EMAIL = 2;
@@ -76,7 +76,7 @@ public class AccessController {
         }else {
             Assert.notNull(userModel, "仅支持邮箱，手机号码方式找回密码");
         }
-        Assert.isTrue(validationCodeService.validateCode(receiver, code), "请输入有效的验证码");
+        Assert.isTrue(verificationCodeService.checkCode(receiver, code), "请输入有效的验证码");
         String newSalt = UUIDGenerator.getInstance().getUUID();
         String newPassword = PasswordHelper.encryptPassword(password, newSalt);
         User user = new User();
@@ -84,7 +84,7 @@ public class AccessController {
         user.setPassword(newPassword);
         user.setId(userModel.getId());
         userService.updateUser(user);
-        validationCodeService.cleanCode(receiver);
+        verificationCodeService.cleanCode(receiver);
     }
 
 
@@ -102,7 +102,7 @@ public class AccessController {
                 type.equals(FIND_TYPE_PHONE), "找回方式仅支持：1-邮箱找回，2-手机找回");
         if(type.equals(FIND_TYPE_PHONE)){
             Assert.isTrue(PhoneValidator.getInstance().isValid(receiver), "请输入正确格式的手机号码");
-            validationCodeService.sendCode(receiver);
+            verificationCodeService.sendCode(receiver);
         }else if(type.equals(FIND_TYPE_EMAIL)){
             Assert.isTrue(EmailValidator.getInstance().isValid(receiver), "请输入正确格式的邮箱");
             // TODO 待适配邮件接口服务
