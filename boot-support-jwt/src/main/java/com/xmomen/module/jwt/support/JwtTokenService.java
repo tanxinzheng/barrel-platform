@@ -11,6 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 public interface JwtTokenService {
 
     /**
+     * 创建token
+     * @param username
+     * @return
+     */
+    public String createToken(String username);
+
+    /**
      * 获取token
      * @param request
      * @return
@@ -42,6 +49,21 @@ public interface JwtTokenService {
      * @return
      */
     public boolean validToken(String token);
+
+    /**
+     * 校验refresh token
+     * @param refreshToken
+     * @return
+     */
+    public boolean validRefreshToken(String refreshToken);
+
+    /**
+     * 更新token
+     * @param refreshToken
+     * @param request
+     * @param response
+     */
+    public String updateToken(String refreshToken, HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 删除token

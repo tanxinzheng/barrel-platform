@@ -40,10 +40,11 @@ public class RestResponse<T> implements Serializable {
         return restResponse;
     }
 
-    public static RestResponse error(String code, String message) {
+    public static RestResponse error(HttpStatus code, String message) {
         RestResponse restResponse = new RestResponse();
         restResponse.setMessage(message);
-        restResponse.setCode(code);
+        restResponse.setCode(code.toString());
+        restResponse.setStatus(code.value());
         return restResponse;
     }
 

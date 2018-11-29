@@ -35,7 +35,7 @@ public class JwtUtils {
     }
 
     /**
-     * 解析出用户名
+     * 解析出jwt信息
      * @param token
      * @param secret
      * @return
@@ -46,6 +46,8 @@ public class JwtUtils {
                 .parseClaimsJws(token);
         return claimsJws.getBody();
     }
+
+
 
 
 }

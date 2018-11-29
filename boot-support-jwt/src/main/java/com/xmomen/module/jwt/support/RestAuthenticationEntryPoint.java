@@ -30,7 +30,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
      */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        RestResponse.error(String.valueOf(HttpStatus.UNAUTHORIZED.value()),
+        RestResponse.error((HttpStatus.UNAUTHORIZED),
                 authException.getMessage())
                 .toJSON(response);
     }

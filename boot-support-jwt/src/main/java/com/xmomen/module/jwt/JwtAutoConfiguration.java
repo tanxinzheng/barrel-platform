@@ -1,5 +1,8 @@
 package com.xmomen.module.jwt;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.xmomen.module.jwt.support.*;
 import com.xmomen.module.jwt.support.access.MyAccessDecisionManager;
@@ -18,14 +21,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.jackson2.SimpleGrantedAuthorityMixin;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -71,6 +79,14 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     @Primary
     public JwtTokenService getJwtTokenService(){
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        // 兼容序列化到redis中
+        om.addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityMixin.class);
+        jackson2JsonRedisSerializer.setObjectMapper(om);
+        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         return new DefaultJwtTokenService(redisTemplate, jwtConfigProperties);
     }
 
@@ -144,7 +160,6 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
 //                })
                 // 除上面外的所有请求全部需要鉴权认证
                 .and()
-//                .addFilterBefore(getJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(getJwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(getJwtAuthorizationFilter(), BasicAuthenticationFilter.class)
                 .formLogin()

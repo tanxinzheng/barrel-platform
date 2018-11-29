@@ -27,6 +27,7 @@ public class JwtUser implements JwtUserDetails {
     private boolean enabled;
     private Set<String> roles;
     private Set<String> permissions;
+    @JsonIgnore
     private Collection<SimpleGrantedAuthority> authorities;
 
     public JwtUser(){}

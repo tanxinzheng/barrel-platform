@@ -34,6 +34,20 @@ public class DefaultJwtTokenService implements JwtTokenService {
     private RedisTemplate redisTemplate;
 
     /**
+     * 创建token
+     *
+     * @param username
+     * @return
+     */
+    @Override
+    public String createToken(String username) {
+        return JwtUtils.createToken(username,
+                jwtConfigProperties.getIssuer(),
+                jwtConfigProperties.getSecret(),
+                jwtConfigProperties.getExpiration());
+    }
+
+    /**
      * 获取token
      *
      * @param request
@@ -106,6 +120,43 @@ public class DefaultJwtTokenService implements JwtTokenService {
         Jwts.parser().setSigningKey(jwtConfigProperties.getSecret()).parse(token);
         return true;
     }
+
+    /**
+     * 校验token
+     *
+     * @param token
+     * @return
+     */
+    @Override
+    public boolean validRefreshToken(String token) {
+        if(token == null){
+            return false;
+        }
+        try {
+            Jwts.parser().setSigningKey(jwtConfigProperties.getSecret()).parse(token);
+            return true;
+        } catch (Exception e){
+            log.debug(e.getMessage(), e);
+        }
+        return true;
+    }
+
+    /**
+     * 更新token
+     *
+     * @param refreshToken
+     * @param request
+     * @param response
+     */
+    @Override
+    public String updateToken(String refreshToken, HttpServletRequest request, HttpServletResponse response) {
+        Claims claims = JwtUtils.parseToken(refreshToken, jwtConfigProperties.getSecret());
+        String username = claims.getSubject();
+        String newToken = createToken(username);
+        response.setHeader("Bearer " + jwtConfigProperties.getTokenHeaderName(), newToken);
+        return newToken;
+    }
+
 
     /**
      * 删除token

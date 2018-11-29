@@ -38,32 +38,44 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                                     FilterChain chain) throws IOException, ServletException {
         String token = jwtTokenService.getToken(request);
         try {
+            // 验证token是否
             if (jwtTokenService.validToken(token)) {
                 JwtAuthenticationToken authentication = jwtTokenService.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-            chain.doFilter(request, response);
+
+        } catch (ExpiredJwtException expiredJwtException) {
+            // token过期则验证refresh token
+            String refreshToken = jwtTokenService.getRefreshToken(request);
+//             refresh token过期则直接跳转登录页面
+            if(refreshToken != null && !jwtTokenService.validToken(refreshToken)){
+                // refresh token未过期则刷新token
+                String newToken = jwtTokenService.updateToken(refreshToken, request, response);
+                JwtAuthenticationToken authentication = jwtTokenService.getAuthentication(newToken);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         } catch (Exception e){
             logger.debug(e.getMessage(), e);
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.setCharacterEncoding("UTF-8");
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            Map<String, Object> data = new HashMap<>();
-            data.put("timestamp", new Date().getTime());
-            if(e instanceof ExpiredJwtException){
-                jwtTokenService.removeToken(request, response);
-                data.put("message", "token is expired");
-            }else {
-                data.put("message", e.getMessage());
-            }
-            data.put("code", HttpStatus.UNAUTHORIZED.value());
-            data.put("path",   request.getRequestURI());
-            data.put("requestId", request.getRequestedSessionId());
-            OutputStream out = response.getOutputStream();
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(out, data);
-            out.flush();
+//            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+//            response.setCharacterEncoding("UTF-8");
+//            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+//            Map<String, Object> data = new HashMap<>();
+//            data.put("timestamp", new Date().getTime());
+//            if(e instanceof ExpiredJwtException){
+//                jwtTokenService.removeToken(request, response);
+//                data.put("message", "token is expired");
+//            }else {
+//                data.put("message", e.getMessage());
+//            }
+//            data.put("code", HttpStatus.UNAUTHORIZED.value());
+//            data.put("path",   request.getRequestURI());
+//            data.put("requestId", request.getRequestedSessionId());
+//            OutputStream out = response.getOutputStream();
+//            ObjectMapper mapper = new ObjectMapper();
+//            mapper.writeValue(out, data);
+//            out.flush();
         }
+        chain.doFilter(request, response);
     }
 
 }
