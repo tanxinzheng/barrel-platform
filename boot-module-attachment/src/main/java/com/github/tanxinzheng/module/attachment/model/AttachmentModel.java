@@ -1,4 +1,4 @@
-package com.xmomen.module.attachment.model;
+package com.github.tanxinzheng.module.attachment.model;
 
 import com.github.tanxinzheng.module.dictionary.web.AccountField;
 import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;

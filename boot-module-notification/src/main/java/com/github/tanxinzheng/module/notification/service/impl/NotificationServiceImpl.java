@@ -1,20 +1,19 @@
 package com.github.tanxinzheng.module.notification.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
+import com.github.tanxinzheng.module.notification.mapper.NotificationMapper;
 import com.github.tanxinzheng.module.notification.model.*;
 import com.github.tanxinzheng.module.notification.service.NotificationReceiveService;
 import com.github.tanxinzheng.module.notification.service.NotificationSendService;
 import com.github.tanxinzheng.module.notification.service.NotificationService;
 import com.github.tanxinzheng.module.notification.service.NotificationTemplateService;
-import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +32,7 @@ import java.util.*;
 public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
-    com.github.tanxinzheng.module.notification.mapper.NotificationMapper notificationMapper;
+    NotificationMapper notificationMapper;
 
     /**
      * 新增通知

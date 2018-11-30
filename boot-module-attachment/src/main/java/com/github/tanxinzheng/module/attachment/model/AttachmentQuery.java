@@ -1,4 +1,4 @@
-package com.xmomen.module.attachment.model;
+package com.github.tanxinzheng.module.attachment.model;
 
 import lombok.Data;
 import com.github.tanxinzheng.framework.model.BaseQuery;

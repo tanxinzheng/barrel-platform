@@ -1,12 +1,11 @@
-package com.xmomen.module.attachment.service;
+package com.github.tanxinzheng.module.attachment.service;
 
 import com.github.pagehelper.Page;
-import com.xmomen.module.attachment.model.Attachment;
-import com.xmomen.module.attachment.model.AttachmentModel;
-import com.xmomen.module.attachment.model.AttachmentQuery;
+import com.github.tanxinzheng.module.attachment.model.Attachment;
+import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
+import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**

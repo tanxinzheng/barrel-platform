@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xmomen.module.attachment.mapper.AttachmentMapper" >
+<mapper namespace="com.github.tanxinzheng.module.attachment.mapper.AttachmentMapper" >
 
-    <insert id="insertSelective" parameterType="com.xmomen.module.attachment.model.Attachment" useGeneratedKeys="true" keyProperty="id" keyColumn="ID" >
+    <insert id="insertSelective" parameterType="com.github.tanxinzheng.module.attachment.model.Attachment" useGeneratedKeys="true" keyProperty="id" keyColumn="ID" >
         <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE" >
             SELECT replace(UUID(),'-','')
         </selectKey>
@@ -86,7 +86,7 @@
         </foreach>
     </delete>
 
-    <update id="updateSelective" parameterType="com.xmomen.module.attachment.model.Attachment" >
+    <update id="updateSelective" parameterType="com.github.tanxinzheng.module.attachment.model.Attachment" >
         update xmo_attachment
         <set>
             <if test="id != null" >
@@ -170,28 +170,28 @@
 
     <!--    查询消息    -->
     <select id="select"
-            resultType="com.xmomen.module.attachment.model.Attachment"
-            parameterType="com.xmomen.module.attachment.model.AttachmentQuery">
+            resultType="com.github.tanxinzheng.module.attachment.model.Attachment"
+            parameterType="com.github.tanxinzheng.module.attachment.model.AttachmentQuery">
         SELECT * FROM xmo_attachment
         <include refid="Update_By_Query_Where_Clause"/>
         ORDER BY ID
     </select>
 
     <select id="selectByPrimaryKey"
-            resultType="com.xmomen.module.attachment.model.Attachment"
+            resultType="com.github.tanxinzheng.module.attachment.model.Attachment"
             parameterType="java.lang.String">
         SELECT * FROM xmo_attachment WHERE ID = #{id}
     </select>
 
     <select id="selectModelByPrimaryKey"
-            resultType="com.xmomen.module.attachment.model.AttachmentModel"
+            resultType="com.github.tanxinzheng.module.attachment.model.AttachmentModel"
             parameterType="java.lang.String">
         SELECT * FROM xmo_attachment WHERE ID = #{id}
     </select>
 
     <select id="selectModel"
-            resultType="com.xmomen.module.attachment.model.AttachmentModel"
-            parameterType="com.xmomen.module.attachment.model.AttachmentQuery">
+            resultType="com.github.tanxinzheng.module.attachment.model.AttachmentModel"
+            parameterType="com.github.tanxinzheng.module.attachment.model.AttachmentQuery">
         SELECT * FROM xmo_attachment
         <include refid="Update_By_Query_Where_Clause"/>
         ORDER BY id

@@ -3,30 +3,14 @@ package com.github.tanxinzheng.module.dictionary.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
-import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
 import com.github.tanxinzheng.test.TestAppController;
-import org.apache.commons.io.FileUtils;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultHandler;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
 import java.util.Date;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,9 +24,6 @@ public class DictionaryControllerTest extends TestAppController {
     String GROUP_CODE = "TEST_GROUP";
 
     private static DictionaryModel dictionaryModel;
-
-    @Autowired
-    DictionaryService dictionaryService;
 
     @Before
     public void setUp() throws Exception {

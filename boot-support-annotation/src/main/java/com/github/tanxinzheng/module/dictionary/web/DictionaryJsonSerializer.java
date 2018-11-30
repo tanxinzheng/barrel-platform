@@ -26,7 +26,7 @@ public class DictionaryJsonSerializer extends JsonSerializer<Object>{
 
     private Map<String, DictionaryTransferService> dictionaryInterpreterServiceMap = Maps.newConcurrentMap();
 
-    @Autowired(required = false)
+    @Autowired
     private DictionaryInterpreterService dictionaryInterpreterService;
 
     @Autowired
@@ -54,6 +54,8 @@ public class DictionaryJsonSerializer extends JsonSerializer<Object>{
                 dictionaryMapLabel = transferService.translate(dictionaryTransfer.index(), (String) value);
             }else if(dictionaryInterpreterService != null){
                 dictionaryMapLabel = dictionaryInterpreterService.translateDictionary(dictionaryTransfer.index(), (String) value);
+            }else{
+                return;
             }
             String currentName = jsonGenerator.getOutputContext().getCurrentName();
             Object dictionaryLabel = dictionaryTransfer.outputFormat().newInstance();

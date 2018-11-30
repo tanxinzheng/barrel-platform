@@ -1,8 +1,8 @@
-package com.xmomen.module.attachment.mapper;
+package com.github.tanxinzheng.module.attachment.mapper;
 
-import com.xmomen.module.attachment.model.Attachment;
-import com.xmomen.module.attachment.model.AttachmentModel;
-import com.xmomen.module.attachment.model.AttachmentQuery;
+import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
+import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
+import com.github.tanxinzheng.module.attachment.model.Attachment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

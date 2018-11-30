@@ -1,21 +1,21 @@
-package com.xmomen.module.attachment.service.impl;
+package com.github.tanxinzheng.module.attachment.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.module.attachment.mapper.AttachmentMapper;
+import com.github.tanxinzheng.module.attachment.model.Attachment;
+import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
+import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
+import com.github.tanxinzheng.module.attachment.service.AttachmentService;
 import com.github.tanxinzheng.module.dictionary.web.DictionaryTransferService;
 import com.google.common.collect.Maps;
 import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.xmomen.module.fss.service.FileStoreService;
-import com.xmomen.module.fss.model.FileStorageInfo;
-import com.xmomen.module.fss.model.FileStorageResult;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
-import com.xmomen.module.attachment.mapper.AttachmentMapper;
-import com.xmomen.module.attachment.model.Attachment;
-import com.xmomen.module.attachment.model.AttachmentModel;
-import com.xmomen.module.attachment.model.AttachmentQuery;
-import com.xmomen.module.attachment.service.AttachmentService;
-import com.github.tanxinzheng.framework.core.model.AccountModel;
+import com.xmomen.module.fss.model.FileStorageInfo;
+import com.xmomen.module.fss.model.FileStorageResult;
+import com.xmomen.module.fss.service.FileStoreService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +51,9 @@ public class AttachmentServiceImpl implements AttachmentService, DictionaryTrans
     @Autowired
     FileStoreService fileStoreService;
 
+    @Autowired
+    CurrentAccountService currentAccountService;
+
     /**
      * 新增附件
      *
@@ -73,9 +76,9 @@ public class AttachmentServiceImpl implements AttachmentService, DictionaryTrans
         if(multipartFile.isEmpty()){
             return null;
         }
+        String userId = currentAccountService.getAccountId();
         String fileName = UUIDGenerator.getInstance().getUUID();
         UsernamePasswordAuthenticationToken subject =(UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        AccountModel accountModel = (AccountModel) subject.getDetails();
         FileStorageInfo fileStorageInfo = new FileStorageInfo(multipartFile);
         FileStorageResult result = fileStoreService.newFile(fileStorageInfo);
         if(!result.isSuccess()){
@@ -87,7 +90,7 @@ public class AttachmentServiceImpl implements AttachmentService, DictionaryTrans
         attachmentModel.setUploadTime(new Date());
         attachmentModel.setAttachmentGroup(DEFAULT_GROUP);
         attachmentModel.setAttachmentPath(result.getStoragePath());
-        attachmentModel.setUploadUserId(accountModel.getUserId());
+        attachmentModel.setUploadUserId(userId);
         attachmentModel.setOriginName(multipartFile.getOriginalFilename());
         attachmentModel.setAttachmentSuffix(multipartFile.getContentType());
         attachmentModel = createAttachment(attachmentModel);

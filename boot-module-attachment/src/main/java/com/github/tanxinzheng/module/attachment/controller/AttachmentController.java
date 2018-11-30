@@ -1,15 +1,13 @@
-package com.xmomen.module.attachment.controller;
+package com.github.tanxinzheng.module.attachment.controller;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.logger.ActionLog;
-
-import com.xmomen.module.attachment.model.AttachmentModel;
-import com.xmomen.module.attachment.model.AttachmentQuery;
-import com.xmomen.module.attachment.service.AttachmentService;
+import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
+import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
+import com.github.tanxinzheng.module.attachment.service.AttachmentService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,7 +30,6 @@ public class AttachmentController {
      * @return  Page<AttachmentModel> 附件领域分页对象
      */
     @ApiOperation(value = "查询附件列表")
-    @PreAuthorize(value = "hasAnyAuthority('ATTACHMENT:VIEW')")
     @RequestMapping(method = RequestMethod.GET)
     public Page<AttachmentModel> getAttachmentList(AttachmentQuery attachmentQuery){
         return attachmentService.getAttachmentModelPage(attachmentQuery);
@@ -44,7 +41,6 @@ public class AttachmentController {
      * @return  AttachmentModel   附件领域对象
      */
     @ApiOperation(value = "查询附件")
-    //@PreAuthorize("hasAuthority('ATTACHMENT:VIEW')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public AttachmentModel getAttachmentById(@PathVariable(value = "id") String id){
         return attachmentService.getOneAttachmentModel(id);
@@ -57,7 +53,6 @@ public class AttachmentController {
      */
     @ApiOperation(value = "新增附件")
     @ActionLog(actionName = "新增附件")
-    //@PreAuthorize("hasAuthority('PERMISSION:CREATE')")
     @RequestMapping(method = RequestMethod.POST)
     public AttachmentModel createAttachment(@RequestBody @Valid AttachmentModel attachmentModel) {
         return attachmentService.createAttachment(attachmentModel);
@@ -71,7 +66,6 @@ public class AttachmentController {
      */
     @ApiOperation(value = "更新附件")
     @ActionLog(actionName = "更新附件")
-    //@PreAuthorize("hasAuthority('PERMISSION:UPDATE')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public AttachmentModel updateAttachment(@PathVariable(value = "id") String id,
                            @RequestBody @Valid AttachmentModel attachmentModel){
@@ -88,7 +82,6 @@ public class AttachmentController {
      */
     @ApiOperation(value = "删除单个附件")
     @ActionLog(actionName = "删除单个附件")
-    //@PreAuthorize("hasAuthority('PERMISSION:DELETE')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteAttachment(@PathVariable(value = "id") String id){
         attachmentService.deleteAttachment(id);
@@ -100,7 +93,6 @@ public class AttachmentController {
      */
     @ApiOperation(value = "批量删除附件")
     @ActionLog(actionName = "批量删除附件")
-    //@PreAuthorize("hasAuthority('PERMISSION:DELETE')")
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteAttachments(@RequestBody AttachmentQuery attachmentQuery){
         attachmentService.deleteAttachment(attachmentQuery.getIds());

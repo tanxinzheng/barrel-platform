@@ -2,6 +2,7 @@ package com.github.tanxinzheng.module.dictionary.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.module.dictionary.mapper.DictionaryMapper;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryInterpreterService;
 import com.google.common.collect.Lists;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author  tanxinzheng
@@ -30,7 +32,7 @@ import java.util.*;
  * @version 1.0.0
  */
 @Service
-public class DictionaryServiceImpl implements DictionaryService, SelectService {
+public class DictionaryServiceImpl implements DictionaryService, DictionaryInterpreterService, SelectService {
 
     @Autowired
     DictionaryMapper dictionaryMapper;
@@ -267,5 +269,17 @@ public class DictionaryServiceImpl implements DictionaryService, SelectService {
     @Override
     public SelectIndex getSelectIndex() {
         return SelectIndex.DICTIONARY;
+    }
+
+    @Cacheable(cacheNames = "dictionariesCache", key = "#dictionaryType||dictionaryCode")
+    @Override
+    public Map<String, Object> translateDictionary(String dictionaryType, String dictionaryCode) {
+        DictionaryQuery dictionaryQuery = new DictionaryQuery();
+        dictionaryQuery.setType(dictionaryType);
+        List<DictionaryModel> list = dictionaryMapper.selectModel(dictionaryQuery);
+        if(list == null){
+            list = Lists.newArrayList();
+        }
+        return list.stream().collect(Collectors.toMap(DictionaryModel::getDictionaryCode, dictionaryModel -> dictionaryModel));
     }
 }

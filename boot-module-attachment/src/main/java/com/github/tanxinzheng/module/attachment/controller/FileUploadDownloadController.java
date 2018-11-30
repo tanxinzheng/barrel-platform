@@ -1,10 +1,10 @@
-package com.github.tanxinzheng.framework.core.controller;
+package com.github.tanxinzheng.module.attachment.controller;
 
 import com.aliyun.oss.common.utils.IOUtils;
 import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.xmomen.module.attachment.model.AttachmentModel;
-import com.xmomen.module.attachment.model.AttachmentQuery;
-import com.xmomen.module.attachment.service.AttachmentService;
+import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
+import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
+import com.github.tanxinzheng.module.attachment.service.AttachmentService;
 import com.xmomen.module.fss.model.FileStorageResult;
 import com.xmomen.module.fss.service.FileStoreService;
 import org.apache.commons.collections.CollectionUtils;
@@ -12,7 +12,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,11 +45,6 @@ public class FileUploadDownloadController {
     @Autowired
     FileStoreService fileStoreService;
 
-    @Value("${oss.endpoint}")
-    private String endpoint;
-    @Value("${oss.bucketName}")
-    private String bucketName;
-
     /**
      * 文件上传
      * @param file
@@ -82,14 +76,15 @@ public class FileUploadDownloadController {
 
     /**
      * 文件批量打包下载
-     * @return
+     * @param fileZipName
+     * @param fileKeys
+     * @param response
      * @throws IOException
-     * @throws BusinessException
      */
     @RequestMapping(value = "/download/zip")
     public void downloadZip(@RequestParam(value = "fileName", required = false) String fileZipName,
-                                      @RequestParam("fileKeys") String[] fileKeys,
-                                      HttpServletResponse response) throws IOException {
+                            @RequestParam("fileKeys") String[] fileKeys,
+                            HttpServletResponse response) throws IOException {
         if(StringUtils.isBlank(fileZipName)){
             fileZipName = "批量下载_" + DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date());
         }
@@ -135,7 +130,6 @@ public class FileUploadDownloadController {
      * @param request
      * @return
      * @throws IOException
-     * @throws BusinessException
      */
     @RequestMapping(value = "/download/temps")
     public ResponseEntity downloadTempFile(@RequestParam("file") String filename,
@@ -144,7 +138,7 @@ public class FileUploadDownloadController {
         String downloadsPath = request.getServletContext().getRealPath("/WEB-INF/temps");
         File file = new File(downloadsPath, realFilename);
         if(!file.exists()) {
-            throw new BusinessException("您要下载的文件的不存在");
+            throw new IllegalArgumentException("您要下载的文件的不存在");
         }
         String name = realFilename.substring(17, realFilename.length());
         HttpHeaders headers = new HttpHeaders();
