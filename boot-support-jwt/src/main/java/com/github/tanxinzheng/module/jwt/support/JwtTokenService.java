@@ -1,5 +1,7 @@
 package com.github.tanxinzheng.module.jwt.support;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,15 +49,19 @@ public interface JwtTokenService {
      * 校验token
      * @param token
      * @return
+     * @throws SignatureException
+     * @throws ExpiredJwtException
      */
-    public boolean validToken(String token);
+    public boolean validToken(String token) throws SignatureException, ExpiredJwtException;
 
     /**
      * 校验refresh token
      * @param refreshToken
      * @return
+     * @throws SignatureException
+     * @throws ExpiredJwtException
      */
-    public boolean validRefreshToken(String refreshToken);
+    public boolean validRefreshToken(String refreshToken) throws SignatureException, ExpiredJwtException;
 
     /**
      * 更新token

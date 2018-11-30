@@ -1,9 +1,7 @@
 package com.github.tanxinzheng.module.jwt.support;
 
 import com.github.tanxinzheng.module.jwt.JwtConfigProperties;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -66,7 +64,7 @@ public class DefaultJwtTokenService implements JwtTokenService {
         // 从Header中获取token
         String token = request.getHeader(headerName);
         if(StringUtils.isNotBlank(token)){
-            token = token.replaceAll("Bearer ", "");
+            token = token.replaceAll(StringUtils.lowerCase(TokenType.BEARER.getCode()) + " ", "");
         }
         if(StringUtils.isBlank(token)){
             // 从请求参数中获取token
@@ -110,12 +108,12 @@ public class DefaultJwtTokenService implements JwtTokenService {
      * @return
      */
     @Override
-    public boolean validToken(String token) throws ExpiredJwtException {
+    public boolean validToken(String token) throws SignatureException, ExpiredJwtException {
         if(token == null){
-            return false;
+            return Boolean.FALSE;
         }
         Jwts.parser().setSigningKey(jwtConfigProperties.getSecret()).parse(token);
-        return true;
+        return Boolean.TRUE;
     }
 
     /**
@@ -125,16 +123,11 @@ public class DefaultJwtTokenService implements JwtTokenService {
      * @return
      */
     @Override
-    public boolean validRefreshToken(String token) {
+    public boolean validRefreshToken(String token) throws SignatureException, ExpiredJwtException {
         if(token == null){
             return false;
         }
-        try {
-            Jwts.parser().setSigningKey(jwtConfigProperties.getSecret()).parse(token);
-            return true;
-        } catch (Exception e){
-            log.debug(e.getMessage(), e);
-        }
+        Jwts.parser().setSigningKey(jwtConfigProperties.getSecret()).parse(token);
         return true;
     }
 

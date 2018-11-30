@@ -24,6 +24,8 @@ public class JwtConfigProperties {
 
     private static final String DEFAULT_JWT_SESSION_NAME = "jwt-session";
 
+    private static final long DEFAULT_JWT_EXPIRATION = 2 * 1000 * 60 * 60;
+
     /**
      * JWT 认证请求头
      */
@@ -72,7 +74,7 @@ public class JwtConfigProperties {
     /**
      * 有效时间
      */
-    private String expiration;
+    private Long expiration;
 
     /**
      * 匿名可访问URL
@@ -111,11 +113,12 @@ public class JwtConfigProperties {
         this.secret = secret;
     }
 
-    public String getExpiration() {
+    public Long getExpiration() {
+        expiration = expiration == null ? DEFAULT_JWT_EXPIRATION : expiration;
         return expiration;
     }
 
-    public void setExpiration(String expiration) {
+    public void setExpiration(Long expiration) {
         this.expiration = expiration;
     }
 

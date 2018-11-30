@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.jwt;
 
+import com.github.tanxinzheng.module.jwt.support.JwtErrorCode;
 import com.github.tanxinzheng.module.jwt.support.JwtUser;
 import com.github.tanxinzheng.module.jwt.support.RestResponse;
 import org.assertj.core.util.Lists;
@@ -76,7 +77,7 @@ public class JwtSupportTest {
         multiValueMap.add("password", "123456");
         Map data = testRestTemplate.postForObject(this.base.toString() + "/login", multiValueMap, Map.class);
         Map result = (HashMap) data.get("data");
-        String token = String.valueOf(result.get("token"));
+        String token = String.valueOf(result.get("accessToken"));
         return token;
     }
 
@@ -133,6 +134,7 @@ public class JwtSupportTest {
         RestResponse responseEntity = testRestTemplate.getForObject(this.base.toString() + "/user?token={token}", RestResponse.class, token);
         Assert.assertNotNull(responseEntity);
         Assert.assertTrue("测试错误的token请求", responseEntity.getStatus() == 401);
+        Assert.assertEquals("测试错误的token请求", JwtErrorCode.TOKEN_INVALID.getCode(), responseEntity.getCode());
     }
 
     @Test
@@ -168,6 +170,21 @@ public class JwtSupportTest {
         RestResponse result = testRestTemplate.postForObject(this.base.toString() + "/login", multiValueMap, RestResponse.class);
         Assert.assertNotNull(result);
         Assert.assertTrue("测试错误密码登录",result.getStatus() == 401);
+    }
+
+    /**
+     * 测试未授权资源访问受限
+     * @throws Exception
+     */
+    @Test
+    public void testTokenExpire() throws Exception {
+        jwtConfigProperties.setExpiration(Long.valueOf(5000));
+        headerLogin();
+        Thread.sleep(10000);
+        RestResponse responseEntity = testRestTemplate.getForObject(this.base.toString() + "/user?id=123456", RestResponse.class);
+        Assert.assertNotNull(responseEntity);
+        Assert.assertTrue("测试token过期", responseEntity.getStatus() == 401);
+        Assert.assertEquals("测试token过期", JwtErrorCode.TOKEN_EXPIRATION.getCode(), responseEntity.getCode());
     }
 
 }

@@ -2,6 +2,8 @@ package com.github.tanxinzheng.module.jwt.support.handler;
 
 import com.github.tanxinzheng.module.jwt.support.JwtUserDetails;
 import com.github.tanxinzheng.module.jwt.support.RestResponse;
+import com.github.tanxinzheng.module.jwt.support.TokenType;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -23,7 +25,8 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         JwtUserDetails jwtUserDetails = (JwtUserDetails) authentication.getDetails();
         data.put("name", jwtUserDetails.getName());
         data.put("username", jwtUserDetails.getUsername());
-        data.put("token", jwtUserDetails.getToken());
+        data.put("tokenType", StringUtils.lowerCase(TokenType.BEARER.getCode()));
+        data.put("accessToken", jwtUserDetails.getToken());
         data.put("refreshToken", jwtUserDetails.getRefreshToken());
         RestResponse.ok(data).toJSON(request, response);
     }

@@ -19,6 +19,7 @@ import java.util.Date;
 @Data
 public class RestResponse<T> implements Serializable {
 
+    private String code;
     private String path;
     private Long timestamp;
     private Integer status;

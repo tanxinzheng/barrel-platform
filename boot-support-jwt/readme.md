@@ -59,3 +59,13 @@ public class JwtStartApp {
     
 }
 ```
+
+## 错误信息状态码
+
+```
+401001   缺少token             access token must be not null
+401002   无效的token           invalid access token
+401003   过期的token           expiration access token
+401004   无效的refresh token   invalid refresh token
+401005   过期的refresh token   expiration refresh token
+```
