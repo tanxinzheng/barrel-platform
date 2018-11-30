@@ -54,7 +54,7 @@
 		</filter>
     </appender>
 
-    <logger name="org.springframework" level="ERROR"/>
+    <!--<logger name="org.springframework" level="ERROR"/>-->
     <logger name="org.mybatis.spring" level="INFO"/>
     <logger name="org.apache" level="ERROR"/>
     <logger name="com.mangofactory.swagger" level="ERROR"/>
