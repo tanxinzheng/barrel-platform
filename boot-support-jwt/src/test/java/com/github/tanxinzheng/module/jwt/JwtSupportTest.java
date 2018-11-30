@@ -107,21 +107,23 @@ public class JwtSupportTest {
     @Test
     public void testAnonymousAccess() throws Exception {
         String data = testRestTemplate.getForObject(this.base.toString() + "/anonymous", String.class);
-        Assert.assertEquals(data, "hello");
+        Assert.assertEquals("测试匿名访问资源", "hello", data);
     }
 
     @Test
     public void testUserAccessByTokenParam() throws Exception {
         String token = getToken();
-        String jwtUser = testRestTemplate.getForObject(this.base.toString() + "/user?token={token}", String.class, token);
-        Assert.assertNotNull(jwtUser);
+        String name = testRestTemplate.getForObject(this.base.toString() + "/user?token={token}", String.class, token);
+        Assert.assertNotNull(name);
+        Assert.assertEquals("测试token参数请求访问资源", "管理员", name);
     }
 
     @Test
     public void testUserAccessByTokenHeader() throws Exception {
         headerLogin();
-        String jwtUser = testRestTemplate.getForObject(this.base.toString() + "/user?id=123456", String.class);
-        Assert.assertNotNull(jwtUser);
+        String name = testRestTemplate.getForObject(this.base.toString() + "/user?id=123456", String.class);
+        Assert.assertNotNull(name);
+        Assert.assertEquals("测试token请求头访问资源", "管理员", name);
     }
 
     @Test
@@ -130,7 +132,7 @@ public class JwtSupportTest {
         token = token + 1;
         RestResponse responseEntity = testRestTemplate.getForObject(this.base.toString() + "/user?token={token}", RestResponse.class, token);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(responseEntity.getStatus() == 401);
+        Assert.assertTrue("测试错误的token请求", responseEntity.getStatus() == 401);
     }
 
     @Test
@@ -138,25 +140,34 @@ public class JwtSupportTest {
         headerLogin();
         String email = testRestTemplate.getForObject(this.base.toString() + "/email", String.class);
         Assert.assertNotNull(email);
-        Assert.assertEquals(email, "admin@xmomen.com");
+        Assert.assertEquals("测试未控制资源可访问权限", "admin@xmomen.com", email);
     }
 
 
+    /**
+     * 测试未授权资源访问受限
+     * @throws Exception
+     */
     @Test
     public void testUserAccessForbidden() throws Exception {
         headerLogin();
         RestResponse responseEntity = testRestTemplate.getForObject(this.base.toString() + "/admin/user?id=123456", RestResponse.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertTrue("测试禁止访问管理员权限", responseEntity.getStatus() == 403);
+        Assert.assertTrue("测试未授权资源访问受限", responseEntity.getStatus() == 403);
     }
 
+    /**
+     * 测试错误密码
+     * @throws Exception
+     */
     @Test
     public void testJwtLoginFail() throws Exception {
         MultiValueMap multiValueMap = new LinkedMultiValueMap();
         multiValueMap.add("username", "admin");
         multiValueMap.add("password", "errorpassword");
-        Map result = testRestTemplate.postForObject(this.base.toString() + "/login", multiValueMap, Map.class);
+        RestResponse result = testRestTemplate.postForObject(this.base.toString() + "/login", multiValueMap, RestResponse.class);
         Assert.assertNotNull(result);
+        Assert.assertTrue("测试错误密码登录",result.getStatus() == 401);
     }
 
 }
