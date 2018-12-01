@@ -1,30 +1,23 @@
-package com.xmomen.module.authorization.service.impl;
+package com.github.tanxinzheng.module.authorization.service.impl;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.module.dictionary.web.AccountInterpreterService;
-import com.google.common.collect.Maps;
-import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.xmomen.module.fss.service.FileStoreService;
-import com.xmomen.module.fss.model.FileStorageInfo;
-import com.xmomen.module.fss.model.FileStorageResult;
-import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
-import com.github.tanxinzheng.framework.utils.UUIDGenerator;
-import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
-import com.xmomen.module.attachment.model.Attachment;
-import com.xmomen.module.attachment.service.AttachmentService;
-import com.xmomen.module.authorization.mapper.UserMapper;
-import com.xmomen.module.authorization.model.AttachmentGroupEnmu;
-import com.xmomen.module.authorization.model.User;
-import com.xmomen.module.authorization.model.UserModel;
-import com.xmomen.module.authorization.model.UserQuery;
-import com.xmomen.module.authorization.service.UserService;
 import com.github.tanxinzheng.framework.core.model.SelectIndex;
 import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
 import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
 import com.github.tanxinzheng.framework.core.service.SelectService;
+import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
+import com.github.tanxinzheng.framework.utils.UUIDGenerator;
+import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
+import com.github.tanxinzheng.module.authorization.mapper.UserMapper;
+import com.github.tanxinzheng.module.authorization.model.User;
+import com.github.tanxinzheng.module.authorization.model.UserModel;
+import com.github.tanxinzheng.module.authorization.model.UserQuery;
+import com.github.tanxinzheng.module.authorization.service.UserService;
+import com.github.tanxinzheng.module.dictionary.web.AccountInterpreterService;
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,9 +42,6 @@ public class UserServiceImpl implements UserService, AccountInterpreterService, 
 
     @Autowired
     UserMapper userMapper;
-
-    @Autowired
-    FileStoreService fileStoreService;
 
     /**
      * 新增数据字典
@@ -243,54 +233,9 @@ public class UserServiceImpl implements UserService, AccountInterpreterService, 
         return userModelList.get(0);
     }
 
-    @Autowired
-    AttachmentService attachmentService;
-
-    /**
-     * 更换用户头像
-     *
-     * @param userId
-     * @param multipartFile
-     */
-    @Transactional
-    @Override
-    public void updateAvatar(String userId, MultipartFile multipartFile) {
-        if(multipartFile.isEmpty()){
-            throw new BusinessException("请选择有效的图片");
-        }
-        FileStorageInfo fileStorageInfo = new FileStorageInfo(multipartFile);
-        FileStorageResult fileStorageResult = fileStoreService.newFile(fileStorageInfo);
-        if(!fileStorageResult.isSuccess()){
-            throw new BusinessException("图片上传失败");
-        }
-        String fileKey = UUIDGenerator.getInstance().getUUID();
-        Attachment attachment = new Attachment();
-        attachment.setAttachmentGroup(AttachmentGroupEnmu.USER_AVATAR.name());
-        attachment.setAttachmentKey(fileKey);
-        attachment.setAttachmentPath(fileStorageResult.getStoragePath());
-        attachment.setAttachmentSize(multipartFile.getSize());
-        attachment.setUploadTime(new Date());
-        attachment.setUploadUserId(userId);
-        attachment.setAttachmentSuffix(multipartFile.getContentType());
-        attachment.setOriginName("avatar.png");
-        attachment.setIsPrivate(false);
-        attachmentService.createAttachment(attachment);
-        User user = getOneUser(userId);
-        if(user != null && StringUtils.isNotBlank(user.getAvatar())){
-            // 删除旧头像
-            attachmentService.deleteAttachmentByKey(user.getAvatar());
-        }
-        User updateUser = new User();
-        updateUser.setId(userId);
-        updateUser.setAvatar(fileKey);
-        updateUser(updateUser);
-
-    }
-
     /**
      * 翻译
      *
-     * @param dictionaryType 字典类型
      * @param dictionaryCode 字典代码
      * @return
      */

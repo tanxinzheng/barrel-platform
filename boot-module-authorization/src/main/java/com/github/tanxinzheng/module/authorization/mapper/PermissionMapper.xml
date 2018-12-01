@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.tanxinzheng.module.authorization.mapper.PermissionMapper" >
+
+    <sql id="Base_Columns">
+        ID,
+        PERMISSION_KEY,
+        PERMISSION_GROUP,
+        PERMISSION_URL,
+        PERMISSION_ACTION,
+        DESCRIPTION,
+        ACTIVE,
+        PARENT_ID,
+        CREATED_USER_ID,
+        CREATED_TIME,
+        UPDATED_USER_ID,
+        UPDATED_TIME
+    </sql>
+
+    <sql id="Base_Properties">
+        #{id, jdbcType=VARCHAR},
+        #{permissionKey, jdbcType=VARCHAR},
+        #{permissionGroup, jdbcType=VARCHAR},
+        #{permissionUrl, jdbcType=VARCHAR},
+        #{permissionAction, jdbcType=VARCHAR},
+        #{description, jdbcType=VARCHAR},
+        #{active, jdbcType=VARCHAR},
+        #{parentId, jdbcType=VARCHAR},
+        #{createdUserId, jdbcType=VARCHAR},
+        #{createdTime, jdbcType=TIMESTAMP},
+        #{updatedUserId, jdbcType=VARCHAR},
+        #{updatedTime, jdbcType=TIMESTAMP}
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.github.tanxinzheng.module.authorization.model.Permission" useGeneratedKeys="true" keyProperty="id" keyColumn="ID" >
+        <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE" >
+            SELECT replace(UUID(),'-','')
+        </selectKey>
+        insert into xmo_permission
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            ID,
+            <if test="permissionKey != null" >
+                PERMISSION_KEY,
+            </if>
+            <if test="permissionGroup != null" >
+                PERMISSION_GROUP,
+            </if>
+            <if test="permissionUrl != null" >
+                PERMISSION_URL,
+            </if>
+            <if test="permissionAction != null" >
+                PERMISSION_ACTION,
+            </if>
+            <if test="description != null" >
+                DESCRIPTION,
+            </if>
+            <if test="active != null" >
+                ACTIVE,
+            </if>
+            <if test="parentId != null" >
+                PARENT_ID,
+            </if>
+            <if test="createdUserId != null" >
+                CREATED_USER_ID,
+            </if>
+            <if test="createdTime != null" >
+                CREATED_TIME,
+            </if>
+            <if test="updatedUserId != null" >
+                UPDATED_USER_ID,
+            </if>
+            <if test="updatedTime != null" >
+                UPDATED_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            #{id, jdbcType=VARCHAR},
+            <if test="permissionKey != null" >
+            #{permissionKey, jdbcType=VARCHAR},
+            </if>
+            <if test="permissionGroup != null" >
+            #{permissionGroup, jdbcType=VARCHAR},
+            </if>
+            <if test="permissionUrl != null" >
+            #{permissionUrl, jdbcType=VARCHAR},
+            </if>
+            <if test="permissionAction != null" >
+            #{permissionAction, jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+            #{description, jdbcType=VARCHAR},
+            </if>
+            <if test="active != null" >
+            #{active, jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null" >
+            #{parentId, jdbcType=VARCHAR},
+            </if>
+            <if test="createdUserId != null" >
+            #{createdUserId, jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null" >
+            #{createdTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedUserId != null" >
+            #{updatedUserId, jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null" >
+            #{updatedTime, jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from xmo_permission where ID = #{id}
+    </delete>
+
+    <delete id="deletesByPrimaryKey" parameterType="java.util.ArrayList" >
+        delete from xmo_permission where ID IN
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+        #{item}
+        </foreach>
+    </delete>
+
+    <update id="updateSelective" parameterType="com.github.tanxinzheng.module.authorization.model.Permission" >
+        update xmo_permission
+        <set>
+            <if test="id != null" >
+            ID = #{id, jdbcType=VARCHAR},
+            </if>
+            <if test="permissionKey != null" >
+            PERMISSION_KEY = #{permissionKey, jdbcType=VARCHAR},
+            </if>
+            <if test="permissionGroup != null" >
+            PERMISSION_GROUP = #{permissionGroup, jdbcType=VARCHAR},
+            </if>
+            <if test="permissionUrl != null" >
+            PERMISSION_URL = #{permissionUrl, jdbcType=VARCHAR},
+            </if>
+            <if test="permissionAction != null" >
+            PERMISSION_ACTION = #{permissionAction, jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+            DESCRIPTION = #{description, jdbcType=VARCHAR},
+            </if>
+            <if test="active != null" >
+            ACTIVE = #{active, jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null" >
+            PARENT_ID = #{parentId, jdbcType=VARCHAR},
+            </if>
+            <if test="createdUserId != null" >
+            CREATED_USER_ID = #{createdUserId, jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null" >
+            CREATED_TIME = #{createdTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedUserId != null" >
+            UPDATED_USER_ID = #{updatedUserId, jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null" >
+            UPDATED_TIME = #{updatedTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <update id="updateSelectiveByQuery" parameterType="map" >
+        update xmo_permission
+        <set >
+            <if test="record.id != null" >
+            ID = #{record.id, jdbcType=VARCHAR},
+            </if>
+            <if test="record.permissionKey != null" >
+            PERMISSION_KEY = #{record.permissionKey, jdbcType=VARCHAR},
+            </if>
+            <if test="record.permissionGroup != null" >
+            PERMISSION_GROUP = #{record.permissionGroup, jdbcType=VARCHAR},
+            </if>
+            <if test="record.permissionUrl != null" >
+            PERMISSION_URL = #{record.permissionUrl, jdbcType=VARCHAR},
+            </if>
+            <if test="record.permissionAction != null" >
+            PERMISSION_ACTION = #{record.permissionAction, jdbcType=VARCHAR},
+            </if>
+            <if test="record.description != null" >
+            DESCRIPTION = #{record.description, jdbcType=VARCHAR},
+            </if>
+            <if test="record.active != null" >
+            ACTIVE = #{record.active, jdbcType=VARCHAR},
+            </if>
+            <if test="record.parentId != null" >
+            PARENT_ID = #{record.parentId, jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdUserId != null" >
+            CREATED_USER_ID = #{record.createdUserId, jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdTime != null" >
+            CREATED_TIME = #{record.createdTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updatedUserId != null" >
+            UPDATED_USER_ID = #{record.updatedUserId, jdbcType=VARCHAR},
+            </if>
+            <if test="record.updatedTime != null" >
+            UPDATED_TIME = #{record.updatedTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="query != null" >
+            <include refid="Update_By_Query_Where_Clause"/>
+        </if>
+    </update>
+
+    <select id="select"
+            resultType="com.github.tanxinzheng.module.authorization.model.Permission"
+            parameterType="com.github.tanxinzheng.module.authorization.model.PermissionQuery">
+        SELECT
+        <include refid="Base_Columns"/>
+        FROM xmo_permission
+        <include refid="Update_By_Query_Where_Clause"/>
+        ORDER BY ID
+    </select>
+
+    <select id="selectByPrimaryKey"
+            resultType="com.github.tanxinzheng.module.authorization.model.Permission"
+            parameterType="java.lang.String">
+        SELECT
+            <include refid="Base_Columns"/>
+        FROM xmo_permission WHERE ID = #{id}
+    </select>
+
+    <select id="selectModelByPrimaryKey"
+            resultType="com.github.tanxinzheng.module.authorization.model.PermissionModel"
+            parameterType="java.lang.String">
+        SELECT
+            <include refid="Base_Columns"/>
+        FROM xmo_permission WHERE ID = #{id}
+    </select>
+
+    <select id="selectModel"
+            resultType="com.github.tanxinzheng.module.authorization.model.PermissionModel"
+            parameterType="com.github.tanxinzheng.module.authorization.model.PermissionQuery">
+        SELECT
+            <include refid="Base_Columns"/>
+        FROM xmo_permission
+        <include refid="Update_By_Query_Where_Clause"/>
+        ORDER BY id
+    </select>
+
+    <sql id="Update_By_Query_Where_Clause">
+        <where>
+            <if test="keyword">
+                AND ID LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="id">
+                AND ID = #{id}
+            </if>
+            <if test="ids">
+                AND ID IN
+                <foreach collection="ids" item="item" separator="," open="(" close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="excludeIds">
+                AND ID NOT IN
+                <foreach collection="excludeIds" item="item" separator="," open="(" close=")">
+                #{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+</mapper>

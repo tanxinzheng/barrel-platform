@@ -1,10 +1,9 @@
-package com.xmomen.module.authorization.service;
+package com.github.tanxinzheng.module.authorization.service;
 
 import com.github.pagehelper.Page;
-import com.xmomen.module.authorization.model.UserQuery;
-import com.xmomen.module.authorization.model.UserModel;
-import com.xmomen.module.authorization.model.User;
-import org.springframework.web.multipart.MultipartFile;
+import com.github.tanxinzheng.module.authorization.model.User;
+import com.github.tanxinzheng.module.authorization.model.UserModel;
+import com.github.tanxinzheng.module.authorization.model.UserQuery;
 
 import java.util.List;
 
@@ -111,10 +110,4 @@ public interface UserService {
      */
     public UserModel getOneUserModel(UserQuery userQuery);
 
-    /**
-     * 更换用户头像
-     * @param userId
-     * @param multipartFile
-     */
-    public void updateAvatar(String userId, MultipartFile multipartFile);
 }
