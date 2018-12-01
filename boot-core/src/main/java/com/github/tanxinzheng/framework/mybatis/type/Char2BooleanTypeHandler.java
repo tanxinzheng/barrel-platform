@@ -51,7 +51,7 @@ public class Char2BooleanTypeHandler implements TypeHandler<Boolean> {
      * @throws SQLException
      */
     public Boolean getResult(ResultSet resultSet, int i) throws SQLException {
-        return tranferType(  resultSet.getString(i) );
+        return tranferType(resultSet.getString(i) );
     }
 
     /**

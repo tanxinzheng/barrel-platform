@@ -1,6 +1,5 @@
 package com.github.tanxinzheng.framework.poi;
 
-import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -134,16 +133,16 @@ public class ExcelUtils extends MiniAbstractExcelView {
     public static <T> List<T> transform(MultipartFile multipartFile, Class<T> model, ImportParams importParams){
         try {
             if(multipartFile.isEmpty()){
-                throw new BusinessException("文件不能空");
+                throw new IllegalArgumentException("文件不能空");
             }
             if(!(multipartFile.getOriginalFilename().endsWith(".xls")
                     || multipartFile.getOriginalFilename().endsWith(".xlsx"))){
-                throw new BusinessException("请选择正确格式的Excel文件上传，文件后缀（.xls）或（.xlsx)");
+                throw new IllegalArgumentException("请选择正确格式的Excel文件上传，文件后缀（.xls）或（.xlsx)");
             }
             return transform(multipartFile.getInputStream(), model, importParams);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new BusinessException("Excel导入失败，错误信息：" + e.getMessage());
+            throw new IllegalArgumentException("Excel导入失败，错误信息：" + e.getMessage());
         }
     }
 
@@ -183,7 +182,7 @@ public class ExcelUtils extends MiniAbstractExcelView {
             in = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new BusinessException("Excel导入失败，错误信息：未找到指定文件");
+            throw new IllegalArgumentException("Excel导入失败，错误信息：未找到指定文件");
         }
         return transform(in, model, importParams);
     }
@@ -200,7 +199,7 @@ public class ExcelUtils extends MiniAbstractExcelView {
         try {
             return ExcelImportUtil.importExcel(inputStream, model, importParams);
         } catch (Exception e) {
-            throw new BusinessException("Excel模板不正确，导入失败");
+            throw new IllegalArgumentException("Excel模板不正确，导入失败");
         }
     }
 

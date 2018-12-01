@@ -24,8 +24,10 @@
 		<module>boot-admin</module>
 		<module>boot-webapp-ams</module>
 		<module>boot-webapp-ums</module>
+        <module>boot-module-attachment</module>
+        <module>boot-module-authorization</module>
 
-	</modules>
+    </modules>
 	<packaging>pom</packaging>
 
 	<name>boot</name>

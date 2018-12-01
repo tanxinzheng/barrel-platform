@@ -33,7 +33,6 @@ public class DictionaryControllerTest extends TestAppController {
     @After
     public void setDown() throws Exception {
         deleteById();
-
     }
 
     public void deleteById() throws Exception {
