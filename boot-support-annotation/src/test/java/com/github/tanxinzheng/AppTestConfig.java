@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -71,6 +72,8 @@ public class AppTestConfig extends WebMvcConfigurerAdapter {
     @Bean
     public DictionaryInterpreterService getDictionaryInterpreterService(){
         return new DictionaryInterpreterService() {
+
+            @Cacheable(cacheNames = "dictionariesCache", key = "#dictionaryType||dictionaryCode")
             @Override
             public Map<String, Object> translateDictionary(String dictionaryType, String dictionaryCode) {
                 Map<String, Object> data = Maps.newHashMap();

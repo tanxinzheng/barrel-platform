@@ -2,6 +2,7 @@ package com.github.tanxinzheng.module.dictionary.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.module.dictionary.mapper.DictionaryMapper;
+import com.github.tanxinzheng.module.dictionary.model.Dictionary;
 import com.github.tanxinzheng.module.dictionary.web.DictionaryInterpreterService;
 import com.google.common.collect.Lists;
 import com.github.tanxinzheng.framework.exception.BusinessException;
@@ -194,7 +195,7 @@ public class DictionaryServiceImpl implements DictionaryService, DictionaryInter
      * @return Dictionary 数据字典实体对象
      */
     @Override
-    public com.github.tanxinzheng.module.dictionary.model.Dictionary getOneDictionary(String id) {
+    public Dictionary getOneDictionary(String id) {
         if(StringUtils.isBlank(id)){
             return null;
         }
@@ -271,7 +272,7 @@ public class DictionaryServiceImpl implements DictionaryService, DictionaryInter
         return SelectIndex.DICTIONARY;
     }
 
-    @Cacheable(cacheNames = "dictionariesCache", key = "#dictionaryType||dictionaryCode")
+    @Cacheable(cacheNames = "dictionariesCache", key = "#dictionaryType")
     @Override
     public Map<String, Object> translateDictionary(String dictionaryType, String dictionaryCode) {
         DictionaryQuery dictionaryQuery = new DictionaryQuery();

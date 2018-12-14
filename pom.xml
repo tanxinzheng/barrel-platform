@@ -21,13 +21,12 @@
         <module>boot-module-dictionary</module>
 		<module>boot-module-notification</module>
 		<module>boot-module-account</module>
+		<module>boot-module-attachment</module>
+		<module>boot-module-authorization</module>
+		<module>boot-module-logger</module>
 		<module>boot-admin</module>
 		<module>boot-webapp-ams</module>
 		<module>boot-webapp-ums</module>
-        <module>boot-module-attachment</module>
-        <module>boot-module-authorization</module>
-        <module>boot-module-logger</module>
-
     </modules>
 	<packaging>pom</packaging>
 

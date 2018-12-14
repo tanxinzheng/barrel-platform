@@ -27,6 +27,13 @@ public interface JwtTokenService {
     public String getToken(HttpServletRequest request);
 
     /**
+     * 创建refresh token
+     * @param username
+     * @return
+     */
+    public String createRefreshToken(String username);
+
+    /**
      * 获取refresh token
      * @param request
      */

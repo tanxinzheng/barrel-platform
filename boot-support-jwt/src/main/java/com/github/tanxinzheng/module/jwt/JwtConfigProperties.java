@@ -24,7 +24,11 @@ public class JwtConfigProperties {
 
     private static final String DEFAULT_JWT_SESSION_NAME = "jwt-session";
 
+    // 默认 2小时
     private static final long DEFAULT_JWT_EXPIRATION = 2 * 1000 * 60 * 60;
+
+    // 默认 2周
+    private static final long DEFAULT_JWT_REFRESH_EXPIRATION = 2 * 7 * 24 * 1000 * 60 * 60;
 
     /**
      * JWT 认证请求头
@@ -75,6 +79,11 @@ public class JwtConfigProperties {
      * 有效时间
      */
     private Long expiration;
+
+    /**
+     * refresh token 有效时间
+     */
+    private Long refreshTokenExpiration;
 
     /**
      * 匿名可访问URL
@@ -163,5 +172,14 @@ public class JwtConfigProperties {
 
     public void setTokenIdName(String tokenIdName) {
         this.tokenIdName = tokenIdName;
+    }
+
+    public Long getRefreshTokenExpiration() {
+        refreshTokenExpiration = refreshTokenExpiration == null ? DEFAULT_JWT_REFRESH_EXPIRATION : refreshTokenExpiration;
+        return refreshTokenExpiration;
+    }
+
+    public void setRefreshTokenExpiration(Long refreshTokenExpiration) {
+        this.refreshTokenExpiration = refreshTokenExpiration;
     }
 }

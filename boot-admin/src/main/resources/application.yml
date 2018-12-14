@@ -46,7 +46,6 @@ mybatis:
 # security
 jwt:
   secret: xmomen
-  expiration: 1800
 
 jog:
   cron:

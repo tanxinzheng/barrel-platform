@@ -41,14 +41,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("用户名或密码错误");
         }
         // 生成token，refreshToken
-        String token = JwtUtils.createToken(userDetails.getUsername(),
-                jwtConfigProperties.getIssuer(),
-                jwtConfigProperties.getSecret(),
-                jwtConfigProperties.getExpiration());
-        String refreshToken = JwtUtils.createToken(userDetails.getUsername(),
-                jwtConfigProperties.getIssuer(),
-                jwtConfigProperties.getSecret(),
-                jwtConfigProperties.getExpiration());
+
+        String token = jwtTokenService.createToken(userDetails.getUsername());
+        String refreshToken = jwtTokenService.createRefreshToken(userDetails.getUsername());
         userDetails.setToken(token);
         userDetails.setRefreshToken(refreshToken);
 

@@ -57,6 +57,14 @@ public class DefaultJwtTokenService implements JwtTokenService {
                 jwtConfigProperties.getTokenParameterName());
     }
 
+    @Override
+    public String createRefreshToken(String username) {
+        return JwtUtils.createToken(username,
+                jwtConfigProperties.getIssuer(),
+                jwtConfigProperties.getSecret(),
+                jwtConfigProperties.getExpiration());
+    }
+
     private String getTokenValue(HttpServletRequest request, String headerName, String cookieName, String parameterName){
         if(request == null){
             return null;

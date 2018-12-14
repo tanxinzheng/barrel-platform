@@ -14,7 +14,6 @@ redis:
 
 jwt:
   secret: 123456
-  expiration: 2 # 以小时为时间单位
   permit-urls:
     - /index.html
     - /swagger-ui.html
