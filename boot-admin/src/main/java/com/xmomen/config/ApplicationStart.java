@@ -1,6 +1,6 @@
 package com.xmomen.config;
 
-import com.xmomen.module.jwt.EnableJWT;
+import com.github.tanxinzheng.module.jwt.EnableJWT;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @EnableJWT
-@MapperScan(value = "com.xmomen.**.mapper")
+@MapperScan(value = "com.**.mapper")
 public class ApplicationStart {
 
     public static void main(String[] args) {

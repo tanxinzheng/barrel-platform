@@ -23,7 +23,6 @@ public @Data class AccountModel implements Serializable {
     private Boolean locked;
     @DictionaryTransfer(index = DictionaryIndex.ATTACHMENT_KEY, fieldName = "avatarUrl")
     private String avatar;
-
     private List<NavItem> navItems;
 
     @Data

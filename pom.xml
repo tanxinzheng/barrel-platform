@@ -26,6 +26,7 @@
 		<module>boot-webapp-ums</module>
         <module>boot-module-attachment</module>
         <module>boot-module-authorization</module>
+        <module>boot-module-logger</module>
 
     </modules>
 	<packaging>pom</packaging>

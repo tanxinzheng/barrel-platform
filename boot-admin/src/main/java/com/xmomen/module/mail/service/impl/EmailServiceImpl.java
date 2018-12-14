@@ -4,21 +4,12 @@ import com.alibaba.druid.util.IOUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.xmomen.module.fss.service.FileStoreService;
-import com.xmomen.module.fss.model.FileStorageResult;
-import com.xmomen.module.attachment.model.AttachmentModel;
-import com.xmomen.module.attachment.model.AttachmentQuery;
-import com.xmomen.module.attachment.service.AttachmentService;
 import com.xmomen.module.mail.model.EmailModel;
 import com.xmomen.module.mail.service.EmailService;
-import freemarker.cache.StringTemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -30,10 +21,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.List;
 
 /**
  * Created by tanxinzheng on 2018/6/10.
@@ -87,8 +75,8 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-    @Autowired
-    AttachmentService attachmentService;
+//    @Autowired
+//    AttachmentService attachmentService;
     @Autowired
     FileStoreService fileStoreService;
 
@@ -98,20 +86,20 @@ public class EmailServiceImpl implements EmailService {
      */
     private void loadAttachmentKeys(EmailModel emailModel){
         if(CollectionUtils.isNotEmpty(emailModel.getAttachmentKeys())) {
-            AttachmentQuery attachmentQuery = new AttachmentQuery();
-            attachmentQuery.setAttachmentKeys(emailModel.getAttachmentKeys().toArray(new String[emailModel.getAttachmentKeys().size()]));
-            List<AttachmentModel> attachmentModelList = attachmentService.getAttachmentModelList(attachmentQuery);
-            if(CollectionUtils.isNotEmpty(attachmentModelList)){
-                List<Pair<String, InputStream>> pairList = Lists.newArrayList();
-                attachmentModelList.stream().forEach(attachmentModel -> {
-                    FileStorageResult result = fileStoreService.getFile(attachmentModel.getFullKey());
-                    if(result.isSuccess()){
-                        Pair<String, InputStream> filePair = new Pair<>(attachmentModel.getOriginName(), result.getInputStream());
-                        pairList.add(filePair);
-                    }
-                });
-                emailModel.setAttachmentList(pairList);
-            }
+//            AttachmentQuery attachmentQuery = new AttachmentQuery();
+//            attachmentQuery.setAttachmentKeys(emailModel.getAttachmentKeys().toArray(new String[emailModel.getAttachmentKeys().size()]));
+//            List<AttachmentModel> attachmentModelList = attachmentService.getAttachmentModelList(attachmentQuery);
+//            if(CollectionUtils.isNotEmpty(attachmentModelList)){
+//                List<Pair<String, InputStream>> pairList = Lists.newArrayList();
+//                attachmentModelList.stream().forEach(attachmentModel -> {
+//                    FileStorageResult result = fileStoreService.getFile(attachmentModel.getFullKey());
+//                    if(result.isSuccess()){
+//                        Pair<String, InputStream> filePair = new Pair<>(attachmentModel.getOriginName(), result.getInputStream());
+//                        pairList.add(filePair);
+//                    }
+//                });
+//                emailModel.setAttachmentList(pairList);
+//            }
         }
     }
 

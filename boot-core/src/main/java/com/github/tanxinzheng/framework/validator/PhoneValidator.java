@@ -1,20 +1,26 @@
 package com.github.tanxinzheng.framework.validator;
 
-import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Created by tanxinzheng on 17/8/5.
  */
-public class PhoneValidator implements Serializable {
+public class PhoneValidator implements AbstractValidator<String> {
 
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^1(3|4|5|7|8)\\d{9}$");
+    public static final String PATTERN = "^1(3|4|5|7|8)\\d{9}$";
+
+    public static final Pattern PHONE_PATTERN = Pattern.compile(PATTERN);
 
     public static final PhoneValidator PHONE_VALIDATOR = new PhoneValidator();
 
     public static PhoneValidator getInstance(){
         return PHONE_VALIDATOR;
+    }
+
+    @Override
+    public String getPattern() {
+        return PHONE_PATTERN.pattern();
     }
 
     /**

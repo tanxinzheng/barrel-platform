@@ -1,15 +1,15 @@
 package com.xmomen.config;
 
-import com.xmomen.config.adapter.JwtSecurityMetadataHandler;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
-import com.xmomen.module.authorization.model.*;
-import com.xmomen.module.authorization.service.GroupPermissionService;
-import com.xmomen.module.authorization.service.UserGroupService;
-import com.xmomen.module.authorization.service.UserService;
-import com.xmomen.module.jwt.JwtConfigAdapter;
-import com.xmomen.module.jwt.support.JwtLoadService;
-import com.xmomen.module.jwt.support.JwtUser;
-import com.xmomen.module.jwt.support.access.SecurityMetadataHandler;
+import com.github.tanxinzheng.module.authorization.model.*;
+import com.github.tanxinzheng.module.authorization.service.GroupPermissionService;
+import com.github.tanxinzheng.module.authorization.service.UserGroupService;
+import com.github.tanxinzheng.module.authorization.service.UserService;
+import com.github.tanxinzheng.module.jwt.JwtConfigAdapter;
+import com.github.tanxinzheng.module.jwt.support.JwtLoadService;
+import com.github.tanxinzheng.module.jwt.support.JwtUser;
+import com.github.tanxinzheng.module.jwt.support.access.SecurityMetadataHandler;
+import com.xmomen.config.adapter.JwtSecurityMetadataHandler;
 import org.apache.commons.collections.CollectionUtils;
 import org.assertj.core.util.Lists;
 import org.assertj.core.util.Sets;

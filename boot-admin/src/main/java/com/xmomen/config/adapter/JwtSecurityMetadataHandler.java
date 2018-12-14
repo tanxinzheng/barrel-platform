@@ -1,12 +1,12 @@
 package com.xmomen.config.adapter;
 
+import com.github.tanxinzheng.module.authorization.constant.PermissionAction;
+import com.github.tanxinzheng.module.authorization.model.GroupPermissionQuery;
+import com.github.tanxinzheng.module.authorization.model.PermissionModel;
+import com.github.tanxinzheng.module.authorization.service.GroupPermissionService;
+import com.github.tanxinzheng.module.jwt.support.access.PermissionGrantedAuthority;
+import com.github.tanxinzheng.module.jwt.support.access.SecurityMetadataHandler;
 import com.google.common.collect.Maps;
-import com.xmomen.module.authorization.constant.PermissionAction;
-import com.xmomen.module.authorization.model.GroupPermissionQuery;
-import com.xmomen.module.authorization.model.PermissionModel;
-import com.xmomen.module.authorization.service.GroupPermissionService;
-import com.xmomen.module.jwt.support.access.PermissionGrantedAuthority;
-import com.xmomen.module.jwt.support.access.SecurityMetadataHandler;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;

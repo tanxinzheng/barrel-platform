@@ -19,7 +19,7 @@ public interface AccountService {
     /**
      * 更新账户基本信息
      */
-    void updateAccountDetail(AccountDetail accountDetail);
+    void updateNickName(AccountDetail accountDetail);
 
     /**
      * 绑定手机
