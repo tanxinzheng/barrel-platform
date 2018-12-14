@@ -3,7 +3,7 @@ package com.xmomen.module.mail.service.impl;
 import com.alibaba.druid.util.IOUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.xmomen.module.fss.service.FileStoreService;
+import com.github.tanxinzheng.module.fss.service.FileStoreService;
 import com.xmomen.module.mail.model.EmailModel;
 import com.xmomen.module.mail.service.EmailService;
 import javafx.util.Pair;
