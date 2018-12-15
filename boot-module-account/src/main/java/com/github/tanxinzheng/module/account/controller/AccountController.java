@@ -2,9 +2,10 @@ package com.github.tanxinzheng.module.account.controller;
 
 import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
-import com.github.tanxinzheng.module.account.model.AccountDetail;
 import com.github.tanxinzheng.module.account.model.AccountModel;
 import com.github.tanxinzheng.module.account.service.AccountService;
+import com.github.tanxinzheng.module.authorization.model.User;
+import com.github.tanxinzheng.module.authorization.service.UserService;
 import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +35,9 @@ public class AccountController {
     @Autowired
     VerificationCodeService verificationCodeService;
 
+    @Autowired
+    UserService userService;
+
     /**
      * 查询当前用户简要信息
      * @return
@@ -42,12 +46,13 @@ public class AccountController {
     @ApiOperation(value = "查询当前用户资料信息")
     @ActionLog(actionName = "查询当前用户资料信息")
     public AccountModel accountSetting(){
-        AccountDetail accountDetail = accountService.getAccountDetail();
+        String userId = currentAccountService.getAccountId();
+        User user = userService.getOneUser(userId);
         AccountModel accountModel = new AccountModel();
-        accountModel.setAvatar(accountDetail.getAvatar());
-        accountModel.setEmail(accountDetail.getEmail());
-        accountModel.setId(accountDetail.getId());
-        accountModel.setPhone(accountDetail.getPhone());
+        accountModel.setAvatar(user.getAvatar());
+        accountModel.setEmail(user.getEmail());
+        accountModel.setId(user.getId());
+        accountModel.setPhone(user.getPhoneNumber());
         return accountModel;
     }
 

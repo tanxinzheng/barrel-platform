@@ -11,12 +11,6 @@ import java.util.Set;
 public interface AccountService {
 
     /**
-     * 查询用户详情
-     * @return
-     */
-    AccountDetail getAccountDetail();
-
-    /**
      * 更新账户基本信息
      */
     void updateNickName(AccountDetail accountDetail);

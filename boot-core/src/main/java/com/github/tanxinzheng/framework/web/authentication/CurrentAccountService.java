@@ -27,12 +27,6 @@ public interface CurrentAccountService<T> {
     String getAccountName();
 
     /**
-     * 当前用户明细
-     * @return
-     */
-    T getAccountDetail();
-
-    /**
      * 当前用户角色
      * @return
      */

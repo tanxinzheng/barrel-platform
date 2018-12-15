@@ -31,23 +31,13 @@ import java.util.Set;
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    CurrentAccountService<AccountDetail> currentAccountService;
+    CurrentAccountService currentAccountService;
 
     @Autowired
     UserService userService;
 
     @Autowired
     FileStoreService fileStoreService;
-
-    /**
-     * 查询账户详情
-     *
-     * @return
-     */
-    @Override
-    public AccountDetail getAccountDetail() {
-        return currentAccountService.getAccountDetail();
-    }
 
     /**
      * 更新账户基本信息

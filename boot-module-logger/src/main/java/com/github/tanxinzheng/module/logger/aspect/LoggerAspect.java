@@ -59,35 +59,39 @@ public class LoggerAspect {
     public Object traceMethod(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object returnVal = null;
         String returnStr = null;
-        String methodName = proceedingJoinPoint.getSignature().getName();
-        final Object[] args = proceedingJoinPoint.getArgs();
-        final String arguments;
-        Object target = proceedingJoinPoint.getTarget();
-        Method method = getMethodByClassAndName(target.getClass(), methodName);    //得到拦截的方法
-        ActionLog an = (ActionLog)getAnnotationByMethod(method, ActionLog.class );
-        if(an != null){
-            methodName = an.actionName();
-        }
-        if (args == null || args.length == 0) {
-            arguments = "";
-        } else {
-            arguments = Arrays.deepToString(args);
-        }
-        String userId = getUserId();
-        returnVal = proceedingJoinPoint.proceed();
-        if(loggerService != null){
-            LogModel logModel = new LogModel();
-            logModel.setActionDate(new Date());
-            logModel.setTargetClass(target.getClass().getName());
-            logModel.setTargetMethod(method.getName());
-            logModel.setActionName(format(methodName, getAnnotationParamsByMethod(method, args)));
-            logModel.setUserId(userId);
-            logModel.setClientIp(getRemoteHost(request));
-            log.debug("User action record info -> {0}", JSONObject.toJSONString(logModel));
-            loggerService.setLogInfo(logModel);
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Entering method [{}] with arguments [{}]", methodName, arguments);
+        try {
+            String methodName = proceedingJoinPoint.getSignature().getName();
+            final Object[] args = proceedingJoinPoint.getArgs();
+            final String arguments;
+            Object target = proceedingJoinPoint.getTarget();
+            Method method = getMethodByClassAndName(target.getClass(), methodName);    //得到拦截的方法
+            ActionLog an = (ActionLog)getAnnotationByMethod(method, ActionLog.class );
+            if(an != null){
+                methodName = an.actionName();
+            }
+            if (args == null || args.length == 0) {
+                arguments = "";
+            } else {
+                arguments = Arrays.deepToString(args);
+            }
+            String userId = getUserId();
+            returnVal = proceedingJoinPoint.proceed();
+            if(loggerService != null){
+                LogModel logModel = new LogModel();
+                logModel.setActionDate(new Date());
+                logModel.setTargetClass(target.getClass().getName());
+                logModel.setTargetMethod(method.getName());
+                logModel.setActionName(format(methodName, getAnnotationParamsByMethod(method, args)));
+                logModel.setUserId(userId);
+                logModel.setClientIp(getRemoteHost(request));
+                log.debug("User action record info -> {0}", JSONObject.toJSONString(logModel));
+                loggerService.setLogInfo(logModel);
+            }
+            if (log.isDebugEnabled()) {
+                log.debug("Entering method [{}] with arguments [{}]", methodName, arguments);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
         }
         return returnVal;
     }

@@ -33,11 +33,6 @@ public class TestAppConfig extends WebAppConfigurerAdapter {
             }
 
             @Override
-            public Object getAccountDetail() {
-                return null;
-            }
-
-            @Override
             public Set<String> getRoles() {
                 return null;
             }

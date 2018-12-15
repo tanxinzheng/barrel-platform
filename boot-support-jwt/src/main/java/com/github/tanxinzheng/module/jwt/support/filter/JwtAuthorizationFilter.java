@@ -6,6 +6,7 @@ import com.github.tanxinzheng.module.jwt.support.JwtAuthenticationToken;
 import com.github.tanxinzheng.module.jwt.support.RestResponse;
 import com.github.tanxinzheng.module.jwt.support.exception.JwtTokenInvalidException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -49,7 +50,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 JwtAuthenticationToken authentication = jwtTokenService.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (SignatureException signatureException) {
+        } catch (MalformedJwtException | SignatureException signatureException) {
             returnErrorCode(request, response, JwtErrorCode.TOKEN_INVALID);
             return;
         } catch (ExpiredJwtException expiredJwtException) {
