@@ -53,8 +53,7 @@ public class CurrentAccountServiceImpl implements CurrentAccountService<JwtUser>
      *
      * @return
      */
-    @Override
-    public JwtUser getAccountDetail() {
+    private JwtUser getAccountDetail() {
         Object object = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if(object instanceof JwtUser){
             return (JwtUser) object;
