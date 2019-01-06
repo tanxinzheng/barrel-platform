@@ -1,14 +1,14 @@
 package com.github.tanxinzheng.module.jwt.support;
 
 import com.github.tanxinzheng.module.jwt.JwtConfigProperties;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.TimeUnit;
@@ -66,32 +66,7 @@ public class DefaultJwtTokenService implements JwtTokenService {
     }
 
     private String getTokenValue(HttpServletRequest request, String headerName, String cookieName, String parameterName){
-        if(request == null){
-            return null;
-        }
-        // 从Header中获取token
-        String token = request.getHeader(headerName);
-        if(StringUtils.isNotBlank(token)){
-            token = token.replaceAll(StringUtils.lowerCase(TokenType.BEARER.getCode()) + " ", "");
-        }
-        if(StringUtils.isBlank(token)){
-            // 从请求参数中获取token
-            token = request.getParameter(parameterName);
-        }
-        if(StringUtils.isBlank(token)
-                && ArrayUtils.isNotEmpty(request.getCookies())){
-            // 从Cookie中获取token
-            String cookieTokenName = cookieName;
-            for (Cookie cookie : request.getCookies()) {
-                if(cookie.getName() != null
-                        && cookieTokenName != null
-                        && cookie.getName().equalsIgnoreCase(cookieTokenName)){
-                    token = cookie.getValue();
-                    break;
-                }
-            }
-        }
-        return token;
+        return JwtUtils.getTokenValue(request, headerName, cookieName, parameterName);
     }
 
     /**

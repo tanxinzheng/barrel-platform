@@ -8,12 +8,17 @@ import com.github.tanxinzheng.module.authorization.service.GroupPermissionServic
 import com.github.tanxinzheng.module.authorization.service.GroupService;
 import com.github.tanxinzheng.module.authorization.service.PermissionService;
 import com.github.tanxinzheng.module.authorization.service.UserGroupService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.lang.model.type.ErrorType;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -22,6 +27,7 @@ import java.util.List;
  * @date    2017-7-25 0:51:13
  * @version 1.0.0
  */
+@Api(value = "group", description = "用户组管理", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 @RequestMapping(value = "/group")
 public class GroupController {
@@ -40,7 +46,7 @@ public class GroupController {
      * @param   groupQuery    用户组查询参数对象
      * @return  Page<GroupModel> 用户组领域分页对象
      */
-    @ApiOperation(value = "查询用户组列表")
+    @ApiOperation(value = "查询用户组列表", notes = "获取商品信息(用于数据同步)", httpMethod = "POST", produces=MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(method = RequestMethod.GET)
     public Page<GroupModel> getGroupList(GroupQuery groupQuery){
         return groupService.getGroupModelPage(groupQuery);

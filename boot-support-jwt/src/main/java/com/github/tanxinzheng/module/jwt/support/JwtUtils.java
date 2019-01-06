@@ -4,8 +4,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.data.redis.core.TimeoutUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.UUID;
 
@@ -46,6 +49,44 @@ public class JwtUtils {
                 .setSigningKey(secret)
                 .parseClaimsJws(token);
         return claimsJws.getBody();
+    }
+
+
+    /**
+     * 获取token
+     * @param request
+     * @param headerName
+     * @param cookieName
+     * @param parameterName
+     * @return
+     */
+    public static String getTokenValue(HttpServletRequest request, String headerName, String cookieName, String parameterName){
+        if(request == null){
+            return null;
+        }
+        // 从Header中获取token
+        String token = request.getHeader(headerName);
+        if(StringUtils.isNotBlank(token)){
+            token = token.replaceAll(StringUtils.lowerCase(TokenType.BEARER.getCode()) + " ", "");
+        }
+        if(StringUtils.isBlank(token)){
+            // 从请求参数中获取token
+            token = request.getParameter(parameterName);
+        }
+        if(StringUtils.isBlank(token)
+                && ArrayUtils.isNotEmpty(request.getCookies())){
+            // 从Cookie中获取token
+            String cookieTokenName = cookieName;
+            for (Cookie cookie : request.getCookies()) {
+                if(cookie.getName() != null
+                        && cookieTokenName != null
+                        && cookie.getName().equalsIgnoreCase(cookieTokenName)){
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        return token;
     }
 
 
