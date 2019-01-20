@@ -29,7 +29,7 @@ public class DictionaryAnnotationIntrospector extends JacksonAnnotationIntrospec
         Iterable<Annotation> annotated = a.annotations();
         for (Annotation annotation : annotated) {
             for (Class key : annotationJsonSerializerMap.keySet()) {
-                if(annotation.annotationType().getName().equals(key.getName())){
+                if(annotation.annotationType().isAssignableFrom(key)){
                     Object dictionaryTransfer = a.getAnnotation(key);
                     return applicationContext.getBean(annotationJsonSerializerMap.get(key), dictionaryTransfer);
                 }

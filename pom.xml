@@ -27,7 +27,8 @@
 		<module>boot-admin</module>
 		<module>boot-webapp-ams</module>
 		<module>boot-webapp-ums</module>
-    </modules>
+		<module>boot-module-menu</module>
+	</modules>
 	<packaging>pom</packaging>
 
 	<name>boot</name>
@@ -106,6 +107,7 @@
 			<artifactId>pagehelper</artifactId>
 			<version>5.0.4</version>
 		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -127,11 +129,29 @@
 				<groupId>com.xmomen.generator</groupId>
 				<artifactId>xmomen-generator-maven-plugin</artifactId>
 				<version>1.0.0-SNAPSHOT</version>
+				<configuration>
+					<configurationFile>src/test/resources/help/generator-config.json</configurationFile>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.42</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.4.13</version>
+			</plugin>
+
+			<!-- 扫描全部模块时，必须运行mvn clean compile，保证所有子模块都已编译-->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.3.0.603</version>
 			</plugin>
 		</plugins>
 	</build>
