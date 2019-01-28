@@ -3,7 +3,7 @@ package ${targetPackage};
 import com.alibaba.fastjson.JSONObject;
 import com.xmomen.framework.mybatis.page.Page;
 import com.xmomen.module.system.model.${domainObjectClassName}Model;
-import com.xmomen.module.test.BaseTestController;
+import BaseTestController;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

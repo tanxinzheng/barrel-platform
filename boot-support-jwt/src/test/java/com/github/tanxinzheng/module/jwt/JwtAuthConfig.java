@@ -4,7 +4,7 @@ import com.github.tanxinzheng.module.jwt.support.JwtLoadService;
 import com.github.tanxinzheng.module.jwt.support.TestJwtLoadService;
 import com.github.tanxinzheng.module.jwt.support.access.PermissionGrantedAuthority;
 import com.github.tanxinzheng.module.jwt.support.access.SecurityMetadataHandler;
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMethod;

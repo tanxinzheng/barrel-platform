@@ -13,7 +13,7 @@ import com.github.tanxinzheng.framework.core.service.SelectService;
 import com.github.tanxinzheng.module.authorization.service.GroupService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

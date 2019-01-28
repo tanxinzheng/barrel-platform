@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.framework.utils;
 
 import com.github.tanxinzheng.framework.model.TreeModel;
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.framework.core.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xmomen.module.test.BaseTestController;
+import com.github.tanxinzheng.module.test.BaseTestController;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,10 +9,8 @@ import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.Date;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

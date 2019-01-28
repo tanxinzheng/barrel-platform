@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.framework.core.controller;
 
-import com.xmomen.module.test.BaseTestController;
+import com.github.tanxinzheng.module.test.BaseTestController;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.apache.commons.lang3.time.DateFormatUtils;

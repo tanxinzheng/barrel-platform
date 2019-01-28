@@ -1,0 +1,14 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: eureka-server-01
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:7070/eureka/
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}

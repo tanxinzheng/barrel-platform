@@ -1,15 +1,13 @@
 package com.github.tanxinzheng.module.notification.controller;
 
-import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
 import com.github.tanxinzheng.module.notification.model.*;
 import com.github.tanxinzheng.module.notification.service.NotificationService;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

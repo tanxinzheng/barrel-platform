@@ -18,7 +18,7 @@ import com.github.tanxinzheng.module.authorization.service.UserService;
 import com.github.tanxinzheng.module.dictionary.web.AccountInterpreterService;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

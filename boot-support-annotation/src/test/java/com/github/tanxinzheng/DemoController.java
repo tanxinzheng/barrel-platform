@@ -1,7 +1,7 @@
 package com.github.tanxinzheng;
 
 import com.github.tanxinzheng.module.dictionary.model.DemoModel;
-import org.assertj.core.util.Lists;
+import com.google.common.collect.Lists;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

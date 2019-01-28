@@ -8,7 +8,7 @@ import com.github.tanxinzheng.module.notification.model.NotificationQuery;
 import com.github.tanxinzheng.module.notification.model.SendNotification;
 import com.github.tanxinzheng.module.notification.service.NotificationService;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
