@@ -11,7 +11,6 @@
 
     <artifactId>boot-admin</artifactId>
     <packaging>jar</packaging>
-
     <name>boot-admin</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -150,39 +149,39 @@
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>OSS Sonatype Repository</name>
-            <layout>default</layout>
-            <url>https://oss.sonatype.org/content/repositories/public</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>sonatype-nexus-snapshots</id>-->
+            <!--<name>OSS Sonatype Repository</name>-->
+            <!--<layout>default</layout>-->
+            <!--<url>https://oss.sonatype.org/content/repositories/public</url>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
                 <!--<updatePolicy>always</updatePolicy>-->
-            </releases>
-        </repository>
-    </repositories>
+            <!--</snapshots>-->
+            <!--<releases>-->
+                <!--<enabled>true</enabled>-->
+                <!--&lt;!&ndash;<updatePolicy>always</updatePolicy>&ndash;&gt;-->
+            <!--</releases>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Nexus Sonatype Repository</name>
-            <layout>default</layout>
-            <url>https://oss.sonatype.org/content/repositories/public</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
+    <!--<pluginRepositories>-->
+        <!--<pluginRepository>-->
+            <!--<id>sonatype-nexus-snapshots</id>-->
+            <!--<name>Nexus Sonatype Repository</name>-->
+            <!--<layout>default</layout>-->
+            <!--<url>https://oss.sonatype.org/content/repositories/public</url>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
                 <!--<updatePolicy>never</updatePolicy>-->
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
+            <!--</snapshots>-->
+            <!--<releases>-->
+                <!--<enabled>true</enabled>-->
+                <!--&lt;!&ndash;<updatePolicy>never</updatePolicy>&ndash;&gt;-->
+            <!--</releases>-->
+        <!--</pluginRepository>-->
+    <!--</pluginRepositories>-->
 
 
     <dependencies>
@@ -193,12 +192,22 @@
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-support-swagger</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-module-dictionary</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-support-annotation</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-support-druid</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
@@ -342,12 +351,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>0.2.23</version>
         </dependency>
 
         <dependency>

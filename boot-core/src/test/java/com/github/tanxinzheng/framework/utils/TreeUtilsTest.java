@@ -1,17 +1,13 @@
 package com.github.tanxinzheng.framework.utils;
 
 import com.github.tanxinzheng.framework.model.TreeModel;
-import com.sun.deploy.panel.TreeBuilder;
 import org.assertj.core.util.Lists;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by tanxinzheng on 2019/1/12.

@@ -1,6 +1,5 @@
 package com.xmomen.module.mail.service.impl;
 
-import com.alibaba.druid.util.IOUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.module.fss.service.FileStoreService;
@@ -9,6 +8,7 @@ import com.xmomen.module.mail.service.EmailService;
 import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -128,7 +128,7 @@ public class EmailServiceImpl implements EmailService {
                 helper.setSentDate(emailModel.getSentDate());
             }
             for (Pair<String, InputStream> pair : emailModel.getAttachmentList()) {
-                helper.addAttachment(pair.getKey(), new ByteArrayResource(IOUtils.readByteArray(pair.getValue())));
+                helper.addAttachment(pair.getKey(), new ByteArrayResource(IOUtils.toByteArray(pair.getValue())));
             }
             mailSender.send(mimeMessage);
         } catch (Exception e) {
