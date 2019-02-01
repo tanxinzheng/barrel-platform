@@ -51,9 +51,14 @@ public class RestResponse<T> implements Serializable {
     }
 
     public void toJSON(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        toJSON(request, response, HttpStatus.OK);
+    }
+
+    public void toJSON(HttpServletRequest request, HttpServletResponse response, HttpStatus httpStatus) throws IOException {
         setPath(request.getRequestURI());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
+        response.setStatus(httpStatus.value());
         OutputStream out = response.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

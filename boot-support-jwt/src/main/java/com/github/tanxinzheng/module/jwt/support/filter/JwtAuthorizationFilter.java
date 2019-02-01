@@ -84,7 +84,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             restResponse.setMessage(errorCode.getMessage());
             restResponse.setError(StringUtils.lowerCase(HttpStatus.UNAUTHORIZED.name()));
             restResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-            restResponse.toJSON(request, response);
+            restResponse.toJSON(request, response, HttpStatus.UNAUTHORIZED);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

@@ -112,7 +112,7 @@ public class AppTestConfig extends WebMvcConfigurerAdapter {
                 user2.put("userName", "用户");
                 user2.put("link", "http://avatar.xxx.com/avatar/2.jpg");
                 data.put("2", user2);
-                return data.get(userId);
+                return data;
             }
         };
     }

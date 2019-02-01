@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 字典序列化
@@ -46,6 +47,9 @@ public class AccountJsonSerializer extends JsonSerializer<Object> {
             }
             if(dictionaryLabel instanceof String){
                 jsonGenerator.writeStringField(fieldName, (String) dictionaryLabel);
+            }else if(dictionaryLabel instanceof Map){
+                Object val = ((Map) dictionaryLabel).get(value);
+                jsonGenerator.writeObjectField(fieldName, val);
             }else{
                 jsonGenerator.writeObjectField(fieldName, dictionaryLabel);
             }
