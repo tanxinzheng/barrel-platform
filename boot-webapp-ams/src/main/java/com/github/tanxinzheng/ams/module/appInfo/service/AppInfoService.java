@@ -1,10 +1,9 @@
 package com.github.tanxinzheng.ams.module.appInfo.service;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoQuery;
-import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoModel;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfo;
-import org.apache.ibatis.exceptions.TooManyResultsException;
+import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoModel;
+import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoQuery;
 
 import java.util.List;
 

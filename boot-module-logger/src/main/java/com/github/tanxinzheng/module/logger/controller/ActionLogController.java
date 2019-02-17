@@ -5,8 +5,8 @@ import com.github.tanxinzheng.module.logger.LogModel;
 import com.github.tanxinzheng.module.logger.model.ActionLogQuery;
 import com.github.tanxinzheng.module.logger.service.LoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,7 +24,7 @@ public class ActionLogController {
      * @param actionLogQuery
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<LogModel> getActionLog(ActionLogQuery actionLogQuery){
         return loggerService.getActionLogPage(actionLogQuery);
     }

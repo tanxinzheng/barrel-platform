@@ -42,7 +42,7 @@ public class AccountController {
      * 查询当前用户简要信息
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     @ApiOperation(value = "查询当前用户资料信息")
     @ActionLog(actionName = "查询当前用户资料信息")
     public AccountModel accountSetting(){
@@ -60,7 +60,7 @@ public class AccountController {
      * 当前用户权限
      * @return
      */
-    @RequestMapping(value = "/authorities", method = RequestMethod.GET)
+    @GetMapping(value = "/authorities")
     @ApiOperation(value = "查询当前用户权限")
     @ActionLog(actionName = "查询当前用户权限")
     public Map getAccountAuthorities(){
@@ -77,7 +77,7 @@ public class AccountController {
      * @param oldPassword
      * @param password
      */
-    @RequestMapping(value = "/password", method = RequestMethod.PUT)
+    @PutMapping(value = "/password")
     @ApiOperation(value = "当前用户修改密码")
     @ActionLog(actionName = "当前用户修改密码")
     public void updatePassword(@RequestParam(value = "oldPassword") String oldPassword,
@@ -90,7 +90,7 @@ public class AccountController {
      * @param type  1-手机，2-邮箱
      * @param receiver
      */
-    @RequestMapping(value = "/bind", method = RequestMethod.PUT)
+    @PutMapping(value = "/bind")
     @ApiOperation(value = "绑定手机、邮箱")
     @ActionLog(actionName = "绑定手机、邮箱")
     public void bind(@RequestParam(value = "type") Integer type,
@@ -114,7 +114,7 @@ public class AccountController {
      * 更换头像
      * @param file
      */
-    @RequestMapping(value = "/avatar", method = RequestMethod.POST)
+    @PostMapping(value = "/avatar")
     @ApiOperation(value = "更换头像")
     @ActionLog(actionName = "更换头像")
     public void updateAvatar(@RequestPart(value = "file") MultipartFile file) {

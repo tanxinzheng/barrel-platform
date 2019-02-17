@@ -1,18 +1,16 @@
 package com.github.tanxinzheng.module.authorization.model;
 
-import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
-import com.github.tanxinzheng.framework.model.BaseModel;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.tanxinzheng.framework.model.BaseModel;
 import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import lombok.Data;
-import org.hibernate.validator.constraints.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 import org.springframework.beans.BeanUtils;
 
-import java.lang.Boolean;
-import java.lang.String;
 import java.io.Serializable;
 
 /**

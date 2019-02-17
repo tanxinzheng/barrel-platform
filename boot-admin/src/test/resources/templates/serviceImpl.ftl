@@ -23,8 +23,6 @@ import java.util.List;
 @Service
 public class ${domainObjectClassName}ServiceImpl implements ${domainObjectClassName}Service {
 
-    private static Logger logger = LoggerFactory.getLogger(${domainObjectClassName}ServiceImpl.class);
-
     @Autowired
     ${domainObjectClassName}Mapper ${domainObjectName}Mapper;
 

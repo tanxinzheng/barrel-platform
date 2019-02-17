@@ -32,7 +32,7 @@ public class GroupPermissionController {
      * @return  Page<GroupPermissionModel> 组权限领域分页对象
      */
     @ApiOperation(value = "查询组权限列表")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<GroupPermissionModel> getGroupPermissionList(GroupPermissionQuery groupPermissionQuery){
         return groupPermissionService.getGroupPermissionModelPage(groupPermissionQuery);
     }
@@ -43,7 +43,7 @@ public class GroupPermissionController {
      * @return  GroupPermissionModel   组权限领域对象
      */
     @ApiOperation(value = "查询组权限")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public GroupPermissionModel getGroupPermissionById(@PathVariable(value = "id") String id){
         return groupPermissionService.getOneGroupPermissionModel(id);
     }
@@ -55,7 +55,7 @@ public class GroupPermissionController {
      */
     @ApiOperation(value = "新增组权限")
     @ActionLog(actionName = "新增组权限")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public GroupPermissionModel createGroupPermission(@RequestBody @Valid GroupPermissionModel groupPermissionModel) {
         return groupPermissionService.createGroupPermission(groupPermissionModel);
     }
@@ -68,7 +68,7 @@ public class GroupPermissionController {
      */
     @ApiOperation(value = "更新组权限")
     @ActionLog(actionName = "更新组权限")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public GroupPermissionModel updateGroupPermission(@PathVariable(value = "id") String id,
                            @RequestBody @Valid GroupPermissionModel groupPermissionModel){
         if(StringUtils.isNotBlank(id)){
@@ -84,7 +84,7 @@ public class GroupPermissionController {
      */
     @ApiOperation(value = "删除单个组权限")
     @ActionLog(actionName = "删除单个组权限")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteGroupPermission(@PathVariable(value = "id") String id){
         groupPermissionService.deleteGroupPermission(id);
     }
@@ -95,7 +95,7 @@ public class GroupPermissionController {
      */
     @ApiOperation(value = "批量删除组权限")
     @ActionLog(actionName = "批量删除组权限")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteGroupPermissions(GroupPermissionQuery groupPermissionQuery){
         Assert.notNull(groupPermissionQuery.getGroupId(), "groupId must be not null");
         Assert.notEmpty(groupPermissionQuery.getPermissionIds(), "permissionIds must be not empty");

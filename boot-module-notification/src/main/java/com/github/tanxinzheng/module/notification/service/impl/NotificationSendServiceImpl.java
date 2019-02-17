@@ -9,8 +9,6 @@ import com.github.tanxinzheng.module.notification.model.NotificationSendModel;
 import com.github.tanxinzheng.module.notification.model.NotificationSendQuery;
 import com.github.tanxinzheng.module.notification.service.NotificationSendService;
 import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +23,6 @@ import java.util.List;
  */
 @Service
 public class NotificationSendServiceImpl implements NotificationSendService {
-
-    private static Logger logger = LoggerFactory.getLogger(NotificationSendServiceImpl.class);
 
     @Autowired
     NotificationSendMapper notificationSendMapper;

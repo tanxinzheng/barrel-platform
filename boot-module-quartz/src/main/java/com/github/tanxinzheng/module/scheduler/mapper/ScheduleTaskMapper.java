@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.module.scheduler.mapper;
 
-import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskQuery;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskModel;
+import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

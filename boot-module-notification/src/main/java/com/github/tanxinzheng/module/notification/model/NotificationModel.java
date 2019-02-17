@@ -1,11 +1,10 @@
 package com.github.tanxinzheng.module.notification.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.tanxinzheng.module.dictionary.web.AccountField;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import com.github.tanxinzheng.framework.model.BaseModel;
 import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
-
+import com.github.tanxinzheng.module.dictionary.web.AccountField;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;

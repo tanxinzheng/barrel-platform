@@ -1,20 +1,17 @@
 package com.github.tanxinzheng.framework.core.controller;
 
 import com.github.tanxinzheng.framework.core.model.SelectIndex;
-import com.google.common.collect.Maps;
-import com.github.tanxinzheng.framework.web.rest.RestError;
 import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
 import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
 import com.github.tanxinzheng.framework.core.service.SelectService;
+import com.github.tanxinzheng.framework.web.rest.RestError;
+import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -46,7 +43,7 @@ public class CacheController {
      * @return  List<SelectOptionModel> 数据字典领域分页对象
      */
     @ApiOperation(value = "查询数据字典列表")
-    @RequestMapping(value = "/select", method = RequestMethod.GET)
+    @GetMapping(value = "/select")
     public List<SelectOptionModel> getDictionaryList(@Valid SelectOptionQuery selectOptionQuery){
         String selectIndex = selectOptionQuery.getTypeCode();
         SelectIndex selectIndexKey = null;
@@ -71,7 +68,7 @@ public class CacheController {
      * @return
      */
     @ApiOperation(value = "清除缓存")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public RestError clearCache(@RequestParam(value = "cacheKey") String cacheKey){
         cacheManager.getCache(cacheKey).clear();
         return new RestError("缓存清理成功");

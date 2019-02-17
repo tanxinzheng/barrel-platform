@@ -2,23 +2,18 @@ package com.github.tanxinzheng.module.authorization.controller;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.logger.ActionLog;
-
 import com.github.tanxinzheng.module.authorization.model.*;
 import com.github.tanxinzheng.module.authorization.service.GroupPermissionService;
 import com.github.tanxinzheng.module.authorization.service.GroupService;
-import com.github.tanxinzheng.module.authorization.service.PermissionService;
 import com.github.tanxinzheng.module.authorization.service.UserGroupService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.lang.model.type.ErrorType;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -47,7 +42,7 @@ public class GroupController {
      * @return  Page<GroupModel> 用户组领域分页对象
      */
     @ApiOperation(value = "查询用户组列表", notes = "获取商品信息(用于数据同步)", httpMethod = "POST", produces=MediaType.APPLICATION_JSON_VALUE)
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<GroupModel> getGroupList(GroupQuery groupQuery){
         return groupService.getGroupModelPage(groupQuery);
     }
@@ -58,7 +53,7 @@ public class GroupController {
      * @return  GroupModel   用户组领域对象
      */
     @ApiOperation(value = "查询用户组")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public GroupModel getGroupById(@PathVariable(value = "id") String id){
         return groupService.getOneGroupModel(id);
     }
@@ -71,7 +66,7 @@ public class GroupController {
     @ApiOperation(value = "新增用户组")
     @ActionLog(actionName = "新增用户组")
     //@PreAuthorize(value = "hasAnyAuthority('GROUP:CREATE')")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public GroupModel createGroup(@RequestBody @Valid GroupModel groupModel) {
         groupModel.setGroupType(GroupModel.GROUP_TYPE_CUSTOM);
         return groupService.createGroup(groupModel);
@@ -85,7 +80,7 @@ public class GroupController {
      */
     @ApiOperation(value = "更新用户组")
     @ActionLog(actionName = "更新用户组")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public GroupModel updateGroup(@PathVariable(value = "id") String id,
                            @RequestBody @Valid GroupModel groupModel){
         if(StringUtils.isNotBlank(id)){
@@ -101,7 +96,7 @@ public class GroupController {
      */
     @ApiOperation(value = "删除单个用户组")
     @ActionLog(actionName = "删除单个用户组")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteGroup(@PathVariable(value = "id") String id){
         groupService.deleteGroup(id);
     }
@@ -112,7 +107,7 @@ public class GroupController {
      */
     @ApiOperation(value = "批量删除用户组")
     @ActionLog(actionName = "批量删除用户组")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteGroups(@RequestBody GroupQuery groupQuery){
         groupService.deleteGroup(groupQuery.getIds());
     }

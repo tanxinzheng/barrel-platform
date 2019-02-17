@@ -1,17 +1,15 @@
 package com.github.tanxinzheng.ams.module.appInfo.controller;
 
-import io.swagger.annotations.ApiOperation;
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.logger.ActionLog;
-import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoQuery;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoModel;
+import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoQuery;
 import com.github.tanxinzheng.ams.module.appInfo.service.AppInfoService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.github.tanxinzheng.framework.logger.ActionLog;
+import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import org.apache.commons.lang3.StringUtils;
 import javax.validation.Valid;
 
 /**
@@ -23,8 +21,6 @@ import javax.validation.Valid;
 @RequestMapping(value = "/appInfo")
 public class AppInfoController {
 
-    private static Logger logger = LoggerFactory.getLogger(AppInfoController.class);
-
     @Autowired
     AppInfoService appInfoService;
 
@@ -35,7 +31,7 @@ public class AppInfoController {
      */
     @ApiOperation(value = "查询应用信息列表")
     @ActionLog(actionName = "查询应用信息列表")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<AppInfoModel> getAppInfoList(AppInfoQuery appInfoQuery){
         return appInfoService.getAppInfoModelPage(appInfoQuery);
     }
@@ -47,7 +43,7 @@ public class AppInfoController {
      */
     @ApiOperation(value = "查询应用信息")
     @ActionLog(actionName = "查询应用信息")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public AppInfoModel getAppInfoById(@PathVariable(value = "id") String id){
         return appInfoService.getOneAppInfoModel(id);
     }
@@ -59,7 +55,7 @@ public class AppInfoController {
      */
     @ApiOperation(value = "新增应用信息")
     @ActionLog(actionName = "新增应用信息")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public AppInfoModel createAppInfo(@RequestBody @Valid AppInfoModel appInfoModel) {
         return appInfoService.createAppInfo(appInfoModel);
     }
@@ -72,7 +68,7 @@ public class AppInfoController {
      */
     @ApiOperation(value = "更新应用信息")
     @ActionLog(actionName = "更新应用信息")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public AppInfoModel updateAppInfo(@PathVariable(value = "id") String id,
                            @RequestBody @Valid AppInfoModel appInfoModel){
         if(StringUtils.isNotBlank(id)){
@@ -88,7 +84,7 @@ public class AppInfoController {
      */
     @ApiOperation(value = "删除单个应用信息")
     @ActionLog(actionName = "删除单个应用信息")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteAppInfo(@PathVariable(value = "id") String id){
         appInfoService.deleteAppInfo(id);
     }
@@ -99,7 +95,7 @@ public class AppInfoController {
      */
     @ApiOperation(value = "批量删除应用信息")
     @ActionLog(actionName = "批量删除应用信息")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteAppInfos(AppInfoQuery appInfoQuery){
         appInfoService.deleteAppInfo(appInfoQuery.getIds());
     }

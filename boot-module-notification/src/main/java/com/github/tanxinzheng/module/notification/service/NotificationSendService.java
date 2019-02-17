@@ -1,10 +1,9 @@
 package com.github.tanxinzheng.module.notification.service;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.module.notification.model.NotificationSendQuery;
-import com.github.tanxinzheng.module.notification.model.NotificationSendModel;
 import com.github.tanxinzheng.module.notification.model.NotificationSend;
-import org.apache.ibatis.exceptions.TooManyResultsException;
+import com.github.tanxinzheng.module.notification.model.NotificationSendModel;
+import com.github.tanxinzheng.module.notification.model.NotificationSendQuery;
 
 import java.util.List;
 

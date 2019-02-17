@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +35,7 @@ public class AccountNotificationController {
      * @return
      */
     @ApiOperation(value = "查询当前用户消息，默认查询三个月内")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public List<AccountNotification> getAccountNotifications() {
         NotificationQuery notificationQuery = new NotificationQuery();
         notificationQuery.setUserId(currentAccountService.getAccountId());

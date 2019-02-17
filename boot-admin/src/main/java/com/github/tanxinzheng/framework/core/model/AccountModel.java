@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.framework.core.model;
 
-import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import lombok.Data;
 
 import java.io.Serializable;

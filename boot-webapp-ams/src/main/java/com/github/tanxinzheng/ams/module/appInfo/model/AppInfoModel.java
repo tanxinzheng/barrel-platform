@@ -1,15 +1,14 @@
 package com.github.tanxinzheng.ams.module.appInfo.model;
 
-import com.github.tanxinzheng.framework.model.BaseModel;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.tanxinzheng.framework.model.BaseModel;
 import lombok.Data;
-import org.hibernate.validator.constraints.*;
-import javax.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.BeanUtils;
 
-import java.lang.Integer;
-import java.lang.String;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

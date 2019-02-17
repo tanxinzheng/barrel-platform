@@ -1,8 +1,8 @@
 package com.github.tanxinzheng.module.attachment.mapper;
 
+import com.github.tanxinzheng.module.attachment.model.Attachment;
 import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
 import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
-import com.github.tanxinzheng.module.attachment.model.Attachment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -30,7 +30,7 @@ public class AttachmentController {
      * @return  Page<AttachmentModel> 附件领域分页对象
      */
     @ApiOperation(value = "查询附件列表")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<AttachmentModel> getAttachmentList(AttachmentQuery attachmentQuery){
         return attachmentService.getAttachmentModelPage(attachmentQuery);
     }
@@ -41,7 +41,7 @@ public class AttachmentController {
      * @return  AttachmentModel   附件领域对象
      */
     @ApiOperation(value = "查询附件")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public AttachmentModel getAttachmentById(@PathVariable(value = "id") String id){
         return attachmentService.getOneAttachmentModel(id);
     }
@@ -53,7 +53,7 @@ public class AttachmentController {
      */
     @ApiOperation(value = "新增附件")
     @ActionLog(actionName = "新增附件")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public AttachmentModel createAttachment(@RequestBody @Valid AttachmentModel attachmentModel) {
         return attachmentService.createAttachment(attachmentModel);
     }
@@ -66,7 +66,7 @@ public class AttachmentController {
      */
     @ApiOperation(value = "更新附件")
     @ActionLog(actionName = "更新附件")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public AttachmentModel updateAttachment(@PathVariable(value = "id") String id,
                            @RequestBody @Valid AttachmentModel attachmentModel){
         if(StringUtils.isNotBlank(id)){
@@ -82,7 +82,7 @@ public class AttachmentController {
      */
     @ApiOperation(value = "删除单个附件")
     @ActionLog(actionName = "删除单个附件")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteAttachment(@PathVariable(value = "id") String id){
         attachmentService.deleteAttachment(id);
     }
@@ -93,7 +93,7 @@ public class AttachmentController {
      */
     @ApiOperation(value = "批量删除附件")
     @ActionLog(actionName = "批量删除附件")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteAttachments(@RequestBody AttachmentQuery attachmentQuery){
         attachmentService.deleteAttachment(attachmentQuery.getIds());
     }

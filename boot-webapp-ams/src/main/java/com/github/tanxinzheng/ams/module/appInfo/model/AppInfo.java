@@ -1,10 +1,8 @@
 package com.github.tanxinzheng.ams.module.appInfo.model;
 
-import lombok.Data;
 import com.github.tanxinzheng.framework.model.BaseEntity;
+import lombok.Data;
 
-import java.lang.Integer;
-import java.lang.String;
 import java.io.Serializable;
 
 /**

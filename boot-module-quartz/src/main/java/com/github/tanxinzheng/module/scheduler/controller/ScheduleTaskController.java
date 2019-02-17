@@ -1,14 +1,13 @@
 package com.github.tanxinzheng.module.scheduler.controller;
 
+import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.module.scheduler.QuartzManager;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskModel;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskQuery;
 import com.github.tanxinzheng.module.scheduler.service.ScheduleTaskService;
 import io.swagger.annotations.ApiOperation;
-import com.github.tanxinzheng.framework.logger.ActionLog;
-import com.github.pagehelper.Page;
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +35,7 @@ public class ScheduleTaskController {
      */
     @ApiOperation(value = "新增定时任务")
     @ActionLog(actionName = "新增定时任务")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ScheduleTaskModel addScheduleTask(@RequestBody @Valid ScheduleTaskModel scheduleTaskModel) {
         try {
             quartzManager.addJob(
@@ -60,7 +59,7 @@ public class ScheduleTaskController {
      */
     @ApiOperation(value = "查询定时任务")
     @ActionLog(actionName = "查询定时任务")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<ScheduleTaskModel> getScheduleTaskList(ScheduleTaskQuery scheduleJobQuery) {
         return scheduleTaskService.getScheduleTaskPages(scheduleJobQuery);
     }

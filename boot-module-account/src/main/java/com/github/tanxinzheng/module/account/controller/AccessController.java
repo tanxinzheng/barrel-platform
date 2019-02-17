@@ -45,7 +45,7 @@ public class AccessController {
      * @return
      */
     @ApiOperation(value = "用户注册")
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping(value = "/register")
     public void registerModel(@RequestBody @Valid RegisterModel register) {
         UserModel checkUser = userService.getOneUserModelByUsername(register.getUsername());
         Assert.isNull(checkUser, "该用户名已被注册");
@@ -90,7 +90,7 @@ public class AccessController {
      * @param code      验证码
      * @return
      */
-    @RequestMapping(value = "/find_password", method = RequestMethod.PUT)
+    @PutMapping(value = "/find_password")
     @ApiOperation(value = "找回密码")
     public void findPassword(@RequestParam(value = "type") Integer type,
                                   @RequestParam(value = "receiver") String receiver,
@@ -131,7 +131,7 @@ public class AccessController {
      * @param receiver  手机号码或邮箱
      */
     @ApiOperation(value = "发送验证码")
-    @RequestMapping(value = "/code", method = RequestMethod.POST)
+    @PostMapping(value = "/code")
     @ResponseBody
     public void setValidateCode(@RequestParam(value = "type") Integer type,
                                 @RequestParam(value = "receiver") String receiver){

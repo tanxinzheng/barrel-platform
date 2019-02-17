@@ -12,8 +12,6 @@ import com.github.tanxinzheng.module.menu.model.MenuQuery;
 import com.github.tanxinzheng.module.menu.service.MenuService;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +27,6 @@ import java.util.List;
  */
 @Service
 public class MenuServiceImpl implements MenuService {
-
-    private static Logger logger = LoggerFactory.getLogger(MenuServiceImpl.class);
 
     @Autowired
     MenuMapper menuMapper;

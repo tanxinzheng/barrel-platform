@@ -22,8 +22,6 @@ import java.util.List;
 @RequestMapping(value = "${restMapping}")
 public class ${domainObjectClassName}Controller {
 
-    private static Logger logger = LoggerFactory.getLogger(${domainObjectClassName}Controller.class);
-
     @Autowired
     ${domainObjectClassName}Service ${domainObjectName}Service;
 
@@ -35,7 +33,7 @@ public class ${domainObjectClassName}Controller {
     @ApiOperation(value = "查询${tableComment}列表")
     @ActionLog(actionName = "查询${tableComment}列表")
     //@PreAuthorize("hasAuthority('${domainObjectClassName?upper_case}:VIEW')")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<${domainObjectClassName}Model> get${domainObjectClassName}List(${domainObjectClassName}Query ${domainObjectName}Query){
         return ${domainObjectName}Service.get${domainObjectClassName}ModelPage(${domainObjectName}Query);
     }
@@ -48,7 +46,7 @@ public class ${domainObjectClassName}Controller {
     @ApiOperation(value = "查询${tableComment}")
     @ActionLog(actionName = "查询${tableComment}")
     //@PreAuthorize("hasAuthority('${domainObjectClassName?upper_case}:VIEW')")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ${domainObjectClassName}Model get${domainObjectClassName}ById(@PathVariable(value = "id") String id){
         return ${domainObjectName}Service.getOne${domainObjectClassName}Model(id);
     }
@@ -61,7 +59,7 @@ public class ${domainObjectClassName}Controller {
     @ApiOperation(value = "新增${tableComment}")
     @ActionLog(actionName = "新增${tableComment}")
     //@PreAuthorize("hasAuthority('${domainObjectClassName?upper_case}:CREATE')")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ${domainObjectClassName}Model create${domainObjectClassName}(@RequestBody @Valid ${domainObjectClassName}Model ${domainObjectName}Model) {
         return ${domainObjectName}Service.create${domainObjectClassName}(${domainObjectName}Model);
     }
@@ -75,7 +73,7 @@ public class ${domainObjectClassName}Controller {
     @ApiOperation(value = "更新${tableComment}")
     @ActionLog(actionName = "更新${tableComment}")
     //@PreAuthorize("hasAuthority('${domainObjectClassName?upper_case}:UPDATE')")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ${domainObjectClassName}Model update${domainObjectClassName}(@PathVariable(value = "id") String id,
                            @RequestBody @Valid ${domainObjectClassName}Model ${domainObjectName}Model){
         if(StringUtils.isNotBlank(id)){
@@ -92,7 +90,7 @@ public class ${domainObjectClassName}Controller {
     @ApiOperation(value = "删除单个${tableComment}")
     @ActionLog(actionName = "删除单个${tableComment}")
     //@PreAuthorize("hasAuthority('${domainObjectClassName?upper_case}:DELETE')")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void delete${domainObjectClassName}(@PathVariable(value = "id") String id){
         ${domainObjectName}Service.delete${domainObjectClassName}(id);
     }
@@ -104,7 +102,7 @@ public class ${domainObjectClassName}Controller {
     @ApiOperation(value = "批量删除${tableComment}")
     @ActionLog(actionName = "批量删除${tableComment}")
     //@PreAuthorize("hasAuthority('${domainObjectClassName?upper_case}:DELETE')")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void delete${domainObjectClassName}s(${domainObjectClassName}Query ${domainObjectName}Query){
         ${domainObjectName}Service.delete${domainObjectClassName}(${domainObjectName}Query.getIds());
     }

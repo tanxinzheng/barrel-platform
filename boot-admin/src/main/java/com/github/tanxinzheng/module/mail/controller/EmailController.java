@@ -23,7 +23,7 @@ public class EmailController {
      * 测试邮件发送
      */
     @ApiOperation(value="测试邮件发送", notes="getEntityById")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public @ResponseBody
     RestResult sendEmail(@RequestBody @Valid EmailModel emailModel) {
         emailService.sendEmail(emailModel);

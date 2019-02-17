@@ -3,28 +3,19 @@ package com.github.tanxinzheng.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.github.tanxinzheng.module.dictionary.mapper.DictionaryMapper;
-import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
-import com.github.tanxinzheng.module.dictionary.model.DictionaryQuery;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryAnnotationIntrospector;
 import com.github.tanxinzheng.framework.web.handler.LogbackMDCInterceptor;
 import com.github.tanxinzheng.framework.web.json.CustomDateDeserialize;
 import com.github.tanxinzheng.framework.web.support.DateConverter;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryInterpreterService;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryTransferService;
-import com.github.tanxinzheng.module.logger.aspect.LoggerAspect;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryAnnotationIntrospector;
 import com.github.tanxinzheng.module.fss.EnableFSSAliyun;
-import com.google.common.collect.Lists;
+import com.github.tanxinzheng.module.logger.aspect.LoggerAspect;
 import org.jeecgframework.poi.excel.view.JeecgMapExcelView;
 import org.jeecgframework.poi.excel.view.JeecgSingleExcelView;
 import org.jeecgframework.poi.excel.view.JeecgTemplateExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.MultipartAutoConfiguration;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
-import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -42,9 +33,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.MultipartConfigElement;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by tanxinzheng on 17/8/23.

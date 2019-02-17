@@ -1,13 +1,10 @@
 package com.github.tanxinzheng.module.dictionary.model;
 
-import lombok.Data;
 import com.github.tanxinzheng.framework.model.BaseEntity;
+import lombok.Data;
 
-import java.lang.Boolean;
-import java.lang.String;
-import java.lang.Integer;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author  tanxinzheng

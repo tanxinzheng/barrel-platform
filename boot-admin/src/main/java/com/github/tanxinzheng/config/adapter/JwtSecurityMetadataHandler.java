@@ -6,8 +6,8 @@ import com.github.tanxinzheng.module.authorization.model.PermissionModel;
 import com.github.tanxinzheng.module.authorization.service.GroupPermissionService;
 import com.github.tanxinzheng.module.jwt.support.access.PermissionGrantedAuthority;
 import com.github.tanxinzheng.module.jwt.support.access.SecurityMetadataHandler;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 

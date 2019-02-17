@@ -3,7 +3,6 @@ package com.github.tanxinzheng.module.scheduler.model;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

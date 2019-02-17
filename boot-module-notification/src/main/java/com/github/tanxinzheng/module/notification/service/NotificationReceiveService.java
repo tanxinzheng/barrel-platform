@@ -2,7 +2,6 @@ package com.github.tanxinzheng.module.notification.service;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.module.notification.model.*;
-import org.apache.ibatis.exceptions.TooManyResultsException;
 
 import java.util.List;
 

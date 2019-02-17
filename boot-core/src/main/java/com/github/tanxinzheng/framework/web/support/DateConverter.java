@@ -1,11 +1,10 @@
 package com.github.tanxinzheng.framework.web.support;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.commons.validator.routines.DateValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.Converter;
@@ -16,9 +15,8 @@ import java.util.Date;
 /**
  * Created by tanxinzheng on 17/6/11.
  */
+@Slf4j
 public class DateConverter implements Converter<String, Date> {
-
-    private static Logger logger = LoggerFactory.getLogger(DateConverter.class);
 
     private FastDateFormat[] datePatterns = {
             DateFormatUtils.ISO_DATE_FORMAT,
@@ -41,7 +39,7 @@ public class DateConverter implements Converter<String, Date> {
             long datetime = Long.valueOf(source);
             return new Date(datetime);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             StringBuffer stringBuffer = new StringBuffer();
             for (int i = 0; i < datePatterns.length; i++) {
                 FastDateFormat datePattern = datePatterns[i];

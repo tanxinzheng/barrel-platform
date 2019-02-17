@@ -1,9 +1,9 @@
 package com.github.tanxinzheng.module.authorization.model;
 
+import com.github.tanxinzheng.framework.model.BaseQuery;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import com.github.tanxinzheng.framework.model.BaseQuery;
 
 import java.io.Serializable;
 

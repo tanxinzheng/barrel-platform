@@ -2,10 +2,9 @@ package com.github.tanxinzheng.module.menu.service;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.model.TreeModel;
-import com.github.tanxinzheng.module.menu.model.MenuQuery;
-import com.github.tanxinzheng.module.menu.model.MenuModel;
 import com.github.tanxinzheng.module.menu.model.Menu;
-import org.apache.ibatis.exceptions.TooManyResultsException;
+import com.github.tanxinzheng.module.menu.model.MenuModel;
+import com.github.tanxinzheng.module.menu.model.MenuQuery;
 
 import java.util.List;
 

@@ -1,10 +1,8 @@
 package com.github.tanxinzheng.module.notification.model;
 
-import lombok.Data;
 import com.github.tanxinzheng.framework.model.BaseEntity;
+import lombok.Data;
 
-import java.lang.Boolean;
-import java.lang.String;
 import java.io.Serializable;
 
 /**

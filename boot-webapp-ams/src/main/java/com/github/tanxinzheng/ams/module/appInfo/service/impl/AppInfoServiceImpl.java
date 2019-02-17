@@ -1,19 +1,17 @@
 package com.github.tanxinzheng.ams.module.appInfo.service.impl;
 
-import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
-import com.github.tanxinzheng.ams.module.appInfo.model.AppInfo;
+import com.github.pagehelper.Page;
 import com.github.tanxinzheng.ams.module.appInfo.mapper.AppInfoMapper;
+import com.github.tanxinzheng.ams.module.appInfo.model.AppInfo;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoModel;
 import com.github.tanxinzheng.ams.module.appInfo.model.AppInfoQuery;
 import com.github.tanxinzheng.ams.module.appInfo.service.AppInfoService;
-import com.github.pagehelper.Page;
+import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +24,6 @@ import java.util.List;
  */
 @Service
 public class AppInfoServiceImpl implements AppInfoService {
-
-    private static Logger logger = LoggerFactory.getLogger(AppInfoServiceImpl.class);
 
     @Autowired
     AppInfoMapper appInfoMapper;

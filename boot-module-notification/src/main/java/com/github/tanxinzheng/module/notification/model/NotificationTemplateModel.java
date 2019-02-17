@@ -9,7 +9,6 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 import org.springframework.beans.BeanUtils;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

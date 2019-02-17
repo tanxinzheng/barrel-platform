@@ -33,7 +33,7 @@ public class UserController {
      */
     @ApiOperation(value = "查询用户列表")
     //@PreAuthorize(value = "hasAnyAuthority('USER:VIEW')")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<UserModel> getUserList(UserQuery userQuery){
         return userService.getUserModelPage(userQuery);
     }
@@ -44,7 +44,7 @@ public class UserController {
      * @return  UserModel   用户领域对象
      */
     @ApiOperation(value = "查询用户")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public UserModel getUserById(@PathVariable(value = "id") String id){
         return userService.getOneUserModel(id);
     }
@@ -56,7 +56,7 @@ public class UserController {
      */
     @ApiOperation(value = "新增用户")
     @ActionLog(actionName = "新增用户")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public UserModel createUser(@RequestBody @Valid UserModel userModel) {
         userModel.setPassword("123456");
         return userService.createUser(userModel);
@@ -70,7 +70,7 @@ public class UserController {
      */
     @ApiOperation(value = "更新用户")
     @ActionLog(actionName = "更新用户")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public UserModel updateUser(@PathVariable(value = "id") String id,
                            @RequestBody @Valid UserModel userModel){
         if(StringUtils.isNotBlank(id)){
@@ -86,7 +86,7 @@ public class UserController {
      */
     @ApiOperation(value = "删除单个用户")
     @ActionLog(actionName = "删除单个用户")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteUser(@PathVariable(value = "id") String id){
         userService.deleteUser(id);
     }
@@ -97,7 +97,7 @@ public class UserController {
      */
     @ApiOperation(value = "批量删除用户")
     @ActionLog(actionName = "批量删除用户")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteUsers(@RequestParam(value = "ids[]") String[] ids){
         userService.deleteUser(ids);
     }

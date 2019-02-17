@@ -1,18 +1,15 @@
 package com.github.tanxinzheng.module.notification.controller;
 
-import io.swagger.annotations.ApiOperation;
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.logger.ActionLog;
-
-import com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery;
 import com.github.tanxinzheng.module.notification.model.NotificationTemplateModel;
+import com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery;
 import com.github.tanxinzheng.module.notification.service.NotificationTemplateService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import org.apache.commons.lang3.StringUtils;
 import javax.validation.Valid;
 
 /**
@@ -24,8 +21,6 @@ import javax.validation.Valid;
 @RequestMapping(value = "/notification/template")
 public class NotificationTemplateController {
 
-    private static Logger logger = LoggerFactory.getLogger(NotificationTemplateController.class);
-
     @Autowired
     NotificationTemplateService notificationTemplateService;
 
@@ -36,7 +31,7 @@ public class NotificationTemplateController {
      */
     @ApiOperation(value = "新增通知模板")
     @ActionLog(actionName = "新增通知模板")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public NotificationTemplateModel createNotificationTemplate(@RequestBody @Valid NotificationTemplateModel notificationTemplateModel) {
         return notificationTemplateService.createNotificationTemplate(notificationTemplateModel);
     }
@@ -48,7 +43,7 @@ public class NotificationTemplateController {
      */
     @ApiOperation(value = "查询通知模板列表")
     @ActionLog(actionName = "查询通知模板列表")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<NotificationTemplateModel> getNotificationTemplateList(NotificationTemplateQuery notificationTemplateQuery){
         return notificationTemplateService.getNotificationTemplateModelPage(notificationTemplateQuery);
     }
@@ -60,7 +55,7 @@ public class NotificationTemplateController {
      */
     @ApiOperation(value = "查询通知模板")
     @ActionLog(actionName = "查询通知模板")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public NotificationTemplateModel getNotificationTemplateById(@PathVariable(value = "id") String id){
         return notificationTemplateService.getOneNotificationTemplateModel(id);
     }
@@ -73,7 +68,7 @@ public class NotificationTemplateController {
      */
     @ApiOperation(value = "更新通知模板")
     @ActionLog(actionName = "更新通知模板")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public NotificationTemplateModel updateNotificationTemplate(@PathVariable(value = "id") String id,
                            @RequestBody @Valid NotificationTemplateModel notificationTemplateModel){
         if(StringUtils.isNotBlank(id)){
@@ -89,7 +84,7 @@ public class NotificationTemplateController {
      */
     @ApiOperation(value = "删除单个通知模板")
     @ActionLog(actionName = "删除单个通知模板")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteNotificationTemplate(@PathVariable(value = "id") String id){
         notificationTemplateService.deleteNotificationTemplate(id);
     }
@@ -100,7 +95,7 @@ public class NotificationTemplateController {
      */
     @ApiOperation(value = "批量删除通知模板")
     @ActionLog(actionName = "批量删除通知模板")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteNotificationTemplates(NotificationTemplateQuery notificationTemplateQuery){
         notificationTemplateService.deleteNotificationTemplate(notificationTemplateQuery.getIds());
     }

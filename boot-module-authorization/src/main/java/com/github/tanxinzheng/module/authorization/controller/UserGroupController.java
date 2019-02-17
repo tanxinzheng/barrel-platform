@@ -32,7 +32,7 @@ public class UserGroupController {
      * @return  Page<UserGroupModel> 用户组关联领域分页对象
      */
     @ApiOperation(value = "查询用户组关联列表")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<UserGroupModel> getUserGroupList(UserGroupQuery userGroupQuery){
         return userGroupService.getUserGroupModelPage(userGroupQuery);
     }
@@ -43,7 +43,7 @@ public class UserGroupController {
      * @return  UserGroupModel   用户组关联领域对象
      */
     @ApiOperation(value = "查询用户组关联")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public UserGroupModel getUserGroupById(@PathVariable(value = "id") String id){
         return userGroupService.getOneUserGroupModel(id);
     }
@@ -55,7 +55,7 @@ public class UserGroupController {
      */
     @ApiOperation(value = "新增用户组关联")
     @ActionLog(actionName = "新增用户组关联")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public UserGroupModel createUserGroup(@RequestBody @Valid UserGroupModel userGroupModel) {
         return userGroupService.createUserGroup(userGroupModel);
     }
@@ -68,7 +68,7 @@ public class UserGroupController {
      */
     @ApiOperation(value = "更新用户组关联")
     @ActionLog(actionName = "更新用户组关联")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public UserGroupModel updateUserGroup(@PathVariable(value = "id") String id,
                            @RequestBody @Valid UserGroupModel userGroupModel){
         if(StringUtils.isNotBlank(id)){
@@ -84,7 +84,7 @@ public class UserGroupController {
      */
     @ApiOperation(value = "删除单个用户组关联")
     @ActionLog(actionName = "删除单个用户组关联")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteUserGroup(@PathVariable(value = "id") String id){
         userGroupService.deleteUserGroup(id);
     }
@@ -96,7 +96,7 @@ public class UserGroupController {
     @ApiOperation(value = "批量删除用户组关联")
     @ActionLog(actionName = "批量删除用户组关联")
     //@PreAuthorize(value = "hasAnyAuthority('USERGROUP:DELETE')")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteUserGroups(UserGroupQuery userGroupQuery){
         userGroupService.deleteUserGroups(userGroupQuery.getUserId(), userGroupQuery.getGroupIds());
     }

@@ -1,19 +1,19 @@
 package com.github.tanxinzheng.module.authorization.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.tanxinzheng.framework.core.model.SelectIndex;
+import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
+import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
+import com.github.tanxinzheng.framework.core.service.SelectService;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.github.tanxinzheng.module.authorization.mapper.GroupMapper;
 import com.github.tanxinzheng.module.authorization.mapper.UserGroupMapper;
 import com.github.tanxinzheng.module.authorization.model.*;
-import com.github.tanxinzheng.framework.core.model.SelectIndex;
-import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
-import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
-import com.github.tanxinzheng.framework.core.service.SelectService;
 import com.github.tanxinzheng.module.authorization.service.GroupService;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

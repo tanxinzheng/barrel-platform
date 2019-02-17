@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.ams.module.appInfo.model;
 
-import lombok.Data;
 import com.github.tanxinzheng.framework.model.BaseQuery;
+import lombok.Data;
 
 import java.io.Serializable;
 

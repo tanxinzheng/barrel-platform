@@ -1,17 +1,15 @@
 package com.github.tanxinzheng.module.jwt.support.filter;
 
+import com.github.tanxinzheng.module.jwt.support.JwtAuthenticationToken;
 import com.github.tanxinzheng.module.jwt.support.JwtErrorCode;
 import com.github.tanxinzheng.module.jwt.support.JwtTokenService;
-import com.github.tanxinzheng.module.jwt.support.JwtAuthenticationToken;
 import com.github.tanxinzheng.module.jwt.support.RestResponse;
-import com.github.tanxinzheng.module.jwt.support.exception.JwtTokenInvalidException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;

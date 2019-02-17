@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,7 +35,7 @@ public class MenuController {
      */
     @ApiOperation(value = "查询菜单配置列表")
     @ActionLog(actionName = "查询菜单配置列表")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<MenuModel> getMenuList(MenuQuery menuQuery){
         return menuService.getMenuModelPage(menuQuery);
     }
@@ -48,7 +47,7 @@ public class MenuController {
      */
     @ApiOperation(value = "查询菜单配置")
     @ActionLog(actionName = "查询菜单配置")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public MenuModel getMenuById(@PathVariable(value = "id") String id){
         return menuService.getOneMenuModel(id);
     }
@@ -60,7 +59,7 @@ public class MenuController {
      */
     @ApiOperation(value = "新增菜单配置")
     @ActionLog(actionName = "新增菜单配置")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public MenuModel createMenu(@RequestBody @Valid MenuModel menuModel) {
         return menuService.createMenu(menuModel);
     }
@@ -73,7 +72,7 @@ public class MenuController {
      */
     @ApiOperation(value = "更新菜单配置")
     @ActionLog(actionName = "更新菜单配置")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public MenuModel updateMenu(@PathVariable(value = "id") String id,
                            @RequestBody @Valid MenuModel menuModel){
         if(StringUtils.isNotBlank(id)){
@@ -89,7 +88,7 @@ public class MenuController {
      */
     @ApiOperation(value = "删除单个菜单配置")
     @ActionLog(actionName = "删除单个菜单配置")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteMenu(@PathVariable(value = "id") String id){
         menuService.deleteMenu(id);
     }
@@ -100,7 +99,7 @@ public class MenuController {
      */
     @ApiOperation(value = "批量删除菜单配置")
     @ActionLog(actionName = "批量删除菜单配置")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteMenus(MenuQuery menuQuery){
         menuService.deleteMenu(menuQuery.getIds());
     }

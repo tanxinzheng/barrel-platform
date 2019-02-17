@@ -1,15 +1,14 @@
 package com.github.tanxinzheng.module.dictionary.controller;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.module.dictionary.model.DictionaryQuery;
-import com.google.common.collect.Lists;
 import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.framework.poi.ExcelUtils;
-
 import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
 import com.github.tanxinzheng.framework.web.rest.ImportExcelResponse;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
+import com.github.tanxinzheng.module.dictionary.model.DictionaryQuery;
 import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -46,7 +45,7 @@ public class DictionaryController {
      */
     @ApiOperation(value = "新增数据字典")
     @ActionLog(actionName = "新增数据字典")
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public DictionaryModel createDictionary(@RequestBody @Valid DictionaryModel dictionaryModel) {
         dictionaryModel.setCreatedUserId(currentAccountService.getAccountId());
         dictionaryModel.setUpdatedUserId(currentAccountService.getAccountId());
@@ -60,7 +59,7 @@ public class DictionaryController {
      */
     @ApiOperation(value = "查询数据字典列表")
     @ActionLog(actionName = "查询数据字典列表")
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Page<DictionaryModel> getDictionaryList(DictionaryQuery dictionaryQuery){
         return dictionaryService.getDictionaryModelPage(dictionaryQuery);
     }
@@ -72,7 +71,7 @@ public class DictionaryController {
      */
     @ApiOperation(value = "查询数据字典")
     @ActionLog(actionName = "查询数据字典")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public DictionaryModel getDictionaryById(@PathVariable(value = "id") String id){
         return dictionaryService.getOneDictionaryModel(id);
     }
@@ -85,7 +84,7 @@ public class DictionaryController {
      */
     @ApiOperation(value = "更新数据字典")
     @ActionLog(actionName = "更新数据字典，字典编号：${DictionaryModel.dictionaryCode}")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public DictionaryModel updateDictionary(@PathVariable(value = "id") String id,
                            @RequestBody @Valid DictionaryModel dictionaryModel){
         if(StringUtils.isNotBlank(id)){
@@ -103,7 +102,7 @@ public class DictionaryController {
      */
     @ApiOperation(value = "删除单个数据字典")
     @ActionLog(actionName = "删除单个数据字典")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteDictionary(@PathVariable(value = "id") String id){
         dictionaryService.deleteDictionary(id);
     }
@@ -114,7 +113,7 @@ public class DictionaryController {
      */
     @ApiOperation(value = "批量删除数据字典")
     @ActionLog(actionName = "批量删除数据字典")
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public void deleteDictionaries(DictionaryQuery dictionaryQuery){
         dictionaryService.deleteDictionary(dictionaryQuery.getIds());
     }

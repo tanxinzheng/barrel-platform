@@ -3,7 +3,10 @@ package com.github.tanxinzheng;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.github.tanxinzheng.module.dictionary.web.*;
+import com.github.tanxinzheng.module.dictionary.web.AccountInterpreterService;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryAnnotationIntrospector;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryInterpreterService;
+import com.github.tanxinzheng.module.dictionary.web.DictionaryTransferService;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -14,14 +17,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.util.Map;
 

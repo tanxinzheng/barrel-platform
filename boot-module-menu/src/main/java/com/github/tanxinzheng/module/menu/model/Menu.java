@@ -3,8 +3,6 @@ package com.github.tanxinzheng.module.menu.model;
 import com.github.tanxinzheng.framework.model.BaseEntity;
 import lombok.Data;
 
-import java.lang.Integer;
-import java.lang.String;
 import java.io.Serializable;
 
 /**

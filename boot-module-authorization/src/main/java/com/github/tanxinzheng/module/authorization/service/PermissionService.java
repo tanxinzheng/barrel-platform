@@ -1,8 +1,8 @@
 package com.github.tanxinzheng.module.authorization.service;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.module.authorization.model.PermissionModel;
 import com.github.tanxinzheng.module.authorization.model.Permission;
+import com.github.tanxinzheng.module.authorization.model.PermissionModel;
 import com.github.tanxinzheng.module.authorization.model.PermissionQuery;
 
 import java.util.List;
