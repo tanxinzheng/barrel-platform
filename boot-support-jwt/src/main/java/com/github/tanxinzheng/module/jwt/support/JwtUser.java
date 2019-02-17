@@ -187,6 +187,6 @@ public class JwtUser implements JwtUserDetails {
 
     @Override
     public String toString() {
-        return String.format("JwtUser{refreshToken='%s', token='%s', id='%s', username='%s', password=[PROTECTED]', name='%s', email='%s', accountNonExpired=%s, accountNonLocked=%s, credentialsNonExpired=%s, enabled=%s, roles=%s, permissions=%s, authorities=%s}", refreshToken, token, id, username, name, email, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, roles, permissions, authorities);
+        return String.format("JwtUser{refreshToken='%s', token='%s', id='%s', username='%s', password='[PROTECTED]', name='%s', email='%s', accountNonExpired=%s, accountNonLocked=%s, credentialsNonExpired=%s, enabled=%s, roles=%s, permissions=%s, authorities=%s}", refreshToken, token, id, username, name, email, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, roles, permissions, authorities);
     }
 }

@@ -6,6 +6,7 @@ import com.github.tanxinzheng.framework.model.TreeModel;
 import com.github.tanxinzheng.module.menu.model.MenuModel;
 import com.github.tanxinzheng.module.menu.model.MenuQuery;
 import com.github.tanxinzheng.module.menu.service.MenuService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @RestController
+@Api(value = "菜单接口", description = "菜单接口")
 @RequestMapping(value = "/menu")
 public class MenuController {
 
@@ -34,7 +36,6 @@ public class MenuController {
      */
     @ApiOperation(value = "查询菜单配置列表")
     @ActionLog(actionName = "查询菜单配置列表")
-    @PreAuthorize("hasAuthority('MENU:VIEW')")
     @RequestMapping(method = RequestMethod.GET)
     public Page<MenuModel> getMenuList(MenuQuery menuQuery){
         return menuService.getMenuModelPage(menuQuery);
@@ -47,7 +48,6 @@ public class MenuController {
      */
     @ApiOperation(value = "查询菜单配置")
     @ActionLog(actionName = "查询菜单配置")
-    @PreAuthorize("hasAuthority('MENU:VIEW')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public MenuModel getMenuById(@PathVariable(value = "id") String id){
         return menuService.getOneMenuModel(id);
@@ -60,7 +60,6 @@ public class MenuController {
      */
     @ApiOperation(value = "新增菜单配置")
     @ActionLog(actionName = "新增菜单配置")
-    @PreAuthorize("hasAuthority('MENU:CREATE')")
     @RequestMapping(method = RequestMethod.POST)
     public MenuModel createMenu(@RequestBody @Valid MenuModel menuModel) {
         return menuService.createMenu(menuModel);
@@ -74,7 +73,6 @@ public class MenuController {
      */
     @ApiOperation(value = "更新菜单配置")
     @ActionLog(actionName = "更新菜单配置")
-    @PreAuthorize("hasAuthority('MENU:UPDATE')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public MenuModel updateMenu(@PathVariable(value = "id") String id,
                            @RequestBody @Valid MenuModel menuModel){
@@ -91,7 +89,6 @@ public class MenuController {
      */
     @ApiOperation(value = "删除单个菜单配置")
     @ActionLog(actionName = "删除单个菜单配置")
-    @PreAuthorize("hasAuthority('MENU:DELETE')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteMenu(@PathVariable(value = "id") String id){
         menuService.deleteMenu(id);
@@ -103,7 +100,6 @@ public class MenuController {
      */
     @ApiOperation(value = "批量删除菜单配置")
     @ActionLog(actionName = "批量删除菜单配置")
-    @PreAuthorize("hasAuthority('MENU:DELETE')")
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteMenus(MenuQuery menuQuery){
         menuService.deleteMenu(menuQuery.getIds());
@@ -114,11 +110,10 @@ public class MenuController {
      * 查询树形结构菜单
      * @return
      */
-    @ApiOperation(value = "查询菜单配置列表")
-    @ActionLog(actionName = "查询菜单配置列表")
-    @PreAuthorize("hasAuthority('MENU:VIEW')")
-    @RequestMapping(method = RequestMethod.GET)
-    public List<TreeModel> getTreeModule(MenuQuery query){
+    @ApiOperation(value = "查询树形菜单")
+    @ActionLog(actionName = "查询树形菜单信息")
+    @RequestMapping(value = "/tree", method = RequestMethod.GET)
+    public List<TreeModel> getTreeMenu(MenuQuery query){
         return menuService.getTreeMenu(query);
     }
 

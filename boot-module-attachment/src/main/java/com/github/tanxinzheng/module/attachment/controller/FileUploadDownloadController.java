@@ -7,6 +7,7 @@ import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
 import com.github.tanxinzheng.module.attachment.service.AttachmentService;
 import com.github.tanxinzheng.module.fss.model.FileStorageResult;
 import com.github.tanxinzheng.module.fss.service.FileStoreService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,6 +38,7 @@ import java.util.zip.ZipOutputStream;
  */
 @Controller
 @RequestMapping(value = "/file")
+@Slf4j
 public class FileUploadDownloadController {
 
     @Autowired
@@ -120,7 +122,7 @@ public class FileUploadDownloadController {
                 outputStream.closeEntry();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 

@@ -15,6 +15,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <boot.fremework.version>${parent.version}</boot.fremework.version>
     </properties>
 
     <profiles>
@@ -35,189 +36,41 @@
         </profile>
     </profiles>
 
-    <build>
-        <!--<finalName>app-${version}</finalName>-->
-        <filters>
-            <filter>src/main/resources/application-${build.profile.id}.yml</filter>
-        </filters>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>application-*.yml</exclude>
-                </excludes>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>application-${build.profile.id}.yml</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <!--    代码覆盖率    -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.1.201405082137</version>
-                <executions>
-                    <execution>
-                        <id>pre-test</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>post-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- tag::plugin[] -->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <configuration>
-                    <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
-                    <!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
-                    <!--<dockerDirectory>docker</dockerDirectory>-->
-                    <baseImage>java:alpine</baseImage>
-                    <imageName>boot-admin-app</imageName>
-                    <resources>
-                        <resource>
-                            <targetPath>/var/deploy</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.${project.packaging}</include>
-                        </resource>
-                    </resources>
-                    <entryPoint>["java", "-Dserver.port=8000", "-jar", "/var/deploy/boot-admin-1.0.0-SNAPSHOT.jar"]</entryPoint>
-                </configuration>
-            </plugin>
-            <!-- end::plugin[] -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.4</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.12.2</version>
-                <configuration>
-                    <skipTests>true</skipTests>
-                    <forkMode>once</forkMode>
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.4.2</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <encoding>utf-8</encoding>
-                    <!--替换application.yml中的变量值-->
-                    <useDefaultDelimiters>true</useDefaultDelimiters>
-                </configuration>
-            </plugin>
-
-            <!--    打包成可直接运行的jar，详细请查看spring boot executable   -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <executable>true</executable>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-    <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>sonatype-nexus-snapshots</id>-->
-            <!--<name>OSS Sonatype Repository</name>-->
-            <!--<layout>default</layout>-->
-            <!--<url>https://oss.sonatype.org/content/repositories/public</url>-->
-            <!--<snapshots>-->
-                <!--<enabled>true</enabled>-->
-                <!--<updatePolicy>always</updatePolicy>-->
-            <!--</snapshots>-->
-            <!--<releases>-->
-                <!--<enabled>true</enabled>-->
-                <!--&lt;!&ndash;<updatePolicy>always</updatePolicy>&ndash;&gt;-->
-            <!--</releases>-->
-        <!--</repository>-->
-    <!--</repositories>-->
-
-    <!--<pluginRepositories>-->
-        <!--<pluginRepository>-->
-            <!--<id>sonatype-nexus-snapshots</id>-->
-            <!--<name>Nexus Sonatype Repository</name>-->
-            <!--<layout>default</layout>-->
-            <!--<url>https://oss.sonatype.org/content/repositories/public</url>-->
-            <!--<snapshots>-->
-                <!--<enabled>true</enabled>-->
-                <!--<updatePolicy>never</updatePolicy>-->
-            <!--</snapshots>-->
-            <!--<releases>-->
-                <!--<enabled>true</enabled>-->
-                <!--&lt;!&ndash;<updatePolicy>never</updatePolicy>&ndash;&gt;-->
-            <!--</releases>-->
-        <!--</pluginRepository>-->
-    <!--</pluginRepositories>-->
-
-
     <dependencies>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-module-authorization</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.github.tanxinzheng</groupId>-->
+            <!--<artifactId>boot-module-menu</artifactId>-->
+            <!--<version>${boot.fremework.version}</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-quartz</artifactId>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-support-swagger</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-module-dictionary</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-support-annotation</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-support-druid</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
 
         <dependency>
@@ -229,23 +82,23 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-support-jwt</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-module-account</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-support-verificationCode</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
 
         <!--<dependency>-->
@@ -376,7 +229,7 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-module-logger</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
@@ -509,13 +362,13 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-module-notification</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-support-store</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
 
         <dependency>
@@ -539,5 +392,124 @@
         </dependency>
 
     </dependencies>
+
+
+    <build>
+        <!--<finalName>app-${version}</finalName>-->
+        <filters>
+            <filter>src/main/resources/application-${build.profile.id}.yml</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>application-*.yml</exclude>
+                </excludes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>application-${build.profile.id}.yml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!--    代码覆盖率    -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>pre-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- tag::plugin[] -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
+                    <!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
+                    <!--<dockerDirectory>docker</dockerDirectory>-->
+                    <baseImage>java:alpine</baseImage>
+                    <imageName>boot-admin-app</imageName>
+                    <resources>
+                        <resource>
+                            <targetPath>/var/deploy</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.${project.packaging}</include>
+                        </resource>
+                    </resources>
+                    <entryPoint>["java", "-Dserver.port=8000", "-jar", "/var/deploy/boot-admin-1.0.0-SNAPSHOT.jar"]</entryPoint>
+                </configuration>
+            </plugin>
+            <!-- end::plugin[] -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.2</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                    <forkMode>once</forkMode>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4.2</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>utf-8</encoding>
+                    <!--替换application.yml中的变量值-->
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+
+            <!--    打包成可直接运行的jar，详细请查看spring boot executable   -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

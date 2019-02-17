@@ -12,7 +12,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @ServletComponentScan
 @SpringBootApplication
 @EnableJWT
-@MapperScan(value = "com.**.mapper")
+@MapperScan(value = "com.github.tanxinzheng.**.mapper")
 public class ApplicationStart {
 
     public static void main(String[] args) {

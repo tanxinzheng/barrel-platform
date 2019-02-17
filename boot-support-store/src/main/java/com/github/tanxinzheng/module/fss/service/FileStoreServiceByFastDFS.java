@@ -3,7 +3,7 @@ package com.github.tanxinzheng.module.fss.service;
 import com.github.tanxinzheng.module.fss.model.FileStorageInfo;
 import com.github.tanxinzheng.module.fss.model.FileStorageResult;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.csource.common.MyException;
 import org.csource.fastdfs.*;
@@ -134,6 +134,9 @@ public class FileStoreServiceByFastDFS implements FileStoreService {
     @Override
     public boolean deleteFile(String filePathAndName) {
         String[] file = parserFullPath(filePathAndName);
+        if(ArrayUtils.isEmpty(file)){
+            return Boolean.FALSE;
+        }
         try {
             storageClient.delete_file(file[0], file[1]);
             return Boolean.TRUE;

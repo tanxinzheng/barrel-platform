@@ -27,15 +27,8 @@ public enum PermissionAction {
         return desc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public RequestMethod getRequestMethod() {
         return requestMethod;
     }
 
-    public void setRequestMethod(RequestMethod requestMethod) {
-        this.requestMethod = requestMethod;
-    }
 }

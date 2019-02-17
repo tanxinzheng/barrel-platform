@@ -42,15 +42,14 @@ public class FileStorageResult {
     public static FileStorageResult SUCCESS(String storagePath, InputStream inputStream) {
         FileStorageResult result = FileStorageResult.SUCCESS(storagePath);
         try {
-            byte[] bytes = null;
             if(inputStream != null){
                 int len1 = inputStream.available();
-                bytes = new byte[len1];
+                byte[] bytes = new byte[len1];
                 inputStream.read(bytes);
+                inputStream.close();
+                result.setContent(bytes);
+                result.setFileSize(bytes.length);
             }
-            inputStream.close();
-            result.setContent(bytes);
-            result.setFileSize(bytes.length);
         } catch (IOException e) {
 
         }

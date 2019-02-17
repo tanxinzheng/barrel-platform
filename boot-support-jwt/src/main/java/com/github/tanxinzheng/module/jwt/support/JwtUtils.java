@@ -29,7 +29,7 @@ public class JwtUtils {
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
 //                .setAudience(jwtUser.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + Long.valueOf(expiration)))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .setIssuedAt(new Date())
                 .setSubject(username)
                 .setIssuer(issuer)

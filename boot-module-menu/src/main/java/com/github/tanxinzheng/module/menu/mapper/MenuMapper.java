@@ -3,6 +3,7 @@ package com.github.tanxinzheng.module.menu.mapper;
 import com.github.tanxinzheng.module.menu.model.Menu;
 import com.github.tanxinzheng.module.menu.model.MenuModel;
 import com.github.tanxinzheng.module.menu.model.MenuQuery;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date    2019-1-11 22:32:46
  * @version 1.0.0
  */
+@Mapper
 public interface MenuMapper {
 
     List<Menu> select(MenuQuery menuQuery);

@@ -4,7 +4,7 @@ server:
 
 spring:
   profiles:
-    active: ${build.profile.id}
+    active: ${build.profile.id},quartz
   servlet:
     multipart:
       max-file-size: 20971520
@@ -57,3 +57,8 @@ oss:
   accessKeySecret: SvUzBFGETJ3k9DUY0krXEKLYEpOsFF
   bucketName: xmomen-test
   endpoint: oss-cn-hangzhou.aliyuncs.com
+
+
+job:
+  cron:
+    simpleJob: 0/5 * * * * ?

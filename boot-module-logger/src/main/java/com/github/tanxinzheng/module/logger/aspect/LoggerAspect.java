@@ -129,7 +129,7 @@ public class LoggerAspect {
                             params.put(args[i].getClass().getSimpleName(), data);
                         }
                     } catch (JsonProcessingException e) {
-                        e.printStackTrace();
+                        log.error(e.getMessage(), e);
                     }
                 }
             }

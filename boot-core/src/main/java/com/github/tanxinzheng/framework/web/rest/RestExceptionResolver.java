@@ -2,6 +2,7 @@ package com.github.tanxinzheng.framework.web.rest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.tanxinzheng.framework.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.text.MessageFormat;
 /**
  * Created by Jeng on 2016/1/11.
  */
+@Slf4j
 public class RestExceptionResolver extends SimpleMappingExceptionResolver {
 
     @Value("#{systemProperties['spring.maxUploadSize']}")
@@ -61,7 +63,7 @@ public class RestExceptionResolver extends SimpleMappingExceptionResolver {
         try {
             response.getWriter().write(JSONObject.toJSONString(restError));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         logger.error(ex.getMessage(), ex);
         return mv;

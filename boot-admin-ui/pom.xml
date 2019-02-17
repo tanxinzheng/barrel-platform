@@ -17,9 +17,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <cnpm>yarn</cnpm>
+        <start-class>com.github.tanxinzheng.config.ApplicationStart</start-class>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-admin</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -30,77 +37,68 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                    <mainClass>com.github.tanxinzheng.config.ApplicationStart</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>npm-install</id>
-                        <phase>validate</phase>
+                        <id>exec-cnpm-install</id>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>npm</executable>
+                            <executable>${cnpm}</executable>
                             <arguments>
                                 <argument>install</argument>
                             </arguments>
+                            <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>npm-build</id>
-                        <phase>generate-resources</phase>
+                        <id>exec-cnpm-run-build</id>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <skip>${skipNpmBuild}</skip>
-                            <executable>npm</executable>
+                            <executable>${cnpm}</executable>
                             <arguments>
                                 <argument>run</argument>
                                 <argument>build</argument>
                             </arguments>
-                            <environmentVariables>
-                                <PROJECT_VERSION>${project.version}</PROJECT_VERSION>
-                            </environmentVariables>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>npm-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${skipTests}</skip>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>test:unit</argument>
-                            </arguments>
+                            <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <nonFilteredFileExtensions>
-                        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>swf</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>ico</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>png</nonFilteredFileExtension>
-                    </nonFilteredFileExtensions>
-                    <includeEmptyDirs>true</includeEmptyDirs>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-resources-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<nonFilteredFileExtensions>-->
+                        <!--<nonFilteredFileExtension>woff</nonFilteredFileExtension>-->
+                        <!--<nonFilteredFileExtension>ttf</nonFilteredFileExtension>-->
+                        <!--<nonFilteredFileExtension>woff2</nonFilteredFileExtension>-->
+                        <!--<nonFilteredFileExtension>eot</nonFilteredFileExtension>-->
+                        <!--<nonFilteredFileExtension>swf</nonFilteredFileExtension>-->
+                        <!--<nonFilteredFileExtension>ico</nonFilteredFileExtension>-->
+                        <!--<nonFilteredFileExtension>png</nonFilteredFileExtension>-->
+                    <!--</nonFilteredFileExtensions>-->
+                    <!--<includeEmptyDirs>true</includeEmptyDirs>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>src/main/webapp/dist</directory>
             </resource>
             <resource>
                 <directory>target/dist</directory>

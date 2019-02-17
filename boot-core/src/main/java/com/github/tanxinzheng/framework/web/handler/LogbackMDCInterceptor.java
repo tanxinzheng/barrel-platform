@@ -8,7 +8,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
 
 /**
  * Created by tanxinzheng on 18/2/9.
@@ -39,14 +38,8 @@ public class LogbackMDCInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
-        MDC.put(REQUEST_ID, request.getRequestedSessionId());
-        if(request.getUserPrincipal() == null){
-            MDC.put(USERNAME, "-");
-            return true;
-        }
-        String username = request.getUserPrincipal().getName();
-        if(StringUtils.isNotBlank(username)){
-            MDC.put(USERNAME, username);
+        if(request.getUserPrincipal() != null && StringUtils.isNotBlank(request.getUserPrincipal().getName())){
+            MDC.put(USERNAME, request.getUserPrincipal().getName());
         }else{
             MDC.put(USERNAME, "-");
         }

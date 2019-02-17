@@ -1,23 +1,22 @@
 package com.github.tanxinzheng.module.menu.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.model.TreeModel;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.github.tanxinzheng.framework.utils.TreeUtils;
-import com.github.tanxinzheng.module.menu.model.Menu;
 import com.github.tanxinzheng.module.menu.mapper.MenuMapper;
+import com.github.tanxinzheng.module.menu.model.Menu;
 import com.github.tanxinzheng.module.menu.model.MenuModel;
 import com.github.tanxinzheng.module.menu.model.MenuQuery;
 import com.github.tanxinzheng.module.menu.service.MenuService;
-import com.github.pagehelper.Page;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.ibatis.exceptions.TooManyResultsException;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;

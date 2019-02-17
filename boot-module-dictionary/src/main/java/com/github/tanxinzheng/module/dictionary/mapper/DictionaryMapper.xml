@@ -239,6 +239,8 @@
                 AND (
                 DICTIONARY_CODE LIKE CONCAT('%', #{keyword}, '%')
                 OR DICTIONARY_NAME LIKE CONCAT('%', #{keyword}, '%')
+                OR GROUP_NAME LIKE CONCAT('%', #{keyword}, '%')
+                OR GROUP_CODE LIKE CONCAT('%', #{keyword}, '%')
                 )
             </if>
             <if test="id">

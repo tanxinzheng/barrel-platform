@@ -1,11 +1,15 @@
 package com.github.tanxinzheng.module.scheduler;
 
+import com.github.tanxinzheng.framework.exception.BusinessException;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
+
+import java.util.TimeZone;
 
 import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.JobBuilder.newJob;
@@ -27,40 +31,43 @@ public class QuartzManager {
 
     /**
      * 添加定时任务
+     * 一个job可以有多个触发器，如一个job包含多个触发操作组成一个多事件的任务
      */
-    public void addJob(String jobName,String jobGroupName,String triggerName,String triggerGroupName, Class cls, String time){
+    public void addJob(String jobName,
+                       String jobGroupName,
+                       String triggerName,
+                       String triggerGroupName,
+                       Class cls,
+                       String cron,
+                       String description) {
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
         try {
-            Scheduler scheduler = schedulerFactoryBean.getScheduler();
             scheduler.start();
-            JobDetail jobDetail = newJob(cls).withIdentity(jobName, jobGroupName).build();
-            CronTrigger cronTrigger = newTrigger().withIdentity(triggerName, triggerGroupName).withSchedule(cronSchedule(time)).build();
-            scheduler.scheduleJob(jobDetail,cronTrigger);
+            JobKey jobKey = new JobKey(jobName, jobGroupName);
+            if(scheduler.checkExists(jobKey)){
+                throw new SchedulerException("The jobName and jobGroup already exists.");
+            }
+            TriggerKey triggerKey = new TriggerKey(triggerName, triggerGroupName);
+            if(scheduler.checkExists(triggerKey)){
+                throw new SchedulerException("The triggerName and triggerGroupName already exists.");
+            }
+
+            JobDetail jobDetail = newJob(cls)
+                    .withIdentity(jobName, jobGroupName)
+                    .withDescription(description)
+                    .build();
+            CronTrigger cronTrigger = newTrigger()
+                    .withIdentity(triggerName, triggerGroupName)
+                    .withSchedule(cronSchedule(cron)).build();
+//            CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
+//            cronTriggerFactoryBean.setCronExpression(cron);
+//            cronTriggerFactoryBean.setDescription(description);
+//            cronTriggerFactoryBean.setJobDetail(jobDetail);
+//            cronTriggerFactoryBean.setTimeZone(TimeZone.getDefault());
+            scheduler.scheduleJob(jobDetail, cronTrigger);
         } catch (SchedulerException e) {
-            logger.error(e.getMessage(), e);
+            throw new BusinessException(e.getMessage(), e);
         }
-    }
-
-    /**
-     *  添加任务
-     * @param jobName
-     * @param triggerName
-     * @param groupName
-     * @param cls
-     * @param time
-     */
-    public void addJob(String jobName,String triggerName,String groupName,Class cls,String time){
-        addJob(jobName,groupName,triggerName,groupName,cls,time);
-    }
-
-    /**
-     * 添加任务
-     * @param jobName
-     * @param triggerName
-     * @param cls
-     * @param time
-     */
-    public void addJob(String jobName,String triggerName,Class cls,String time){
-        addJob(jobName,JOB_GROUP_NAME,triggerName,TRIGGER_GROUP_NAME,cls,time);
     }
 
     /**
@@ -76,6 +83,7 @@ public class QuartzManager {
             }
         } catch (SchedulerException e) {
             logger.error(e.getMessage(), e);
+            throw new BusinessException(e.getMessage(), e);
         }
         return result;
     }
@@ -99,8 +107,8 @@ public class QuartzManager {
                 scheduler.pauseJob(jobKey);
             }
         } catch (SchedulerException e) {
-
             logger.error(e.getMessage(), e);
+            throw new BusinessException(e.getMessage(), e);
         }
     }
 
@@ -126,6 +134,7 @@ public class QuartzManager {
             }
         } catch (SchedulerException e) {
             logger.error(e.getMessage(), e);
+            throw new BusinessException(e.getMessage(), e);
         }
     }
 
@@ -151,6 +160,7 @@ public class QuartzManager {
             }
         } catch (SchedulerException e) {
             logger.error(e.getMessage(), e);
+            throw new BusinessException(e.getMessage(), e);
         }
     }
 
@@ -183,6 +193,7 @@ public class QuartzManager {
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
             logger.error(e.getMessage(), e);
+            throw new BusinessException("修改Cron表达式失败，错误信息：" + e.getMessage());
         }
     }
 
@@ -194,9 +205,4 @@ public class QuartzManager {
     public void updateCronExpress(String jobName, String cronExpression){
         updateCronExpress(jobName, JOB_GROUP_NAME, cronExpression);
     }
-
-//    @Override
-//    public void afterPropertiesSet() throws Exception {
-//        Assert.notNull(schedulerFactoryBean, "schedulerFactoryBean must be not null");
-//    }
 }

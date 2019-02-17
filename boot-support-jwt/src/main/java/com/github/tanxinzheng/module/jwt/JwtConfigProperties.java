@@ -25,10 +25,10 @@ public class JwtConfigProperties {
     private static final String DEFAULT_JWT_SESSION_NAME = "jwt-session";
 
     // 默认 2小时
-    private static final long DEFAULT_JWT_EXPIRATION = 2 * 1000 * 60 * 60;
+    private static final long DEFAULT_JWT_EXPIRATION = 2L * 1000 * 60 * 60;
 
     // 默认 2周
-    private static final long DEFAULT_JWT_REFRESH_EXPIRATION = 2 * 7 * 24 * 1000 * 60 * 60;
+    private static final long DEFAULT_JWT_REFRESH_EXPIRATION = 2L * 7 * 24 * 1000 * 60 * 60;
 
     /**
      * JWT 认证请求头

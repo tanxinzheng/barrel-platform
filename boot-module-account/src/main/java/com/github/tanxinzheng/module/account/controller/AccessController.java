@@ -9,6 +9,7 @@ import com.github.tanxinzheng.module.authorization.model.UserModel;
 import com.github.tanxinzheng.module.authorization.model.UserQuery;
 import com.github.tanxinzheng.module.authorization.service.UserService;
 import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +25,7 @@ import java.util.Date;
  * 重置密码控制器
  */
 @RestController
+@Api(value = "公共访问接口", description = "公共访问接口：注册，找回密码，发送验证码")
 @RequestMapping(value = "/access")
 @Slf4j
 public class AccessController {
@@ -42,6 +44,7 @@ public class AccessController {
      * @param register
      * @return
      */
+    @ApiOperation(value = "用户注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void registerModel(@RequestBody @Valid RegisterModel register) {
         UserModel checkUser = userService.getOneUserModelByUsername(register.getUsername());

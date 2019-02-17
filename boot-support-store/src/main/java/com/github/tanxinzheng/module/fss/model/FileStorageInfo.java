@@ -1,6 +1,7 @@
 package com.github.tanxinzheng.module.fss.model;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -11,6 +12,7 @@ import java.io.InputStream;
 /**
  * Created by tanxinzheng on 2018/7/22.
  */
+@Slf4j
 @Data
 public class FileStorageInfo {
 
@@ -25,7 +27,7 @@ public class FileStorageInfo {
         try {
             this.content = multipartFile.getBytes();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         String originalFileName = multipartFile.getOriginalFilename();
         this.fileExt = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
@@ -41,8 +43,8 @@ public class FileStorageInfo {
             int len1 = inputStream.available();
             content = new byte[len1];
             inputStream.read(content);
+            inputStream.close();
         }
-        inputStream.close();
     }
 
     public InputStream getInputStream(){

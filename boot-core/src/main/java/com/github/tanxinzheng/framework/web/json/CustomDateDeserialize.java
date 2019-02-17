@@ -3,6 +3,7 @@ package com.github.tanxinzheng.framework.web.json;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.commons.validator.routines.DateValidator;
@@ -14,6 +15,7 @@ import java.util.Date;
 /**
  * Created by tanxinzheng on 16/12/11.
  */
+@Slf4j
 public class CustomDateDeserialize extends JsonDeserializer<Date> {
 
     public static final FastDateFormat ISO_DATE_MINUTE_ZONE_FORMAT = FastDateFormat.getInstance("yyyy-MM-dd HH:mm");
@@ -31,7 +33,7 @@ public class CustomDateDeserialize extends JsonDeserializer<Date> {
                 return ISO_DATE_MINUTE_ZONE_FORMAT.parse(source);
             }
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return date;
     }

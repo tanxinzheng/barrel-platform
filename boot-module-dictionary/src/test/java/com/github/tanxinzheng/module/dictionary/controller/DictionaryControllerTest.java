@@ -77,7 +77,7 @@ public class DictionaryControllerTest extends TestAppController {
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
         JSONArray jsonArray = JSONArray.parseArray(resultJson);
-        Assert.assertNotNull("新增数据字典，测试不通过", jsonArray);
+        Assert.assertNotNull("查询数据字典列表，测试不通过", jsonArray);
     }
 
     @Test
