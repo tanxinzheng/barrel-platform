@@ -13,26 +13,10 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<modules>
 		<module>boot-core</module>
-		<module>boot-support-test</module>
-		<module>boot-support-store</module>
-		<module>boot-support-jwt</module>
-        <module>boot-support-annotation</module>
-		<module>boot-support-verificationCode</module>
-		<module>boot-support-swagger</module>
-		<module>boot-support-druid</module>
+		<module>boot-support-parent</module>
+		<module>boot-module-parent</module>
+		<module>boot-cloud-parent</module>
 		<module>boot-archetype-module</module>
-        <module>boot-module-dictionary</module>
-		<module>boot-module-notification</module>
-		<module>boot-module-account</module>
-		<module>boot-module-attachment</module>
-		<module>boot-module-authorization</module>
-		<module>boot-module-logger</module>
-		<module>boot-module-menu</module>
-		<module>boot-module-quartz</module>
-		<module>boot-cloud-eureka</module>
-		<module>boot-cloud-zipkin</module>
-		<module>boot-cloud-zuul</module>
-		<module>boot-cloud-hystrix</module>
 		<module>boot-admin</module>
 		<module>boot-admin-ui</module>
 		<module>boot-webapp-ams</module>
@@ -54,6 +38,34 @@
 		<skipNpmBuild>false</skipNpmBuild>
 		<skipTests>false</skipTests>
 	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>local-nexus</id>
+			<name>maven-releases</name>
+			<url>http://localhost:10003/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>local-nexus</id>
+			<name>maven-snapshots</name>
+			<url>http://localhost:10003/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<!--<repositories>-->
+		<!--<repository>-->
+			<!--<id>local-mac-release</id>-->
+			<!--<name>maven-releases</name>-->
+			<!--<url>http://localhost:10003/repository/maven-releases/</url>-->
+		<!--</repository>-->
+		<!--<repository>-->
+			<!--<id>local-mac-snapshots</id>-->
+			<!--<name>maven-snapshots</name>-->
+			<!--<url>http://localhost:10003/repository/maven-snapshots/</url>-->
+			<!--<snapshots>-->
+				<!--<enabled>true</enabled>-->
+			<!--</snapshots>-->
+		<!--</repository>-->
+	<!--</repositories>-->
 
 	<dependencyManagement>
 		<dependencies>
@@ -86,6 +98,11 @@
 				<artifactId>spring-boot-starter-data-redis</artifactId>
 				<version>${spring.boot.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>org.mybatis.spring.boot</groupId>
 				<artifactId>mybatis-spring-boot-starter</artifactId>
@@ -171,11 +188,6 @@
 				<artifactId>junit</artifactId>
 				<version>4.12</version>
 			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-test</artifactId>
-				<version>${spring.boot.version}</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -216,6 +228,13 @@
 				<version>0.4.13</version>
 			</plugin>
 
+			<!-- 兼容windows环境下运行yarn命令 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+			</plugin>
+
 			<!-- 扫描全部模块时，必须运行mvn clean compile，保证所有子模块都已编译-->
 			<!-- 集成覆盖率必须添加jacoco插件,且必须运行 package -->
 			<plugin>
@@ -238,6 +257,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

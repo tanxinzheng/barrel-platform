@@ -23,11 +23,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-admin</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -79,31 +74,11 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-resources-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<nonFilteredFileExtensions>-->
-                        <!--<nonFilteredFileExtension>woff</nonFilteredFileExtension>-->
-                        <!--<nonFilteredFileExtension>ttf</nonFilteredFileExtension>-->
-                        <!--<nonFilteredFileExtension>woff2</nonFilteredFileExtension>-->
-                        <!--<nonFilteredFileExtension>eot</nonFilteredFileExtension>-->
-                        <!--<nonFilteredFileExtension>swf</nonFilteredFileExtension>-->
-                        <!--<nonFilteredFileExtension>ico</nonFilteredFileExtension>-->
-                        <!--<nonFilteredFileExtension>png</nonFilteredFileExtension>-->
-                    <!--</nonFilteredFileExtensions>-->
-                    <!--<includeEmptyDirs>true</includeEmptyDirs>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
         <resources>
             <resource>
                 <directory>src/main/webapp/dist</directory>
-            </resource>
-            <resource>
-                <directory>target/dist</directory>
-                <targetPath>META-INF/boot-admin-ui</targetPath>
-                <filtering>false</filtering>
+                <targetPath>META-INF/resources</targetPath>
             </resource>
         </resources>
     </build>

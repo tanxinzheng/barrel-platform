@@ -3,8 +3,11 @@ server:
 #  context-path: /api
 
 spring:
+  resources:
+    static-locations:
+      - classpath:/static/
   profiles:
-    active: ${build.profile.id},quartz
+    active: ${build.profile.id}
   servlet:
     multipart:
       max-file-size: 20971520
