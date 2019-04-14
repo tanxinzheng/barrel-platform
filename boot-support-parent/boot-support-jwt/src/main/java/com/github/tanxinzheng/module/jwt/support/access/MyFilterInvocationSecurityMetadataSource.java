@@ -1,12 +1,12 @@
 package com.github.tanxinzheng.module.jwt.support.access;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Collection;
@@ -25,7 +25,6 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-    private List<PermissionGrantedAuthority> authorityList = Lists.newArrayList();
     /**
      * Accesses the {@code ConfigAttribute}s that apply to a given secure object.
      *
@@ -41,15 +40,14 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         String requestUrl = fi.getRequestUrl();
         String requestMethod = fi.getRequest().getMethod();
         RequestMethod method = RequestMethod.valueOf(requestMethod);
-        authorityList = securityMetadataHandler.loadAllPermission();
-        if(CollectionUtils.isEmpty(authorityList)){
-            return Lists.newArrayList();
-        }
-        for (PermissionGrantedAuthority permissionGrantedAuthority : authorityList) {
-            if(antPathMatcher.match(permissionGrantedAuthority.getUrl(), requestUrl)
-                    && permissionGrantedAuthority.getRequestMethod().equals(method)){
-                return SecurityConfig.createList(permissionGrantedAuthority.getRoles()
-                        .toArray(new String[permissionGrantedAuthority.getRoles().size()]));
+        List<PermissionGrantedAuthority> authorityList = securityMetadataHandler.loadAllPermission();
+        if(CollectionUtils.isNotEmpty(authorityList)){
+            for (PermissionGrantedAuthority permissionGrantedAuthority : authorityList) {
+                if(antPathMatcher.match(permissionGrantedAuthority.getUrl(), requestUrl)
+                        && permissionGrantedAuthority.getRequestMethod().equals(method)){
+                    return SecurityConfig.createList(permissionGrantedAuthority.getRoles()
+                            .toArray(new String[permissionGrantedAuthority.getRoles().size()]));
+                }
             }
         }
         //没有匹配到,默认是要登录才能访问
@@ -67,7 +65,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
      */
     @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
-        return null;
+        return Lists.newArrayList();
     }
 
     /**

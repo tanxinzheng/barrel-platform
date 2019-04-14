@@ -55,16 +55,16 @@
     </appender>
 
     <logger name="org.springframework" level="ERROR"/>
-    <logger name="org.mybatis.spring" level="INFO"/>
+    <logger name="org.mybatis.spring" level="ERROR"/>
     <logger name="org.apache" level="ERROR"/>
     <logger name="com.mangofactory.swagger" level="ERROR"/>
     <!--  定时任务  -->
     <logger name="com.mchange.v2.c3p0" level="ERROR"/>
     <logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="ERROR"/>
     <logger name="springfox.documentation" level="ERROR"/>
-    <logger name="org.hibernate" level="DEBUG"/>
+    <logger name="org.hibernate" level="ERROR"/>
 
-    <root level="${LOG_LEVEL}">
+    <root level="ERROR">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE-ERROR" />
 		<appender-ref ref="FILE-INFO" />
