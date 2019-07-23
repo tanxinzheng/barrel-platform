@@ -32,7 +32,7 @@ public class NotificationController {
 
     /**
      * 新增通知
-     * @param   notificationModel  新增对象参数
+     * @param   sendNotification  新增对象参数
      * @return  NotificationModel   通知领域对象
      */
     @ApiOperation(value = "新增通知")

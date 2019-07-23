@@ -22,7 +22,7 @@ import java.util.Set;
  * Created by Jeng on 2016/1/5.
  */
 @RestController
-@Api(value = "当前用户相关信息", description = "当前用户简要信息，权限等相关接口")
+@Api(value = "当前用户相关信息", tags = "当前用户简要信息，权限等相关接口")
 @RequestMapping(value = "/account")
 public class AccountController {
 

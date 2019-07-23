@@ -19,7 +19,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @RestController
-@Api(value = "当前用户菜单接口", description = "当前用户菜单接口")
+@Api(value = "当前用户菜单接口", tags = "当前用户菜单接口")
 @RequestMapping(value = "/account/menu")
 public class AccountMenuController {
 

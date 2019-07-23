@@ -22,6 +22,7 @@
         <module>boot-module-logger</module>
         <module>boot-module-menu</module>
         <module>boot-module-quartz</module>
+        <module>boot-module-workorder</module>
     </modules>
 
     <properties>

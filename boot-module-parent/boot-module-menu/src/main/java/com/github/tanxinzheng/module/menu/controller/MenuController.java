@@ -21,7 +21,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @RestController
-@Api(value = "菜单接口", description = "菜单接口")
+@Api(value = "菜单接口", tags = "菜单接口")
 @RequestMapping(value = "/menu")
 public class MenuController {
 

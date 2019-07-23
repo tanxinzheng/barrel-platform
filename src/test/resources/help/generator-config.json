@@ -1,0 +1,18 @@
+{
+  "dataSource":{
+    "dialect":"MySQL",
+    "driver":"com.mysql.jdbc.Driver",
+    "url":"jdbc:mysql://127.0.0.1:3306/xmo_demo?useUnicode=true&amp;characterEncoding=utf8",
+    "username":"root",
+    "password":"123456"
+  },
+  "tables":[
+    {
+      "domainObjectName":"Menu",
+      "tableComment":"菜单配置",
+      "tableName":"xmo_menu",
+      "modulePackage":"com.github.module.menu",
+      "restMapping":"/menu"
+    }
+  ]
+}
