@@ -49,6 +49,8 @@ mybatis:
 # security
 jwt:
   secret: xmomen
+  tokenHead: Bearer
+  tokenHeader: Authorization
 
 jog:
   cron:

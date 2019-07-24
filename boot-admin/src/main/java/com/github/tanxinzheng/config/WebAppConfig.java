@@ -3,7 +3,7 @@ package com.github.tanxinzheng.config;
 import com.github.tanxinzheng.framework.adapter.WebAppConfigurerAdapter;
 import com.github.tanxinzheng.framework.core.service.impl.CurrentAccountServiceImpl;
 import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
-import com.github.tanxinzheng.module.jwt.support.JwtUser;
+import com.github.tanxinzheng.jwt.support.JwtUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

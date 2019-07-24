@@ -20,11 +20,11 @@ mybatis:
   config-location: classpath:mybatis-config.xml
 server:
   port: 20000
-cas:
-  server-url: http://localhost:20001
-  server-login-url: ${cas.server-url}/login
-  server-logout-url: ${cas.server-url}/logout?service=${cas.app-server-url}
-  app-server-url: http://localhost:${server.port}
-  app-login-url: /login
-  app-logout-url: /logout
-  permit-urls: /
+#cas:
+#  server-url: http://localhost:20001
+#  server-login-url: ${cas.server-url}/login
+#  server-logout-url: ${cas.server-url}/logout?service=${cas.app-server-url}
+#  app-server-url: http://localhost:${server.port}
+#  app-login-url: /login
+#  app-logout-url: /logout
+#  permit-urls: /

@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.config;
 
-import com.github.tanxinzheng.module.jwt.EnableJWT;
+//import com.github.tanxinzheng.module.jwt.EnableJWT;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +11,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  */
 @ServletComponentScan
 @SpringBootApplication
-@EnableJWT
+//@EnableJWT
 @MapperScan(value = "com.github.tanxinzheng.**.mapper")
 public class ApplicationStart {
 

@@ -17,7 +17,6 @@
         <module>boot-support-store</module>
         <module>boot-support-jwt</module>
         <module>boot-support-annotation</module>
-        <module>boot-support-verificationCode</module>
         <module>boot-support-swagger</module>
         <module>boot-support-druid</module>
     </modules>

@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.framework.core.service.impl;
 
 import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
-import com.github.tanxinzheng.module.jwt.support.JwtUser;
+import com.github.tanxinzheng.jwt.support.JwtUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Set;
