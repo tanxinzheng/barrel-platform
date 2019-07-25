@@ -1,9 +1,9 @@
 package com.github.tanxinzheng.jwt;
 
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
+import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
 import com.github.tanxinzheng.jwt.support.JwtUser;
 import com.github.tanxinzheng.jwt.support.RestAuthenticationEntryPoint;
-import com.github.tanxinzheng.jwt.support.filter.JwtAuthorizationFilter;
 import com.github.tanxinzheng.module.authorization.model.UserModel;
 import com.github.tanxinzheng.module.authorization.service.UserService;
 import com.google.common.collect.Lists;
@@ -13,7 +13,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,15 +40,10 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableConfigurationProperties(value = JwtConfigProperties.class)
-//@ConditionalOnProperty(prefix = "jwt", value = "enable", matchIfMissing = true)
-//@ConditionalOnBean({RedisTemplate.class, JwtLoadService.class})
-public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
+public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     JwtConfigProperties jwtConfigProperties;
-
-    @Autowired
-    RedisTemplate redisTemplate;
 
     @Autowired
     UserService userService;
@@ -93,7 +87,6 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
         String[] data = list.toArray(new String[list.size()]);
         return data;
     }
-
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -203,7 +196,6 @@ public class JwtAutoConfiguration extends WebSecurityConfigurerAdapter {
             }
         };
     }
-
 
     @Bean
     @Override

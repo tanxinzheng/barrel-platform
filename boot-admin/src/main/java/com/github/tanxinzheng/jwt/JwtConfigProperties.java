@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.jwt;
 
+import com.github.tanxinzheng.jwt.support.TokenType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -24,6 +25,8 @@ public class JwtConfigProperties {
 
     private static final String DEFAULT_JWT_SESSION_NAME = "jwt-session";
 
+    private static final String DEFAULT_JWT_TOKEN_TYPE = TokenType.BEARER.getCode();
+
     // 默认 2小时
     private static final long DEFAULT_JWT_EXPIRATION = 2L * 1000 * 60 * 60;
 
@@ -34,6 +37,11 @@ public class JwtConfigProperties {
      * JWT 认证请求头
      */
     private String tokenHeaderName;
+
+    /**
+     * Token Type
+     */
+    private String tokenType;
 
     /**
      * JWT 请求参数
@@ -90,96 +98,16 @@ public class JwtConfigProperties {
      */
     private String[] permitUrls;
 
-    public String getTokenHeaderName() {
-        tokenHeaderName = tokenHeaderName == null ? DEFAULT_JWT_TOKEN_HEADER_NAME : tokenHeaderName;
-        return tokenHeaderName;
-    }
-
-    public String getRefreshTokenHeaderName() {
-        refreshTokenHeaderName = refreshTokenHeaderName == null ? DEFAULT_JWT_REFRESH_TOKEN_HEADER_NAME : refreshTokenHeaderName;
-        return refreshTokenHeaderName;
-    }
-
-    public String getRefreshTokenParameterName() {
-        refreshTokenParameterName = refreshTokenParameterName == null ? DEFAULT_JWT_REFRESH_TOKEN_PARAMETER_NAME : refreshTokenParameterName;
-        return refreshTokenParameterName;
-    }
-
-    public String getRefreshTokenCookieName() {
-        refreshTokenCookieName = refreshTokenCookieName == null ? DEFAULT_JWT_REFRESH_TOKEN_COOKIE_NAME : refreshTokenCookieName;
-        return refreshTokenCookieName;
-    }
-
-    public void setTokenHeaderName(String tokenHeaderName) {
-        this.tokenHeaderName = tokenHeaderName;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    public Long getExpiration() {
-        expiration = expiration == null ? DEFAULT_JWT_EXPIRATION : expiration;
-        return expiration;
-    }
-
-    public void setExpiration(Long expiration) {
-        this.expiration = expiration;
-    }
-
-    public String getTokenParameterName() {
-        tokenParameterName = tokenParameterName == null ? DEFAULT_JWT_TOKEN_PARAMETER_NAME : tokenParameterName;
-        return tokenParameterName;
-    }
-
-    public void setTokenParameterName(String tokenParameterName) {
-        this.tokenParameterName = tokenParameterName;
-    }
-
-    public String getTokenCookieName() {
-        tokenCookieName = tokenCookieName == null ? DEFAULT_JWT_TOKEN_COOKIE_NAME : tokenCookieName;
-        return tokenCookieName;
-    }
-
-    public void setTokenCookieName(String tokenCookieName) {
-        this.tokenCookieName = tokenCookieName;
-    }
-
-    public String[] getPermitUrls() {
-        return permitUrls;
-    }
-
-    public void setPermitUrls(String[] permitUrls) {
-        this.permitUrls = permitUrls;
-    }
-
-    public String getIssuer() {
-        return issuer;
-    }
-
-    public void setIssuer(String issuer) {
-        this.issuer = issuer;
-    }
-
-    public String getTokenIdName() {
-        tokenIdName = tokenIdName == null ? DEFAULT_JWT_SESSION_NAME : tokenIdName;
-        return tokenIdName;
-    }
-
-    public void setTokenIdName(String tokenIdName) {
-        this.tokenIdName = tokenIdName;
-    }
-
-    public Long getRefreshTokenExpiration() {
-        refreshTokenExpiration = refreshTokenExpiration == null ? DEFAULT_JWT_REFRESH_EXPIRATION : refreshTokenExpiration;
-        return refreshTokenExpiration;
-    }
-
-    public void setRefreshTokenExpiration(Long refreshTokenExpiration) {
-        this.refreshTokenExpiration = refreshTokenExpiration;
+    public JwtConfigProperties() {
+        this.tokenType = TokenType.BEARER.getCode();
+        this.tokenHeaderName = DEFAULT_JWT_TOKEN_HEADER_NAME;
+        this.tokenParameterName = DEFAULT_JWT_TOKEN_PARAMETER_NAME;
+        this.tokenCookieName = DEFAULT_JWT_TOKEN_COOKIE_NAME;
+        this.refreshTokenExpiration = DEFAULT_JWT_REFRESH_EXPIRATION;
+        this.refreshTokenHeaderName = DEFAULT_JWT_REFRESH_TOKEN_HEADER_NAME;
+        this.refreshTokenParameterName = DEFAULT_JWT_REFRESH_TOKEN_PARAMETER_NAME;
+        this.refreshTokenCookieName = DEFAULT_JWT_REFRESH_TOKEN_COOKIE_NAME;
+        this.tokenIdName = DEFAULT_JWT_SESSION_NAME;
+        this.expiration = DEFAULT_JWT_EXPIRATION;
     }
 }

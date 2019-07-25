@@ -1,6 +1,7 @@
-package com.github.tanxinzheng.framework.core.web;
+package com.github.tanxinzheng.framework.web.support;
 
-import com.github.tanxinzheng.framework.web.rest.RestResult;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
@@ -9,12 +10,15 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Jeng on 2016/1/21.
  */
 @Order(1)
 @ControllerAdvice
-public class RestResultBodyAdvice implements ResponseBodyAdvice {
+public class PaginationBodyAdvice implements ResponseBodyAdvice {
 
     /**
      * Whether this component supports the given controller method return type
@@ -26,7 +30,7 @@ public class RestResultBodyAdvice implements ResponseBodyAdvice {
      */
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
-        return returnType.getMethod().getReturnType().isAssignableFrom(RestResult.class);
+        return returnType.getMethod().getReturnType().isAssignableFrom(Page.class);
     }
 
     /**
@@ -43,10 +47,14 @@ public class RestResultBodyAdvice implements ResponseBodyAdvice {
      */
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if(body instanceof RestResult){
-            RestResult restResult = (RestResult) body;
-            restResult.setPath(request.getURI().getPath());
-            return restResult;
+        if(body instanceof Page){
+            Page page = (Page) body;
+            Map map = new HashMap();
+            PageInfo pageInfo = page.toPageInfo();
+            pageInfo.setList(null);
+            map.put("pageInfo", pageInfo);
+            map.put("data", page.getResult());
+            return map;
         }
         return body;
     }

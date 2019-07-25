@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.framework.core.controller;
+package com.github.tanxinzheng.module.access.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

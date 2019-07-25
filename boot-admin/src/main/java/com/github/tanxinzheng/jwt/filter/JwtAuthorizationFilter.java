@@ -1,10 +1,10 @@
-package com.github.tanxinzheng.jwt.support.filter;
+package com.github.tanxinzheng.jwt.filter;
 
+import com.github.tanxinzheng.jwt.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.support.JwtUtils;
 import com.github.tanxinzheng.jwt.support.TokenType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,22 +29,20 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtUtils jwtUtils;
-    @Value("${jwt.tokenHeader}")
-    private String tokenHeader;
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
+    @Autowired
+    JwtConfigProperties jwtConfigProperties;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-        String authHeader = request.getHeader(this.tokenHeader);
+        String authHeader = request.getHeader(jwtConfigProperties.getTokenHeaderName());
         if (authHeader != null && authHeader.startsWith(TokenType.BEARER.getCode())) {
             String authToken = authHeader.substring(TokenType.BEARER.getCode().length() + 1);// The part after "Bearer "
             String username = jwtUtils.getUsernameByToken(authToken);
             log.info("checking username:{}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 if (jwtUtils.validateToken(authToken, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

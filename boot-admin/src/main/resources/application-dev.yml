@@ -14,7 +14,6 @@ redis:
 
 jwt:
   secret: 123456
-  expiration: 3600
   permit-urls:
     - /index.html
     - /swagger-ui.html

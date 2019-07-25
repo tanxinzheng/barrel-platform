@@ -49,7 +49,7 @@ mybatis:
 # security
 jwt:
   secret: xmomen
-  tokenHead: Bearer
+  expiration: 3600
   tokenHeader: Authorization
 
 jog:

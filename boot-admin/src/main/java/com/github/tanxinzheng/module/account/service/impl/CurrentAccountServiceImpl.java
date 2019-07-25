@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.framework.core.service.impl;
+package com.github.tanxinzheng.module.account.service.impl;
 
 import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
 import com.github.tanxinzheng.jwt.support.JwtUser;

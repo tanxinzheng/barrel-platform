@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.jwt.support;
 
+import com.github.tanxinzheng.jwt.JwtConfigProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -7,7 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +24,8 @@ import java.util.UUID;
 @Slf4j
 public class JwtUtils {
 
-    @Value("${jwt.secret}")
-    private String secret;
-    @Value("${jwt.expiration}")
-    private Long expiration;
+    @Autowired
+    JwtConfigProperties jwtConfigProperties;
 
     /**
      * 生成token
@@ -38,12 +37,12 @@ public class JwtUtils {
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
 //                .setAudience(jwtUser.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtConfigProperties.getExpiration() * 1000))
                 .setIssuedAt(new Date())
                 .setSubject(username)
                 .setIssuer(issuer)
                 .setNotBefore(new Date())
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .signWith(SignatureAlgorithm.HS256, jwtConfigProperties.getSecret())
                 .compact();
     }
 
@@ -67,7 +66,7 @@ public class JwtUtils {
      */
     public String getUsernameByToken(String token){
         Jws<Claims> claimsJws = Jwts.parser()
-                .setSigningKey(secret)
+                .setSigningKey(jwtConfigProperties.getSecret())
                 .parseClaimsJws(token);
         return claimsJws.getBody().getSubject();
     }
@@ -106,7 +105,7 @@ public class JwtUtils {
         Claims claims = null;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(secret)
+                    .setSigningKey(jwtConfigProperties.getSecret())
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
@@ -130,7 +129,7 @@ public class JwtUtils {
         // 从Header中获取token
         String token = request.getHeader(headerName);
         if(StringUtils.isNotBlank(token)){
-            token = token.replaceAll(StringUtils.lowerCase(TokenType.BEARER.getCode()) + " ", "");
+            token = token.replaceAll(StringUtils.lowerCase(jwtConfigProperties.getTokenType()) + " ", "");
         }
         if(StringUtils.isBlank(token)){
             // 从请求参数中获取token

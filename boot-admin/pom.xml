@@ -44,11 +44,6 @@
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-support-swagger</artifactId>
-            <version>${boot.fremework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-support-annotation</artifactId>
             <version>${boot.fremework.version}</version>
         </dependency>
