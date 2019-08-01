@@ -3,8 +3,6 @@ package com.github.tanxinzheng.module.account.service;
 import com.github.tanxinzheng.module.account.model.AccountDetail;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Set;
-
 /**
  * Created by tanxinzheng on 2018/11/30.
  */
@@ -21,48 +19,37 @@ public interface AccountService {
     /**
      * 更新账户基本信息
      */
-    void updateNickName(AccountDetail accountDetail);
+    void updateNickName(String userId, AccountDetail accountDetail);
 
     /**
      * 绑定手机
      * @param phone
      */
-    void bindPhone(String phone);
+    void bindPhone(String userId, String phone);
 
     /**
      * 绑定Email
      * @param email
      */
-    void bindEmail(String email);
+    void bindEmail(String userId, String email);
 
     /**
      * 绑定微信
      * @param wechatId
      */
-    void bindWechat(String wechatId);
+    void bindWechat(String userId, String wechatId);
 
     /**
      * 更新密码
      * @param oldPassword
      * @param newPassword
      */
-    void updatePassword(String oldPassword, String newPassword);
+    void updatePassword(String userId, String oldPassword, String newPassword);
 
     /**
      * 更新头像
      * @param file
      */
-    void updateAvatar(MultipartFile file);
+    void updateAvatar(String userId, MultipartFile file);
 
-    /**
-     * 查询账户拥有的角色
-     * @return
-     */
-    Set<String> findRoles();
-
-    /**
-     * 查询账户拥有的权限资源
-     * @return
-     */
-    Set<String> findPermissions();
 }

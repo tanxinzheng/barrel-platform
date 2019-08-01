@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.tanxinzheng.framework.web.handler.LogbackMDCInterceptor;
 import com.github.tanxinzheng.framework.web.json.CustomDateDeserialize;
 import com.github.tanxinzheng.framework.web.support.DateConverter;
+import com.github.tanxinzheng.framework.web.support.LoginUserResolver;
 import com.github.tanxinzheng.module.dictionary.web.DictionaryAnnotationIntrospector;
 import com.github.tanxinzheng.module.fss.EnableFSSAliyun;
 import com.github.tanxinzheng.module.logger.aspect.LoggerAspect;
@@ -24,6 +25,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -33,6 +35,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.MultipartConfigElement;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by tanxinzheng on 17/8/23.
@@ -45,6 +48,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     ApplicationContext applicationContext;
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new LoginUserResolver());
+    }
 
     @Bean
     public DictionaryAnnotationIntrospector getDictionaryIntrospector(){

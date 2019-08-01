@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.jwt.filter;
 
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.jwt.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.support.JwtUtils;
 import com.github.tanxinzheng.jwt.support.TokenType;
@@ -7,9 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -42,10 +41,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             String username = jwtUtils.getUsernameByToken(authToken);
             log.info("checking username:{}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                if (jwtUtils.validateToken(authToken, userDetails)) {
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                CurrentLoginUser currentLoginUser = (CurrentLoginUser) userDetailsService.loadUserByUsername(username);
+                if (jwtUtils.validateToken(authToken, currentLoginUser)) {
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(currentLoginUser, currentLoginUser.getPassword(), currentLoginUser.getAuthorities());
+                    authentication.setDetails(currentLoginUser);
                     log.info("authenticated user:{}", username);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }

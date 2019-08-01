@@ -3,7 +3,8 @@ package com.github.tanxinzheng.module.dictionary.controller;
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.framework.poi.ExcelUtils;
-import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.framework.web.annotation.LoginUser;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.framework.web.rest.ImportExcelResponse;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryQuery;
@@ -35,9 +36,6 @@ public class DictionaryController {
     @Autowired
     DictionaryService dictionaryService;
 
-    @Autowired
-    CurrentAccountService currentAccountService;
-
     /**
      * 新增数据字典
      * @param   dictionaryModel  新增对象参数
@@ -46,9 +44,9 @@ public class DictionaryController {
     @ApiOperation(value = "新增数据字典")
     @ActionLog(actionName = "新增数据字典")
     @PostMapping
-    public DictionaryModel createDictionary(@RequestBody @Valid DictionaryModel dictionaryModel) {
-        dictionaryModel.setCreatedUserId(currentAccountService.getAccountId());
-        dictionaryModel.setUpdatedUserId(currentAccountService.getAccountId());
+    public DictionaryModel createDictionary(@LoginUser CurrentLoginUser loginUser, @RequestBody @Valid DictionaryModel dictionaryModel) {
+        dictionaryModel.setCreatedUserId(loginUser.getId());
+        dictionaryModel.setUpdatedUserId(loginUser.getId());
         return dictionaryService.createDictionary(dictionaryModel);
     }
 
@@ -60,7 +58,7 @@ public class DictionaryController {
     @ApiOperation(value = "查询数据字典列表")
     @ActionLog(actionName = "查询数据字典列表")
     @GetMapping
-    public Page<DictionaryModel> getDictionaryList(DictionaryQuery dictionaryQuery){
+    public Page<DictionaryModel> getDictionaryList(@LoginUser CurrentLoginUser loginUser, DictionaryQuery dictionaryQuery){
         return dictionaryService.getDictionaryModelPage(dictionaryQuery);
     }
 
@@ -86,12 +84,13 @@ public class DictionaryController {
     @ActionLog(actionName = "更新数据字典，字典编号：${DictionaryModel.dictionaryCode}")
     @PutMapping(value = "/{id}")
     public DictionaryModel updateDictionary(@PathVariable(value = "id") String id,
+                           @LoginUser CurrentLoginUser loginUser,
                            @RequestBody @Valid DictionaryModel dictionaryModel){
         if(StringUtils.isNotBlank(id)){
             dictionaryModel.setId(id);
         }
-        dictionaryModel.setCreatedUserId(currentAccountService.getAccountId());
-        dictionaryModel.setUpdatedUserId(currentAccountService.getAccountId());
+        dictionaryModel.setCreatedUserId(loginUser.getId());
+        dictionaryModel.setUpdatedUserId(loginUser.getId());
         dictionaryService.updateDictionary(dictionaryModel);
         return dictionaryService.getOneDictionaryModel(id);
     }

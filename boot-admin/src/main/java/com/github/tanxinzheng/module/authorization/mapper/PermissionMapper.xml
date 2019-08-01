@@ -5,12 +5,10 @@
     <sql id="Base_Columns">
         ID,
         PERMISSION_KEY,
-        PERMISSION_GROUP,
         PERMISSION_URL,
         PERMISSION_ACTION,
         DESCRIPTION,
         ACTIVE,
-        PARENT_ID,
         CREATED_USER_ID,
         CREATED_TIME,
         UPDATED_USER_ID,
@@ -20,12 +18,10 @@
     <sql id="Base_Properties">
         #{id, jdbcType=VARCHAR},
         #{permissionKey, jdbcType=VARCHAR},
-        #{permissionGroup, jdbcType=VARCHAR},
         #{permissionUrl, jdbcType=VARCHAR},
         #{permissionAction, jdbcType=VARCHAR},
         #{description, jdbcType=VARCHAR},
         #{active, jdbcType=VARCHAR},
-        #{parentId, jdbcType=VARCHAR},
         #{createdUserId, jdbcType=VARCHAR},
         #{createdTime, jdbcType=TIMESTAMP},
         #{updatedUserId, jdbcType=VARCHAR},
@@ -42,9 +38,6 @@
             <if test="permissionKey != null" >
                 PERMISSION_KEY,
             </if>
-            <if test="permissionGroup != null" >
-                PERMISSION_GROUP,
-            </if>
             <if test="permissionUrl != null" >
                 PERMISSION_URL,
             </if>
@@ -56,9 +49,6 @@
             </if>
             <if test="active != null" >
                 ACTIVE,
-            </if>
-            <if test="parentId != null" >
-                PARENT_ID,
             </if>
             <if test="createdUserId != null" >
                 CREATED_USER_ID,
@@ -78,9 +68,6 @@
             <if test="permissionKey != null" >
             #{permissionKey, jdbcType=VARCHAR},
             </if>
-            <if test="permissionGroup != null" >
-            #{permissionGroup, jdbcType=VARCHAR},
-            </if>
             <if test="permissionUrl != null" >
             #{permissionUrl, jdbcType=VARCHAR},
             </if>
@@ -92,9 +79,6 @@
             </if>
             <if test="active != null" >
             #{active, jdbcType=VARCHAR},
-            </if>
-            <if test="parentId != null" >
-            #{parentId, jdbcType=VARCHAR},
             </if>
             <if test="createdUserId != null" >
             #{createdUserId, jdbcType=VARCHAR},
@@ -131,9 +115,6 @@
             <if test="permissionKey != null" >
             PERMISSION_KEY = #{permissionKey, jdbcType=VARCHAR},
             </if>
-            <if test="permissionGroup != null" >
-            PERMISSION_GROUP = #{permissionGroup, jdbcType=VARCHAR},
-            </if>
             <if test="permissionUrl != null" >
             PERMISSION_URL = #{permissionUrl, jdbcType=VARCHAR},
             </if>
@@ -145,9 +126,6 @@
             </if>
             <if test="active != null" >
             ACTIVE = #{active, jdbcType=VARCHAR},
-            </if>
-            <if test="parentId != null" >
-            PARENT_ID = #{parentId, jdbcType=VARCHAR},
             </if>
             <if test="createdUserId != null" >
             CREATED_USER_ID = #{createdUserId, jdbcType=VARCHAR},
@@ -174,9 +152,6 @@
             <if test="record.permissionKey != null" >
             PERMISSION_KEY = #{record.permissionKey, jdbcType=VARCHAR},
             </if>
-            <if test="record.permissionGroup != null" >
-            PERMISSION_GROUP = #{record.permissionGroup, jdbcType=VARCHAR},
-            </if>
             <if test="record.permissionUrl != null" >
             PERMISSION_URL = #{record.permissionUrl, jdbcType=VARCHAR},
             </if>
@@ -188,9 +163,6 @@
             </if>
             <if test="record.active != null" >
             ACTIVE = #{record.active, jdbcType=VARCHAR},
-            </if>
-            <if test="record.parentId != null" >
-            PARENT_ID = #{record.parentId, jdbcType=VARCHAR},
             </if>
             <if test="record.createdUserId != null" >
             CREATED_USER_ID = #{record.createdUserId, jdbcType=VARCHAR},
@@ -243,7 +215,7 @@
             <include refid="Base_Columns"/>
         FROM xmo_permission
         <include refid="Update_By_Query_Where_Clause"/>
-        ORDER BY id
+        ORDER BY created_time
     </select>
 
     <sql id="Update_By_Query_Where_Clause">
@@ -268,5 +240,27 @@
             </if>
         </where>
     </sql>
+
+    <insert id="insertByBatch" parameterType="java.util.List">
+        insert into xmo_permission
+        (
+        <include refid="Base_Columns"></include>
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{item.id, jdbcType=VARCHAR},
+            #{item.permissionKey, jdbcType=VARCHAR},
+            #{item.permissionUrl, jdbcType=VARCHAR},
+            #{item.permissionAction, jdbcType=VARCHAR},
+            #{item.description, jdbcType=VARCHAR},
+            #{item.active, jdbcType=VARCHAR},
+            #{item.createdUserId, jdbcType=VARCHAR},
+            sysdate(),
+            #{item.updatedUserId, jdbcType=VARCHAR},
+            sysdate()
+        )
+        </foreach>
+    </insert>
 
 </mapper>

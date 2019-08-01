@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
-import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
 import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
 import com.github.tanxinzheng.module.attachment.mapper.AttachmentMapper;
 import com.github.tanxinzheng.module.attachment.model.Attachment;
@@ -51,9 +50,6 @@ public class AttachmentServiceImpl implements AttachmentService, DictionaryTrans
     @Autowired
     FileStoreService fileStoreService;
 
-    @Autowired
-    CurrentAccountService currentAccountService;
-
     /**
      * 新增附件
      *
@@ -72,11 +68,10 @@ public class AttachmentServiceImpl implements AttachmentService, DictionaryTrans
 
     @Override
     @Transactional
-    public AttachmentModel createAttachment(MultipartFile multipartFile) {
+    public AttachmentModel createAttachment(String userId, MultipartFile multipartFile) {
         if(multipartFile.isEmpty()){
             return null;
         }
-        String userId = currentAccountService.getAccountId();
         String fileName = UUIDGenerator.getInstance().getUUID();
         UsernamePasswordAuthenticationToken subject =(UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         FileStorageInfo fileStorageInfo = new FileStorageInfo(multipartFile);

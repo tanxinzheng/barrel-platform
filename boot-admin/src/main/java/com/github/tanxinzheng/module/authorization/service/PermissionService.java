@@ -105,6 +105,8 @@ public interface PermissionService {
 
     /**
      * 自动初始化权限数据
+     * @param swaggerGroup
+     * @param updatedBy
      */
-    void autoInitPermissions();
+    void autoInitPermissions(String swaggerGroup, String updatedBy);
 }

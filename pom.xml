@@ -261,19 +261,26 @@
 				<configuration>
 					<configLocation>documents/checkstyle.xml</configLocation>
 					<encoding>UTF-8</encoding>
+					<consoleOutput>true</consoleOutput>
+					<failsOnError>true</failsOnError>
+					<includeTestSourceDirectory>true</includeTestSourceDirectory>
 				</configuration>
-				<executions>
-					<execution>
-						<id>checkstyle</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-						<configuration>
-							<failOnViolation>true</failOnViolation>
-						</configuration>
-					</execution>
-				</executions>
+				<goals>
+					<goal>check</goal>
+				</goals>
+				<!-- 	开启以下配置将对validate阶段进行check	-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>checkstyle</id>-->
+<!--						<phase>validate</phase>-->
+<!--						<goals>-->
+<!--							<goal>check</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<failOnViolation>true</failOnViolation>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

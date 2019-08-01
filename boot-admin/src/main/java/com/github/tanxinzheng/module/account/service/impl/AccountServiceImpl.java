@@ -4,7 +4,6 @@ import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
-import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
 import com.github.tanxinzheng.jwt.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.support.JwtUtils;
 import com.github.tanxinzheng.module.account.model.AccountDetail;
@@ -33,17 +32,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Set;
-
 /**
  * Created by tanxinzheng on 2018/12/1.
  */
 @Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
-
-    @Autowired
-    CurrentAccountService currentAccountService;
 
     @Autowired
     UserService userService;
@@ -71,7 +65,7 @@ public class AccountServiceImpl implements AccountService {
      * 登录
      *
      * @param username
-     * @param password
+     * @param rwaPassword
      * @return
      */
     @Override
@@ -103,10 +97,9 @@ public class AccountServiceImpl implements AccountService {
      */
     @Transactional
     @Override
-    public void updateNickName(AccountDetail accountDetail) {
-        String userId = currentAccountService.getAccountId();
+    public void updateNickName(String userId, AccountDetail accountDetail) {
         User user = new User();
-        user.setId(userId);
+        user.setId(accountDetail.getId());
         user.setNickname(accountDetail.getName());
         userService.updateUser(user);
     }
@@ -117,9 +110,8 @@ public class AccountServiceImpl implements AccountService {
      * @param phone
      */
     @Override
-    public void bindPhone(String phone) {
+    public void bindPhone(String userId, String phone) {
         Assert.isTrue(PhoneValidator.getInstance().isValid(phone), "请输入正确格式的手机号码");
-        String userId = currentAccountService.getAccountId();
         UserQuery userQuery = new UserQuery();
         userQuery.setPhone(phone);
         UserModel exitUser = userService.getOneUserModel(userQuery);
@@ -136,9 +128,8 @@ public class AccountServiceImpl implements AccountService {
      * @param email
      */
     @Override
-    public void bindEmail(String email) {
+    public void bindEmail(String userId, String email) {
         Assert.isTrue(EmailValidator.getInstance().isValid(email), "请输入正确格式的邮箱");
-        String userId = currentAccountService.getAccountId();
         UserQuery userQuery = new UserQuery();
         userQuery.setEmail(email);
         UserModel exitUser = userService.getOneUserModel(userQuery);
@@ -155,7 +146,7 @@ public class AccountServiceImpl implements AccountService {
      * @param wechatId
      */
     @Override
-    public void bindWechat(String wechatId) {
+    public void bindWechat(String userId, String wechatId) {
 
     }
 
@@ -167,8 +158,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     @Transactional
-    public void updatePassword(String oldPassword, String newPassword) {
-        String userId = currentAccountService.getAccountId();
+    public void updatePassword(String userId, String oldPassword, String newPassword) {
         User query = userService.getOneUser(userId);
         String encryptPassword = PasswordHelper.encryptPassword(oldPassword, query.getSalt());
         Assert.isTrue(encryptPassword.equals(oldPassword), "输入的旧密码不正确");
@@ -187,12 +177,10 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     @Transactional
-    public void updateAvatar(MultipartFile file) {
+    public void updateAvatar(String userId, MultipartFile file) {
         if(file.isEmpty()){
             throw new IllegalArgumentException("请选择有效的图片");
         }
-        String userId = currentAccountService.getAccountId();
-
         User user = userService.getOneUser(userId);
         if(StringUtils.isNotBlank(user.getAvatar())){
             // 删除旧头像
@@ -212,23 +200,4 @@ public class AccountServiceImpl implements AccountService {
         userService.updateUser(updateUser);
     }
 
-    /**
-     * 查询账户拥有的角色
-     *
-     * @return
-     */
-    @Override
-    public Set<String> findRoles() {
-        return currentAccountService.getRoles();
-    }
-
-    /**
-     * 查询账户拥有的权限资源
-     *
-     * @return
-     */
-    @Override
-    public Set<String> findPermissions() {
-        return currentAccountService.getPermissions();
-    }
 }

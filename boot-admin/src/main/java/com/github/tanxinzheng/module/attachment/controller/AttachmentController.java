@@ -2,6 +2,8 @@ package com.github.tanxinzheng.module.attachment.controller;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.logger.ActionLog;
+import com.github.tanxinzheng.framework.web.annotation.LoginUser;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
 import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
 import com.github.tanxinzheng.module.attachment.service.AttachmentService;
@@ -54,7 +56,9 @@ public class AttachmentController {
     @ApiOperation(value = "新增附件")
     @ActionLog(actionName = "新增附件")
     @PostMapping
-    public AttachmentModel createAttachment(@RequestBody @Valid AttachmentModel attachmentModel) {
+    public AttachmentModel createAttachment(@LoginUser CurrentLoginUser loginUser, @RequestBody @Valid AttachmentModel attachmentModel) {
+        attachmentModel.setUploadUserId(loginUser.getId());
+        attachmentModel.setCreatedUserId(loginUser.getId());
         return attachmentService.createAttachment(attachmentModel);
     }
 

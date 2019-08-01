@@ -1,8 +1,10 @@
 package com.github.tanxinzheng.module.authorization.controller;
 
-import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.framework.poi.ExcelUtils;
+import com.github.tanxinzheng.framework.web.annotation.LoginUser;
 import com.github.tanxinzheng.framework.web.authentication.PermissionResourceKey;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
+import com.github.tanxinzheng.framework.web.rest.RestResult;
 import com.github.tanxinzheng.module.authorization.constant.PermissionAction;
 import com.github.tanxinzheng.module.authorization.model.PermissionCreate;
 import com.github.tanxinzheng.module.authorization.model.PermissionModel;
@@ -10,6 +12,7 @@ import com.github.tanxinzheng.module.authorization.model.PermissionQuery;
 import com.github.tanxinzheng.module.authorization.service.PermissionService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +41,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  * @date    2017-7-25 1:52:35
  * @version 1.0.0
  */
+@Api(tags = {"权限管理"}, authorizations = {})
 @RestController
 @RequestMapping(value = "/permission")
 public class PermissionController {
@@ -50,7 +54,7 @@ public class PermissionController {
      * @param   permissionQuery    权限查询参数对象
      * @return  Page<PermissionModel> 权限领域分页对象
      */
-    @ApiOperation(value = "查询权限列表")
+    @ApiOperation(value = "查询权限列表", tags = "查询权限列表")
     @RequestMapping(method = GET)
     public List<PermissionModel> getPermissionList(final PermissionQuery permissionQuery) {
         return permissionService.getPermissionModelList(permissionQuery);
@@ -62,7 +66,6 @@ public class PermissionController {
      * @return  PermissionModel   权限领域对象
      */
     @ApiOperation(value = "查询权限")
-    //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:VIEW')")
     @RequestMapping(value = "/{id}", method = GET)
     public PermissionModel getPermissionById(@PathVariable(value = "id") String id) {
         return permissionService.getOnePermissionModel(id);
@@ -74,13 +77,11 @@ public class PermissionController {
      * @return  PermissionModel   权限领域对象
      */
     @ApiOperation(value = "新增权限")
-    @ActionLog(actionName = "新增权限")
     @RequestMapping(method = POST)
     public void createPermission(@RequestBody @Valid PermissionCreate permissionCreate) {
         List<PermissionModel> list = Lists.newArrayList();
         for (PermissionAction action : PermissionAction.values()) {
             PermissionModel permissionModel = new PermissionModel();
-            permissionModel.setPermissionGroup(permissionCreate.getPermissionGroup().toUpperCase());
             permissionModel.setPermissionUrl(permissionCreate.getPermissionUrl());
             permissionModel.setDescription(permissionCreate.getDescription() + ":" + action.getDesc());
             permissionModel.setActive(permissionCreate.getActive());
@@ -98,7 +99,6 @@ public class PermissionController {
      * @return  PermissionModel   权限领域对象
      */
     @ApiOperation(value = "更新权限")
-    @ActionLog(actionName = "更新权限")
     @RequestMapping(value = "/{id}", method = PUT)
     public PermissionModel updatePermission(@PathVariable(value = "id") String id,
                            @RequestBody @Valid PermissionModel permissionModel){
@@ -114,8 +114,6 @@ public class PermissionController {
      * @param id    主键
      */
     @ApiOperation(value = "删除单个权限")
-    @ActionLog(actionName = "删除单个权限")
-    //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:DELETE')")
     @RequestMapping(value = "/{id}", method = DELETE)
     public void deletePermission(@PathVariable(value = "id") String id){
         permissionService.deletePermission(id);
@@ -126,7 +124,6 @@ public class PermissionController {
      * @param permissionQuery    查询参数对象
      */
     @ApiOperation(value = "批量删除权限")
-    @ActionLog(actionName = "批量删除权限")
     @RequestMapping(method = DELETE)
     public void deletePermissions(final PermissionQuery permissionQuery){
         permissionService.deletePermission(permissionQuery.getIds());
@@ -147,10 +144,8 @@ public class PermissionController {
      * @param permissionQuery    查询参数对象
      */
     @ApiOperation(value = "导出权限")
-    @ActionLog(actionName = "导出权限")
-    //@PreAuthorize(value = "hasAnyAuthority('PERMISSION:VIEW')")
     @RequestMapping(value="/export", method = GET)
-    public void exportDictionaries(HttpServletRequest request,
+    public void exportExcel(HttpServletRequest request,
                                            HttpServletResponse response,
                                            PermissionQuery permissionQuery) {
         List<PermissionModel> list = permissionService.getPermissionModelList(permissionQuery);
@@ -162,14 +157,31 @@ public class PermissionController {
      * @param file
      */
     @ApiOperation(value = "批量导入权限")
-    @ActionLog(actionName = "批量导入权限")
     @RequestMapping(value="/import", method = POST)
-    public void importDictionaries(@RequestParam("file") MultipartFile file) throws IOException {
+    public void importExcel(@LoginUser CurrentLoginUser loginUser, @RequestParam("file") MultipartFile file) throws IOException {
         List<PermissionModel> list = ExcelUtils.transform(file, PermissionModel.class);
         if(CollectionUtils.isEmpty(list)){
             return;
         }
+        list.stream().forEach(permissionModel -> {
+            permissionModel.setUpdatedUserId(loginUser.getId());
+            permissionModel.setCreatedUserId(loginUser.getId());
+        });
         permissionService.createPermissions(list);
+    }
+
+
+    /**
+     * 获取所有RequestMappingInfo
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "获取所有未纳入权限控制资源")
+    @GetMapping(value = "/sync")
+    public RestResult syncAll(@RequestParam(value = "group", required = false) String swaggerGroup,
+                               HttpServletRequest request) {
+        permissionService.autoInitPermissions(swaggerGroup, "TEST");
+        return RestResult.OK("同步成功");
     }
 
     /**
@@ -177,6 +189,7 @@ public class PermissionController {
      * @param request
      * @return
      */
+    @ApiOperation(value = "获取所有未纳入权限控制资源")
     @RequestMapping(value = "/url")
     public List getAllUrl(HttpServletRequest request) {
         WebApplicationContext wc = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());

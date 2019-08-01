@@ -2,11 +2,14 @@ package com.github.tanxinzheng.module.attachment.controller;
 
 import com.aliyun.oss.common.utils.IOUtils;
 import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.web.annotation.LoginUser;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
 import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
 import com.github.tanxinzheng.module.attachment.service.AttachmentService;
 import com.github.tanxinzheng.module.fss.model.FileStorageResult;
 import com.github.tanxinzheng.module.fss.service.FileStoreService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
@@ -18,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,9 +56,11 @@ public class FileUploadDownloadController {
      * @param file
      * @throws IOException
      */
-    @RequestMapping(value = "/upload")
-    public AttachmentModel upload(@RequestParam("file") MultipartFile file) throws IOException {
-        return attachmentService.createAttachment(file);
+    @ApiOperation(value = "上传文件")
+    @PostMapping(value = "/upload")
+    public AttachmentModel upload(@LoginUser CurrentLoginUser loginUser,
+                                  @RequestParam("file") MultipartFile file) throws IOException {
+        return attachmentService.createAttachment(loginUser.getId(), file);
     }
 
     /**
@@ -63,6 +69,7 @@ public class FileUploadDownloadController {
      * @throws IOException
      * @throws BusinessException
      */
+    @ApiOperation(value = "下载文件")
     @RequestMapping(value = "/download")
     public ResponseEntity download(@RequestParam("fileKey") String fileKey) throws IOException {
         AttachmentModel attachmentModel = attachmentService.getOneAttachmentModelCache(fileKey);
@@ -83,6 +90,7 @@ public class FileUploadDownloadController {
      * @param response
      * @throws IOException
      */
+    @ApiOperation(value = "批量文件zip打包下载")
     @RequestMapping(value = "/download/zip")
     public void downloadZip(@RequestParam(value = "fileName", required = false) String fileZipName,
                             @RequestParam("fileKeys") String[] fileKeys,
@@ -133,6 +141,7 @@ public class FileUploadDownloadController {
      * @return
      * @throws IOException
      */
+    @ApiOperation(value = "下载临时文件")
     @RequestMapping(value = "/download/temps")
     public ResponseEntity downloadTempFile(@RequestParam("file") String filename,
                                    HttpServletRequest request) throws IOException {

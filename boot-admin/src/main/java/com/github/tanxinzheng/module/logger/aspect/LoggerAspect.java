@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tanxinzheng.framework.logger.ActionLog;
-import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.logger.LogModel;
 import com.github.tanxinzheng.module.logger.service.LoggerService;
 import com.google.common.collect.Maps;
@@ -17,6 +17,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,9 +42,6 @@ public class LoggerAspect {
 
     @Autowired
     private LoggerService loggerService;
-
-    @Autowired
-    private CurrentAccountService accountService;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -152,7 +150,8 @@ public class LoggerAspect {
      * @return
      */
     public String getUserId(){
-        return accountService.getAccountId();
+        CurrentLoginUser loginUser = (CurrentLoginUser) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        return loginUser.getId();
     }
 
     /**

@@ -3,7 +3,7 @@ package com.github.tanxinzheng.module.authorization.service.impl;
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
-import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.module.authorization.mapper.GroupPermissionMapper;
 import com.github.tanxinzheng.module.authorization.mapper.PermissionMapper;
 import com.github.tanxinzheng.module.authorization.model.Permission;
@@ -11,15 +11,23 @@ import com.github.tanxinzheng.module.authorization.model.PermissionModel;
 import com.github.tanxinzheng.module.authorization.model.PermissionQuery;
 import com.github.tanxinzheng.module.authorization.service.PermissionService;
 import com.google.common.collect.Lists;
+import io.swagger.models.HttpMethod;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import springfox.documentation.service.Documentation;
+import springfox.documentation.spring.web.DocumentationCache;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.mappers.ServiceModelToSwagger2Mapper;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author  tanxinzheng
@@ -34,9 +42,6 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Autowired
     GroupPermissionMapper groupPermissionMapper;
-
-    @Autowired
-    CurrentAccountService currentAccountService;
 
     /**
      * 新增权限
@@ -76,10 +81,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     @Transactional
     public List<PermissionModel> createPermissions(List<PermissionModel> permissionModels) {
-        String userId = currentAccountService.getAccountId();
         for (PermissionModel permissionModel : permissionModels) {
-            permissionModel.setCreatedUserId(userId);
-            permissionModel.setUpdatedUserId(userId);
             permissionModel.setCreatedTime(new Date());
             permissionModel.setUpdatedTime(new Date());
             permissionMapper.insertSelective(permissionModel.getEntity());
@@ -221,8 +223,81 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionModelList.get(0);
     }
 
-    @Override
-    public void autoInitPermissions() {
+    @Autowired
+    private DocumentationCache documentationCache;
 
+    @Autowired
+    private ServiceModelToSwagger2Mapper mapper;
+
+    @Transactional
+    @Override
+    public void autoInitPermissions(String swaggerGroup, String updatedBy) {
+        String groupName = Optional.ofNullable(swaggerGroup).orElse(Docket.DEFAULT_GROUP_NAME);
+        Documentation documentation = documentationCache.documentationByGroup(groupName);
+        List<PermissionModel> newList = Lists.newArrayList();
+        if (documentation == null) {
+            return;
+        }
+        Swagger swagger = mapper.mapDocumentation(documentation);
+        Map<String, Path> map = swagger.getPaths();
+        for (Map.Entry<String, Path> stringPathEntry : map.entrySet()) {
+            Path path = stringPathEntry.getValue();
+            Map<HttpMethod, Operation> operationMap = path.getOperationMap();
+            for (HttpMethod httpMethod : operationMap.keySet()) {
+                PermissionModel permission = new PermissionModel();
+                permission.setId(UUIDGenerator.getInstance().getUUID());
+                permission.setPermissionUrl(stringPathEntry.getKey());
+                permission.setPermissionAction(httpMethod.name().toUpperCase());
+                permission.setDescription(operationMap.get(httpMethod).getSummary());
+                permission.setPermissionKey(httpMethod.name().toUpperCase() + ":" + stringPathEntry.getKey());
+                permission.setActive(Boolean.TRUE);
+                permission.setCreatedUserId(updatedBy);
+                permission.setUpdatedUserId(updatedBy);
+                newList.add(permission);
+            }
+        }
+        PermissionQuery query = new PermissionQuery();
+        List<PermissionModel> oldList = permissionMapper.selectModel(query);
+        Map<String, PermissionModel> oldMap = oldList.stream().collect(Collectors.toMap(PermissionModel::getPermissionKey, Function.identity()));
+        Map<String, PermissionModel> newMap = newList.stream().collect(Collectors.toMap(PermissionModel::getPermissionKey, Function.identity()));
+        List<PermissionModel> oldUpdateList = Lists.newArrayList();
+        List<PermissionModel> newInsertList = Lists.newArrayList();
+        newMap.forEach((key, newPermission) -> {
+            PermissionModel oldPermission = oldMap.get(key);
+            Optional<PermissionModel> model = Optional.of(oldPermission);
+            if(!model.isPresent()){
+                // 历史权限资源不存在
+                newInsertList.add(newPermission);
+            }else if(!newPermission.getDescription().equals(oldPermission.getDescription())
+                    || !newPermission.getPermissionAction().equals(oldPermission.getPermissionAction())
+                    || !newPermission.getPermissionUrl().equals(oldPermission.getPermissionUrl())){
+                // 历史权限资源已存在
+                oldPermission.setPermissionUrl(newPermission.getPermissionUrl());
+                oldPermission.setDescription(newPermission.getDescription());
+                oldPermission.setPermissionAction(newPermission.getPermissionAction());
+                oldPermission.setUpdatedTime(new Date());
+                oldPermission.setUpdatedUserId(newPermission.getUpdatedUserId());
+                oldUpdateList.add(oldPermission);
+            }
+        });
+        //
+        List<String> oldDeleteList = Lists.newArrayList();
+        oldMap.forEach((key, oldPermission) -> {
+            PermissionModel newPermission = newMap.get(key);
+            if(newPermission == null){
+                oldDeleteList.add(oldPermission.getId());
+            }
+        });
+        if(CollectionUtils.isNotEmpty(newInsertList)){
+            permissionMapper.insertByBatch(newInsertList);
+        }
+        if(CollectionUtils.isNotEmpty(oldDeleteList)){
+            permissionMapper.deletesByPrimaryKey(oldDeleteList);
+        }
+        if(CollectionUtils.isNotEmpty(oldUpdateList)){
+            oldUpdateList.stream().forEach(permissionModel -> {
+                permissionMapper.updateSelective(permissionModel.getEntity());
+            });
+        }
     }
 }

@@ -1,8 +1,8 @@
 package com.github.tanxinzheng.jwt;
 
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
-import com.github.tanxinzheng.jwt.support.JwtUser;
 import com.github.tanxinzheng.jwt.support.RestAuthenticationEntryPoint;
 import com.github.tanxinzheng.module.authorization.model.UserModel;
 import com.github.tanxinzheng.module.authorization.service.UserService;
@@ -137,13 +137,13 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
             UserModel userModel = userService.getOneUserModelByUsername(username);
             if (userModel != null) {
                 // 缺少权限验证
-                JwtUser jwtUser = new JwtUser();
-                jwtUser.setId(userModel.getId());
-                jwtUser.setUsername(userModel.getUsername());
-                jwtUser.setPassword(userModel.getPassword());
-                jwtUser.setName(userModel.getNickname());
-                jwtUser.setEmail(userModel.getEmail());
-                return jwtUser;
+                CurrentLoginUser currentLoginUser = new CurrentLoginUser();
+                currentLoginUser.setId(userModel.getId());
+                currentLoginUser.setUsername(userModel.getUsername());
+                currentLoginUser.setPassword(userModel.getPassword());
+                currentLoginUser.setName(userModel.getNickname());
+                currentLoginUser.setEmail(userModel.getEmail());
+                return currentLoginUser;
             }
             throw new UsernameNotFoundException("用户名或密码错误");
         };

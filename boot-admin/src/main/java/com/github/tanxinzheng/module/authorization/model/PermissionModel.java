@@ -29,17 +29,7 @@ public @Data class PermissionModel extends BaseModel implements Serializable {
 
     private String groupId;
 
-    /** 权限类型：菜单，请求 */
-    @Excel(name = "权限类型：菜单，请求")
-    @Length(max = 10, message = "权限类型：菜单，请求字符长度限制[0,10]")
-    private String permissionType;
-
     private String permissionKey;
-    /** 权限组 */
-    @Excel(name = "权限组")
-    @NotBlank(message = "权限组为必填项")
-    @Length(max = 100, message = "权限组字符长度限制[0,100]")
-    private String permissionGroup;
     /** 权限URL */
     @Excel(name = "权限URL")
     @NotBlank(message = "权限URL为必填项")
@@ -60,10 +50,6 @@ public @Data class PermissionModel extends BaseModel implements Serializable {
     @NotBlank(message = "激活为必填项")
     @Length(max = 1, message = "激活字符长度限制[0,1]")
     private Boolean active;
-    /** 父节点 */
-    @Excel(name = "父节点")
-    @Length(max = 50, message = "父节点字符长度限制[0,50]")
-    private String parentId;
     /** 创建人 */
     @Excel(name = "创建人")
     @NotBlank(message = "创建人为必填项")

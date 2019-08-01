@@ -7,7 +7,7 @@ spring:
     static-locations:
       - classpath:/static/
   profiles:
-    active: ${build.profile.id}
+    active: ${build.profile.id}, redis
   servlet:
     multipart:
       max-file-size: 20971520

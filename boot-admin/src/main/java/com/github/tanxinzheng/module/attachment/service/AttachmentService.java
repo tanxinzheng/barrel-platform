@@ -27,7 +27,7 @@ public interface AttachmentService {
      * @param multipartFile
      * @return
      */
-    public AttachmentModel createAttachment(MultipartFile multipartFile);
+    public AttachmentModel createAttachment(String userId, MultipartFile multipartFile);
 
     /**
      * 新增附件实体对象

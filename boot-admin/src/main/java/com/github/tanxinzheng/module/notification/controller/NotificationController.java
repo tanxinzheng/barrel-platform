@@ -2,7 +2,8 @@ package com.github.tanxinzheng.module.notification.controller;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.logger.ActionLog;
-import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.framework.web.annotation.LoginUser;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.notification.model.NotificationModel;
 import com.github.tanxinzheng.module.notification.model.NotificationQuery;
 import com.github.tanxinzheng.module.notification.model.SendNotification;
@@ -26,9 +27,6 @@ public class NotificationController {
 
     @Autowired
     NotificationService notificationService;
-
-    @Autowired
-    CurrentAccountService currentAccountService;
 
     /**
      * 新增通知
@@ -90,8 +88,9 @@ public class NotificationController {
      */
     @ApiOperation(value = "更新通知")
     @RequestMapping(value = "/{id}/read", method = RequestMethod.PUT)
-    public void readNotification(@PathVariable(value = "id") String id){
-        notificationService.read(id, currentAccountService.getAccountId());
+    public void readNotification(@LoginUser CurrentLoginUser loginUser,
+                                 @PathVariable(value = "id") String id){
+        notificationService.read(id, loginUser.getId());
     }
 
     /**

@@ -1,21 +1,11 @@
 package com.github.tanxinzheng.config;
 
-import com.github.tanxinzheng.framework.adapter.WebAppConfigurerAdapter;
-import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
-import com.github.tanxinzheng.jwt.support.JwtUser;
-import com.github.tanxinzheng.module.account.service.impl.CurrentAccountServiceImpl;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by tanxinzheng on 2018/9/20.
  */
 @Configuration
-public class WebAppConfig extends WebAppConfigurerAdapter {
+public class WebAppConfig {
 
-    @Bean
-    @Override
-    public CurrentAccountService<JwtUser> getCurrentAccountService() {
-        return new CurrentAccountServiceImpl();
-    }
 }

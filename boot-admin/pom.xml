@@ -454,6 +454,30 @@
                     <executable>true</executable>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>1.5.6</version>
+                <configuration>
+                    <!-- asciidoc文档输入路径 -->
+                    <sourceDirectory>src/docs/asciidoc/generated</sourceDirectory>
+                    <!-- html文档输出路径 -->
+                    <outputDirectory>src/docs/asciidoc/html</outputDirectory>
+                    <backend>html</backend>
+                    <sourceHighlighter>coderay</sourceHighlighter>
+                    <!-- html文档格式参数 -->
+                    <attributes>
+                        <doctype>book</doctype>
+                        <toc>left</toc>
+                        <toclevels>3</toclevels>
+                        <numbered></numbered>
+                        <hardbreaks></hardbreaks>
+                        <sectlinks></sectlinks>
+                        <sectanchors></sectanchors>
+                    </attributes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

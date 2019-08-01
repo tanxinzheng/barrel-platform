@@ -1,7 +1,8 @@
 package com.github.tanxinzheng.module.notification.controller;
 
 import com.github.tanxinzheng.framework.logger.ActionLog;
-import com.github.tanxinzheng.framework.web.authentication.CurrentAccountService;
+import com.github.tanxinzheng.framework.web.annotation.LoginUser;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.notification.model.*;
 import com.github.tanxinzheng.module.notification.service.NotificationService;
 import com.google.common.collect.Lists;
@@ -24,9 +25,6 @@ import java.util.Optional;
 public class AccountNotificationController {
 
     @Autowired
-    CurrentAccountService currentAccountService;
-
-    @Autowired
     NotificationService notificationService;
 
 
@@ -36,9 +34,9 @@ public class AccountNotificationController {
      */
     @ApiOperation(value = "查询当前用户消息，默认查询三个月内")
     @GetMapping
-    public List<AccountNotification> getAccountNotifications() {
+    public List<AccountNotification> getAccountNotifications(@LoginUser CurrentLoginUser loginUser) {
         NotificationQuery notificationQuery = new NotificationQuery();
-        notificationQuery.setUserId(currentAccountService.getAccountId());
+        notificationQuery.setUserId(loginUser.getId());
         List<NotificationModel> list = notificationService.getNotificationModelList(notificationQuery);
         List<AccountNotification> result = Lists.newArrayList();
         for (NotificationDataState notificationDataState : NotificationDataState.values()) {
@@ -90,11 +88,13 @@ public class AccountNotificationController {
     @RequestMapping(value = "/notification/count", method = RequestMethod.GET)
     @ApiOperation(value = "查询当前用户资料信息")
     @ActionLog(actionName = "查询当前用户资料信息")
-    public List<NotificationStateCount> notificationCount(NotificationQuery notificationQuery){
+    public List<NotificationStateCount> notificationCount(
+            @LoginUser CurrentLoginUser loginUser,
+            NotificationQuery notificationQuery){
         if(notificationQuery == null){
             notificationQuery = new NotificationQuery();
         }
-        notificationQuery.setUserId(currentAccountService.getAccountId());
+        notificationQuery.setUserId(loginUser.getId());
         return notificationService.countNotificationState(notificationQuery);
     }
 
@@ -105,11 +105,13 @@ public class AccountNotificationController {
     @RequestMapping(value = "/notification/count/unread", method = RequestMethod.GET)
     @ApiOperation(value = "查询当前用户资料信息")
     @ActionLog(actionName = "查询当前用户资料信息")
-    public NotificationStateCount countUnRead(NotificationQuery notificationQuery){
+    public NotificationStateCount countUnRead(
+            @LoginUser CurrentLoginUser loginUser,
+            NotificationQuery notificationQuery){
         if(notificationQuery == null){
             notificationQuery = new NotificationQuery();
         }
-        notificationQuery.setUserId(currentAccountService.getAccountId());
+        notificationQuery.setUserId(loginUser.getId());
         List<NotificationStateCount> list = notificationService.countNotificationState(notificationQuery);
         if(CollectionUtils.isEmpty(list)){
             return new NotificationStateCount();
