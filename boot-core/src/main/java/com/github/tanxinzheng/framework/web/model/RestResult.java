@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.framework.web.rest;
+package com.github.tanxinzheng.framework.web.model;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

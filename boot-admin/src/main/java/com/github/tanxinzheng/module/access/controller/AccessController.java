@@ -3,7 +3,7 @@ package com.github.tanxinzheng.module.access.controller;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
-import com.github.tanxinzheng.framework.web.rest.RestResult;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.jwt.support.TokenType;
 import com.github.tanxinzheng.module.access.model.LoginParam;
 import com.github.tanxinzheng.module.account.model.RegisterModel;
@@ -50,12 +50,12 @@ public class AccessController {
 
     @ApiOperation(value = "用户登录")
     @PostMapping(value = "/login")
-    public RestResult login(@RequestBody @Valid LoginParam loginParam) {
+    public RestResponse login(@RequestBody @Valid LoginParam loginParam) {
         String token = accountService.login(loginParam.getUsername(), loginParam.getPassword());
         Map<String, String> result = Maps.newHashMap();
         result.put("accessToken", token);
         result.put("tokenType", TokenType.BEARER.getCode());
-        return RestResult.OK(result);
+        return RestResponse.success(result);
     }
 
     /**

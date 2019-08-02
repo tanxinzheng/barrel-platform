@@ -2,6 +2,7 @@ package com.github.tanxinzheng.framework.web.rest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
@@ -39,8 +40,7 @@ public class RestExceptionResolver extends SimpleMappingExceptionResolver {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         //避免乱码
         response.setCharacterEncoding("UTF-8");
-        RestError restError = new RestError(ex, request);
-        restError.setStatus(status);
+        RestResponse restError = RestResponse.failed(HttpStatus.INTERNAL_SERVER_ERROR, ex);
         if(ex instanceof IllegalArgumentException || ex instanceof BusinessException){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             restError.setStatus(HttpStatus.BAD_REQUEST.value());

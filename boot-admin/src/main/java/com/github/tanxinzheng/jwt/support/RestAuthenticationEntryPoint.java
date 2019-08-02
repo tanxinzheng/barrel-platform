@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.jwt.support;
 
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

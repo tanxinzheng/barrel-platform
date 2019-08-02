@@ -1,18 +1,16 @@
 package com.github.tanxinzheng.framework.poi;
 
-import com.github.tanxinzheng.framework.web.rest.RestError;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import lombok.Data;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by tanxinzheng on 16/12/10.
  */
 @Data
-public class ExcelImportResultModel extends RestError {
+public class ExcelImportResultModel extends RestResponse {
 
-    public ExcelImportResultModel(Exception ex, HttpServletRequest request) {
-        super(ex, request);
+    public ExcelImportResultModel() {
+        super();
     }
 
     /**

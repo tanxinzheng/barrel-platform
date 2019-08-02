@@ -4,7 +4,7 @@ import com.github.tanxinzheng.framework.poi.ExcelUtils;
 import com.github.tanxinzheng.framework.web.annotation.LoginUser;
 import com.github.tanxinzheng.framework.web.authentication.PermissionResourceKey;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
-import com.github.tanxinzheng.framework.web.rest.RestResult;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.module.authorization.constant.PermissionAction;
 import com.github.tanxinzheng.module.authorization.model.PermissionCreate;
 import com.github.tanxinzheng.module.authorization.model.PermissionModel;
@@ -178,10 +178,10 @@ public class PermissionController {
      */
     @ApiOperation(value = "获取所有未纳入权限控制资源")
     @GetMapping(value = "/sync")
-    public RestResult syncAll(@RequestParam(value = "group", required = false) String swaggerGroup,
+    public RestResponse syncAll(@RequestParam(value = "group", required = false) String swaggerGroup,
                                HttpServletRequest request) {
         permissionService.autoInitPermissions(swaggerGroup, "TEST");
-        return RestResult.OK("同步成功");
+        return RestResponse.success("同步成功");
     }
 
     /**

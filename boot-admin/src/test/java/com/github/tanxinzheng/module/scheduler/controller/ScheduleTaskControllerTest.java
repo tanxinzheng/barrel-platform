@@ -1,12 +1,14 @@
-package com.github.tanxinzheng.module;
+package com.github.tanxinzheng.module.scheduler.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.tanxinzheng.AppTest;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskModel;
-import com.github.tanxinzheng.test.TestAppController;
-import org.junit.*;
-import org.junit.runners.MethodSorters;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -14,11 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Unit test for simple App.
- */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AppTest extends TestAppController {
+public class ScheduleTaskControllerTest extends AppTest {
 
     private static ScheduleTaskModel scheduleTaskModel;
 

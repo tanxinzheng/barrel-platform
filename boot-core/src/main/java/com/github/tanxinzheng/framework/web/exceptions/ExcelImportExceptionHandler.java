@@ -36,9 +36,7 @@ public class ExcelImportExceptionHandler extends AbstractRestExceptionHandler {
      */
     @ExceptionHandler({ExcelImportValidFailException.class})
     public final ResponseEntity<ExcelImportResultModel> handleException(ExcelImportValidFailException ex, HttpServletRequest request) throws IOException {
-        ExcelImportResultModel restError = new ExcelImportResultModel(ex, request);
-        restError.setStatus(HttpStatus.BAD_REQUEST.value());
-        restError.setMessage("导入Excel数据校验失败");
+        ExcelImportResultModel restError = (ExcelImportResultModel) ExcelImportResultModel.failed(HttpStatus.BAD_REQUEST, "导入Excel数据校验失败");
         HttpHeaders headers = new HttpHeaders();
         ExcelImportResult excelImportResult = ex.getExcelImportResult();
         Workbook workbook = excelImportResult.getWorkbook();

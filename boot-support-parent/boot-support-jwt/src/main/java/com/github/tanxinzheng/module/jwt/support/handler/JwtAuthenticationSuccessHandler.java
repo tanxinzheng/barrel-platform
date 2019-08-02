@@ -28,7 +28,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         data.put("tokenType", StringUtils.lowerCase(TokenType.BEARER.getCode()));
         data.put("accessToken", jwtUserDetails.getToken());
         data.put("refreshToken", jwtUserDetails.getRefreshToken());
-        RestResponse.ok(data).toJSON(request, response);
+        RestResponse.success(data).toJSON(request, response);
     }
 
 }

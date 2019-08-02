@@ -1,16 +1,20 @@
 package com.github.tanxinzheng.module.dictionary.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.github.tanxinzheng.AppTest;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
-import com.github.tanxinzheng.test.TestAppController;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by tanxinzheng on 2018/11/20.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class DictionaryControllerTest extends TestAppController {
+public class DictionaryControllerTest extends AppTest {
 
     String GROUP_CODE = "TEST_GROUP";
 
@@ -35,7 +39,10 @@ public class DictionaryControllerTest extends TestAppController {
         deleteById();
     }
 
-    public void deleteById() throws Exception {
+    private void deleteById() throws Exception {
+        if(dictionaryModel == null){
+            return;
+        }
         ResultActions actions = mockMvc.perform(delete("/dictionary/{id}", dictionaryModel.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -43,47 +50,52 @@ public class DictionaryControllerTest extends TestAppController {
                 .andExpect(status().isOk());
     }
 
-    public String create() throws Exception {
+    private RestResponse<DictionaryModel> create() throws Exception {
         DictionaryModel model = new DictionaryModel();
         model.setGroupCode(GROUP_CODE);
         model.setGroupName("测试分组");
-        model.setDictionaryCode("TEST_02");
+        model.setDictionaryCode("TEST_0"+ new Random().nextInt());
         model.setDictionaryName("第一测试小组");
         ResultActions actions = mockMvc.perform(post("/dictionary")
+                .header(AUTHORIZATION, createToken())
                 .content(JSONObject.toJSONString(model))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
-        dictionaryModel = JSONObject.parseObject(resultJson, DictionaryModel.class);
-        return resultJson;
+        RestResponse<DictionaryModel> restResponse = JSONObject.parseObject(resultJson, new TypeReference<RestResponse<DictionaryModel>>(){});
+        dictionaryModel = restResponse.getData();
+        return restResponse;
     }
 
     @Test
     public void test0createDictionary() throws Exception {
-        String resultJson = create();
-        JSONObject resultObj = JSONObject.parseObject(resultJson);
-        Assert.assertNotNull("新增数据字典，测试不通过", resultObj);
-        Assert.assertNotNull("新增数据字典，测试不通过", resultObj.get("id"));
+        RestResponse<DictionaryModel> resultJson = create();
+        Assert.assertNotNull("新增数据字典，测试不通过", resultJson);
+        Assert.assertNotNull("新增数据字典，测试不通过", resultJson.getData());
+        Assert.assertNotNull("新增数据字典，测试不通过", resultJson.getData().getId());
     }
 
     @Test
     public void test1getDictionaryList() throws Exception {
         ResultActions actions = mockMvc.perform(get("/dictionary")
+                .header(AUTHORIZATION, createToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
-        JSONArray jsonArray = JSONArray.parseArray(resultJson);
-        Assert.assertNotNull("查询数据字典列表，测试不通过", jsonArray);
+        RestResponse<List<DictionaryModel>> restResponse = JSONObject.parseObject(resultJson, new TypeReference<RestResponse<List<DictionaryModel>>>(){});
+        Assert.assertNotNull("查询数据字典列表，测试不通过", restResponse);
+        Assert.assertTrue("查询数据字典列表，测试不通过", restResponse.getData().size() > 0);
     }
 
     @Test
     public void test2getDictionaryById() throws Exception {
         create();
         ResultActions actions = mockMvc.perform(get("/dictionary/{id}", dictionaryModel.getId())
+                .header(AUTHORIZATION, createToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -101,6 +113,7 @@ public class DictionaryControllerTest extends TestAppController {
         String name = "第一测试小组" + new Date().getTime();
         model.setDictionaryName(name);
         ResultActions actions = mockMvc.perform(put("/dictionary/{id}", model.getId())
+                .header(AUTHORIZATION, createToken())
                 .content(JSONObject.toJSONString(model))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

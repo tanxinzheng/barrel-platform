@@ -1,10 +1,7 @@
 package com.github.tanxinzheng.jwt.support;
 
 import com.github.tanxinzheng.jwt.JwtConfigProperties;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -65,10 +62,16 @@ public class JwtUtils {
      * @return
      */
     public String getUsernameByToken(String token){
-        Jws<Claims> claimsJws = Jwts.parser()
-                .setSigningKey(jwtConfigProperties.getSecret())
-                .parseClaimsJws(token);
-        return claimsJws.getBody().getSubject();
+        String  subject = null;
+        try {
+            subject = Jwts.parser()
+                    .setSigningKey(jwtConfigProperties.getSecret())
+                    .parseClaimsJws(token)
+                    .getBody().getSubject();
+        } catch (Exception e) {
+            log.info("JWT格式验证失败:{}",token);
+        }
+        return subject;
     }
 
     /**
@@ -108,8 +111,14 @@ public class JwtUtils {
                     .setSigningKey(jwtConfigProperties.getSecret())
                     .parseClaimsJws(token)
                     .getBody();
+        } catch (ExpiredJwtException
+                | UnsupportedJwtException
+                | MalformedJwtException
+                | SignatureException
+                | IllegalArgumentException ex) {
+            log.info(ex.getMessage(), ex);
         } catch (Exception e) {
-            log.info("JWT格式验证失败:{}",token);
+            log.info("token验证失败: {}",token);
         }
         return claims;
     }

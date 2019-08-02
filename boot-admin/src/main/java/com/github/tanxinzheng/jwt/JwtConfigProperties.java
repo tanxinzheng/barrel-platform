@@ -109,5 +109,12 @@ public class JwtConfigProperties {
         this.refreshTokenCookieName = DEFAULT_JWT_REFRESH_TOKEN_COOKIE_NAME;
         this.tokenIdName = DEFAULT_JWT_SESSION_NAME;
         this.expiration = DEFAULT_JWT_EXPIRATION;
+        this.permitUrls = new String[]{
+                "/**.css",
+                "/**.js",
+                "/**/*.css",
+                "/**/*.js",
+                "/favicon.ico"
+        };
     }
 }

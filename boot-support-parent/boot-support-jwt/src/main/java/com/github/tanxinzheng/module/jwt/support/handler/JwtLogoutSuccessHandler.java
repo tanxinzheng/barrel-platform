@@ -24,6 +24,6 @@ public class JwtLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         jwtTokenService.removeToken(request, response);
-        RestResponse.ok("SUCCESS").toJSON(request, response);
+        RestResponse.success("SUCCESS").toJSON(request, response);
     }
 }

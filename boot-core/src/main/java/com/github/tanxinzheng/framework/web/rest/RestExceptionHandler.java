@@ -1,6 +1,8 @@
 package com.github.tanxinzheng.framework.web.rest;
 
 import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
+import io.jsonwebtoken.MalformedJwtException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,13 +38,14 @@ public class RestExceptionHandler {
 //    @Value(value = "${spring.servlet.multipart.max-file-size}")
     private Long maxUploadSize;
 
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(value = {
+            Exception.class,
+            MalformedJwtException.class
+    })
     @ResponseBody
-    public RestError exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
+    public RestResponse exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
         logger.error(ex.getMessage(), ex);
-        RestError restError = new RestError(ex);
-        restError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        restError.setException(ex.getClass().getSimpleName());
+        RestResponse restError = RestResponse.failed(HttpStatus.INTERNAL_SERVER_ERROR, ex);
         if(ex instanceof BindException){
             BindException bindException = (BindException) ex;
             restError = handleBindException(bindException.getBindingResult(), bindException);
@@ -67,6 +70,9 @@ public class RestExceptionHandler {
             response.setStatus(HttpStatus.FORBIDDEN.value());
             restError.setStatus(HttpStatus.FORBIDDEN.value());
             restError.setMessage(ex.getMessage());
+        }else if(ex instanceof MalformedJwtException){
+            restError.setStatus(HttpStatus.UNAUTHORIZED.value());
+            restError.setMessage("token校验失败");
         }else{
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             restError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -75,10 +81,8 @@ public class RestExceptionHandler {
         return restError;
     }
 
-    protected RestError handleBindException(BindingResult bindingResult, Exception ex) {
-        RestError restError = new RestError(ex);
-        restError.setStatus(HttpStatus.BAD_REQUEST.value());
-        restError.setMessage("非法请求参数，校验请求参数不合法");
+    protected RestResponse handleBindException(BindingResult bindingResult, Exception ex) {
+        RestResponse restError = RestResponse.failed(HttpStatus.BAD_REQUEST, "非法请求参数，校验请求参数不合法");
         BindingResult result = bindingResult;
         List<org.springframework.validation.FieldError> fieldErrors = result.getFieldErrors();
         List<FieldError> fieldErrorList = new ArrayList<FieldError>();
@@ -96,7 +100,6 @@ public class RestExceptionHandler {
                 restError.setMessage(fieldError.getMessage());
             }
         }
-        restError.setErrors(fieldErrorList);
         return restError;
     }
 

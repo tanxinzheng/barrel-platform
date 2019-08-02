@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.framework.web.exceptions;
 
-import com.github.tanxinzheng.framework.web.rest.RestError;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.framework.web.rest.WebCommonUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,11 +22,10 @@ public abstract class AbstractRestExceptionHandler {
             webRequest.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
         }
         if(WebCommonUtils.isJSON(request)){
-            if(body instanceof RestError){
+            if(body instanceof RestResponse){
                 return new ResponseEntity(body, headers, status);
             }
-            RestError restError = new RestError(ex, request);
-            restError.setStatus(status.value());
+            RestResponse restError = RestResponse.failed(status, ex.getMessage());
             return new ResponseEntity(restError, headers, status);
         }
         return new ResponseEntity(body, headers, status);

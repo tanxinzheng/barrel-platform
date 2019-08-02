@@ -1,16 +1,17 @@
 logging:
-  config: classpath:logback-${build.profile.id}.xml
+  config: classpath:logback-test.xml
 
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://172.21.0.2:3306/xmo_demo?useUnicode:true&amp;characterEncoding:utf8
+    url: jdbc:mysql://localhost:3306/xmo_demo?useUnicode:true&amp;characterEncoding:utf8
     username: root
-    password: root
-
-redis:
-  host: 172.17.0.3
-  port: 6379
+    password: 123456
+  redis:
+    host: localhost # Redis服务器地址
+    database: 1 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+    password: # Redis服务器连接密码（默认为空）
 
 jwt:
   secret: 123456

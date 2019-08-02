@@ -1,7 +1,8 @@
-package com.github.tanxinzheng.jwt;
+package com.github.tanxinzheng.config;
 
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
+import com.github.tanxinzheng.jwt.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
 import com.github.tanxinzheng.jwt.support.RestAuthenticationEntryPoint;
 import com.github.tanxinzheng.module.authorization.model.UserModel;
@@ -40,7 +41,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableConfigurationProperties(value = JwtConfigProperties.class)
-public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     JwtConfigProperties jwtConfigProperties;
@@ -79,11 +80,6 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         String[] permitUrls = jwtConfigProperties.getPermitUrls();
         List<String> list = Lists.newArrayList(permitUrls);
         list.add("/access/**");
-        list.add("/**.css");
-        list.add("/**.js");
-        list.add("/**/*.css");
-        list.add("/**/*.js");
-        list.add("/favicon.ico");
         String[] data = list.toArray(new String[list.size()]);
         return data;
     }
