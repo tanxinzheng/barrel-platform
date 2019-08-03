@@ -1,7 +1,6 @@
 package com.github.tanxinzheng.module.authorization.controller;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.module.authorization.model.GroupPermissionModel;
 import com.github.tanxinzheng.module.authorization.model.GroupPermissionQuery;
 import com.github.tanxinzheng.module.authorization.service.GroupPermissionService;
@@ -54,7 +53,6 @@ public class GroupPermissionController {
      * @return  GroupPermissionModel   组权限领域对象
      */
     @ApiOperation(value = "新增组权限")
-    @ActionLog(actionName = "新增组权限")
     @PostMapping
     public GroupPermissionModel createGroupPermission(@RequestBody @Valid GroupPermissionModel groupPermissionModel) {
         return groupPermissionService.createGroupPermission(groupPermissionModel);
@@ -67,7 +65,6 @@ public class GroupPermissionController {
      * @return  GroupPermissionModel   组权限领域对象
      */
     @ApiOperation(value = "更新组权限")
-    @ActionLog(actionName = "更新组权限")
     @PutMapping(value = "/{id}")
     public GroupPermissionModel updateGroupPermission(@PathVariable(value = "id") String id,
                            @RequestBody @Valid GroupPermissionModel groupPermissionModel){
@@ -83,7 +80,6 @@ public class GroupPermissionController {
      * @param id    主键
      */
     @ApiOperation(value = "删除单个组权限")
-    @ActionLog(actionName = "删除单个组权限")
     @DeleteMapping(value = "/{id}")
     public void deleteGroupPermission(@PathVariable(value = "id") String id){
         groupPermissionService.deleteGroupPermission(id);
@@ -94,7 +90,6 @@ public class GroupPermissionController {
      * @param groupPermissionQuery    查询参数对象
      */
     @ApiOperation(value = "批量删除组权限")
-    @ActionLog(actionName = "批量删除组权限")
     @DeleteMapping
     public void deleteGroupPermissions(GroupPermissionQuery groupPermissionQuery){
         Assert.notNull(groupPermissionQuery.getGroupId(), "groupId must be not null");

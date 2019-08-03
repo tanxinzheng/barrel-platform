@@ -21,8 +21,8 @@ import java.io.Serializable;
 @ExcelTarget(value = "GroupModel")
 public @Data class GroupModel extends BaseModel implements Serializable {
 
-    public static final String GROUP_TYPE_SYSTEM = "GROUP_TYPE_SYSTEM";
-    public static final String GROUP_TYPE_CUSTOM = "GROUP_TYPE_CUSTOM";
+    public static final String GROUP_TYPE_SYSTEM = "SYSTEM";
+    public static final String GROUP_TYPE_CUSTOM = "CUSTOM";
 
     /** 主键 */
     @Length(max = 32, message = "主键字符长度限制[0,32]")

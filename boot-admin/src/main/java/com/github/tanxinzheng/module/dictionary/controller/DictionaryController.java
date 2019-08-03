@@ -10,6 +10,7 @@ import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryQuery;
 import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
 import com.google.common.collect.Lists;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -28,6 +29,7 @@ import java.util.List;
  * @date    2017-6-11 18:57:11
  * @version 1.0.0
  */
+@Api(tags = "用户组管理")
 @RestController
 @RequestMapping(value = "/dictionary")
 @Slf4j
@@ -44,7 +46,8 @@ public class DictionaryController {
     @ApiOperation(value = "新增数据字典")
     @ActionLog(actionName = "新增数据字典")
     @PostMapping
-    public DictionaryModel createDictionary(@LoginUser CurrentLoginUser loginUser, @RequestBody @Valid DictionaryModel dictionaryModel) {
+    public DictionaryModel createDictionary(@LoginUser CurrentLoginUser loginUser,
+                                            @RequestBody @Valid DictionaryModel dictionaryModel) {
         dictionaryModel.setCreatedUserId(loginUser.getId());
         dictionaryModel.setUpdatedUserId(loginUser.getId());
         return dictionaryService.createDictionary(dictionaryModel);

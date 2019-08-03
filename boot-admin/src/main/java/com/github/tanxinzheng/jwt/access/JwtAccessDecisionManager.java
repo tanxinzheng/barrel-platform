@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.jwt.support.access;
+package com.github.tanxinzheng.jwt.access;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +20,8 @@ import java.util.Iterator;
  * 2.无需启动
  * Created by tanxinzheng on 2018/10/21.
  */
-public class MyAccessDecisionManager implements AccessDecisionManager {
+public class JwtAccessDecisionManager implements AccessDecisionManager {
+
     /**
      * Resolves an access control decision for the passed parameters.
      *

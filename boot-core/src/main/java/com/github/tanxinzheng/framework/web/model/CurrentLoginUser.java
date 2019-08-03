@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -30,7 +30,7 @@ public class CurrentLoginUser implements UserDetails {
     private boolean enabled;
     private Set<String> roles;
     private Set<String> permissions;
-    private Collection<SimpleGrantedAuthority> authorities;
+    private List<SimpleGrantedAuthority> authorities;
 
     public CurrentLoginUser(){}
 
@@ -54,7 +54,7 @@ public class CurrentLoginUser implements UserDetails {
         this.username = username;
         this.roles = roles;
         this.permissions = permissions;
-        Collection<SimpleGrantedAuthority> collection = Lists.newArrayList();
+        List<SimpleGrantedAuthority> collection = Lists.newArrayList();
         if(CollectionUtils.isNotEmpty(roles)){
             roles.stream().forEach(role -> {
                 SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role);
@@ -71,7 +71,7 @@ public class CurrentLoginUser implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public List<SimpleGrantedAuthority> getAuthorities() {
         return authorities;
     }
 
@@ -181,7 +181,7 @@ public class CurrentLoginUser implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    public void setAuthorities(Collection<SimpleGrantedAuthority> authorities) {
+    public void setAuthorities(List<SimpleGrantedAuthority> authorities) {
         this.authorities = authorities;
     }
 

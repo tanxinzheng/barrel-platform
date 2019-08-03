@@ -1,13 +1,14 @@
-package com.github.tanxinzheng.module.jwt.support.access;
+package com.github.tanxinzheng.jwt.access;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by tanxinzheng on 2018/10/22.
  */
-public class PermissionGrantedAuthority {
+public class PermissionGrantedAuthority implements Serializable  {
 
     private String url;
     private RequestMethod requestMethod;

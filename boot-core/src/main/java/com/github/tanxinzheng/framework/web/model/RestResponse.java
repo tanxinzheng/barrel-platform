@@ -63,7 +63,9 @@ public class RestResponse<T> implements Serializable {
     }
 
     public static RestResponse failed(HttpStatus code, Exception ex) {
-        return RestResponse.failed(code, ex.getMessage());
+        RestResponse restResponse = RestResponse.failed(code, ex.getMessage());
+        restResponse.setError(ex.getMessage());
+        return restResponse;
     }
 
     public static RestResponse validateFailed(String message) {

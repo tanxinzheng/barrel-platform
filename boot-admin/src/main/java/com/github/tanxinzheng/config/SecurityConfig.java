@@ -3,7 +3,11 @@ package com.github.tanxinzheng.config;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.jwt.JwtConfigProperties;
+import com.github.tanxinzheng.jwt.access.JwtAccessDecisionManager;
+import com.github.tanxinzheng.jwt.access.JwtFilterInvocationSecurityMetadataSource;
+import com.github.tanxinzheng.jwt.access.JwtSecurityMetadataHandler;
 import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
+import com.github.tanxinzheng.jwt.handler.TokenAccessDeniedHandler;
 import com.github.tanxinzheng.jwt.support.RestAuthenticationEntryPoint;
 import com.github.tanxinzheng.module.authorization.model.UserModel;
 import com.github.tanxinzheng.module.authorization.service.UserService;
@@ -15,19 +19,24 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -105,25 +114,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated()
                 // 用于动态URL权限控制
-//                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-//                    public <O extends FilterSecurityInterceptor> O postProcess(
-//                            O fsi) {
-//                        fsi.setSecurityMetadataSource(mySecurityMetadataSource());
-//                        fsi.setAccessDecisionManager(myAccessDecisionManager());
-//                        return fsi;
-//                    }
-//                })
+                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                    public <O extends FilterSecurityInterceptor> O postProcess(
+                            O fsi) {
+                        fsi.setSecurityMetadataSource(getSecurityMetadataSource());
+                        fsi.setAccessDecisionManager(getAccessDecisionManager());
+                        return fsi;
+                    }
+                })
                 // 除上面外的所有请求全部需要鉴权认证
                 .and()
                 .addFilterBefore(getJwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                .exceptionHandling()
+                    .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                    .accessDeniedHandler(new TokenAccessDeniedHandler()) // 访问未授权资源异常处理
                 .and()
                 // 禁用缓存
                 .logout()
                 .and()
                 .headers().cacheControl();
+    }
+
+    @Bean
+    public AccessDecisionManager getAccessDecisionManager() {
+        return new JwtAccessDecisionManager();
+    }
+
+    @Bean
+    public JwtSecurityMetadataHandler getJwtSecurityMetadataHandler(){
+        return new JwtSecurityMetadataHandler();
+    }
+
+    @Bean
+    public FilterInvocationSecurityMetadataSource getSecurityMetadataSource() {
+        JwtFilterInvocationSecurityMetadataSource securityMetadataSource = new JwtFilterInvocationSecurityMetadataSource(getJwtSecurityMetadataHandler());
+        return securityMetadataSource;
     }
 
     @Bean
@@ -139,6 +166,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 currentLoginUser.setPassword(userModel.getPassword());
                 currentLoginUser.setName(userModel.getNickname());
                 currentLoginUser.setEmail(userModel.getEmail());
+                currentLoginUser.setAuthorities(Lists.newArrayList(new SimpleGrantedAuthority("ROLE_USER")));
                 return currentLoginUser;
             }
             throw new UsernameNotFoundException("用户名或密码错误");

@@ -2,7 +2,6 @@ package com.github.tanxinzheng.module.authorization.controller;
 
 import com.github.tanxinzheng.framework.poi.ExcelUtils;
 import com.github.tanxinzheng.framework.web.annotation.LoginUser;
-import com.github.tanxinzheng.framework.web.authentication.PermissionResourceKey;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.module.authorization.constant.PermissionAction;
@@ -11,26 +10,19 @@ import com.github.tanxinzheng.module.authorization.model.PermissionModel;
 import com.github.tanxinzheng.module.authorization.model.PermissionQuery;
 import com.github.tanxinzheng.module.authorization.service.PermissionService;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -184,60 +176,6 @@ public class PermissionController {
         return RestResponse.success("同步成功");
     }
 
-    /**
-     * 获取所有RequestMappingInfo
-     * @param request
-     * @return
-     */
-    @ApiOperation(value = "获取所有未纳入权限控制资源")
-    @RequestMapping(value = "/url")
-    public List getAllUrl(HttpServletRequest request) {
-        WebApplicationContext wc = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getSession().getServletContext());
-        RequestMappingHandlerMapping rmhp = wc.getBean(RequestMappingHandlerMapping.class);
-        Map<RequestMappingInfo, HandlerMethod> map = rmhp.getHandlerMethods();
-        Map<String, List> res = Maps.newHashMap();
-        for(RequestMappingInfo info : map.keySet()){
-            String key = map.get(info).getBean().toString();
-            if(CollectionUtils.isNotEmpty(res.get(key))){
-                res.get(key).add(info);
-            }else{
-                res.put(key, Lists.newArrayList(info));
-            }
-        }
-
-        Map<String, Object> permissionControllerMaps = wc.getBeansWithAnnotation(PermissionResourceKey.class);
-        List permissionModelList = Lists.newArrayList();
-        for (String controllerName : permissionControllerMaps.keySet()) {
-            Object contrl = permissionControllerMaps.get(controllerName);
-            PermissionResourceKey permissionResourceKey = contrl.getClass().getAnnotation(PermissionResourceKey.class);
-            List<RequestMappingInfo> actions = res.get(controllerName);
-            actions.stream().forEach(requestMappingInfo -> {
-                PermissionModel permissionModel = new PermissionModel();
-                PermissionAction action = method2Action(requestMappingInfo.getMethodsCondition().getMethods().stream().findFirst().get());
-                permissionModel.setPermissionUrl(requestMappingInfo.getPatternsCondition().toString());
-//                permissionModel.setPermissionName(permissionResourceKey.description() + ":" + action.getDesc());
-//                permissionModel.setPermissionCode(permissionResourceKey.code() + ":" + action.name());
-                permissionModel.setActive(Boolean.TRUE);
-                permissionModelList.add(permissionModel);
-            });
-        }
-        return permissionModelList;
-    }
-
-    private PermissionAction method2Action(RequestMethod requestMethod){
-        switch (requestMethod){
-            case GET:
-                return PermissionAction.VIEW;
-            case DELETE:
-                return PermissionAction.REMOVE;
-            case POST:
-                return PermissionAction.ADD;
-            case PUT:
-                return PermissionAction.EDIT;
-            default:
-                return null;
-        }
-    }
 
 
 }

@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.jwt.support.access;
+package com.github.tanxinzheng.jwt.access;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
@@ -15,11 +15,11 @@ import java.util.List;
 /**
  * Created by tanxinzheng on 2018/10/21.
  */
-public class MyFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+public class JwtFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     private SecurityMetadataHandler securityMetadataHandler;
 
-    public MyFilterInvocationSecurityMetadataSource(SecurityMetadataHandler securityMetadataHandler) {
+    public JwtFilterInvocationSecurityMetadataSource(SecurityMetadataHandler securityMetadataHandler) {
         this.securityMetadataHandler = securityMetadataHandler;
     }
 

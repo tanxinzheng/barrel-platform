@@ -14,6 +14,7 @@ import java.io.IOException;
  * Created by tanxinzheng on 17/12/12.
  */
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
     /**
      * Commences an authentication scheme.
      * <p>

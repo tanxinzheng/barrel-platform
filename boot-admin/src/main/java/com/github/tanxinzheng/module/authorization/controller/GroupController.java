@@ -199,6 +199,7 @@ public class GroupController {
      * @param groupId
      * @return
      */
+    @ApiOperation(value = "用户组未绑定用户")
     @GetMapping(value = "/{groupId}/users/unbind")
     public List<UserModel> findPermissionByGroup(@PathVariable(value = "groupId") String groupId){
         return userGroupService.getUnbindUsers(groupId);

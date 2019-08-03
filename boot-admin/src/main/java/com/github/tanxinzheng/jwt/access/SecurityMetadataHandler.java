@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.jwt.support.access;
+package com.github.tanxinzheng.jwt.access;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface SecurityMetadataHandler {
      * 加载所有权限
      * @return
      */
-    List<PermissionGrantedAuthority> loadAllPermission();
+    public List<PermissionGrantedAuthority> loadAllPermission();
 }

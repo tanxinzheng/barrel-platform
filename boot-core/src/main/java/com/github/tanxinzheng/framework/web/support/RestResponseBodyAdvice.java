@@ -68,7 +68,7 @@ public class RestResponseBodyAdvice implements ResponseBodyAdvice {
                                   ServerHttpResponse response) {
         Object out;
         ObjectMapper mapper = mapperThreadLocal.get();
-        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
         if(body instanceof RestResponse){
             out = body;
         }else if(body instanceof Page){

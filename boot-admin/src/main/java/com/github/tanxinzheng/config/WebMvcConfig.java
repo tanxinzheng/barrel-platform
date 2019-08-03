@@ -9,7 +9,6 @@ import com.github.tanxinzheng.framework.web.support.DateConverter;
 import com.github.tanxinzheng.framework.web.support.LoginUserResolver;
 import com.github.tanxinzheng.module.dictionary.web.DictionaryAnnotationIntrospector;
 import com.github.tanxinzheng.module.fss.EnableFSSAliyun;
-import com.github.tanxinzheng.module.logger.aspect.LoggerAspect;
 import org.jeecgframework.poi.excel.view.JeecgMapExcelView;
 import org.jeecgframework.poi.excel.view.JeecgSingleExcelView;
 import org.jeecgframework.poi.excel.view.JeecgTemplateExcelView;
@@ -96,11 +95,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         BeanNameViewResolver beanNameViewResolver = new BeanNameViewResolver();
         beanNameViewResolver.setOrder(0);
         return beanNameViewResolver;
-    }
-
-    @Bean
-    public LoggerAspect getLoggerAspect(){
-        return new LoggerAspect();
     }
 
     @Override

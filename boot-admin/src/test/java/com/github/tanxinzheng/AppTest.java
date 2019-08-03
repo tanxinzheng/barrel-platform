@@ -1,6 +1,9 @@
 package com.github.tanxinzheng;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.github.tanxinzheng.config.ApplicationStart;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.jwt.support.JwtUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -42,5 +45,9 @@ public class AppTest {
 
     protected String createToken(){
         return "Bearer " + jwtUtils.createToken("admin", "xmo");
+    }
+
+    protected <T> RestResponse<T> parseRestResponse(String resultJson){
+        return JSONObject.parseObject(resultJson, new TypeReference<RestResponse<T>>(){});
     }
 }

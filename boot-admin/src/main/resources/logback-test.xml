@@ -54,15 +54,15 @@
 		</filter>
     </appender>
 
-    <logger name="org.springframework" level="ERROR"/>
-    <logger name="org.mybatis.spring" level="ERROR"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.mybatis.spring" level="INFO"/>
     <logger name="org.apache" level="ERROR"/>
     <logger name="com.mangofactory.swagger" level="ERROR"/>
     <!--  定时任务  -->
     <logger name="com.mchange.v2.c3p0" level="ERROR"/>
     <logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="ERROR"/>
     <logger name="springfox.documentation" level="ERROR"/>
-    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="org.hibernate" level="INFO"/>
 
     <root level="INFO">
 		<appender-ref ref="STDOUT" />
