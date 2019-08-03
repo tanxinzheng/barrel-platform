@@ -15,7 +15,6 @@
     <modules>
         <module>boot-support-test</module>
         <module>boot-support-store</module>
-        <module>boot-support-jwt</module>
         <module>boot-support-annotation</module>
         <module>boot-support-druid</module>
     </modules>

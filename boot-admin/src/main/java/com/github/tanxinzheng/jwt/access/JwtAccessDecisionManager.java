@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.jwt.access;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.Iterator;
  * 2.无需启动
  * Created by tanxinzheng on 2018/10/21.
  */
+@Slf4j
 public class JwtAccessDecisionManager implements AccessDecisionManager {
 
     /**
@@ -43,6 +45,7 @@ public class JwtAccessDecisionManager implements AccessDecisionManager {
         while (ite.hasNext()) {
             ConfigAttribute ca = ite.next();
             String needRole = ((org.springframework.security.access.SecurityConfig) ca).getAttribute();
+            log.debug("access this resource need role : {}", needRole);
             for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
                 if(grantedAuthority.getAuthority().equals(needRole)){
                     //匹配到有对应角色,则允许通过

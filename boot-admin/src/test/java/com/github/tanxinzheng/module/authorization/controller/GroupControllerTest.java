@@ -43,7 +43,7 @@ public class GroupControllerTest extends AppTest {
                 .andDo(print())
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
-        RestResponse<List<GroupModel>> restResponse = JSONObject.parseObject(resultJson, new TypeReference<RestResponse<List<GroupModel>>>(){});
+        RestResponse<List<GroupModel>> restResponse = parseRestResponse(resultJson);
         Assert.assertNotNull("查询用户组，测试不通过", restResponse);
         Assert.assertTrue("查询用户组，测试不通过", restResponse.getData().size() > 0);
     }
@@ -66,7 +66,7 @@ public class GroupControllerTest extends AppTest {
                 .andDo(print())
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
-        RestResponse<GroupModel> restResponse = JSONObject.parseObject(resultJson, new TypeReference<RestResponse<GroupModel>>(){});
+        RestResponse<GroupModel> restResponse = parseRestResponse(resultJson);
         Assert.assertNotNull(restResponse);
         Assert.assertNotNull(restResponse.getData().getId());
     }

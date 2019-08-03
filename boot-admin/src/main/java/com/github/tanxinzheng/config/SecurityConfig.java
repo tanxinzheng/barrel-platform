@@ -9,9 +9,13 @@ import com.github.tanxinzheng.jwt.access.JwtSecurityMetadataHandler;
 import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
 import com.github.tanxinzheng.jwt.handler.TokenAccessDeniedHandler;
 import com.github.tanxinzheng.jwt.support.RestAuthenticationEntryPoint;
+import com.github.tanxinzheng.module.authorization.model.UserGroupModel;
+import com.github.tanxinzheng.module.authorization.model.UserGroupQuery;
 import com.github.tanxinzheng.module.authorization.model.UserModel;
+import com.github.tanxinzheng.module.authorization.service.UserGroupService;
 import com.github.tanxinzheng.module.authorization.service.UserService;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -153,10 +157,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return securityMetadataSource;
     }
 
+    @Autowired
+    UserGroupService userGroupService;
+
     @Bean
     public UserDetailsService userDetailsService() {
         //获取登录用户信息
         return username -> {
+
             UserModel userModel = userService.getOneUserModelByUsername(username);
             if (userModel != null) {
                 // 缺少权限验证
@@ -166,7 +174,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 currentLoginUser.setPassword(userModel.getPassword());
                 currentLoginUser.setName(userModel.getNickname());
                 currentLoginUser.setEmail(userModel.getEmail());
-                currentLoginUser.setAuthorities(Lists.newArrayList(new SimpleGrantedAuthority("ROLE_USER")));
+                UserGroupQuery userGroupQuery = new UserGroupQuery();
+                userGroupQuery.setUserId(userModel.getId());
+                List<UserGroupModel> userGroupModelList = userGroupService.getUserGroupModelList(userGroupQuery);
+                List<SimpleGrantedAuthority> simpleGrantedAuthorities = Lists.newArrayList();
+                if(CollectionUtils.isNotEmpty(userGroupModelList)){
+                    userGroupModelList.stream().forEach(userGroupModel -> {
+                        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userGroupModel.getGroupName());
+                        simpleGrantedAuthorities.add(simpleGrantedAuthority);
+                    });
+                }
+                currentLoginUser.setAuthorities(simpleGrantedAuthorities);
                 return currentLoginUser;
             }
             throw new UsernameNotFoundException("用户名或密码错误");

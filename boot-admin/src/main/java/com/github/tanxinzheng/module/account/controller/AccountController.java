@@ -65,7 +65,6 @@ public class AccountController {
         Map rolesMap = new HashMap();
         if(CollectionUtils.isEmpty(roles)){
             roles = Sets.newHashSet();
-            roles.add("ROLE_USER");
         }
         rolesMap.put("roles", roles);
         rolesMap.put("permissions", permissions);
