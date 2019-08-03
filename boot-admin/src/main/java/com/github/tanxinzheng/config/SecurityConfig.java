@@ -5,9 +5,9 @@ import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.jwt.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.access.JwtAccessDecisionManager;
 import com.github.tanxinzheng.jwt.access.JwtFilterInvocationSecurityMetadataSource;
-import com.github.tanxinzheng.jwt.access.JwtSecurityMetadataHandler;
 import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
 import com.github.tanxinzheng.jwt.handler.TokenAccessDeniedHandler;
+import com.github.tanxinzheng.jwt.handler.TokenSecurityMetadataHandler;
 import com.github.tanxinzheng.jwt.support.RestAuthenticationEntryPoint;
 import com.github.tanxinzheng.module.authorization.model.UserGroupModel;
 import com.github.tanxinzheng.module.authorization.model.UserGroupQuery;
@@ -147,8 +147,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtSecurityMetadataHandler getJwtSecurityMetadataHandler(){
-        return new JwtSecurityMetadataHandler();
+    public TokenSecurityMetadataHandler getJwtSecurityMetadataHandler(){
+        return new TokenSecurityMetadataHandler();
     }
 
     @Bean

@@ -1,4 +1,6 @@
-package com.github.tanxinzheng.jwt.access;
+package com.github.tanxinzheng.jwt.handler;
+
+import com.github.tanxinzheng.jwt.access.PermissionGrantedAuthority;
 
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.jwt.access;
 
+import com.github.tanxinzheng.jwt.handler.SecurityMetadataHandler;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.security.access.ConfigAttribute;

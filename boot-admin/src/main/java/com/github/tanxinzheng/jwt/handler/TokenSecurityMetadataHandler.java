@@ -1,5 +1,6 @@
-package com.github.tanxinzheng.jwt.access;
+package com.github.tanxinzheng.jwt.handler;
 
+import com.github.tanxinzheng.jwt.access.PermissionGrantedAuthority;
 import com.github.tanxinzheng.module.authorization.model.GroupPermissionQuery;
 import com.github.tanxinzheng.module.authorization.model.PermissionModel;
 import com.github.tanxinzheng.module.authorization.service.GroupPermissionService;
@@ -15,7 +16,7 @@ import java.util.Map;
 /**
  * Created by tanxinzheng on 2018/10/22.
  */
-public class JwtSecurityMetadataHandler implements SecurityMetadataHandler {
+public class TokenSecurityMetadataHandler implements SecurityMetadataHandler {
 
     @Autowired
     GroupPermissionService groupPermissionService;

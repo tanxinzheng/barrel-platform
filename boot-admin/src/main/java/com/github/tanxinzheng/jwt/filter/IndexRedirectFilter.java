@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.config;
+package com.github.tanxinzheng.jwt.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
