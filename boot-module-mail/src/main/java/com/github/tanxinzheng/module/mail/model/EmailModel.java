@@ -2,7 +2,7 @@ package com.github.tanxinzheng.module.mail.model;
 
 import javafx.util.Pair;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.io.InputStream;

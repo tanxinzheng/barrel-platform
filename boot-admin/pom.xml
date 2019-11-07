@@ -3,7 +3,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>spring-boot</artifactId>
+        <artifactId>boot</artifactId>
         <groupId>com.github.tanxinzheng</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
@@ -51,21 +51,31 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>boot-module-account</artifactId>-->
-<!--            <version>1.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>boot-module-common</artifactId>-->
-<!--            <version>1.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>boot-module-auth</artifactId>-->
-<!--            <version>1.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-core</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-jwt</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-translate</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-common</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-auth</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>

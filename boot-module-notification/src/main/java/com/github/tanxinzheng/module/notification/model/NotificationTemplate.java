@@ -10,7 +10,8 @@ import java.io.Serializable;
  * @date    2017-8-24 17:42:47
  * @version 1.0.0
  */
-public @Data class NotificationTemplate extends BaseEntity implements Serializable {
+@Data
+public class NotificationTemplate extends BaseEntity implements Serializable {
 
     /** 主键 */
     private String id;

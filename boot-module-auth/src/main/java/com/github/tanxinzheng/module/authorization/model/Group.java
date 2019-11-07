@@ -10,7 +10,8 @@ import java.io.Serializable;
  * @date    2017-7-25 0:51:13
  * @version 1.0.0
  */
-public @Data class Group extends BaseEntity implements Serializable {
+@Data
+public class Group extends BaseEntity implements Serializable {
 
     /** 主键 */
     private String id;

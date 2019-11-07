@@ -10,7 +10,8 @@ import java.io.Serializable;
  * @date    2019-1-11 22:32:46
  * @version 1.0.0
  */
-public @Data class MenuQuery extends BaseQuery implements Serializable {
+@Data
+public class MenuQuery extends BaseQuery implements Serializable {
 
     private String keyword;
     private String id;

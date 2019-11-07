@@ -6,7 +6,7 @@ import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
 import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 import org.springframework.beans.BeanUtils;
@@ -20,7 +20,8 @@ import java.util.Date;
  * @version 1.0.0
  */
 @ExcelTarget(value = "UserModel")
-public @Data class UserModel extends BaseModel implements Serializable {
+@Data
+public class UserModel extends BaseModel implements Serializable {
 
     /** 主键 */
     @Length(max = 32, message = "主键字符长度限制[0,32]")

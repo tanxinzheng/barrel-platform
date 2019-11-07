@@ -3,7 +3,7 @@ package com.github.tanxinzheng.module.account.model;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -11,7 +11,8 @@ import java.io.Serializable;
 /**
  * Created by Jeng on 2016/1/6.
  */
-public @Data
+@Data
+public
 class RegisterModel implements Serializable {
 
     /**

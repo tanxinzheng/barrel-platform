@@ -11,7 +11,8 @@ import ${mykey};
 import java.io.Serializable;
 
 <#include "header.ftl">
-public @Data class ${domainObjectClassName} extends BaseEntity implements Serializable {
+@Data
+public class ${domainObjectClassName} extends BaseEntity implements Serializable {
 
 <#if columns?exists>
     <#list columns as field>

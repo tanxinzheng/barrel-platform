@@ -21,12 +21,11 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -57,10 +56,6 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     JwtConfigProperties jwtConfigProperties;
 
-    @Autowired
-    SaltSource saltSource;
-
-
     /**
      * 登录
      *
@@ -74,9 +69,8 @@ public class AccountServiceImpl implements AccountService {
         //密码需要客户端加密后传递
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            String salt = (String) saltSource.getSalt(userDetails);
-            String encPassword = PasswordHelper.encryptPassword(rwaPassword, salt);
-            if(!passwordEncoder.isPasswordValid(encPassword, rwaPassword, salt)){
+            String password = passwordEncoder.encode(rwaPassword);
+            if(!passwordEncoder.matches(password, userDetails.getPassword())){
                 throw new BadCredentialsException("密码不正确");
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

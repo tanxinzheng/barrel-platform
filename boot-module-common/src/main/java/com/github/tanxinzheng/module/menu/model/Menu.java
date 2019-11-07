@@ -10,7 +10,8 @@ import java.io.Serializable;
  * @date    2019-1-11 22:32:46
  * @version 1.0.0
  */
-public @Data class Menu extends BaseEntity implements Serializable {
+@Data
+public class Menu extends BaseEntity implements Serializable {
 
     /** 主键 */
     private String id;

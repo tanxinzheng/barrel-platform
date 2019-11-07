@@ -6,7 +6,8 @@ import BaseQuery;
 import java.io.Serializable;
 
 <#include "header.ftl">
-public @Data class ${domainObjectClassName}Query extends BaseQuery implements Serializable {
+@Data
+public class ${domainObjectClassName}Query extends BaseQuery implements Serializable {
 
     private String keyword;
     private String id;

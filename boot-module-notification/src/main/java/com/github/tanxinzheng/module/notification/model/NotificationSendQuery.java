@@ -10,7 +10,8 @@ import java.io.Serializable;
  * @date    2017-8-24 17:42:48
  * @version 1.0.0
  */
-public @Data class NotificationSendQuery extends BaseQuery implements Serializable {
+@Data
+public class NotificationSendQuery extends BaseQuery implements Serializable {
 
     private String keyword;
     private String id;

@@ -10,7 +10,8 @@ import java.io.Serializable;
  * @date    2017-6-16 22:59:53
  * @version 1.0.0
  */
-public @Data class UserQuery extends BaseQuery implements Serializable {
+@Data
+public class UserQuery extends BaseQuery implements Serializable {
 
     private String keyword;
     private String id;

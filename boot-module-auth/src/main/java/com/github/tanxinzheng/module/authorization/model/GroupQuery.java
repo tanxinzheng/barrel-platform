@@ -14,7 +14,8 @@ import java.io.Serializable;
  */
 
 @ApiModel(value="用户组查询模型")
-public @Data class GroupQuery extends BaseQuery implements Serializable {
+@Data
+public class GroupQuery extends BaseQuery implements Serializable {
 
     @ApiModelProperty(value="关键字")
     private String keyword;

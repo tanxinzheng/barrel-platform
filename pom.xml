@@ -5,25 +5,22 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.8.RELEASE</version>
+		<version>2.2.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.tanxinzheng</groupId>
-	<artifactId>spring-boot</artifactId>
+	<artifactId>boot</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>spring-boot</name>
-	<description>Spring Boot Example</description>
+	<name>boot-parent</name>
+	<description>Boot Example</description>
 
 	<modules>
 		<module>boot-version</module>
 		<module>boot-core</module>
-		<module>boot-support-parent</module>
-<!--		<module>boot-cloud-parent</module>-->
-		<module>boot-archetype-module</module>
-		<module>boot-admin</module>
-		<module>boot-admin-ui</module>
-		<module>boot-webapp-ams</module>
+		<module>boot-support-test</module>
+		<module>boot-module-translate</module>
+		<module>boot-module-fss</module>
 		<module>boot-module-logger</module>
 		<module>boot-module-scheduler</module>
 		<module>boot-module-mail</module>
@@ -33,6 +30,10 @@
 		<module>boot-module-account</module>
 		<module>boot-module-auth</module>
 		<module>boot-module-api</module>
+		<module>boot-admin</module>
+		<module>boot-admin-ui</module>
+		<module>boot-webapp-ams</module>
+		<module>boot-archetype-module</module>
 	</modules>
 
 	<properties>
@@ -43,7 +44,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring-cloud.version>Camden.SR5</spring-cloud.version>
 		<boot.fremework.version>1.0.0-SNAPSHOT</boot.fremework.version>
-		<spring.boot.version>2.1.8.RELEASE</spring.boot.version>
+		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
 		<skipNpmBuild>false</skipNpmBuild>
 		<skipTests>false</skipTests>
 	</properties>
@@ -126,7 +127,7 @@
 <!--			</dependency>-->
 <!--			<dependency>-->
 <!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-support-annotation</artifactId>-->
+<!--				<artifactId>boot-module-translate</artifactId>-->
 <!--				<version>1.0.1-SNAPSHOT</version>-->
 <!--			</dependency>-->
 <!--			<dependency>-->

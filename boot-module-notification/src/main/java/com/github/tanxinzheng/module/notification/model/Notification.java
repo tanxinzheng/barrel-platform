@@ -11,7 +11,8 @@ import java.util.Date;
  * @date    2017-8-24 17:42:48
  * @version 1.0.0
  */
-public @Data class Notification extends BaseEntity implements Serializable {
+@Data
+public class Notification extends BaseEntity implements Serializable {
 
     /** 主键 */
     private String id;

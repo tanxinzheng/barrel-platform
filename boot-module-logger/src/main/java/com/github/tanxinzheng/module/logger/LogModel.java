@@ -9,7 +9,8 @@ import java.util.Date;
 /**
  * Created by Jeng on 16/3/20.
  */
-public @Data
+@Data
+public
 class LogModel implements Serializable{
 
     private String userId;

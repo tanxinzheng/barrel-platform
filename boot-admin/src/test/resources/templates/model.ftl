@@ -20,7 +20,8 @@ import java.io.Serializable;
 
 <#include "header.ftl">
 @ExcelTarget(value = "${domainObjectClassName}Model")
-public @Data class ${domainObjectClassName}Model extends BaseModel implements Serializable {
+@Data
+public class ${domainObjectClassName}Model extends BaseModel implements Serializable {
 
 <#if columns?exists>
     <#list columns as field>

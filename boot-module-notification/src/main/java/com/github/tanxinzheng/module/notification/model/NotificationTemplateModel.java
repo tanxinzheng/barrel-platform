@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.tanxinzheng.framework.model.BaseModel;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 import org.springframework.beans.BeanUtils;
@@ -17,7 +17,8 @@ import java.io.Serializable;
  * @version 1.0.0
  */
 @ExcelTarget(value = "NotificationTemplateModel")
-public @Data class NotificationTemplateModel extends BaseModel implements Serializable {
+@Data
+public class NotificationTemplateModel extends BaseModel implements Serializable {
 
     /** 主键 */
     @Length(max = 32, message = "主键字符长度限制[0,32]")

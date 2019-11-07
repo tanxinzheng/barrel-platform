@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>spring-boot</artifactId>
+        <artifactId>boot</artifactId>
         <groupId>com.github.tanxinzheng</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
@@ -35,7 +35,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-support-annotation</artifactId>
+            <artifactId>boot-module-translate</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -6,7 +6,7 @@ import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
 import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 import org.springframework.beans.BeanUtils;
@@ -19,7 +19,8 @@ import java.io.Serializable;
  * @version 1.0.0
  */
 @ExcelTarget(value = "UserGroupModel")
-public @Data class UserGroupModel extends BaseModel implements Serializable {
+@Data
+public class UserGroupModel extends BaseModel implements Serializable {
 
     /**  */
     @Length(max = 32, message = "字符长度限制[0,32]")
