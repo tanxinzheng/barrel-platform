@@ -5,12 +5,12 @@
     <parent>
         <artifactId>spring-boot</artifactId>
         <groupId>com.github.tanxinzheng</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>boot-support-test</artifactId>
-
+    <version>1.0.1-SNAPSHOT</version>
     <name>boot-support-test</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

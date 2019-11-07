@@ -1,5 +1,25 @@
-fss:
-  access-key-id: LTAIQ9tAnQKgixOa
-  access-key-secret: SvUzBFGETJ3k9DUY0krXEKLYEpOsFF
-  bucket-name: xmomen-test
-  endpoint: oss-cn-hangzhou.aliyuncs.com
+storage:
+    # 本地对象存储配置信息
+    local:
+      storagePath: storage
+      # 这个地方应该是wx模块的WxStorageController的fetch方法对应的地址
+      address: http://localhost:8080/wx/storage/fetch/
+    # 阿里云对象存储配置信息
+    aliyun:
+      access-key-id: LTAIQ9tAnQKgixOa
+      access-key-secret: SvUzBFGETJ3k9DUY0krXEKLYEpOsFF
+      bucket-name: xmomen-test
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+    # 腾讯对象存储配置信息
+    # 请参考 https://cloud.tencent.com/document/product/436/6249
+    tencent:
+      secretId: 111111
+      secretKey: xxxxxx
+      region: xxxxxx
+      bucketName: litemall
+    # 七牛云对象存储配置信息
+    qiniu:
+      endpoint: http://pd5cb6ulu.bkt.clouddn.com
+      accessKey: 111111
+      secretKey: xxxxxx
+      bucketName: litemall

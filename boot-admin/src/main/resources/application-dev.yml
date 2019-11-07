@@ -1,5 +1,5 @@
-logging:
-  config: classpath:logback.xml
+#logging:
+#  config: classpath:logback.xml
 
 spring:
   datasource:
@@ -13,11 +13,19 @@ spring:
     port: 6379 # Redis服务器连接端口
     password: # Redis服务器连接密码（默认为空）
 
-jwt:
-  secret: 123456
-  permit-urls:
-    - /index.html
-    - /swagger-ui.html
-    - /swagger-resources/**
-    - /v2/**
-    - /webjars/**
+#jwt:
+#  secret: 123456
+#  permit-urls:
+#    - /index.html
+#    - /swagger-ui.html
+#    - /swagger-resources/**
+#    - /v2/**
+#    - /webjars/**
+#
+storage:
+  active: aliyun
+  aliyun:
+    access-key-id: LTAIQ9tAnQKgixOa
+    access-key-secret: SvUzBFGETJ3k9DUY0krXEKLYEpOsFF
+    bucket-name: xmomen-test
+    endpoint: oss-cn-hangzhou.aliyuncs.com

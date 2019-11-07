@@ -5,25 +5,35 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.14.RELEASE</version>
+		<version>2.1.8.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.tanxinzheng</groupId>
 	<artifactId>spring-boot</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>spring-boot</name>
+	<description>Spring Boot Example</description>
+
 	<modules>
+		<module>boot-version</module>
 		<module>boot-core</module>
 		<module>boot-support-parent</module>
-		<module>boot-cloud-parent</module>
+<!--		<module>boot-cloud-parent</module>-->
 		<module>boot-archetype-module</module>
 		<module>boot-admin</module>
 		<module>boot-admin-ui</module>
 		<module>boot-webapp-ams</module>
+		<module>boot-module-logger</module>
+		<module>boot-module-scheduler</module>
+		<module>boot-module-mail</module>
+		<module>boot-module-jwt</module>
+		<module>boot-module-notification</module>
+		<module>boot-module-common</module>
+		<module>boot-module-account</module>
+		<module>boot-module-auth</module>
+		<module>boot-module-api</module>
 	</modules>
-	<packaging>pom</packaging>
-
-	<name>boot</name>
-	<description>Spring Boot Example</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,23 +42,24 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring-cloud.version>Camden.SR5</spring-cloud.version>
-		<spring.boot.version>1.5.14.RELEASE</spring.boot.version>
+		<boot.fremework.version>1.0.0-SNAPSHOT</boot.fremework.version>
+		<spring.boot.version>2.1.8.RELEASE</spring.boot.version>
 		<skipNpmBuild>false</skipNpmBuild>
 		<skipTests>false</skipTests>
 	</properties>
 
-	<distributionManagement>
-		<repository>
-			<id>local-nexus</id>
-			<name>maven-releases</name>
-			<url>http://localhost:10003/repository/maven-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>local-nexus</id>
-			<name>maven-snapshots</name>
-			<url>http://localhost:10003/repository/maven-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
+<!--	<distributionManagement>-->
+<!--		<repository>-->
+<!--			<id>local-nexus</id>-->
+<!--			<na<version>1.0.1-SNAPSHOT</version>me>maven-releases</name>-->
+<!--			<url>http://localhost:10003/repository/maven-releases/</url>-->
+<!--		</repository>-->
+<!--		<snapshotRepository>-->
+<!--			<id>local-nexus</id>-->
+<!--			<name>maven-snapshots</name>-->
+<!--			<url>http://localhost:10003/repository/maven-snapshots/</url>-->
+<!--		</snapshotRepository>-->
+<!--	</distributionManagement>-->
 	<!--<repositories>-->
 		<!--<repository>-->
 			<!--<id>local-mac-release</id>-->
@@ -65,22 +76,103 @@
 		<!--</repository>-->
 	<!--</repositories>-->
 
+	<dependencies>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.collections</groupId>
+			<artifactId>google-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-netflix</artifactId>
-				<version>1.4.3.RELEASE</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>boot-core</artifactId>-->
+<!--				<version>1.0.1-SNAPSHOT</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>boot-support-store</artifactId>-->
+<!--				<version>1.0.1-SNAPSHOT</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>boot-support-annotation</artifactId>-->
+<!--				<version>1.0.1-SNAPSHOT</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>boot-module-common</artifactId>-->
+<!--				<version>1.0.1-SNAPSHOT</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>boot-module-auth</artifactId>-->
+<!--				<version>1.0.1-SNAPSHOT</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>boot-module-account</artifactId>-->
+<!--				<version>1.0.1-SNAPSHOT</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>boot-module-logger</artifactId>-->
+<!--				<version>1.0.1-SNAPSHOT</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>boot-module-jwt</artifactId>-->
+<!--				<version>1.0.1-SNAPSHOT</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>boot-support-test</artifactId>-->
+<!--				<version>1.0.1-SNAPSHOT</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>org.springframework.cloud</groupId>-->
+<!--				<artifactId>spring-cloud-dependencies</artifactId>-->
+<!--				<version>${spring-cloud.version}</version>-->
+<!--				<type>pom</type>-->
+<!--				<scope>import</scope>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>org.springframework.cloud</groupId>-->
+<!--				<artifactId>spring-cloud-netflix</artifactId>-->
+<!--				<version>1.4.3.RELEASE</version>-->
+<!--				<type>pom</type>-->
+<!--				<scope>import</scope>-->
+<!--			</dependency>-->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-starter-parent</artifactId>
@@ -105,6 +197,11 @@
 				<groupId>org.mybatis.spring.boot</groupId>
 				<artifactId>mybatis-spring-boot-starter</artifactId>
 				<version>1.3.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>5.1.7.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
@@ -171,6 +268,49 @@
 				<artifactId>mysql-connector-java</artifactId>
 				<version>5.1.47</version>
 			</dependency>
+			<dependency>
+				<groupId>com.qcloud</groupId>
+				<artifactId>cos_api</artifactId>
+				<version>5.4.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.aliyun.oss</groupId>
+				<artifactId>aliyun-sdk-oss</artifactId>
+				<version>2.8.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.qiniu</groupId>
+				<artifactId>qiniu-java-sdk</artifactId>
+				<version>[7.2.0, 7.2.99]</version>
+			</dependency>
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>2.3.23</version>
+			</dependency>
+			<!-- logback -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.7</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-core</artifactId>
+				<version>1.1.7</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-access</artifactId>
+				<version>1.1.7</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.1.7</version>
+			</dependency>
 			<!--集成logstash-->
 			<dependency>
 				<groupId>net.logstash.logback</groupId>
@@ -186,6 +326,11 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
 				<version>1.1.9</version>
+			</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>2.2.3</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
@@ -209,22 +354,6 @@
 					<target>${java.version}</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.xmomen.generator</groupId>
-				<artifactId>xmomen-generator-maven-plugin</artifactId>
-				<version>1.0.0-SNAPSHOT</version>
-				<configuration>
-					<configurationFile>src/test/resources/help/generator-config.json</configurationFile>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>5.1.42</version>
-						<scope>runtime</scope>
-					</dependency>
-				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>com.spotify</groupId>

@@ -53,8 +53,8 @@ public class RestExceptionHandler {
 
     private static final Log logger = LogFactory.getLog(RestExceptionHandler.class);
 
-    @Value(value = "${spring.servlet.multipart.max-file-size}")
-    private Long maxUploadSize;
+//    @Value(value = "${spring.servlet.multipart.max-file-size}")
+    private Long maxUploadSize = 102400l;
 
     @ExceptionHandler(value = {
             Exception.class,

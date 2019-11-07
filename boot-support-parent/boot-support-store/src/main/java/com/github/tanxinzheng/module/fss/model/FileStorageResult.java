@@ -12,7 +12,8 @@ import java.io.InputStream;
 @Data
 public class FileStorageResult {
 
-
+    private String key;
+    private String contentType;
     private byte[] content;
     private String fileExt;
     private boolean success;
@@ -20,6 +21,7 @@ public class FileStorageResult {
     private String fileName;
     private long fileSize;
     private String storagePath;
+    private String url;
 
     public FileStorageResult() {
     }

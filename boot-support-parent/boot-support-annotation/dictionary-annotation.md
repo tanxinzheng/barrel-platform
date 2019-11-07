@@ -9,7 +9,7 @@
 <dependency>
     <groupId>com.github.tanxinzheng</groupId>
     <artifactId>boot-support-annotation</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
