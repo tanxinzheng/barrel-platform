@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>boot-support-test</artifactId>
+    <artifactId>boot-starter-test</artifactId>
     <version>1.0.1-SNAPSHOT</version>
-    <name>boot-support-test</name>
+    <name>boot-starter-test</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 

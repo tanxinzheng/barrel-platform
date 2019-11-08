@@ -1,15 +1,14 @@
-package com.github.tanxinzheng.config;
+package com.github.tanxinzheng.web.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-//import com.github.tanxinzheng.framework.web.handler.LogbackMDCInterceptor;
-//import com.github.tanxinzheng.framework.web.json.CustomDateDeserialize;
-//import com.github.tanxinzheng.framework.web.support.DateConverter;
-//import com.github.tanxinzheng.framework.web.support.LoginUserResolver;
-//import com.github.tanxinzheng.module.dictionary.web.DictionaryAnnotationIntrospector;
+import com.github.tanxinzheng.framework.web.handler.LogbackMDCInterceptor;
+import com.github.tanxinzheng.framework.web.json.CustomDateDeserialize;
+import com.github.tanxinzheng.framework.web.support.DateConverter;
+import com.github.tanxinzheng.framework.web.support.LoginUserResolver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,7 +22,6 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import javax.servlet.MultipartConfigElement;
 import java.util.Date;
 import java.util.List;
 
@@ -40,46 +38,27 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-//        argumentResolvers.add(new LoginUserResolver());
+        argumentResolvers.add(new LoginUserResolver());
     }
 
-//    @Bean
-//    public DictionaryAnnotationIntrospector getDictionaryIntrospector(){
-//        DictionaryAnnotationIntrospector dictionaryAnnotationIntrospector = new DictionaryAnnotationIntrospector();
-//        dictionaryAnnotationIntrospector.setApplicationContext(applicationContext);
-//        return dictionaryAnnotationIntrospector;
-//    }
 
     @Bean
     @Primary
     public ObjectMapper objectMapper() {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-//        builder.serializationInclusion(JsonInclude.Include.NON_EMPTY);
+        builder.serializationInclusion(JsonInclude.Include.NON_EMPTY);
         builder.timeZone("GMT+8");
         builder.simpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        builder.deserializerByType(Date.class, new CustomDateDeserialize());
+        builder.deserializerByType(Date.class, new CustomDateDeserialize());
         builder.featuresToDisable(
                 SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS,
                 DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES,
                 DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
         );
-//        builder.annotationIntrospector(getDictionaryIntrospector());
         builder.featuresToEnable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         return builder.build();
     }
-//
-//    @Bean
-//    public JeecgTemplateExcelView getJeecgTemplateExcelView(){
-//        return new JeecgTemplateExcelView();
-//    }
-//    @Bean
-//    public JeecgSingleExcelView getJeecgSingleExcelView(){
-//        return new JeecgSingleExcelView();
-//    }
-//    @Bean
-//    public JeecgMapExcelView getJeecgMapExcelView(){
-//        return new JeecgMapExcelView();
-//    }
+
     @Bean
     public BeanNameViewResolver getBeanNameViewResolver(){
         BeanNameViewResolver beanNameViewResolver = new BeanNameViewResolver();
@@ -89,13 +68,13 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-//        registry.addConverter(new DateConverter());
+        registry.addConverter(new DateConverter());
     }
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer
-                .defaultContentType(MediaType.APPLICATION_JSON_UTF8)
+                .defaultContentType(MediaType.APPLICATION_JSON)
                 .parameterName("format")
                 .favorParameter(true)
                 .ignoreUnknownPathExtensions(false)
@@ -106,22 +85,12 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.enableContentNegotiation(false, new MappingJackson2JsonView());
-        registry.enableContentNegotiation(
-                new MappingJackson2JsonView()
-        );
+        registry.enableContentNegotiation(new MappingJackson2JsonView());
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LogbackMDCInterceptor()).addPathPatterns("/**");
-    }
-
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-//        factory.setMaxFileSize("128KB");
-//        factory.setMaxRequestSize("128KB");
-        return factory.createMultipartConfig();
+        registry.addInterceptor(new LogbackMDCInterceptor()).addPathPatterns("/**");
     }
 
 }

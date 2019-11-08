@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-support-test</artifactId>
+            <artifactId>boot-starter-test</artifactId>
             <version>1.0.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>

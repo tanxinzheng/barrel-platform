@@ -1,7 +1,5 @@
 package com.github.tanxinzheng;
 
-//import com.github.tanxinzheng.module.jwt.EnableJWT;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -18,7 +18,8 @@
 	<modules>
 		<module>boot-version</module>
 		<module>boot-core</module>
-		<module>boot-support-test</module>
+		<module>boot-starter-test</module>
+		<module>boot-starter-web</module>
 		<module>boot-module-translate</module>
 		<module>boot-module-fss</module>
 		<module>boot-module-logger</module>
@@ -45,6 +46,9 @@
 		<spring-cloud.version>Camden.SR5</spring-cloud.version>
 		<boot.fremework.version>1.0.0-SNAPSHOT</boot.fremework.version>
 		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
+		<io.springfox.version>2.6.1</io.springfox.version>
+		<io.springfox.version>2.9.2</io.springfox.version>
+		<swagger-annotations.version>1.5.10</swagger-annotations.version>
 		<skipNpmBuild>false</skipNpmBuild>
 		<skipTests>false</skipTests>
 	</properties>
@@ -103,10 +107,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.swagger</groupId>
-			<artifactId>swagger-annotations</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -157,7 +157,7 @@
 <!--			</dependency>-->
 <!--			<dependency>-->
 <!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-support-test</artifactId>-->
+<!--				<artifactId>boot-starter-test</artifactId>-->
 <!--				<version>1.0.1-SNAPSHOT</version>-->
 <!--			</dependency>-->
 <!--			<dependency>-->
@@ -237,17 +237,27 @@
 			<dependency>
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger-ui</artifactId>
-				<version>2.6.1</version>
+				<version>${io.springfox.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger2</artifactId>
-				<version>2.6.1</version>
+				<version>${io.springfox.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>io.swagger</groupId>
 				<artifactId>swagger-annotations</artifactId>
-				<version>1.5.10</version>
+				<version>${swagger-annotations.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-core</artifactId>
+				<version>${io.springfox.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-spring-web</artifactId>
+				<version>${io.springfox.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.projectlombok</groupId>
