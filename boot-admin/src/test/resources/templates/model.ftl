@@ -7,8 +7,8 @@ import ${modulePackage}.model.${domainObjectClassName};
 import lombok.Data;
 import org.hibernate.validator.constraints.*;
 import javax.validation.constraints.*;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecgframework.poi.excel.annotation.ExcelTarget;
+//import org.jeecgframework.poi.excel.annotation.Excel;
+//import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 import org.springframework.beans.BeanUtils;
 
 <#if importClassList?exists>
@@ -19,7 +19,7 @@ import ${mykey};
 import java.io.Serializable;
 
 <#include "header.ftl">
-@ExcelTarget(value = "${domainObjectClassName}Model")
+//@ExcelTarget(value = "${domainObjectClassName}Model")
 @Data
 public class ${domainObjectClassName}Model extends BaseModel implements Serializable {
 
@@ -27,7 +27,7 @@ public class ${domainObjectClassName}Model extends BaseModel implements Serializ
     <#list columns as field>
     /** ${field['columnComment']} */
     <#if !field.primaryKey && !field.hide>
-    @Excel(name = "${field['columnComment']}")
+    //@Excel(name = "${field['columnComment']}")
     </#if>
     <#if !field.nullable && !field.primaryKey>
     <#if field['javaType'] = 'String'>

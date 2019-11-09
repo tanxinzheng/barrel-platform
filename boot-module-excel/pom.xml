@@ -2,16 +2,17 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>boot</artifactId>
         <groupId>com.github.tanxinzheng</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>boot-module-translate</artifactId>
+    <groupId>com.github.tanxinzheng</groupId>
+    <artifactId>boot-module-excel</artifactId>
     <version>1.0.1-SNAPSHOT</version>
-    <name>boot-module-translate</name>
+
+    <name>boot-module-excel</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,21 +26,20 @@
             <artifactId>boot-core</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>boot-module-excel</artifactId>-->
-<!--            <version>1.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
         <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-starter-test</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <scope>test</scope>
+            <groupId>org.jeecg</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+            <version>2.3.1</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.jeecg</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jeecg</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>2.3.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -47,6 +47,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 
 </project>

@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.web.config;
+package com.github.tanxinzheng.framework.poi.config;
 
 import org.jeecgframework.poi.excel.view.JeecgMapExcelView;
 import org.jeecgframework.poi.excel.view.JeecgSingleExcelView;

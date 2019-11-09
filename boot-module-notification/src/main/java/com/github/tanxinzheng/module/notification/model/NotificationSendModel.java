@@ -4,21 +4,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.tanxinzheng.framework.model.BaseModel;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import javax.validation.constraints.NotBlank;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+
+//import org.jeecgframework.poi.excel.annotation.Excel;
+//import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 
 /**
  * @author  tanxinzheng
  * @date    2017-8-24 17:42:48
  * @version 1.0.0
  */
-@ExcelTarget(value = "NotificationSendModel")
+//@ExcelTarget(value = "NotificationSendModel")
 @Data
 public class NotificationSendModel extends BaseModel implements Serializable {
 
@@ -39,7 +40,7 @@ public class NotificationSendModel extends BaseModel implements Serializable {
     @Length(max = 32, message = "通知内容表主键字符长度限制[0,32]")
     private String notificationId;
     /** 发送人 */
-    @Excel(name = "发送人")
+    //@Excel(name = "发送人")
 //    @NotBlank(message = "发送人为必填项")
     @Length(max = 32, message = "发送人字符长度限制[0,32]")
     private String sender;
@@ -56,11 +57,11 @@ public class NotificationSendModel extends BaseModel implements Serializable {
      */
     private Date expireTime;
     /** 发送时间 */
-    @Excel(name = "发送时间")
+    //@Excel(name = "发送时间")
     @NotNull(message = "发送时间为必填项")
     private Date sendTime;
     /** 状态 */
-    @Excel(name = "状态")
+    //@Excel(name = "状态")
 //    @NotBlank(message = "状态为必填项")
     @Length(max = 10, message = "状态字符长度限制[0,10]")
     private String dataState;

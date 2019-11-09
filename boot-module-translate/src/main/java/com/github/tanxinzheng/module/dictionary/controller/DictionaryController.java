@@ -1,27 +1,21 @@
 package com.github.tanxinzheng.module.dictionary.controller;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.poi.ExcelUtils;
 import com.github.tanxinzheng.framework.web.annotation.LoginUser;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
-import com.github.tanxinzheng.framework.web.rest.ImportExcelResponse;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryQuery;
 import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
-import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
+
+//import com.github.tanxinzheng.framework.poi.ExcelUtils;
 
 /**
  * @author  tanxinzheng
@@ -113,45 +107,45 @@ public class DictionaryController {
         dictionaryService.deleteDictionary(dictionaryQuery.getIds());
     }
 
-    /**
-     * 下载Excel模板
-     */
-    @ApiOperation(value = "下载数据字典导入模板")
-    @RequestMapping(value="/template", method = RequestMethod.GET)
-    public void downloadTemplate(HttpServletRequest request,
-                                 HttpServletResponse response) {
-        List<DictionaryModel> dictionaryModelList = Lists.newArrayList();
-        ExcelUtils.export(request, response, DictionaryModel.class, dictionaryModelList, "数据字典_模板");
-    }
-
-    /**
-     * 导出Excel
-     * @param dictionaryQuery
-     * @param request
-     * @param response
-     */
-    @ApiOperation(value = "导出数据字典")
-    @RequestMapping(value="/export", method = RequestMethod.GET)
-    public void exportDictionaries(DictionaryQuery dictionaryQuery,
-                                             HttpServletRequest request,
-                                             HttpServletResponse response) {
-        List<DictionaryModel> dictionaryModelList = dictionaryService.getDictionaryModelList(dictionaryQuery);
-        ExcelUtils.export(request, response, DictionaryModel.class, dictionaryModelList, "数据字典");
-    }
-
-    /**
-     * 导入Excel
-     * @param file
-     */
-    @ApiOperation(value = "导入数据字典")
-    @RequestMapping(value="/import", method = RequestMethod.POST)
-    public ImportExcelResponse importDictionaries(@RequestParam("file") MultipartFile file) {
-        List<DictionaryModel> list = ExcelUtils.transform(file, DictionaryModel.class);
-        if(CollectionUtils.isEmpty(list)){
-            return ImportExcelResponse.fail();
-        }
-        dictionaryService.createDictionaries(list);
-        return ImportExcelResponse.success(list.size());
-    }
+//    /**
+//     * 下载Excel模板
+//     */
+//    @ApiOperation(value = "下载数据字典导入模板")
+//    @RequestMapping(value="/template", method = RequestMethod.GET)
+//    public void downloadTemplate(HttpServletRequest request,
+//                                 HttpServletResponse response) {
+//        List<DictionaryModel> dictionaryModelList = Lists.newArrayList();
+//        ExcelUtils.export(request, response, DictionaryModel.class, dictionaryModelList, "数据字典_模板");
+//    }
+//
+//    /**
+//     * 导出Excel
+//     * @param dictionaryQuery
+//     * @param request
+//     * @param response
+//     */
+//    @ApiOperation(value = "导出数据字典")
+//    @RequestMapping(value="/export", method = RequestMethod.GET)
+//    public void exportDictionaries(DictionaryQuery dictionaryQuery,
+//                                             HttpServletRequest request,
+//                                             HttpServletResponse response) {
+//        List<DictionaryModel> dictionaryModelList = dictionaryService.getDictionaryModelList(dictionaryQuery);
+//        ExcelUtils.export(request, response, DictionaryModel.class, dictionaryModelList, "数据字典");
+//    }
+//
+//    /**
+//     * 导入Excel
+//     * @param file
+//     */
+//    @ApiOperation(value = "导入数据字典")
+//    @RequestMapping(value="/import", method = RequestMethod.POST)
+//    public ImportExcelResponse importDictionaries(@RequestParam("file") MultipartFile file) {
+//        List<DictionaryModel> list = ExcelUtils.transform(file, DictionaryModel.class);
+//        if(CollectionUtils.isEmpty(list)){
+//            return ImportExcelResponse.fail();
+//        }
+//        dictionaryService.createDictionaries(list);
+//        return ImportExcelResponse.success(list.size());
+//    }
 
 }

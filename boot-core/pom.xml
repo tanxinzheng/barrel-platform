@@ -33,21 +33,6 @@
             <artifactId>fastjson</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jeecg</groupId>
-            <artifactId>easypoi-annotation</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jeecg</groupId>
-            <artifactId>easypoi-base</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jeecg</groupId>
-            <artifactId>easypoi-web</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
         </dependency>
@@ -71,6 +56,10 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
