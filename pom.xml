@@ -35,6 +35,7 @@
 		<module>boot-admin-ui</module>
 		<module>boot-webapp-ams</module>
 		<module>boot-archetype-module</module>
+		<module>boot-starter-security</module>
 	</modules>
 
 	<properties>
@@ -46,7 +47,7 @@
 		<spring-cloud.version>Camden.SR5</spring-cloud.version>
 		<boot.fremework.version>1.0.0-SNAPSHOT</boot.fremework.version>
 		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
-		<io.springfox.version>2.6.1</io.springfox.version>
+		<io.swagger.version>2.6.1</io.swagger.version>
 		<io.springfox.version>2.9.2</io.springfox.version>
 		<swagger-annotations.version>1.5.10</swagger-annotations.version>
 		<skipNpmBuild>false</skipNpmBuild>
@@ -81,37 +82,45 @@
 		<!--</repository>-->
 	<!--</repositories>-->
 
-	<dependencies>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.collections</groupId>
-			<artifactId>google-collections</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+<!--	<dependencies>-->
+<!--		<dependency>-->
+<!--			<groupId>com.google.guava</groupId>-->
+<!--			<artifactId>guava</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>io.springfox</groupId>-->
+<!--			<artifactId>springfox-swagger2</artifactId>-->
+<!--		</dependency>-->
+<!--&lt;!&ndash;		<dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;			<groupId>com.google.collections</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;			<artifactId>google-collections</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;		</dependency>&ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.commons</groupId>-->
+<!--			<artifactId>commons-lang3</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>commons-collections</groupId>-->
+<!--			<artifactId>commons-collections</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.projectlombok</groupId>-->
+<!--			<artifactId>lombok</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-web</artifactId>-->
+<!--		</dependency>-->
+<!--&lt;!&ndash;		<dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;			<groupId>io.springfox</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;			<artifactId>springfox-swagger2</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;		</dependency>&ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-test</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+<!--	</dependencies>-->
 
 	<dependencyManagement>
 		<dependencies>
@@ -243,11 +252,6 @@
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger2</artifactId>
 				<version>${io.springfox.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.swagger</groupId>
-				<artifactId>swagger-annotations</artifactId>
-				<version>${swagger-annotations.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>io.springfox</groupId>
@@ -428,33 +432,41 @@
 <!--					</execution>-->
 <!--				</executions>-->
 			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.codehaus.mojo</groupId>-->
+<!--				<artifactId>xml-maven-plugin</artifactId>-->
+<!--				<version>1.0.2</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>process-classes</phase>-->
+<!--						<goals>-->
+<!--							<goal>transform</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--				<configuration>-->
+<!--					<transformationSets>-->
+<!--						<transformationSet>-->
+<!--							<dir>target\</dir>-->
+<!--&lt;!&ndash;							<stylesheet>checkstyle\checkstyle-author.xsl</stylesheet>&ndash;&gt;-->
+<!--							<includes>checkstyle-result.xml</includes>-->
+<!--							<fileMappers>-->
+<!--								<fileMapper-->
+<!--										implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">-->
+<!--									<pattern>\.xml$</pattern>-->
+<!--									<replacement>.html</replacement>-->
+<!--								</fileMapper>-->
+<!--							</fileMappers>-->
+<!--						</transformationSet>-->
+<!--					</transformationSets>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>xml-maven-plugin</artifactId>
-				<version>1.0.2</version>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>transform</goal>
-						</goals>
-					</execution>
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.5</version>
 				<configuration>
-					<transformationSets>
-						<transformationSet>
-							<dir>target\</dir>
-<!--							<stylesheet>checkstyle\checkstyle-author.xsl</stylesheet>-->
-							<includes>checkstyle-result.xml</includes>
-							<fileMappers>
-								<fileMapper
-										implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
-									<pattern>\.xml$</pattern>
-									<replacement>.html</replacement>
-								</fileMapper>
-							</fileMappers>
-						</transformationSet>
-					</transformationSets>
+					<skip>true</skip>
 				</configuration>
 			</plugin>
 		</plugins>

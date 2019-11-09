@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 字典序列化
@@ -24,7 +25,7 @@ import java.util.Map;
 @Slf4j
 public class DictionaryJsonSerializer extends JsonSerializer<Object>{
 
-    private Map<String, DictionaryTransferService> dictionaryInterpreterServiceMap = Maps.newConcurrentMap();
+    private Map<String, DictionaryTransferService> dictionaryInterpreterServiceMap = new ConcurrentHashMap<>();
 
     @Autowired
     private DictionaryInterpreterService dictionaryInterpreterService;

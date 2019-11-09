@@ -1,7 +1,6 @@
 package com.github.tanxinzheng.module.menu.controller;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.framework.model.TreeModel;
 import com.github.tanxinzheng.module.menu.model.MenuModel;
 import com.github.tanxinzheng.module.menu.model.MenuQuery;
