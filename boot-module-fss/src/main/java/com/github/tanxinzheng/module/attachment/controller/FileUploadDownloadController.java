@@ -126,7 +126,7 @@ public class FileUploadDownloadController {
             if(result.isSuccess()){
                 ZipEntry zipEntry = new ZipEntry(filename);
                 outputStream.putNextEntry(zipEntry);
-                org.apache.poi.util.IOUtils.copy(result.getInputStream(), outputStream);
+                org.apache.commons.io.IOUtils.copy(result.getInputStream(), outputStream);
                 outputStream.closeEntry();
             }
         } catch (IOException e) {

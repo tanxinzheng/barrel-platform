@@ -4,7 +4,7 @@ import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
-import com.github.tanxinzheng.jwt.JwtConfigProperties;
+import com.github.tanxinzheng.jwt.config.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.support.JwtUtils;
 import com.github.tanxinzheng.module.account.model.AccountDetail;
 import com.github.tanxinzheng.module.account.service.AccountService;

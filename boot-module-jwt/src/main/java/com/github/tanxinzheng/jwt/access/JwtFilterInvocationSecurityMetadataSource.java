@@ -52,7 +52,7 @@ public class JwtFilterInvocationSecurityMetadataSource implements FilterInvocati
             }
         }
         //没有匹配到授权资源的角色，默认是要登录才能访问
-        return SecurityConfig.createList();
+        return SecurityConfig.createList("ROLE_USER");
     }
 
     /**

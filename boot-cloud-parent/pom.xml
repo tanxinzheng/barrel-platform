@@ -15,7 +15,7 @@
 
     <modules>
         <module>boot-cloud-eureka</module>
-        <module>boot-cloud-zipkin</module>
+<!--        <module>boot-cloud-zipkin</module>-->
         <module>boot-cloud-zuul</module>
         <module>boot-cloud-hystrix</module>
     </modules>
@@ -25,7 +25,32 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-netflix</artifactId>-->
+<!--                <version>${spring-cloud.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-parent</artifactId>-->
+<!--                <version>${spring-cloud.version}</version>-->
+<!--            </dependency>-->
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>

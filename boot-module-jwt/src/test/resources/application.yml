@@ -1,0 +1,30 @@
+server:
+  port: 8000
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+    url: jdbc:h2:mem:test
+    username: root
+    password: test
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      encoding:
+        enabled: true
+  server:
+    tomcat:
+      uri-encoding: UTF-8
+jwt:
+  enable: true
+  secret: 123456
+  issuer: com.github.tanxinzheng
+  permit-urls:
+    - /index.html
+    - /swagger-ui.html
+    - /swagger-resources/**
+    - /v2/**
+    - /webjars/**

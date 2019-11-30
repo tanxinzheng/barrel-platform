@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.tanxinzheng.framework.web.handler.LogbackMDCInterceptor;
 import com.github.tanxinzheng.framework.web.json.CustomDateDeserialize;
 import com.github.tanxinzheng.framework.web.support.DateConverter;
-import com.github.tanxinzheng.framework.web.support.LoginUserResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +37,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new LoginUserResolver());
+        System.out.println();
     }
 
 
@@ -78,8 +77,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                 .parameterName("format")
                 .favorParameter(true)
                 .ignoreUnknownPathExtensions(false)
-                .ignoreAcceptHeader(false)
-                .useJaf(true);
+                .ignoreAcceptHeader(false);
     }
 
     @Override

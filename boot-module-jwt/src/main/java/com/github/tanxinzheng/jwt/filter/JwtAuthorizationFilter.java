@@ -1,16 +1,17 @@
 package com.github.tanxinzheng.jwt.filter;
 
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
-import com.github.tanxinzheng.jwt.JwtConfigProperties;
+import com.github.tanxinzheng.jwt.config.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.support.JwtUtils;
 import com.github.tanxinzheng.jwt.support.TokenType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,15 +21,16 @@ import java.io.IOException;
 /**
  * Created by tanxinzheng on 17/8/19.
  */
+@Component
 @Slf4j
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
 
-    @Autowired
+    @Resource
     private UserDetailsService userDetailsService;
-    @Autowired
+    @Resource
     private JwtUtils jwtUtils;
-    @Autowired
+    @Resource
     JwtConfigProperties jwtConfigProperties;
 
     @Override

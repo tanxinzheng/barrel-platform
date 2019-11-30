@@ -1,14 +1,14 @@
 package com.github.tanxinzheng.jwt.support;
 
-import com.github.tanxinzheng.jwt.JwtConfigProperties;
+import com.github.tanxinzheng.jwt.config.JwtConfigProperties;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -21,7 +21,7 @@ import java.util.UUID;
 @Slf4j
 public class JwtUtils {
 
-    @Autowired
+    @Resource
     JwtConfigProperties jwtConfigProperties;
 
     /**
@@ -35,6 +35,25 @@ public class JwtUtils {
                 .setId(UUID.randomUUID().toString())
 //                .setAudience(jwtUser.getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtConfigProperties.getExpiration() * 1000))
+                .setIssuedAt(new Date())
+                .setSubject(username)
+                .setIssuer(issuer)
+                .setNotBefore(new Date())
+                .signWith(SignatureAlgorithm.HS256, jwtConfigProperties.getSecret())
+                .compact();
+    }
+
+    /**
+     * 生成token
+     * @param username
+     * @param issuer
+     * @return
+     */
+    public String createRefreshToken(String username, String issuer){
+        return Jwts.builder()
+                .setId(UUID.randomUUID().toString())
+//                .setAudience(jwtUser.getUsername())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtConfigProperties.getRefreshTokenExpiration() * 1000))
                 .setIssuedAt(new Date())
                 .setSubject(username)
                 .setIssuer(issuer)

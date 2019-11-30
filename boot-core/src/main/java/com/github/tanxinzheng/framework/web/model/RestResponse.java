@@ -22,14 +22,12 @@ import java.util.List;
 @Data
 public class RestResponse<T> implements Serializable {
 
-    private PageInfo pageInfo;
     private String code;
-    private String path;
     private String timestamp;
     private Integer status;
     private String message;
     private T data;
-    private String error;
+    private Object error;
 
     public RestResponse() {
         this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
@@ -50,7 +48,6 @@ public class RestResponse<T> implements Serializable {
 
     public static RestResponse success(PageInfo pageInfo, List data) {
         RestResponse restResponse = RestResponse.success(data);
-        restResponse.setPageInfo(pageInfo);
         return restResponse;
     }
 
@@ -67,6 +64,7 @@ public class RestResponse<T> implements Serializable {
         restResponse.setError(ex.getMessage());
         return restResponse;
     }
+
 
     public static RestResponse validateFailed(String message) {
         RestResponse restResponse = new RestResponse();
@@ -85,7 +83,6 @@ public class RestResponse<T> implements Serializable {
     }
 
     public void toJSON(HttpServletRequest request, HttpServletResponse response, HttpStatus httpStatus) throws IOException {
-        setPath(request.getRequestURI());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
         response.setStatus(httpStatus.value());

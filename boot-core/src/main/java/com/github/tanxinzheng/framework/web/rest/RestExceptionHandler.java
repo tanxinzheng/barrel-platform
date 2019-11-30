@@ -3,14 +3,12 @@ package com.github.tanxinzheng.framework.web.rest;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.utils.DateTimeUtils;
 import com.github.tanxinzheng.framework.web.model.RestResponse;
-import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.annotation.Order;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindException;
@@ -43,15 +41,15 @@ public class RestExceptionHandler {
     private Long maxUploadSize = 102400l;
 
     @ExceptionHandler(value = {
-            Exception.class,
-            RuntimeException.class,
+            BusinessException.class,
             AccessDeniedException.class,
-            MalformedJwtException.class
+            MethodArgumentNotValidException.class
     })
     @ResponseBody
     public RestResponse exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
         String eventNo = DateTimeUtils.getDatetimeString(new Date()) + RandomStringUtils.randomNumeric(4);
         RestResponse restError = RestResponse.failed(HttpStatus.INTERNAL_SERVER_ERROR, ex);
+        restError.setError(ex.getMessage());
         if(ex instanceof BindException){
             BindException bindException = (BindException) ex;
             restError = handleBindException(bindException.getBindingResult(), bindException);
@@ -64,28 +62,21 @@ public class RestExceptionHandler {
                 ex instanceof BusinessException){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             restError.setStatus(HttpStatus.BAD_REQUEST.value());
-        }else if(ex instanceof DuplicateKeyException){
-            response.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
-            restError.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
-            restError.setMessage("保存失败，存在重复关键字段");
         }else if(ex instanceof MaxUploadSizeExceededException){
             response.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
             restError.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
             restError.setMessage(MessageFormat.format("文件上传限制最大不能超过{0}M" , (maxUploadSize/1024)/1024));
+            restError.setError(ex.getMessage());
         }else if(ex instanceof AccessDeniedException){
             response.setStatus(HttpStatus.FORBIDDEN.value());
             restError.setStatus(HttpStatus.FORBIDDEN.value());
             restError.setMessage(ex.getMessage());
-        }else if(ex instanceof MalformedJwtException){
-            restError.setStatus(HttpStatus.UNAUTHORIZED.value());
-            restError.setMessage("token校验失败");
         }else{
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             restError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             restError.setMessage("系统异常，请联系管理员，异常事件编号：" + eventNo);
             logger.error("Event No: " + eventNo + " -> " + ex.getMessage(), ex);
         }
-        restError.setError(ex.getMessage());
         return restError;
     }
 
@@ -103,10 +94,10 @@ public class RestExceptionHandler {
             fieldErrorList.add(error);
         }
         if(!CollectionUtils.isEmpty(fieldErrorList)){
+            restError.setError(fieldErrorList);
             FieldError fieldError = fieldErrorList.get(0);
             if(StringUtils.trimToNull(fieldError.getField()) != null && StringUtils.trimToNull(fieldError.getMessage()) != null ){
                 restError.setMessage(fieldError.getMessage());
-                restError.setError(ex.getMessage());
             }
         }
         return restError;

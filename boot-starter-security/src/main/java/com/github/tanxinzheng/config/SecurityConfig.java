@@ -1,9 +1,9 @@
 package com.github.tanxinzheng.config;
 
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
-import com.github.tanxinzheng.jwt.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.access.JwtAccessDecisionManager;
 import com.github.tanxinzheng.jwt.access.JwtFilterInvocationSecurityMetadataSource;
+import com.github.tanxinzheng.jwt.config.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
 import com.github.tanxinzheng.jwt.handler.TokenAccessDeniedHandler;
 import com.github.tanxinzheng.jwt.handler.TokenSecurityMetadataHandler;

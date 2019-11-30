@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.jwt;
+package com.github.tanxinzheng.jwt.config;
 
 import com.github.tanxinzheng.jwt.support.TokenType;
 import lombok.Data;

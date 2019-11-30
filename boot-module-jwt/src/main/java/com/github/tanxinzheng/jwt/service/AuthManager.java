@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.jwt;
+package com.github.tanxinzheng.jwt.service;
 
 import com.github.tanxinzheng.jwt.support.JwtUser;
 

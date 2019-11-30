@@ -1,12 +1,11 @@
 package com.github.tanxinzheng.jwt.config;
 
-import com.github.tanxinzheng.jwt.AuthManager;
-import com.github.tanxinzheng.jwt.JwtConfigProperties;
 import com.github.tanxinzheng.jwt.access.JwtAccessDecisionManager;
 import com.github.tanxinzheng.jwt.access.JwtFilterInvocationSecurityMetadataSource;
 import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
 import com.github.tanxinzheng.jwt.handler.TokenAccessDeniedHandler;
 import com.github.tanxinzheng.jwt.handler.TokenSecurityMetadataHandler;
+import com.github.tanxinzheng.jwt.service.AuthManager;
 import com.github.tanxinzheng.jwt.support.JwtUser;
 import com.github.tanxinzheng.jwt.support.RestAuthenticationEntryPoint;
 import com.google.common.collect.Lists;
@@ -44,6 +43,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableConfigurationProperties(value = JwtConfigProperties.class)
+//@ConditionalOnProperty(prefix = "jwt", value = "enable", matchIfMissing = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -82,7 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String[] getStaticResourcesUrl(){
         String[] permitUrls = jwtConfigProperties.getPermitUrls();
         List<String> list = Lists.newArrayList(permitUrls);
-        list.add("/access/**");
         String[] data = list.toArray(new String[list.size()]);
         return data;
     }
