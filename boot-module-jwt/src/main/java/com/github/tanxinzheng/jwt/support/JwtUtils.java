@@ -5,7 +5,6 @@ import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -30,14 +29,13 @@ public class JwtUtils {
      * @param issuer
      * @return
      */
-    public String createToken(String username, String issuer){
+    public String createToken(String username){
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
-//                .setAudience(jwtUser.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtConfigProperties.getExpiration() * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtConfigProperties.getExpiration()))
                 .setIssuedAt(new Date())
                 .setSubject(username)
-                .setIssuer(issuer)
+                .setIssuer(jwtConfigProperties.getIssuer())
                 .setNotBefore(new Date())
                 .signWith(SignatureAlgorithm.HS256, jwtConfigProperties.getSecret())
                 .compact();
@@ -49,14 +47,14 @@ public class JwtUtils {
      * @param issuer
      * @return
      */
-    public String createRefreshToken(String username, String issuer){
+    public String createRefreshToken(String username){
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
 //                .setAudience(jwtUser.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtConfigProperties.getRefreshTokenExpiration() * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtConfigProperties.getRefreshTokenExpiration()))
                 .setIssuedAt(new Date())
                 .setSubject(username)
-                .setIssuer(issuer)
+                .setIssuer(jwtConfigProperties.getIssuer())
                 .setNotBefore(new Date())
                 .signWith(SignatureAlgorithm.HS256, jwtConfigProperties.getSecret())
                 .compact();
@@ -97,15 +95,13 @@ public class JwtUtils {
      * 验证token是否还有效
      *
      * @param token       客户端传入的token
-     * @param userDetails 从数据库中查询出来的用户信息
      */
-    public boolean validateToken(String token, UserDetails userDetails) {
-        String username = getUsernameByToken(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    public boolean validateToken(String token) {
+        return !isTokenExpired(token);
     }
 
     /**
-     * 判断token是否已经失效
+     * 判断token是否已经过期
      */
     private boolean isTokenExpired(String token) {
         Date expiredDate = getExpiredDateFromToken(token);

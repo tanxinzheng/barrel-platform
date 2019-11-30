@@ -3,7 +3,6 @@ package com.github.tanxinzheng.jwt.support;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,8 +15,8 @@ import java.util.Set;
 @Data
 public class JwtUser implements UserDetails {
 
-    private String refreshToken;
-    private String token;
+//    private String refreshToken;
+//    private String token;
     private String id;
     private String username;
     private String password;

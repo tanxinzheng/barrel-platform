@@ -4,6 +4,7 @@ import com.github.tanxinzheng.jwt.controller.dto.LoginRequest;
 import com.github.tanxinzheng.jwt.controller.dto.LoginResponse;
 import com.github.tanxinzheng.jwt.service.AuthManager;
 import com.github.tanxinzheng.jwt.support.JwtUser;
+import com.github.tanxinzheng.jwt.support.JwtUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +24,8 @@ public class AuthController {
     @Resource
     AuthManager authManager;
 
+    @Resource
+    JwtUtils jwtUtils;
 
     /**
      * 用户登录
@@ -39,10 +42,12 @@ public class AuthController {
         if (!jwtUser.getPassword().equals(loginRequest.getPassword())){
             throw new BadCredentialsException("用户名或密码不正确");
         }
+        String accessToken = jwtUtils.createToken(jwtUser.getUsername());
+        String refreshToken = jwtUtils.createRefreshToken(jwtUser.getUsername());
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setUsername(jwtUser.getUsername());
-        loginResponse.setAccessToken(jwtUser.getToken());
-        loginResponse.setRefreshToken(jwtUser.getRefreshToken());
+        loginResponse.setAccessToken(accessToken);
+        loginResponse.setRefreshToken(refreshToken);
         return loginResponse;
     }
 }

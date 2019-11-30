@@ -6,7 +6,7 @@ import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
 import com.github.tanxinzheng.jwt.handler.TokenAccessDeniedHandler;
 import com.github.tanxinzheng.jwt.handler.TokenSecurityMetadataHandler;
 import com.github.tanxinzheng.jwt.service.AuthManager;
-import com.github.tanxinzheng.jwt.support.JwtUser;
+import com.github.tanxinzheng.jwt.support.JwtAuthenticationProvider;
 import com.github.tanxinzheng.jwt.support.RestAuthenticationEntryPoint;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,8 +23,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -146,57 +142,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return securityMetadataSource;
     }
 
-//    @Autowired
-//    UserGroupService userGroupService;
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        //获取登录用户信息
-        return username -> {
-            JwtUser jwtUser = authManager.findUserByUsername(username);
-            if (jwtUser != null) {
-//                // 缺少权限验证
-//                CurrentLoginUser currentLoginUser = new CurrentLoginUser();
-//                currentLoginUser.setId(userModel.getId());
-//                currentLoginUser.setUsername(userModel.getUsername());
-//                currentLoginUser.setPassword(userModel.getPassword());
-//                currentLoginUser.setName(userModel.getNickname());
-//                currentLoginUser.setEmail(userModel.getEmail());
-//                UserGroupQuery userGroupQuery = new UserGroupQuery();
-//                userGroupQuery.setUserId(userModel.getId());
-//                List<UserGroupModel> userGroupModelList = userGroupService.getUserGroupModelList(userGroupQuery);
-//                List<SimpleGrantedAuthority> simpleGrantedAuthorities = Lists.newArrayList();
-//                if(CollectionUtils.isNotEmpty(userGroupModelList)){
-//                    userGroupModelList.stream().forEach(userGroupModel -> {
-//                        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userGroupModel.getGroupName());
-//                        simpleGrantedAuthorities.add(simpleGrantedAuthority);
-//                    });
-//                }
-//                currentLoginUser.setAuthorities(simpleGrantedAuthorities);
-//                return currentLoginUser;
-                return jwtUser;
-            }
-            throw new UsernameNotFoundException("用户名或密码错误");
-        };
-    }
-
+    @Resource
+    JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(daoAuthenticationProvider());
-    }
-
-    @Bean
-    DaoAuthenticationProvider daoAuthenticationProvider(){
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
-        return daoAuthenticationProvider;
-    }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+        auth.authenticationProvider(jwtAuthenticationProvider);
     }
 
 }

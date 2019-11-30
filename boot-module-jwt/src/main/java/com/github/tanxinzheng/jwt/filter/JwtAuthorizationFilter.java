@@ -1,13 +1,12 @@
 package com.github.tanxinzheng.jwt.filter;
 
-import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.jwt.config.JwtConfigProperties;
+import com.github.tanxinzheng.jwt.support.JwtAuthenticationProvider;
+import com.github.tanxinzheng.jwt.support.JwtAuthenticationToken;
 import com.github.tanxinzheng.jwt.support.JwtUtils;
 import com.github.tanxinzheng.jwt.support.TokenType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -27,7 +26,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
 
     @Resource
-    private UserDetailsService userDetailsService;
+    private JwtAuthenticationProvider jwtAuthenticationProvider;
     @Resource
     private JwtUtils jwtUtils;
     @Resource
@@ -37,19 +36,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
+        log.debug(request.getRequestURI());
         String authHeader = request.getHeader(jwtConfigProperties.getTokenHeaderName());
         if (authHeader != null && authHeader.startsWith(TokenType.BEARER.getCode())) {
             String authToken = authHeader.substring(TokenType.BEARER.getCode().length() + 1);// The part after "Bearer "
-            String username = jwtUtils.getUsernameByToken(authToken);
-            log.info("checking username:{}", username);
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                CurrentLoginUser currentLoginUser = (CurrentLoginUser) userDetailsService.loadUserByUsername(username);
-                if (jwtUtils.validateToken(authToken, currentLoginUser)) {
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(currentLoginUser, currentLoginUser.getPassword(), currentLoginUser.getAuthorities());
-                    authentication.setDetails(currentLoginUser);
-                    log.info("authenticated user:{}", username);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+            if (!jwtUtils.validateToken(authToken)) {
+                throw new BadCredentialsException("无效的access token");
+            } else {
+                String username = jwtUtils.getUsernameByToken(authToken);
+                JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(authToken);
+                jwtAuthenticationProvider.authenticate(authenticationToken);
+                log.info("authenticated user: {}", username);
             }
         }
         chain.doFilter(request, response);

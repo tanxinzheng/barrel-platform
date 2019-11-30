@@ -23,6 +23,8 @@ jwt:
   secret: 123456
   issuer: com.github.tanxinzheng
   permit-urls:
+    - /auth/**
+    - /test/anonymous
     - /index.html
     - /swagger-ui.html
     - /swagger-resources/**

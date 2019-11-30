@@ -75,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            token = jwtUtils.createToken(username, jwtConfigProperties.getIssuer());
+            token = jwtUtils.createToken(username);
 //            updateLoginTimeByUsername(username);
 //            insertLoginLog(username);
         } catch (AuthenticationException e) {

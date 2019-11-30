@@ -71,15 +71,7 @@ public class RestResponseBodyAdvice implements ResponseBodyAdvice {
         Object out;
         ObjectMapper mapper = mapperThreadLocal.get();
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
-        if(body instanceof RestResponse){
-            out = body;
-        }else if(body instanceof Page){
-            Page page = (Page) body;
-            Map<String, Object> data = Maps.newHashMap();
-            data.put("pageInfo", page.toPageInfo());
-            data.put("data", page.getResult());
-            out = RestResponse.success(page.toPageInfo(), page.getResult());
-        }else if (body instanceof String){
+        if (body instanceof String){
             RestResponse result = RestResponse.success(body);
             try {
                 //因为是String类型，我们要返回Json字符串，否则SpringBoot框架会转换出错
@@ -87,10 +79,18 @@ public class RestResponseBodyAdvice implements ResponseBodyAdvice {
             } catch (JsonProcessingException e) {
                 out = RestResponse.failed(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
             }
-        }else{
+        }else if(body instanceof RestResponse){
+            out = body;
+        }else if(body instanceof Page){
+            Page page = (Page) body;
+            Map<String, Object> data = Maps.newHashMap();
+            data.put("pageInfo", page.toPageInfo());
+            data.put("data", page.getResult());
+            out = RestResponse.success(page.toPageInfo(), page.getResult());
+        }else {
             out = RestResponse.success(body);
         }
-        RestResponse restResponse = (RestResponse) out;
-        return restResponse;
+//        RestResponse restResponse = (RestResponse) out;
+        return out;
     }
 }

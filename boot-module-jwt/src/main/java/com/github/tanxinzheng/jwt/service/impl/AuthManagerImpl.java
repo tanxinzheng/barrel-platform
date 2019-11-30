@@ -30,8 +30,6 @@ public class AuthManagerImpl implements AuthManager {
         if(userDO == null){
             return null;
         }
-        String token = jwtUtils.createToken(username, jwtConfigProperties.getIssuer());
-        String refreshToken = jwtUtils.createRefreshToken(username, jwtConfigProperties.getIssuer());
         JwtUser jwtUser = new JwtUser();
         jwtUser.setAccountNonExpired(Boolean.TRUE);
         jwtUser.setAccountNonLocked(Boolean.TRUE);
@@ -40,8 +38,6 @@ public class AuthManagerImpl implements AuthManager {
         jwtUser.setEmail(userDO.getEmail());
         jwtUser.setName(userDO.getName());
         jwtUser.setPassword(userDO.getPassword());
-        jwtUser.setToken(token);
-        jwtUser.setRefreshToken(refreshToken);
         jwtUser.setUsername(userDO.getUsername());
         return jwtUser;
     }
