@@ -3,9 +3,6 @@ package com.github.tanxinzheng.module.access.controller;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
-import com.github.tanxinzheng.framework.web.model.RestResponse;
-import com.github.tanxinzheng.jwt.support.TokenType;
-import com.github.tanxinzheng.module.access.model.LoginParam;
 import com.github.tanxinzheng.module.account.model.RegisterModel;
 import com.github.tanxinzheng.module.account.service.AccountService;
 import com.github.tanxinzheng.module.authorization.model.User;
@@ -13,7 +10,6 @@ import com.github.tanxinzheng.module.authorization.model.UserModel;
 import com.github.tanxinzheng.module.authorization.model.UserQuery;
 import com.github.tanxinzheng.module.authorization.service.UserService;
 import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
-import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * 重置密码控制器
@@ -47,16 +42,16 @@ public class AccessController {
 
     public static final int FIND_TYPE_EMAIL = 1;
     public static final int FIND_TYPE_PHONE = 2;
-
-    @ApiOperation(value = "用户登录")
-    @PostMapping(value = "/login")
-    public RestResponse login(@RequestBody @Valid LoginParam loginParam) {
-        String token = accountService.login(loginParam.getUsername(), loginParam.getPassword());
-        Map<String, String> result = Maps.newHashMap();
-        result.put("accessToken", token);
-        result.put("tokenType", TokenType.BEARER.getCode());
-        return RestResponse.success(result);
-    }
+//
+//    @ApiOperation(value = "用户登录")
+//    @PostMapping(value = "/login")
+//    public RestResponse login(@RequestBody @Valid LoginParam loginParam) {
+//        String token = accountService.login(loginParam.getUsername(), loginParam.getPassword());
+//        Map<String, String> result = Maps.newHashMap();
+//        result.put("accessToken", token);
+//        result.put("tokenType", TokenType.BEARER.getCode());
+//        return RestResponse.success(result);
+//    }
 
     /**
      * 用户注册
@@ -70,7 +65,6 @@ public class AccessController {
         Assert.isNull(checkUser, "该用户名已被注册");
         switch (register.getType()){
             case "1":
-
         }
         if(register.getType().equals("2") && StringUtils.isNotBlank(register.getEmail())){
             verificationCodeService.checkCode(register.getEmail(), register.getCode());

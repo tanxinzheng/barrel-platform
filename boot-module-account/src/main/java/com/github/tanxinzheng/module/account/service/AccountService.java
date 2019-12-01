@@ -9,14 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface AccountService {
 
     /**
-     * 登录
-     * @param username
-     * @param password
-     * @return
-     */
-    String login(String username, String password);
-
-    /**
      * 更新账户基本信息
      */
     void updateNickName(String userId, AccountDetail accountDetail);

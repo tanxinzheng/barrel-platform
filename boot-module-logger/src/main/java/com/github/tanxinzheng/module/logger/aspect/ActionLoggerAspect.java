@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tanxinzheng.framework.logger.ActionLog;
-import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.logger.LogModel;
 import com.github.tanxinzheng.module.logger.service.LoggerService;
 import com.google.common.collect.Maps;
@@ -17,7 +16,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +35,7 @@ import java.util.Map;
 @Component
 @Aspect
 @Slf4j
-public class LoggerAspect {
+public class ActionLoggerAspect {
 
     @Autowired
     HttpServletRequest request;
@@ -73,7 +71,7 @@ public class LoggerAspect {
         } else {
             arguments = Arrays.deepToString(args);
         }
-        String userId = getUserId();
+        String username = (String) request.getAttribute("username");
         returnVal = proceedingJoinPoint.proceed();
         if(loggerService != null){
             LogModel logModel = new LogModel();
@@ -81,7 +79,7 @@ public class LoggerAspect {
             logModel.setTargetClass(target.getClass().getName());
             logModel.setTargetMethod(method.getName());
             logModel.setActionName(format(methodName, getAnnotationParamsByMethod(method, args)));
-            logModel.setUserId(userId);
+            logModel.setUserId(username);
             logModel.setClientIp(getRemoteHost(request));
             log.debug("User action record info -> {0}", JSONObject.toJSONString(logModel));
             loggerService.setLogInfo(logModel);
@@ -141,15 +139,6 @@ public class LoggerAspect {
             }
         }
         return null;
-    }
-
-    /**
-     * 获取用户ID
-     * @return
-     */
-    public String getUserId(){
-        CurrentLoginUser loginUser = (CurrentLoginUser) SecurityContextHolder.getContext().getAuthentication().getDetails();
-        return loginUser.getId();
     }
 
     /**

@@ -22,6 +22,7 @@ import java.util.List;
 @Data
 public class RestResponse<T> implements Serializable {
 
+    private PageInfo pageInfo;
     private String code;
     private String timestamp;
     private Integer status;
@@ -48,6 +49,7 @@ public class RestResponse<T> implements Serializable {
 
     public static RestResponse success(PageInfo pageInfo, List data) {
         RestResponse restResponse = RestResponse.success(data);
+        restResponse.setPageInfo(pageInfo);
         return restResponse;
     }
 

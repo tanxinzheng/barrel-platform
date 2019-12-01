@@ -19,13 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -45,44 +38,10 @@ public class AccountServiceImpl implements AccountService {
     FileStoreService fileStoreService;
 
     @Autowired
-    UserDetailsService userDetailsService;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
     JwtUtils jwtUtils;
 
     @Autowired
     JwtConfigProperties jwtConfigProperties;
-
-    /**
-     * 登录
-     *
-     * @param username
-     * @param rwaPassword
-     * @return
-     */
-    @Override
-    public String login(String username, String rwaPassword) {
-        String token = null;
-        //密码需要客户端加密后传递
-        try {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            String password = passwordEncoder.encode(rwaPassword);
-            if(!passwordEncoder.matches(password, userDetails.getPassword())){
-                throw new BadCredentialsException("密码不正确");
-            }
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            token = jwtUtils.createToken(username);
-//            updateLoginTimeByUsername(username);
-//            insertLoginLog(username);
-        } catch (AuthenticationException e) {
-            log.warn("登录异常:{}", e.getMessage());
-        }
-        return token;
-    }
 
     /**
      * 更新账户基本信息

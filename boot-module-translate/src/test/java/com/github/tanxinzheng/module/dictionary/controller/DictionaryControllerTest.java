@@ -2,13 +2,20 @@ package com.github.tanxinzheng.module.dictionary.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.github.tanxinzheng.AppTestConfig;
 import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
-import com.github.tanxinzheng.test.TestAppController;
 import org.junit.*;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Date;
 import java.util.List;
@@ -22,21 +29,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by tanxinzheng on 2018/11/20.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = AppTestConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class DictionaryControllerTest extends TestAppController {
+public class DictionaryControllerTest {
 
     String GROUP_CODE = "TEST_GROUP";
 
     private static DictionaryModel dictionaryModel;
 
+
+    @Autowired
+    protected WebApplicationContext wac;
+
+    protected MockMvc mockMvc;
+
     @Before
     public void setUp() throws Exception {
-        super.setUp();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
     @After
     public void setDown() throws Exception {
         deleteById();
+    }
+
+    protected String createToken(){
+        return "Bearer XMO";
     }
 
     private void deleteById() throws Exception {

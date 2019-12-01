@@ -10,29 +10,21 @@ import com.github.tanxinzheng.module.attachment.model.Attachment;
 import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
 import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
 import com.github.tanxinzheng.module.attachment.service.AttachmentService;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryTransferService;
 import com.github.tanxinzheng.module.fss.model.FileStorageInfo;
 import com.github.tanxinzheng.module.fss.model.FileStorageResult;
 import com.github.tanxinzheng.module.fss.service.FileStoreService;
-import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author  tanxinzheng
@@ -40,7 +32,7 @@ import java.util.Map;
  * @version 1.0.0
  */
 @Service
-public class AttachmentServiceImpl implements AttachmentService, DictionaryTransferService {
+public class AttachmentServiceImpl implements AttachmentService {
 
     private static final String DEFAULT_GROUP = "DEFAULT";
 
@@ -73,7 +65,6 @@ public class AttachmentServiceImpl implements AttachmentService, DictionaryTrans
             return null;
         }
         String fileName = UUIDGenerator.getInstance().getUUID();
-        UsernamePasswordAuthenticationToken subject =(UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         FileStorageInfo fileStorageInfo = new FileStorageInfo(multipartFile);
         FileStorageResult result = fileStoreService.newFile(fileStorageInfo);
         if(!result.isSuccess()){
@@ -283,36 +274,5 @@ public class AttachmentServiceImpl implements AttachmentService, DictionaryTrans
         AttachmentQuery attachmentQuery = new AttachmentQuery();
         attachmentQuery.setAttachmentKey(attachmentKey);
         return getOneAttachmentModel(attachmentQuery);
-    }
-
-    @Autowired
-    HttpServletRequest request;
-
-    /**
-     * 翻译
-     *
-     * @param dictionaryType 字典类型
-     * @param dictionaryCode 字典代码
-     * @return
-     */
-    @Override
-    public Map<String, Object> translate(String dictionaryType, String dictionaryCode) {
-        Authentication subject = SecurityContextHolder.getContext().getAuthentication();
-        String token = (String) subject.getCredentials();
-        String contextPath = request.getScheme() +"://" + request.getServerName()  + ":" +request.getServerPort() +request.getContextPath();
-        String fileUrl = MessageFormat.format( "{0}/file/download?fileKey={1}&token={2}", contextPath, dictionaryCode, token);
-        Map<String, Object> map = Maps.newHashMap();
-        map.put(token, fileUrl);
-        return map;
-    }
-
-    /**
-     * 字典索引
-     *
-     * @return
-     */
-    @Override
-    public String getDictionaryIndex() {
-        return DictionaryIndex.ATTACHMENT_KEY;
     }
 }

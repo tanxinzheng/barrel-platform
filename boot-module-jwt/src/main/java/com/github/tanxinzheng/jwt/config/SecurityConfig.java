@@ -39,7 +39,6 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableConfigurationProperties(value = JwtConfigProperties.class)
-//@ConditionalOnProperty(prefix = "jwt", value = "enable", matchIfMissing = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -91,6 +90,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 由于使用的是JWT，我们这里不需要csrf
                 .csrf().disable()
+                .cors()
+                .and()
 //                .anonymous().disable()
                 // 基于token，所以不需要session
                 .sessionManagement()

@@ -118,4 +118,108 @@ public class JwtConfigProperties {
                 "/favicon.ico"
         };
     }
+
+    public String getTokenHeaderName() {
+        return tokenHeaderName;
+    }
+
+    public void setTokenHeaderName(String tokenHeaderName) {
+        this.tokenHeaderName = tokenHeaderName;
+    }
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
+
+    public String getTokenParameterName() {
+        return tokenParameterName;
+    }
+
+    public void setTokenParameterName(String tokenParameterName) {
+        this.tokenParameterName = tokenParameterName;
+    }
+
+    public String getTokenCookieName() {
+        return tokenCookieName;
+    }
+
+    public void setTokenCookieName(String tokenCookieName) {
+        this.tokenCookieName = tokenCookieName;
+    }
+
+    public String getRefreshTokenHeaderName() {
+        return refreshTokenHeaderName;
+    }
+
+    public void setRefreshTokenHeaderName(String refreshTokenHeaderName) {
+        this.refreshTokenHeaderName = refreshTokenHeaderName;
+    }
+
+    public String getRefreshTokenParameterName() {
+        return refreshTokenParameterName;
+    }
+
+    public void setRefreshTokenParameterName(String refreshTokenParameterName) {
+        this.refreshTokenParameterName = refreshTokenParameterName;
+    }
+
+    public String getRefreshTokenCookieName() {
+        return refreshTokenCookieName;
+    }
+
+    public void setRefreshTokenCookieName(String refreshTokenCookieName) {
+        this.refreshTokenCookieName = refreshTokenCookieName;
+    }
+
+    public String getTokenIdName() {
+        return tokenIdName;
+    }
+
+    public void setTokenIdName(String tokenIdName) {
+        this.tokenIdName = tokenIdName;
+    }
+
+    public String getIssuer() {
+        return issuer;
+    }
+
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public Long getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(Long expiration) {
+        this.expiration = expiration;
+    }
+
+    public Long getRefreshTokenExpiration() {
+        return refreshTokenExpiration;
+    }
+
+    public void setRefreshTokenExpiration(Long refreshTokenExpiration) {
+        this.refreshTokenExpiration = refreshTokenExpiration;
+    }
+
+    public String[] getPermitUrls() {
+        return permitUrls;
+    }
+
+    public void setPermitUrls(String[] permitUrls) {
+        this.permitUrls = permitUrls;
+    }
 }

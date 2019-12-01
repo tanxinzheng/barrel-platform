@@ -26,38 +26,33 @@ public class JwtUtils {
     /**
      * 生成token
      * @param username
-     * @param issuer
      * @return
      */
     public String createToken(String username){
-        return Jwts.builder()
-                .setId(UUID.randomUUID().toString())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtConfigProperties.getExpiration()))
-                .setIssuedAt(new Date())
-                .setSubject(username)
-                .setIssuer(jwtConfigProperties.getIssuer())
-                .setNotBefore(new Date())
-                .signWith(SignatureAlgorithm.HS256, jwtConfigProperties.getSecret())
-                .compact();
+        return createTokenByTime(username, jwtConfigProperties.getExpiration());
     }
 
     /**
      * 生成token
      * @param username
-     * @param issuer
      * @return
      */
     public String createRefreshToken(String username){
-        return Jwts.builder()
+        return createTokenByTime(username, jwtConfigProperties.getRefreshTokenExpiration());
+    }
+
+    private String createTokenByTime(String username, Long expiration){
+        JwtBuilder jwtBuilder = Jwts.builder()
                 .setId(UUID.randomUUID().toString())
-//                .setAudience(jwtUser.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtConfigProperties.getRefreshTokenExpiration()))
-                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .setSubject(username)
-                .setIssuer(jwtConfigProperties.getIssuer())
                 .setNotBefore(new Date())
-                .signWith(SignatureAlgorithm.HS256, jwtConfigProperties.getSecret())
-                .compact();
+                .signWith(SignatureAlgorithm.HS256, jwtConfigProperties.getSecret());
+        if(StringUtils.isNotBlank(jwtConfigProperties.getIssuer())){
+            jwtBuilder.setIssuedAt(new Date());
+            jwtBuilder.setIssuer(jwtConfigProperties.getIssuer());
+        }
+        return jwtBuilder.compact();
     }
 
     /**
@@ -79,15 +74,10 @@ public class JwtUtils {
      * @return
      */
     public String getUsernameByToken(String token){
-        String  subject = null;
-        try {
-            subject = Jwts.parser()
+        String  subject = Jwts.parser()
                     .setSigningKey(jwtConfigProperties.getSecret())
                     .parseClaimsJws(token)
                     .getBody().getSubject();
-        } catch (Exception e) {
-            log.info("JWT格式验证失败:{}",token);
-        }
         return subject;
     }
 

@@ -1,8 +1,5 @@
 package com.github.tanxinzheng.module.authorization.controller;
 
-import com.github.tanxinzheng.framework.poi.ExcelUtils;
-import com.github.tanxinzheng.framework.web.annotation.LoginUser;
-import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.module.authorization.constant.PermissionAction;
 import com.github.tanxinzheng.module.authorization.model.PermissionCreate;
@@ -12,16 +9,12 @@ import com.github.tanxinzheng.module.authorization.service.PermissionService;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -120,47 +113,47 @@ public class PermissionController {
     public void deletePermissions(final PermissionQuery permissionQuery){
         permissionService.deletePermission(permissionQuery.getIds());
     }
-
-    /**
-     * 下载Excel模板
-     */
-    @RequestMapping(value="/template", method = GET)
-    public void downloadTemplate(HttpServletRequest request,
-                                 HttpServletResponse response) {
-        List<PermissionModel> list = Lists.newArrayList();
-        ExcelUtils.export(request, response, PermissionModel.class, list, "权限_模板");
-    }
-
-    /**
-     * 导出Excel
-     * @param permissionQuery    查询参数对象
-     */
-    @ApiOperation(value = "导出权限")
-    @RequestMapping(value="/export", method = GET)
-    public void exportExcel(HttpServletRequest request,
-                                           HttpServletResponse response,
-                                           PermissionQuery permissionQuery) {
-        List<PermissionModel> list = permissionService.getPermissionModelList(permissionQuery);
-        ExcelUtils.export(request, response, PermissionModel.class, list, "权限");
-    }
-
-    /**
-     * 导入Excel
-     * @param file
-     */
-    @ApiOperation(value = "批量导入权限")
-    @RequestMapping(value="/import", method = POST)
-    public void importExcel(@LoginUser CurrentLoginUser loginUser, @RequestParam("file") MultipartFile file) throws IOException {
-        List<PermissionModel> list = ExcelUtils.transform(file, PermissionModel.class);
-        if(CollectionUtils.isEmpty(list)){
-            return;
-        }
-        list.stream().forEach(permissionModel -> {
-            permissionModel.setUpdatedUserId(loginUser.getId());
-            permissionModel.setCreatedUserId(loginUser.getId());
-        });
-        permissionService.createPermissions(list);
-    }
+//
+//    /**
+//     * 下载Excel模板
+//     */
+//    @RequestMapping(value="/template", method = GET)
+//    public void downloadTemplate(HttpServletRequest request,
+//                                 HttpServletResponse response) {
+//        List<PermissionModel> list = Lists.newArrayList();
+//        ExcelUtils.export(request, response, PermissionModel.class, list, "权限_模板");
+//    }
+//
+//    /**
+//     * 导出Excel
+//     * @param permissionQuery    查询参数对象
+//     */
+//    @ApiOperation(value = "导出权限")
+//    @RequestMapping(value="/export", method = GET)
+//    public void exportExcel(HttpServletRequest request,
+//                                           HttpServletResponse response,
+//                                           PermissionQuery permissionQuery) {
+//        List<PermissionModel> list = permissionService.getPermissionModelList(permissionQuery);
+//        ExcelUtils.export(request, response, PermissionModel.class, list, "权限");
+//    }
+//
+//    /**
+//     * 导入Excel
+//     * @param file
+//     */
+//    @ApiOperation(value = "批量导入权限")
+//    @RequestMapping(value="/import", method = POST)
+//    public void importExcel(@LoginUser CurrentLoginUser loginUser, @RequestParam("file") MultipartFile file) throws IOException {
+//        List<PermissionModel> list = ExcelUtils.transform(file, PermissionModel.class);
+//        if(CollectionUtils.isEmpty(list)){
+//            return;
+//        }
+//        list.stream().forEach(permissionModel -> {
+//            permissionModel.setUpdatedUserId(loginUser.getId());
+//            permissionModel.setCreatedUserId(loginUser.getId());
+//        });
+//        permissionService.createPermissions(list);
+//    }
 
 
     /**

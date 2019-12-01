@@ -15,8 +15,6 @@ import java.util.Set;
 @Data
 public class JwtUser implements UserDetails {
 
-//    private String refreshToken;
-//    private String token;
     private String id;
     private String username;
     private String password;

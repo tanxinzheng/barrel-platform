@@ -2,6 +2,8 @@ package com.github.tanxinzheng.framework.web.model;
 
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 public class CurrentLoginUser {
 
@@ -11,5 +13,6 @@ public class CurrentLoginUser {
     private String avatar;
     private String email;
     private String phone;
+    private Set<String> roles;
 
 }

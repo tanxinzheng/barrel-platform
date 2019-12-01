@@ -19,9 +19,7 @@ spring:
     tomcat:
       uri-encoding: UTF-8
 jwt:
-  enable: true
   secret: 123456
-  issuer: com.github.tanxinzheng
   permit-urls:
     - /auth/**
     - /test/anonymous
@@ -30,3 +28,8 @@ jwt:
     - /swagger-resources/**
     - /v2/**
     - /webjars/**
+
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: t_

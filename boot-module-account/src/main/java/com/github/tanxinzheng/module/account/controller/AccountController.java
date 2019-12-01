@@ -4,7 +4,6 @@ import com.github.tanxinzheng.framework.web.annotation.LoginUser;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.account.model.AccountModel;
 import com.github.tanxinzheng.module.account.service.AccountService;
-import com.github.tanxinzheng.module.authorization.service.UserService;
 import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
@@ -15,8 +14,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,9 +29,6 @@ public class AccountController {
 
     @Autowired
     VerificationCodeService verificationCodeService;
-
-    @Autowired
-    UserService userService;
 
     /**
      * 查询当前用户简要信息
@@ -54,21 +48,16 @@ public class AccountController {
 
     /**
      * 当前用户权限
-     * @param loginUser
      * @return
      */
     @GetMapping(value = "/authorities")
     @ApiOperation(value = "查询当前用户权限")
-    public Map getAccountAuthorities(@LoginUser CurrentLoginUser loginUser){
+    public Set<String> getAccountAuthorities(@LoginUser CurrentLoginUser loginUser){
         Set<String> roles = loginUser.getRoles();
-        Set<String> permissions = loginUser.getPermissions();
-        Map rolesMap = new HashMap();
         if(CollectionUtils.isEmpty(roles)){
             roles = Sets.newHashSet();
         }
-        rolesMap.put("roles", roles);
-        rolesMap.put("permissions", permissions);
-        return rolesMap;
+        return roles;
     }
 
     /**

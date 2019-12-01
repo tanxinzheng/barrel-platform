@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.jwt.config;
 
-import com.github.tanxinzheng.framework.web.support.LoginUserResolver;
+import com.github.tanxinzheng.jwt.support.LoginUserResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

@@ -35,6 +35,7 @@ public class AuthManagerImpl implements AuthManager {
         jwtUser.setAccountNonLocked(Boolean.TRUE);
         jwtUser.setCredentialsNonExpired(Boolean.TRUE);
         jwtUser.setId(userDO.getId());
+        jwtUser.setSalt(userDO.getSalt());
         jwtUser.setEmail(userDO.getEmail());
         jwtUser.setName(userDO.getName());
         jwtUser.setPassword(userDO.getPassword());

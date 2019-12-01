@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.jwt.controller;
 
+import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.jwt.controller.dto.LoginRequest;
 import com.github.tanxinzheng.jwt.controller.dto.LoginResponse;
 import com.github.tanxinzheng.jwt.service.AuthManager;
@@ -39,7 +40,8 @@ public class AuthController {
         if(jwtUser == null){
             throw new UsernameNotFoundException("该用户名未注册");
         }
-        if (!jwtUser.getPassword().equals(loginRequest.getPassword())){
+        String rawPassword = PasswordHelper.encryptPassword(loginRequest.getPassword(), jwtUser.getSalt());
+        if (!jwtUser.getPassword().equals(rawPassword)){
             throw new BadCredentialsException("用户名或密码不正确");
         }
         String accessToken = jwtUtils.createToken(jwtUser.getUsername());
@@ -48,6 +50,7 @@ public class AuthController {
         loginResponse.setUsername(jwtUser.getUsername());
         loginResponse.setAccessToken(accessToken);
         loginResponse.setRefreshToken(refreshToken);
+        loginResponse.setName(jwtUser.getName());
         return loginResponse;
     }
 }

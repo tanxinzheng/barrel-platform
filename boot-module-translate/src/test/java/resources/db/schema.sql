@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS `t_dictionary`;
+
+CREATE TABLE `t_dictionary` (
+    `ID` varchar(32) NOT NULL DEFAULT '' COMMENT '主键',
+    `GROUP_NAME` varchar(50) NOT NULL DEFAULT '' COMMENT '字典组名称',
+    `GROUP_CODE` varchar(50) NOT NULL DEFAULT '' COMMENT '字典组代码',
+    `DICTIONARY_NAME` varchar(50) NOT NULL DEFAULT '' COMMENT '名称',
+    `DICTIONARY_CODE` varchar(50) NOT NULL DEFAULT '' COMMENT '代码',
+    `SORT` int(3) NOT NULL COMMENT '排序',
+    `ACTIVE` char(1) NOT NULL DEFAULT '0' COMMENT '激活',
+    `PARENT_ID` varchar(32) DEFAULT '' COMMENT '父节点',
+    `IS_SHOW` char(1) NOT NULL DEFAULT '0' COMMENT '显示',
+    `CREATED_USER_ID` varchar(32) NOT NULL DEFAULT '' COMMENT '创建人',
+    `CREATED_TIME` datetime NOT NULL COMMENT '创建时间',
+    `UPDATED_USER_ID` varchar(32) NOT NULL DEFAULT '' COMMENT '更新人',
+    `UPDATED_TIME` datetime NOT NULL COMMENT '更新时间',
+    `DATA_VERSION` int(10) DEFAULT '0' COMMENT '数据版本号',
+    PRIMARY KEY (`GROUP_CODE`,`DICTIONARY_CODE`),
+    KEY `DICTIONARY_UNIQUE` (`ID`)
+)

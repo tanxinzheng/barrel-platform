@@ -57,21 +57,31 @@
             <artifactId>boot-core</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>boot-module-translate</artifactId>-->
-<!--            <version>1.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>boot-module-common</artifactId>-->
-<!--            <version>1.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>boot-module-account</artifactId>-->
-<!--            <version>1.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-jwt</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-account</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-logger</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-translate</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-module-common</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.github.tanxinzheng</groupId>-->
 <!--            <artifactId>boot-module-excel</artifactId>-->
