@@ -4,7 +4,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/xmo_demo?useUnicode:true&amp;characterEncoding:utf8&amp;useSSL:false
+    url: jdbc:mysql://localhost:3306/xmo_demo?useUnicode:true&characterEncoding:utf8&useSSL:true
     username: root
     password: 123456
   redis:
@@ -16,8 +16,13 @@ spring:
 jwt:
   secret: 123456
   permit-urls:
+    - /error
+    - /actuator/**
     - /auth/**
     - /index.html
+
+    ## swagger 免登陆资源，生产环境关闭
+    - /favicon.ico
     - /swagger-ui.html
     - /swagger-resources/**
     - /v2/**

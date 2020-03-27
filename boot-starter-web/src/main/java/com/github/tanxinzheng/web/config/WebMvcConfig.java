@@ -28,7 +28,6 @@ import java.util.List;
  * Created by tanxinzheng on 17/8/23.
  */
 @Configuration
-@EnableWebMvc
 @ComponentScan(value = {"com.github.tanxinzheng.**"})
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
@@ -40,6 +39,20 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         System.out.println();
     }
 
+    /**
+     * 使用swagger-ui.html必须添加的配置
+     * @param registry
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**").addResourceLocations(
+                "classpath:/static/");
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations(
+                "classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations(
+                "classpath:/META-INF/resources/webjars/");
+        super.addResourceHandlers(registry);
+    }
 
     @Bean
     @Primary

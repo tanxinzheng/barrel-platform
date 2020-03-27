@@ -61,8 +61,11 @@
     <!--  定时任务  -->
     <logger name="com.mchange.v2.c3p0" level="ERROR"/>
     <logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="ERROR"/>
-    <logger name="springfox.documentation" level="ERROR"/>
+    <logger name="springfox.documentation" level="DEBUG"/>
     <logger name="org.hibernate" level="ERROR"/>
+    <logger name="io.lettuce" level="ERROR"/>
+    <logger name="io.netty" level="ERROR"/>
+    <logger name="com.zaxxer" level="ERROR"/>
 
     <root level="${LOG_LEVEL}">
 		<appender-ref ref="STDOUT" />

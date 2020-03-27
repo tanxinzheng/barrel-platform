@@ -49,7 +49,7 @@
 		<spring-cloud.version>Camden.SR5</spring-cloud.version>
 		<boot.fremework.version>1.0.0-SNAPSHOT</boot.fremework.version>
 		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
-		<io.springfox.version>2.8.0</io.springfox.version>
+		<io.springfox.version>2.9.2</io.springfox.version>
 		<skipNpmBuild>false</skipNpmBuild>
 		<skipTests>false</skipTests>
 	</properties>
@@ -269,7 +269,7 @@
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
-				<version>18.0</version>
+				<version>28.0-jre</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.collections</groupId>

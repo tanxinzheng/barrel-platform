@@ -14,6 +14,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 注：
+ * 1.使用 http://localhost:8000/swagger-ui.html 时，必须禁用@EnableWebMvc
+ *
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
