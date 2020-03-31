@@ -26,7 +26,7 @@ import java.util.Date;
  * 重置密码控制器
  */
 @RestController
-@Api(tags = "公共访问接口：注册，找回密码，发送验证码")
+@Api(tags = "用户认证")
 @RequestMapping(value = "/access")
 @Slf4j
 public class AccessController {

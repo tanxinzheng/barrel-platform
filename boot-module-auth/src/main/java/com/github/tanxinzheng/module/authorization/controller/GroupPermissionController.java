@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.tanxinzheng.module.authorization.model.GroupPermissionModel;
 import com.github.tanxinzheng.module.authorization.model.GroupPermissionQuery;
 import com.github.tanxinzheng.module.authorization.service.GroupPermissionService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
  * @date    2017-7-25 1:52:35
  * @version 1.0.0
  */
+@Api(tags = {"权限管理"})
 @RestController
 @RequestMapping(value = "/group/permission")
 public class GroupPermissionController {

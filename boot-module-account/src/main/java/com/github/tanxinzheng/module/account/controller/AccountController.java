@@ -20,7 +20,7 @@ import java.util.Set;
  * Created by Jeng on 2016/1/5.
  */
 @RestController
-@Api(tags = "当前用户简要信息，权限等相关接口")
+@Api(tags = "个人中心")
 @RequestMapping(value = "/account")
 public class AccountController {
 
@@ -36,7 +36,7 @@ public class AccountController {
      * @return
      */
     @GetMapping
-    @ApiOperation(value = "查询当前用户资料信息")
+    @ApiOperation(value = "个人资料")
     public AccountModel accountSetting(@LoginUser CurrentLoginUser loginUser){
         AccountModel accountModel = new AccountModel();
         accountModel.setAvatar(loginUser.getAvatar());
@@ -51,7 +51,7 @@ public class AccountController {
      * @return
      */
     @GetMapping(value = "/authorities")
-    @ApiOperation(value = "查询当前用户权限")
+    @ApiOperation(value = "我的权限")
     public Set<String> getAccountAuthorities(@LoginUser CurrentLoginUser loginUser){
         Set<String> roles = loginUser.getRoles();
         if(CollectionUtils.isEmpty(roles)){
@@ -67,7 +67,7 @@ public class AccountController {
      * @param password
      */
     @PutMapping(value = "/password")
-    @ApiOperation(value = "当前用户修改密码")
+    @ApiOperation(value = "修改密码")
     public void updatePassword(@LoginUser CurrentLoginUser loginUser,
                                @RequestParam(value = "oldPassword") String oldPassword,
                               @RequestParam(value = "password") String password){

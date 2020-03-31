@@ -22,7 +22,7 @@ import java.util.List;
  * @date    2017-7-25 0:51:13
  * @version 1.0.0
  */
-@Api(tags = "用户组管理")
+@Api(tags = {"权限管理"})
 @RestController
 @RequestMapping(value = "/group")
 public class GroupController {

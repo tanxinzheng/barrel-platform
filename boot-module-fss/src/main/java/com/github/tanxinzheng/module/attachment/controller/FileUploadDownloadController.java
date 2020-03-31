@@ -9,6 +9,7 @@ import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
 import com.github.tanxinzheng.module.attachment.service.AttachmentService;
 import com.github.tanxinzheng.module.fss.model.FileStorageResult;
 import com.github.tanxinzheng.module.fss.service.FileStoreService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -40,6 +41,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * Created by tanxinzheng on 16/10/16.
  */
+@Api(tags = {"文件管理"})
 @Controller
 @RequestMapping(value = "/file")
 @Slf4j

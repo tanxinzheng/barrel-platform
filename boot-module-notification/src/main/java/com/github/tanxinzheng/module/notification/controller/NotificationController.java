@@ -7,6 +7,7 @@ import com.github.tanxinzheng.module.notification.model.NotificationModel;
 import com.github.tanxinzheng.module.notification.model.NotificationQuery;
 import com.github.tanxinzheng.module.notification.model.SendNotification;
 import com.github.tanxinzheng.module.notification.service.NotificationService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
  * @date    2017-8-24 17:42:48
  * @version 1.0.0
  */
+@Api(tags = {"消息管理"})
 @RestController
 @RequestMapping(value = "/notification")
 public class NotificationController {

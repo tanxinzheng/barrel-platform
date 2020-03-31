@@ -26,7 +26,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  * @date    2017-7-25 1:52:35
  * @version 1.0.0
  */
-@Api(tags = {"权限管理"}, authorizations = {})
+@Api(tags = {"权限管理"})
 @RestController
 @RequestMapping(value = "/permission")
 public class PermissionController {

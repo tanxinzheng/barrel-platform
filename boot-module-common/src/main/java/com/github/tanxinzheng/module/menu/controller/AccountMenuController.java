@@ -17,8 +17,8 @@ import java.util.List;
  * @date    2019-1-11 22:32:46
  * @version 1.0.0
  */
+@Api(tags = {"个人中心"})
 @RestController
-@Api(tags = "当前用户菜单接口")
 @RequestMapping(value = "/account/menu")
 public class AccountMenuController {
 
@@ -28,7 +28,7 @@ public class AccountMenuController {
      * 查询树形结构菜单
      * @return
      */
-    @ApiOperation(value = "查询树形菜单")
+    @ApiOperation(value = "我的菜单")
     @GetMapping
     public List<TreeModel> getAccountMenu(MenuQuery query){
         // TODO 添加当前登录人ID过滤条件

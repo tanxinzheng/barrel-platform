@@ -20,7 +20,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @RestController
-@Api(tags = "菜单接口")
+@Api(tags = "菜单管理")
 @RequestMapping(value = "/menu")
 public class MenuController {
 

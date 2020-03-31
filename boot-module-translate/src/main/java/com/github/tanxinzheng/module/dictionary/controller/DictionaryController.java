@@ -22,7 +22,7 @@ import javax.validation.Valid;
  * @date    2017-6-11 18:57:11
  * @version 1.0.0
  */
-@Api(tags = "用户组管理")
+@Api(tags = "数据字典管理")
 @RestController
 @RequestMapping(value = "/dictionary")
 @Slf4j

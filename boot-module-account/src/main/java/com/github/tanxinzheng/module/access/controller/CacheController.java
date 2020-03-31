@@ -6,6 +6,7 @@ import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
 import com.github.tanxinzheng.framework.core.service.SelectService;
 import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.google.common.collect.Maps;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * Created by tanxinzheng on 17/6/26.
  */
+@Api(tags = {"系统配置"})
 @Slf4j
 @RestController
 @RequestMapping(value = "/cache")

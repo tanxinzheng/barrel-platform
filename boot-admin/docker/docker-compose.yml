@@ -2,7 +2,13 @@ version: '3'
 
 services:
   boot-admin-app:
-    restart: always
+    networks:
+      - txz-docker-net
+    #restart: always
     image: boot-admin-app:latest
     ports:
     - "10001:8000"
+
+networks:
+  txz-docker-net:
+    external: true

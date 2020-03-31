@@ -31,13 +31,12 @@
 		<module>boot-module-common</module>
 		<module>boot-module-account</module>
 		<module>boot-module-auth</module>
-		<module>boot-module-api</module>
 		<module>boot-module-excel</module>
 		<module>boot-admin</module>
 <!--		<module>boot-admin-ui</module>-->
 		<module>boot-webapp-ams</module>
 		<module>boot-archetype-module</module>
-		<module>boot-starter-security</module>
+<!--		<module>boot-starter-security</module>-->
 	</modules>
 
 	<properties>

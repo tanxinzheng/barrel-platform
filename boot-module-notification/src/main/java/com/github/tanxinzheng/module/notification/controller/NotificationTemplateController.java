@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.tanxinzheng.module.notification.model.NotificationTemplateModel;
 import com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery;
 import com.github.tanxinzheng.module.notification.service.NotificationTemplateService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
  * @date    2017-8-24 17:42:48
  * @version 1.0.0
  */
+@Api(tags = {"消息管理"})
 @RestController
 @RequestMapping(value = "/notification/template")
 public class NotificationTemplateController {

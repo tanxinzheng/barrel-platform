@@ -6,6 +6,7 @@ import com.github.tanxinzheng.module.authorization.model.*;
 import com.github.tanxinzheng.module.authorization.service.PermissionService;
 import com.github.tanxinzheng.module.authorization.service.UserGroupService;
 import com.github.tanxinzheng.module.authorization.service.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.List;
  * @date    2017-6-16 22:59:54
  * @version 1.0.0
  */
+@Api(tags = {"用户管理"})
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {

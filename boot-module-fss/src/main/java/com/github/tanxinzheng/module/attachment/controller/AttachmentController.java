@@ -6,6 +6,7 @@ import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
 import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
 import com.github.tanxinzheng.module.attachment.service.AttachmentService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
  * @date    2017-8-6 15:56:07
  * @version 1.0.0
  */
+@Api(tags = {"文件管理"})
 @RestController
 @RequestMapping(value = "/attachment")
 public class AttachmentController {

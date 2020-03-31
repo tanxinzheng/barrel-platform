@@ -6,6 +6,7 @@ import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.notification.model.*;
 import com.github.tanxinzheng.module.notification.service.NotificationService;
 import com.google.common.collect.Lists;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Optional;
 /**
  * Created by tanxinzheng on 2018/11/19.
  */
+@Api(tags = {"消息中心"})
 @RestController
 @RequestMapping("/account/notification")
 public class AccountNotificationController {
@@ -32,7 +34,7 @@ public class AccountNotificationController {
      * 用户当前消息
      * @return
      */
-    @ApiOperation(value = "查询当前用户消息，默认查询三个月内")
+    @ApiOperation(value = "我的消息", notes = "默认查询三个月内消息")
     @GetMapping
     public List<AccountNotification> getAccountNotifications(@LoginUser CurrentLoginUser loginUser) {
         NotificationQuery notificationQuery = new NotificationQuery();
