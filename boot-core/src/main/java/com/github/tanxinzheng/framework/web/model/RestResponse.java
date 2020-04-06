@@ -31,12 +31,12 @@ public class RestResponse<T> implements Serializable {
     private Object error;
 
     public RestResponse() {
-        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
     }
 
     public RestResponse(T data) {
         this.data = data;
-        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
     }
 
     public static RestResponse success(Object data) {

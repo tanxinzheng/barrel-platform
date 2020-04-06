@@ -1,6 +1,6 @@
 DELETE FROM t_user;
 
-INSERT INTO t_user (id, username, password, slat, name, age, email) VALUES
+INSERT INTO t_dictionary (id, username, password, slat, name, age, email) VALUES
 (6, 'admin', '123456', '3242343', 'admin', 18, 'admin@test.com'),
 (1, 'Jone', '123456', '42321', 'Jone', 18, 'test1@baomidou.com'),
 (2, 'Jack', '123456', '42321', 'Jack', 20, 'test2@baomidou.com'),

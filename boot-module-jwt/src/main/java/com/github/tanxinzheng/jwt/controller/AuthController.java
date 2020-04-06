@@ -1,10 +1,10 @@
 package com.github.tanxinzheng.jwt.controller;
 
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.jwt.controller.dto.LoginRequest;
 import com.github.tanxinzheng.jwt.controller.dto.LoginResponse;
-import com.github.tanxinzheng.jwt.service.AuthManager;
-import com.github.tanxinzheng.jwt.support.JwtUser;
+import com.github.tanxinzheng.framework.core.service.AuthManager;
 import com.github.tanxinzheng.jwt.support.JwtUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,7 +37,7 @@ public class AuthController {
     @PostMapping(value = "/login")
     @ApiOperation(value = "用户登录")
     public LoginResponse login(@RequestBody @Valid @NotNull LoginRequest loginRequest){
-        JwtUser jwtUser = authManager.findUserByUsername(loginRequest.getUsername());
+        CurrentLoginUser jwtUser = authManager.findUserByUsername(loginRequest.getUsername());
         if(jwtUser == null){
             throw new UsernameNotFoundException("该用户名未注册");
         }

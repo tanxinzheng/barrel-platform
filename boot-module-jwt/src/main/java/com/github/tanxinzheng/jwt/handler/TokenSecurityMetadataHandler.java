@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.jwt.handler;
 
 import com.github.tanxinzheng.jwt.access.PermissionGrantedAuthority;
-import com.github.tanxinzheng.jwt.service.AuthManager;
+import com.github.tanxinzheng.framework.core.service.AuthManager;
 import com.google.common.collect.Lists;
 import org.springframework.cache.annotation.Cacheable;
 

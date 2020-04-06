@@ -1,6 +1,7 @@
 package com.github.tanxinzheng.jwt.support;
 
-import com.github.tanxinzheng.jwt.service.AuthManager;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
+import com.github.tanxinzheng.framework.core.service.AuthManager;
 import com.google.common.collect.Lists;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -40,12 +41,23 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = ((JwtAuthenticationToken)authentication).getToken();
         String username = jwtUtils.getUsernameByToken(token);
-        JwtUser jwtUser = authManager.findUserByUsername(username);
-        if(jwtUser == null){
+        CurrentLoginUser currentLoginUser = authManager.findUserByUsername(username);
+        if(currentLoginUser == null){
             throw new UsernameNotFoundException("该用户名未注册");
         }
         List<SimpleGrantedAuthority> authorityList = Lists.newArrayList();
         authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        JwtUser jwtUser = new JwtUser(currentLoginUser.getId(), currentLoginUser.getName(),
+                currentLoginUser.getUsername(), currentLoginUser.getPermissions());
+        jwtUser.setAccountNonExpired(currentLoginUser.isAccountNonExpired());
+        jwtUser.setAccountNonLocked(currentLoginUser.isAccountNonLocked());
+        jwtUser.setCredentialsNonExpired(currentLoginUser.isCredentialsNonExpired());
+        jwtUser.setEmail(currentLoginUser.getEmail());
+        jwtUser.setEnabled(currentLoginUser.isEnabled());
+        jwtUser.setPermissions(currentLoginUser.getPermissions());
+        jwtUser.setRoles(currentLoginUser.getRoles());
+        jwtUser.setSalt(currentLoginUser.getSalt());
+        jwtUser.setPassword(currentLoginUser.getPassword());
         JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(token, jwtUser, authorityList);
         authenticationToken.setAuthenticated(Boolean.TRUE);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);

@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.framework.mybatis.type;
+package com.github.tanxinzheng.framework.mybatis.handler;
 
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;

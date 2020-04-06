@@ -39,7 +39,7 @@ public class PermissionController {
      * @param   permissionQuery    权限查询参数对象
      * @return  Page<PermissionModel> 权限领域分页对象
      */
-    @ApiOperation(value = "查询权限列表", tags = "查询权限列表")
+    @ApiOperation(value = "查询权限列表")
     @RequestMapping(method = GET)
     public List<PermissionModel> getPermissionList(final PermissionQuery permissionQuery) {
         return permissionService.getPermissionModelList(permissionQuery);

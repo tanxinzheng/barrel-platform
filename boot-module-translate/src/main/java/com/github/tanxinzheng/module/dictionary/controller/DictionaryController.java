@@ -1,11 +1,10 @@
 package com.github.tanxinzheng.module.dictionary.controller;
 
-import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.web.annotation.LoginUser;
-import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
-import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
-import com.github.tanxinzheng.module.dictionary.model.DictionaryQuery;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryRequest;
+import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryResponse;
 import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
+import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -14,77 +13,65 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
-//import com.github.tanxinzheng.framework.poi.ExcelUtils;
 
-/**
- * @author  tanxinzheng
- * @date    2017-6-11 18:57:11
- * @version 1.0.0
- */
-@Api(tags = "数据字典管理")
+@Slf4j
+@Api(tags = "数据字典接口")
 @RestController
 @RequestMapping(value = "/dictionary")
-@Slf4j
 public class DictionaryController {
 
     @Autowired
     DictionaryService dictionaryService;
 
     /**
-     * 新增数据字典
-     * @param   dictionaryModel  新增对象参数
-     * @return  DictionaryModel   数据字典领域对象
-     */
-    @ApiOperation(value = "新增数据字典")
-    @PostMapping
-    public DictionaryModel createDictionary(@LoginUser CurrentLoginUser loginUser,
-                                            @RequestBody @Valid DictionaryModel dictionaryModel) {
-        dictionaryModel.setCreatedUserId(loginUser.getId());
-        dictionaryModel.setUpdatedUserId(loginUser.getId());
-        return dictionaryService.createDictionary(dictionaryModel);
-    }
-
-    /**
      * 数据字典列表
-     * @param   dictionaryQuery    数据字典查询参数对象
-     * @return  Page<DictionaryModel> 数据字典领域分页对象
+     * @param   dictionaryRequest    数据字典查询参数对象
+     * @return  Page<DictionaryResponse> 数据字典领域分页对象
      */
     @ApiOperation(value = "查询数据字典列表")
     @GetMapping
-    public Page<DictionaryModel> getDictionaryList(DictionaryQuery dictionaryQuery){
-        return dictionaryService.getDictionaryModelPage(dictionaryQuery);
+    public Page<DictionaryResponse> getDictionaryList(DictionaryRequest dictionaryRequest){
+        return dictionaryService.findPageDictionaryResponse(dictionaryRequest);
     }
 
     /**
      * 查询单个数据字典
      * @param   id  主键
-     * @return  DictionaryModel   数据字典领域对象
+     * @return  DictionaryResponse   数据字典领域对象
      */
     @ApiOperation(value = "查询数据字典")
     @GetMapping(value = "/{id}")
-    public DictionaryModel getDictionaryById(@PathVariable(value = "id") String id){
-        return dictionaryService.getOneDictionaryModel(id);
+    public DictionaryResponse getDictionaryById(@PathVariable(value = "id") String id){
+        return dictionaryService.findOneDictionaryResponse(id);
+    }
+
+    /**
+     * 新增数据字典
+     * @param   dictionaryCreate  新增对象参数
+     * @return  DictionaryResponse   数据字典领域对象
+     */
+    @ApiOperation(value = "新增数据字典")
+    @PostMapping
+    public DictionaryResponse createDictionary(@RequestBody @Valid Dictionary dictionaryCreate) {
+        return dictionaryService.createDictionary(dictionaryCreate);
     }
 
     /**
      * 更新数据字典
      * @param id    主键
-     * @param dictionaryModel  更新对象参数
-     * @return  DictionaryModel   数据字典领域对象
+     * @param dictionaryUpdate  更新对象参数
+     * @return  DictionaryResponse   数据字典领域对象
      */
     @ApiOperation(value = "更新数据字典")
     @PutMapping(value = "/{id}")
-    public DictionaryModel updateDictionary(@PathVariable(value = "id") String id,
-                           @LoginUser CurrentLoginUser loginUser,
-                           @RequestBody @Valid DictionaryModel dictionaryModel){
+    public DictionaryResponse updateDictionary(@PathVariable(value = "id") String id,
+                           @RequestBody @Valid Dictionary dictionaryUpdate){
         if(StringUtils.isNotBlank(id)){
-            dictionaryModel.setId(id);
+            dictionaryUpdate.setId(id);
         }
-        dictionaryModel.setCreatedUserId(loginUser.getId());
-        dictionaryModel.setUpdatedUserId(loginUser.getId());
-        dictionaryService.updateDictionary(dictionaryModel);
-        return dictionaryService.getOneDictionaryModel(id);
+        return dictionaryService.updateDictionary(dictionaryUpdate);
     }
 
     /**
@@ -93,59 +80,19 @@ public class DictionaryController {
      */
     @ApiOperation(value = "删除单个数据字典")
     @DeleteMapping(value = "/{id}")
-    public void deleteDictionary(@PathVariable(value = "id") String id){
-        dictionaryService.deleteDictionary(id);
+    public int deleteDictionary(@PathVariable(value = "id") String id){
+        return dictionaryService.deleteDictionary(id);
     }
 
     /**
      *  删除数据字典
-     * @param dictionaryQuery    查询参数对象
+     * @param ids    查询参数对象
      */
     @ApiOperation(value = "批量删除数据字典")
     @DeleteMapping
-    public void deleteDictionaries(DictionaryQuery dictionaryQuery){
-        dictionaryService.deleteDictionary(dictionaryQuery.getIds());
+    public int deleteDictionarys(@RequestBody List<String> ids){
+        return dictionaryService.deleteDictionary(ids);
     }
 
-//    /**
-//     * 下载Excel模板
-//     */
-//    @ApiOperation(value = "下载数据字典导入模板")
-//    @RequestMapping(value="/template", method = RequestMethod.GET)
-//    public void downloadTemplate(HttpServletRequest request,
-//                                 HttpServletResponse response) {
-//        List<DictionaryModel> dictionaryModelList = Lists.newArrayList();
-//        ExcelUtils.export(request, response, DictionaryModel.class, dictionaryModelList, "数据字典_模板");
-//    }
-//
-//    /**
-//     * 导出Excel
-//     * @param dictionaryQuery
-//     * @param request
-//     * @param response
-//     */
-//    @ApiOperation(value = "导出数据字典")
-//    @RequestMapping(value="/export", method = RequestMethod.GET)
-//    public void exportDictionaries(DictionaryQuery dictionaryQuery,
-//                                             HttpServletRequest request,
-//                                             HttpServletResponse response) {
-//        List<DictionaryModel> dictionaryModelList = dictionaryService.getDictionaryModelList(dictionaryQuery);
-//        ExcelUtils.export(request, response, DictionaryModel.class, dictionaryModelList, "数据字典");
-//    }
-//
-//    /**
-//     * 导入Excel
-//     * @param file
-//     */
-//    @ApiOperation(value = "导入数据字典")
-//    @RequestMapping(value="/import", method = RequestMethod.POST)
-//    public ImportExcelResponse importDictionaries(@RequestParam("file") MultipartFile file) {
-//        List<DictionaryModel> list = ExcelUtils.transform(file, DictionaryModel.class);
-//        if(CollectionUtils.isEmpty(list)){
-//            return ImportExcelResponse.fail();
-//        }
-//        dictionaryService.createDictionaries(list);
-//        return ImportExcelResponse.success(list.size());
-//    }
 
 }

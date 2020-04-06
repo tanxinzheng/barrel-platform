@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.tanxinzheng</groupId>
-	<artifactId>boot</artifactId>
+	<artifactId>boot-parent</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>boot-parent</name>
@@ -53,44 +53,39 @@
 		<skipTests>false</skipTests>
 	</properties>
 
+	<distributionManagement>
+		<repository>
+			<id>rdc-releases</id>
+			<url>https://repo.rdc.aliyun.com/repository/127761-release-WfiAMX/</url>
+		</repository>
+		<snapshotRepository>
+			<id>rdc-snapshots</id>
+			<url>https://repo.rdc.aliyun.com/repository/127761-snapshot-2jimrZ/</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<repositories>
 		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
+			<name>maven-releases</name>
+			<id>rdc-releases</id>
+			<url>https://repo.rdc.aliyun.com/repository/127761-release-WfiAMX/</url>
+		</repository>
+		<repository>
+			<name>maven-snapshots</name>
+			<id>rdc-snapshots</id>
+			<url>https://repo.rdc.aliyun.com/repository/127761-snapshot-2jimrZ/</url>
 			<snapshots>
-				<enabled>false</enabled>
+				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-	</repositories>
-
-<!--	<distributionManagement>-->
 <!--		<repository>-->
-<!--			<id>local-nexus</id>-->
-<!--			<na<version>1.0.1-SNAPSHOT</version>me>maven-releases</name>-->
-<!--			<url>http://localhost:10003/repository/maven-releases/</url>-->
+<!--			<id>spring-milestones</id>-->
+<!--			<name>Spring Milestones</name>-->
+<!--			<url>https://repo.spring.io/milestone</url>-->
+<!--			<snapshots>-->
+<!--				<enabled>false</enabled>-->
+<!--			</snapshots>-->
 <!--		</repository>-->
-<!--		<snapshotRepository>-->
-<!--			<id>local-nexus</id>-->
-<!--			<name>maven-snapshots</name>-->
-<!--			<url>http://localhost:10003/repository/maven-snapshots/</url>-->
-<!--		</snapshotRepository>-->
-<!--	</distributionManagement>-->
-	<!--<repositories>-->
-		<!--<repository>-->
-			<!--<id>local-mac-release</id>-->
-			<!--<name>maven-releases</name>-->
-			<!--<url>http://localhost:10003/repository/maven-releases/</url>-->
-		<!--</repository>-->
-		<!--<repository>-->
-			<!--<id>local-mac-snapshots</id>-->
-			<!--<name>maven-snapshots</name>-->
-			<!--<url>http://localhost:10003/repository/maven-snapshots/</url>-->
-			<!--<snapshots>-->
-				<!--<enabled>true</enabled>-->
-			<!--</snapshots>-->
-		<!--</repository>-->
-	<!--</repositories>-->
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -130,51 +125,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-<!--			<dependency>-->
-<!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-core</artifactId>-->
-<!--				<version>1.0.1-SNAPSHOT</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-support-store</artifactId>-->
-<!--				<version>1.0.1-SNAPSHOT</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-module-translate</artifactId>-->
-<!--				<version>1.0.1-SNAPSHOT</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-module-common</artifactId>-->
-<!--				<version>1.0.1-SNAPSHOT</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-module-auth</artifactId>-->
-<!--				<version>1.0.1-SNAPSHOT</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-module-account</artifactId>-->
-<!--				<version>1.0.1-SNAPSHOT</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-module-logger</artifactId>-->
-<!--				<version>1.0.1-SNAPSHOT</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-module-jwt</artifactId>-->
-<!--				<version>1.0.1-SNAPSHOT</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>com.github.tanxinzheng</groupId>-->
-<!--				<artifactId>boot-starter-test</artifactId>-->
-<!--				<version>1.0.1-SNAPSHOT</version>-->
-<!--			</dependency>-->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-actuator</artifactId>
@@ -190,11 +140,6 @@
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
-<!--			<dependency>-->
-<!--				<groupId>org.mybatis.spring.boot</groupId>-->
-<!--				<artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--				<version>2.0.2</version>-->
-<!--			</dependency>-->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context-support</artifactId>
@@ -416,48 +361,48 @@
 					<goal>check</goal>
 				</goals>
 				<!-- 	开启以下配置将对validate阶段进行check	-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>checkstyle</id>-->
-<!--						<phase>validate</phase>-->
-<!--						<goals>-->
-<!--							<goal>check</goal>-->
-<!--						</goals>-->
-<!--						<configuration>-->
-<!--							<failOnViolation>true</failOnViolation>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--				</executions>-->
+				<executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<failOnViolation>true</failOnViolation>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.codehaus.mojo</groupId>-->
-<!--				<artifactId>xml-maven-plugin</artifactId>-->
-<!--				<version>1.0.2</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<phase>process-classes</phase>-->
-<!--						<goals>-->
-<!--							<goal>transform</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--				<configuration>-->
-<!--					<transformationSets>-->
-<!--						<transformationSet>-->
-<!--							<dir>target\</dir>-->
-<!--&lt;!&ndash;							<stylesheet>checkstyle\checkstyle-author.xsl</stylesheet>&ndash;&gt;-->
-<!--							<includes>checkstyle-result.xml</includes>-->
-<!--							<fileMappers>-->
-<!--								<fileMapper-->
-<!--										implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">-->
-<!--									<pattern>\.xml$</pattern>-->
-<!--									<replacement>.html</replacement>-->
-<!--								</fileMapper>-->
-<!--							</fileMappers>-->
-<!--						</transformationSet>-->
-<!--					</transformationSets>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>xml-maven-plugin</artifactId>
+				<version>1.0.2</version>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>transform</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<transformationSets>
+						<transformationSet>
+							<dir>target\</dir>
+<!--							<stylesheet>checkstyle\checkstyle-author.xsl</stylesheet>-->
+							<includes>checkstyle-result.xml</includes>
+							<fileMappers>
+								<fileMapper
+										implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
+									<pattern>\.xml$</pattern>
+									<replacement>.html</replacement>
+								</fileMapper>
+							</fileMappers>
+						</transformationSet>
+					</transformationSets>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>

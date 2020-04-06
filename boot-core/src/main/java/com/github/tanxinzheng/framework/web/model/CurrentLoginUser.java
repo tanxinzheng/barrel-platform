@@ -9,10 +9,15 @@ public class CurrentLoginUser {
 
     private String id;
     private String username;
+    private String password;
     private String name;
-    private String avatar;
     private String email;
-    private String phone;
+    private String salt;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
     private Set<String> roles;
+    private Set<String> permissions;
 
 }

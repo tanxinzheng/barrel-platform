@@ -5,7 +5,7 @@ import com.github.tanxinzheng.jwt.access.JwtFilterInvocationSecurityMetadataSour
 import com.github.tanxinzheng.jwt.filter.JwtAuthorizationFilter;
 import com.github.tanxinzheng.jwt.handler.TokenAccessDeniedHandler;
 import com.github.tanxinzheng.jwt.handler.TokenSecurityMetadataHandler;
-import com.github.tanxinzheng.jwt.service.AuthManager;
+import com.github.tanxinzheng.framework.core.service.AuthManager;
 import com.github.tanxinzheng.jwt.support.JwtAuthenticationProvider;
 import com.github.tanxinzheng.jwt.support.RestAuthenticationEntryPoint;
 import com.google.common.collect.Lists;
