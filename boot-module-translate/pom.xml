@@ -3,14 +3,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>boot</artifactId>
         <groupId>com.github.tanxinzheng</groupId>
+        <artifactId>boot-parent</artifactId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>boot-module-translate</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
     <name>boot-module-translate</name>
 
     <properties>
@@ -23,12 +22,12 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-core</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-module-jwt</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <artifactId>boot-starter-jwt</artifactId>
+            <version>${boot.fremework.version}</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.github.tanxinzheng</groupId>-->
@@ -44,7 +43,7 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-starter-web</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

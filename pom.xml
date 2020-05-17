@@ -16,12 +16,6 @@
 	<description>Boot Example</description>
 
 	<modules>
-<!--		<module>boot-cloud-parent</module>-->
-		<module>boot-version</module>
-		<module>boot-core</module>
-		<module>boot-starter-test</module>
-		<module>boot-starter-web</module>
-		<module>boot-module-jwt</module>
 		<module>boot-module-translate</module>
 		<module>boot-module-fss</module>
 		<module>boot-module-logger</module>
@@ -34,9 +28,6 @@
 		<module>boot-module-excel</module>
 		<module>boot-admin</module>
 <!--		<module>boot-admin-ui</module>-->
-		<module>boot-webapp-ams</module>
-		<module>boot-archetype-module</module>
-<!--		<module>boot-starter-security</module>-->
 	</modules>
 
 	<properties>

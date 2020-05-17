@@ -55,17 +55,22 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-starter-web</artifactId>
-            <version>${boot.module.version}</version>
+            <version>${boot.fremework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-starter-redis</artifactId>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-core</artifactId>
-            <version>${boot.module.version}</version>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-module-jwt</artifactId>
-            <version>${boot.module.version}</version>
+            <artifactId>boot-starter-jwt</artifactId>
+            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>

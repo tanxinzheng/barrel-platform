@@ -2,6 +2,7 @@ package com.github.tanxinzheng.module.dictionary.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.tanxinzheng.framework.model.BaseModel;
+import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
 import com.github.tanxinzheng.module.dictionary.web.AccountField;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

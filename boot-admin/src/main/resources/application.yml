@@ -19,6 +19,6 @@ mybatis-plus:
   global-config:
     db-config:
       table-prefix: xmo_
-  type-aliases-package: com.github.tanxinzheng.**.model
+  type-aliases-package: com.github.tanxinzheng.**.model,com.github.tanxinzheng.**.entity
   mapper-locations: classpath*:com/**/mapper/*.xml
   config-location: classpath:config/mybatis-config.xml
