@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -15,8 +16,7 @@ class LogModel implements Serializable{
 
     private String userId;
     private String actionName;
-    @DateTimeFormat
-    private Date actionDate;
+    private LocalDateTime actionDate;
     private String clientIp;
     private String targetClass;
     private String targetMethod;
