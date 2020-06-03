@@ -2,14 +2,18 @@ package com.github.tanxinzheng.module.mail.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.tanxinzheng.module.mail.model.EmailModel;
-import com.github.tanxinzheng.test.TestAppController;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by tanxinzheng on 2018/6/10.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {StarterWebTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmailControllerTest extends TestAppController {
     @Before
     public void setUp() throws Exception {

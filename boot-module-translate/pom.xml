@@ -5,10 +5,10 @@
     <parent>
         <groupId>com.github.tanxinzheng</groupId>
         <artifactId>boot-parent</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <version>${project.version}</version>
     <artifactId>boot-module-translate</artifactId>
     <name>boot-module-translate</name>
 
@@ -22,24 +22,22 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-core</artifactId>
-            <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-starter-jwt</artifactId>
-            <version>${boot.fremework.version}</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.github.tanxinzheng</groupId>-->
 <!--            <artifactId>boot-module-excel</artifactId>-->
-<!--            <version>1.0.1-SNAPSHOT</version>-->
+<!--            <version>1.0.0-SNAPSHOT</version>-->
 <!--        </dependency>-->
-        <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-starter-test</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.tanxinzheng</groupId>-->
+<!--            <artifactId>boot-starter-test</artifactId>-->
+<!--            <version>1.0.0-SNAPSHOT</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-starter-web</artifactId>
