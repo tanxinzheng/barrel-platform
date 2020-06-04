@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
@@ -75,7 +76,7 @@ public class ActionLoggerAspect {
         returnVal = proceedingJoinPoint.proceed();
         if(loggerService != null){
             LogModel logModel = new LogModel();
-            logModel.setActionDate(new Date());
+            logModel.setActionDate(LocalDateTime.now());
             logModel.setTargetClass(target.getClass().getName());
             logModel.setTargetMethod(method.getName());
             logModel.setActionName(format(methodName, getAnnotationParamsByMethod(method, args)));

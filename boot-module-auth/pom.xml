@@ -40,12 +40,6 @@
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-module-translate</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>boot-starter-test</artifactId>-->
-<!--            <version>1.0.0-SNAPSHOT</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
