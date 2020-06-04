@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.logger;
 
+import com.github.tanxinzheng.module.dictionary.web.AccountField;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,9 +12,10 @@ import java.util.Date;
  * Created by Jeng on 16/3/20.
  */
 @Data
-public
-class LogModel implements Serializable{
+public class LogModel implements Serializable{
 
+
+    @AccountField
     private String userId;
     private String actionName;
     private LocalDateTime actionDate;

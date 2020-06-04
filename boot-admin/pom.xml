@@ -110,6 +110,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.centychen</groupId>
+            <artifactId>xxl-job-spring-boot-starter</artifactId>
+            <version>1.0.1-RELEASE</version>
+        </dependency>
+
 <!--        <dependency>-->
 <!--            <groupId>com.github.tanxinzheng</groupId>-->
 <!--            <artifactId>boot-admin-ui</artifactId>-->

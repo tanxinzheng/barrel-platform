@@ -40,43 +40,44 @@
 		<boot.fremework.version>1.0.0-SNAPSHOT</boot.fremework.version>
 		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
 		<io.springfox.version>2.9.2</io.springfox.version>
+		<xxl.job.starter.version>1.0.1-RELEASE</xxl.job.starter.version>
 		<skipNpmBuild>false</skipNpmBuild>
 		<skipTests>false</skipTests>
 	</properties>
 
-	<distributionManagement>
-		<repository>
-			<id>rdc-releases</id>
-			<url>https://repo.rdc.aliyun.com/repository/127761-release-WfiAMX/</url>
-		</repository>
-		<snapshotRepository>
-			<id>rdc-snapshots</id>
-			<url>https://repo.rdc.aliyun.com/repository/127761-snapshot-2jimrZ/</url>
-		</snapshotRepository>
-	</distributionManagement>
-	<repositories>
-		<repository>
-			<name>maven-releases</name>
-			<id>rdc-releases</id>
-			<url>https://repo.rdc.aliyun.com/repository/127761-release-WfiAMX/</url>
-		</repository>
-		<repository>
-			<name>maven-snapshots</name>
-			<id>rdc-snapshots</id>
-			<url>https://repo.rdc.aliyun.com/repository/127761-snapshot-2jimrZ/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
+<!--	<distributionManagement>-->
 <!--		<repository>-->
-<!--			<id>spring-milestones</id>-->
-<!--			<name>Spring Milestones</name>-->
-<!--			<url>https://repo.spring.io/milestone</url>-->
+<!--			<id>rdc-releases</id>-->
+<!--			<url>https://repo.rdc.aliyun.com/repository/127761-release-WfiAMX/</url>-->
+<!--		</repository>-->
+<!--		<snapshotRepository>-->
+<!--			<id>rdc-snapshots</id>-->
+<!--			<url>https://repo.rdc.aliyun.com/repository/127761-snapshot-2jimrZ/</url>-->
+<!--		</snapshotRepository>-->
+<!--	</distributionManagement>-->
+<!--	<repositories>-->
+<!--		<repository>-->
+<!--			<name>maven-releases</name>-->
+<!--			<id>rdc-releases</id>-->
+<!--			<url>https://repo.rdc.aliyun.com/repository/127761-release-WfiAMX/</url>-->
+<!--		</repository>-->
+<!--		<repository>-->
+<!--			<name>maven-snapshots</name>-->
+<!--			<id>rdc-snapshots</id>-->
+<!--			<url>https://repo.rdc.aliyun.com/repository/127761-snapshot-2jimrZ/</url>-->
 <!--			<snapshots>-->
-<!--				<enabled>false</enabled>-->
+<!--				<enabled>true</enabled>-->
 <!--			</snapshots>-->
 <!--		</repository>-->
-	</repositories>
+<!--&lt;!&ndash;		<repository>&ndash;&gt;-->
+<!--&lt;!&ndash;			<id>spring-milestones</id>&ndash;&gt;-->
+<!--&lt;!&ndash;			<name>Spring Milestones</name>&ndash;&gt;-->
+<!--&lt;!&ndash;			<url>https://repo.spring.io/milestone</url>&ndash;&gt;-->
+<!--&lt;!&ndash;			<snapshots>&ndash;&gt;-->
+<!--&lt;!&ndash;				<enabled>false</enabled>&ndash;&gt;-->
+<!--&lt;!&ndash;			</snapshots>&ndash;&gt;-->
+<!--&lt;!&ndash;		</repository>&ndash;&gt;-->
+<!--	</repositories>-->
 
 	<dependencies>
 		<dependency>
