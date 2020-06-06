@@ -1,21 +1,5 @@
 package com.github.tanxinzheng.module.scheduler.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.github.tanxinzheng.AppTest;
-import com.github.tanxinzheng.framework.utils.UUIDGenerator;
-import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskModel;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 public class ScheduleTaskControllerTest  {
 //
 //    private static ScheduleTaskModel scheduleTaskModel;

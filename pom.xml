@@ -38,7 +38,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring-cloud.version>Camden.SR5</spring-cloud.version>
 		<boot.fremework.version>1.0.0-SNAPSHOT</boot.fremework.version>
-		<project.version>1.1.0-SNAPSHOT</project.version>
+		<project.version>1.0.0-SNAPSHOT</project.version>
 		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
 		<io.springfox.version>2.9.2</io.springfox.version>
 		<xxl.job.starter.version>1.0.1-RELEASE</xxl.job.starter.version>
@@ -46,69 +46,11 @@
 		<skipTests>false</skipTests>
 	</properties>
 
-<!--	<distributionManagement>-->
-<!--		<repository>-->
-<!--			<id>rdc-releases</id>-->
-<!--			<url>https://repo.rdc.aliyun.com/repository/127761-release-WfiAMX/</url>-->
-<!--		</repository>-->
-<!--		<snapshotRepository>-->
-<!--			<id>rdc-snapshots</id>-->
-<!--			<url>https://repo.rdc.aliyun.com/repository/127761-snapshot-2jimrZ/</url>-->
-<!--		</snapshotRepository>-->
-<!--	</distributionManagement>-->
-<!--	<repositories>-->
-<!--		<repository>-->
-<!--			<name>maven-releases</name>-->
-<!--			<id>rdc-releases</id>-->
-<!--			<url>https://repo.rdc.aliyun.com/repository/127761-release-WfiAMX/</url>-->
-<!--		</repository>-->
-<!--		<repository>-->
-<!--			<name>maven-snapshots</name>-->
-<!--			<id>rdc-snapshots</id>-->
-<!--			<url>https://repo.rdc.aliyun.com/repository/127761-snapshot-2jimrZ/</url>-->
-<!--			<snapshots>-->
-<!--				<enabled>true</enabled>-->
-<!--			</snapshots>-->
-<!--		</repository>-->
-<!--&lt;!&ndash;		<repository>&ndash;&gt;-->
-<!--&lt;!&ndash;			<id>spring-milestones</id>&ndash;&gt;-->
-<!--&lt;!&ndash;			<name>Spring Milestones</name>&ndash;&gt;-->
-<!--&lt;!&ndash;			<url>https://repo.spring.io/milestone</url>&ndash;&gt;-->
-<!--&lt;!&ndash;			<snapshots>&ndash;&gt;-->
-<!--&lt;!&ndash;				<enabled>false</enabled>&ndash;&gt;-->
-<!--&lt;!&ndash;			</snapshots>&ndash;&gt;-->
-<!--&lt;!&ndash;		</repository>&ndash;&gt;-->
-<!--	</repositories>-->
-
 	<dependencies>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>com.google.collections</groupId>-->
-<!--			<artifactId>google-collections</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.apache.commons</groupId>-->
-<!--			<artifactId>commons-lang3</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>commons-collections</groupId>-->
-<!--			<artifactId>commons-collections</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.projectlombok</groupId>-->
-<!--			<artifactId>lombok</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-web</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>io.springfox</groupId>-->
-<!--			<artifactId>springfox-swagger2</artifactId>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -128,7 +70,21 @@
 				<artifactId>boot-starter-jwt</artifactId>
 				<version>${boot.fremework.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>com.github.tanxinzheng</groupId>
+				<artifactId>boot-starter-web</artifactId>
+				<version>${boot.fremework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.tanxinzheng</groupId>
+				<artifactId>boot-starter-redis</artifactId>
+				<version>${boot.fremework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.tanxinzheng</groupId>
+				<artifactId>boot-starter-test</artifactId>
+				<version>${boot.fremework.version}</version>
+			</dependency>
 			<!-- module jar -->
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
@@ -414,35 +370,6 @@
 <!--						</configuration>-->
 <!--					</execution>-->
 <!--				</executions>-->
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>xml-maven-plugin</artifactId>
-				<version>1.0.2</version>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>transform</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<transformationSets>
-						<transformationSet>
-							<dir>target\</dir>
-<!--							<stylesheet>checkstyle\checkstyle-author.xsl</stylesheet>-->
-							<includes>checkstyle-result.xml</includes>
-							<fileMappers>
-								<fileMapper
-										implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
-									<pattern>\.xml$</pattern>
-									<replacement>.html</replacement>
-								</fileMapper>
-							</fileMappers>
-						</transformationSet>
-					</transformationSets>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
