@@ -1,0 +1,42 @@
+server:
+  port: 9005 #提供者的端口
+spring:
+  application:
+    name: boot-dictionary
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/boot_demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850
+#      config:
+#        server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850
+#        file-extension: yaml
+#        namespace: 7d3e5f19-a102-471a-b6e0-67bd7d1d35f3
+#        group: ORDER_GROUP
+  redis:
+    database: 0
+    cluster:
+      max-redirects: 3
+      nodes:
+        - 127.0.0.1:7000
+        - 127.0.0.1:7001
+        - 127.0.0.1:7002
+        - 127.0.0.1:7003
+        - 127.0.0.1:7004
+        - 127.0.0.1:7005
+    lettuce:
+      pool:
+        max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 100 # 连接池中的最大空闲连接
+        min-idle: 50 # 连接池中的最小空闲连接
+        max-wait: 6000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    timeout: 1000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
