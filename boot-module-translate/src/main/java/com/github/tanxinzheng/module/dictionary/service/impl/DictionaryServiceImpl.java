@@ -1,5 +1,8 @@
 package com.github.tanxinzheng.module.dictionary.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryRequest;
 import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryResponse;
@@ -83,8 +86,8 @@ public class DictionaryServiceImpl implements DictionaryService {
      */
     @Override
     public Page<DictionaryResponse> findPageDictionaryResponse(DictionaryRequest dictionaryRequest) {
-        Page<DictionaryResponse> responsePage = new Page<>(dictionaryRequest.getPageNum(), dictionaryRequest.getPageSize());
-        return dictionaryMapper.selectPage(responsePage, dictionaryRequest);
+        Page<DictionaryResponse> dictionaryPage = new Page<>(dictionaryRequest.getPageNum(), dictionaryRequest.getPageSize());
+        return dictionaryMapper.findPage(dictionaryPage, dictionaryRequest.getQueryWrapper());
     }
 
     /**

@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by tanxinzheng on 2018/12/2.
  */
 public class GroupControllerTest extends TestAppController {
+
     @Before
     public void setUp() throws Exception {
         super.setUp();

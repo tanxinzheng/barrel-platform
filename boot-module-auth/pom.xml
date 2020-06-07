@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>boot</artifactId>
+        <artifactId>boot-parent</artifactId>
         <groupId>com.github.tanxinzheng</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <groupId>com.github.tanxinzheng</groupId>
     <artifactId>boot-module-auth</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>${project.version}</version>
 
     <name>boot-module-auth</name>
     <!-- FIXME change it to the project's website -->
@@ -26,28 +26,19 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-core</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.github.tanxinzheng</groupId>-->
 <!--            <artifactId>boot-module-excel</artifactId>-->
-<!--            <version>1.0.1-SNAPSHOT</version>-->
+<!--            <version>1.0.0-SNAPSHOT</version>-->
 <!--        </dependency>-->
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-module-jwt</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <artifactId>boot-starter-jwt</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-module-translate</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>boot-starter-test</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -56,6 +47,11 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

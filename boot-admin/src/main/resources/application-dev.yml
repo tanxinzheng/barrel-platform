@@ -4,14 +4,27 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/xmo_demo?useUnicode:true&characterEncoding:utf8&useSSL:true
+    url: jdbc:mysql://localhost:3306/boot_demo??useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: 123456
   redis:
-    host: localhost # Redis服务器地址
-    database: 0 # Redis数据库索引（默认为0）
-    port: 6379 # Redis服务器连接端口
-    password: # Redis服务器连接密码（默认为空）
+    database: 0
+    cluster:
+      max-redirects: 3
+      nodes:
+        - 127.0.0.1:7000
+        - 127.0.0.1:7001
+        - 127.0.0.1:7002
+        - 127.0.0.1:7003
+        - 127.0.0.1:7004
+        - 127.0.0.1:7005
+    lettuce:
+      pool:
+        max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 100 # 连接池中的最大空闲连接
+        min-idle: 50 # 连接池中的最小空闲连接
+        max-wait: 6000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    timeout: 1000
 
 jwt:
   secret: 123456
@@ -35,3 +48,14 @@ storage:
     access-key-secret: SvUzBFGETJ3k9DUY0krXEKLYEpOsFF
     bucket-name: xmomen-test
     endpoint: oss-cn-hangzhou.aliyuncs.com
+
+xxl-job:
+  admin:
+    admin-addresses: http://localhost:21008/xxl-job-admin
+  executor:
+    app-name: xxl-job-spring-boot-starter-example #默认为 xxl-job-executor
+    access-token: #默认为空
+    log-path: logs/applogs/xxl-job/jobhandler #默认为 logs/applogs/xxl-job/jobhandler
+    log-retention-days: 10 #默认为 10
+    ip: #默认为空
+    port: 9999 #默认为 9999

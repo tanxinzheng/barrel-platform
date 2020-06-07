@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.tanxinzheng.module.dictionary.domain.mapper.DictionaryMapper" >
+
+    <sql id="Base_Columns">
+        ID,
+        GROUP_NAME,
+        GROUP_CODE,
+        DICTIONARY_NAME,
+        DICTIONARY_CODE,
+        SORT,
+        ACTIVE,
+        PARENT_ID,
+        IS_SHOW,
+        CREATED_USER_ID,
+        CREATED_TIME,
+        UPDATED_USER_ID,
+        UPDATED_TIME,
+        DATA_VERSION
+    </sql>
+
+    <sql id="Base_Properties">
+        #{id, jdbcType=VARCHAR},
+        #{groupName, jdbcType=VARCHAR},
+        #{groupCode, jdbcType=VARCHAR},
+        #{dictionaryName, jdbcType=VARCHAR},
+        #{dictionaryCode, jdbcType=VARCHAR},
+        #{sort, jdbcType=INTEGER},
+        #{active, jdbcType=VARCHAR},
+        #{parentId, jdbcType=VARCHAR},
+        #{isShow, jdbcType=VARCHAR},
+        #{createdUserId, jdbcType=VARCHAR},
+        #{createdTime, jdbcType=TIMESTAMP},
+        #{updatedUserId, jdbcType=VARCHAR},
+        #{updatedTime, jdbcType=TIMESTAMP},
+        #{dataVersion, jdbcType=INTEGER}
+    </sql>
+
+    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO xmo_dictionary
+        (
+        <include refid="Base_Columns" />
+        )
+        VALUES
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            <include refid="Base_Properties" />
+        </foreach>
+    </insert>
+
+
+</mapper>
