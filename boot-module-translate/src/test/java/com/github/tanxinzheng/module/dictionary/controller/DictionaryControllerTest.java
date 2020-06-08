@@ -3,7 +3,7 @@ package com.github.tanxinzheng.module.dictionary.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.github.tanxinzheng.AppTestConfig;
-import com.github.tanxinzheng.framework.web.model.RestResponse;
+import com.github.tanxinzheng.framework.model.RestResponse;
 import com.github.tanxinzheng.module.dictionary.model.DictionaryModel;
 import org.junit.*;
 import org.junit.runner.RunWith;

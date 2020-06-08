@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.module.account.model;
 
-import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
 import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
+import com.github.tanxinzheng.web.json.DictionaryIndex;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

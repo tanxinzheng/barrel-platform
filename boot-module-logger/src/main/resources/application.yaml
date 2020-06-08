@@ -2,7 +2,7 @@ server:
   port: 9005 #提供者的端口
 spring:
   application:
-    name: barrel-dictionary
+    name: barrel-logger
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/barrel?useUnicode=true&characterEncoding=utf-8&useSSL=false
@@ -31,7 +31,7 @@ spring:
         - 127.0.0.1:7005
     lettuce:
       pool:
-        max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 100 # 连接池最大连接数（使用负值表示没有限制）
         max-idle: 100 # 连接池中的最大空闲连接
         min-idle: 50 # 连接池中的最小空闲连接
         max-wait: 6000 # 连接池最大阻塞等待时间（使用负值表示没有限制）

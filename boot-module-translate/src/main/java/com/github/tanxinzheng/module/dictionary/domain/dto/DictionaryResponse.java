@@ -2,20 +2,13 @@ package com.github.tanxinzheng.module.dictionary.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
-import lombok.Data;
-import org.hibernate.validator.constraints.*;
-import javax.validation.constraints.*;
-import javax.validation.constraints.NotBlank;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
-import java.lang.Boolean;
-import java.lang.String;
-import java.lang.Integer;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 
 @ApiModel(value = "数据字典")
@@ -83,6 +76,9 @@ public class DictionaryResponse implements Serializable {
     */
     @JsonIgnore
     public static DictionaryResponse toResponse(Dictionary dictionary){
+        if(null == dictionary){
+            return null;
+        }
         DictionaryResponse dictionaryResponse = new DictionaryResponse();
         BeanUtils.copyProperties(dictionary, dictionaryResponse);
         return dictionaryResponse;

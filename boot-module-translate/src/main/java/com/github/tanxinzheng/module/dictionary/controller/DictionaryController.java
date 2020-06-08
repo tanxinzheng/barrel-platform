@@ -3,18 +3,17 @@ package com.github.tanxinzheng.module.dictionary.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryRequest;
 import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryResponse;
-import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
 import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
+import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
-
 
 @Slf4j
 @Api(tags = "数据字典接口")
@@ -22,7 +21,7 @@ import java.util.List;
 @RequestMapping(value = "/dictionary")
 public class DictionaryController {
 
-    @Autowired
+    @Resource
     DictionaryService dictionaryService;
 
     /**
@@ -90,9 +89,8 @@ public class DictionaryController {
      */
     @ApiOperation(value = "批量删除数据字典")
     @DeleteMapping
-    public int deleteDictionarys(@RequestBody List<String> ids){
+    public int deleteDictionaries(@RequestBody List<String> ids){
         return dictionaryService.deleteDictionary(ids);
     }
-
 
 }

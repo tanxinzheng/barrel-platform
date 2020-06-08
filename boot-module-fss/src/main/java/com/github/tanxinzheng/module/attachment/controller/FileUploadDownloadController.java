@@ -2,13 +2,13 @@ package com.github.tanxinzheng.module.attachment.controller;
 
 import com.aliyun.oss.common.utils.IOUtils;
 import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.github.tanxinzheng.framework.web.annotation.LoginUser;
-import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
 import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
 import com.github.tanxinzheng.module.attachment.service.AttachmentService;
 import com.github.tanxinzheng.module.fss.model.FileStorageResult;
 import com.github.tanxinzheng.module.fss.service.FileStoreService;
+import com.github.tanxinzheng.web.annotation.LoginUser;
+import com.github.tanxinzheng.web.model.CurrentLoginUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
