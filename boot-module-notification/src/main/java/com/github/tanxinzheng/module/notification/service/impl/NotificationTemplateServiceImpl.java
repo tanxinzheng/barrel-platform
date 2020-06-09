@@ -7,15 +7,12 @@ import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
 import com.github.tanxinzheng.framework.core.service.SelectService;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryTransferService;
 import com.github.tanxinzheng.module.notification.mapper.NotificationTemplateMapper;
 import com.github.tanxinzheng.module.notification.model.NotificationTemplate;
 import com.github.tanxinzheng.module.notification.model.NotificationTemplateModel;
 import com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery;
 import com.github.tanxinzheng.module.notification.service.NotificationTemplateService;
-import com.github.tanxinzheng.web.json.DictionaryIndex;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author  tanxinzheng
@@ -33,7 +28,7 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  */
 @Service
-public class NotificationTemplateServiceImpl implements NotificationTemplateService, DictionaryTransferService, SelectService {
+public class NotificationTemplateServiceImpl implements NotificationTemplateService, SelectService {
 
     @Autowired
     NotificationTemplateMapper notificationTemplateMapper;
@@ -217,25 +212,25 @@ public class NotificationTemplateServiceImpl implements NotificationTemplateServ
      * @param dictionaryCode 字典代码
      * @return
      */
-    @Override
-    public Map<String, Object> translate(String dictionaryType, String dictionaryCode) {
-        NotificationTemplateQuery notificationTemplateQuery = new NotificationTemplateQuery();
-        List<NotificationTemplateModel> notificationTemplateModelList = getNotificationTemplateModelList(notificationTemplateQuery);
-        if(CollectionUtils.isNotEmpty(notificationTemplateModelList)){
-            return notificationTemplateModelList.stream().collect(Collectors.toMap(NotificationTemplateModel::getTemplateCode, NotificationTemplateModel::getTemplateName));
-        }
-        return Maps.newHashMap();
-    }
-
-    /**
-     * 字典索引
-     *
-     * @return
-     */
-    @Override
-    public String getDictionaryIndex() {
-        return DictionaryIndex.NOTIFICATION_TEMPLATE;
-    }
+//    @Override
+//    public Map<String, Object> translate(String dictionaryType, String dictionaryCode) {
+//        NotificationTemplateQuery notificationTemplateQuery = new NotificationTemplateQuery();
+//        List<NotificationTemplateModel> notificationTemplateModelList = getNotificationTemplateModelList(notificationTemplateQuery);
+//        if(CollectionUtils.isNotEmpty(notificationTemplateModelList)){
+//            return notificationTemplateModelList.stream().collect(Collectors.toMap(NotificationTemplateModel::getTemplateCode, NotificationTemplateModel::getTemplateName));
+//        }
+//        return Maps.newHashMap();
+//    }
+//
+//    /**
+//     * 字典索引
+//     *
+//     * @return
+//     */
+//    @Override
+//    public String getDictionaryIndex() {
+//        return DictionaryIndex.NOTIFICATION_TEMPLATE;
+//    }
 
     /**
      * 查询option数据

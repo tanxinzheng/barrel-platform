@@ -2,6 +2,7 @@ package com.github.tanxinzheng.module.dictionary.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
+import com.github.tanxinzheng.module.dictionary.web.AccountField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -44,12 +45,14 @@ public class DictionaryResponse implements Serializable {
     private Boolean isShow;
     /** 创建人 */
     @ApiModelProperty(value = "创建人")
+    @AccountField
     private String createdUserId;
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")
     private Date createdTime;
     /** 更新人 */
     @ApiModelProperty(value = "更新人")
+    @AccountField
     private String updatedUserId;
     /** 更新时间 */
     @ApiModelProperty(value = "更新时间")

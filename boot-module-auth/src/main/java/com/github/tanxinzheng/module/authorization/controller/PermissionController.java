@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.authorization.controller;
 
-import com.github.tanxinzheng.framework.model.RestResponse;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.module.authorization.constant.PermissionAction;
 import com.github.tanxinzheng.module.authorization.model.PermissionCreate;
 import com.github.tanxinzheng.module.authorization.model.PermissionModel;

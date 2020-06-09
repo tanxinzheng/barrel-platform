@@ -5,13 +5,13 @@ spring:
     name: barrel-dictionary
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/barrel?useUnicode=true&characterEncoding=utf-8&useSSL=false
-    username: root
-    password: 123456
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850
+    url: jdbc:mysql://ecs-txz:3306/barrel?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: barrel_data
+    password: Putdown#exhale6#ploys#Blunt
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850
 #      config:
 #        server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850
 #        file-extension: yaml
@@ -37,6 +37,11 @@ spring:
         max-wait: 6000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
     timeout: 1000
 
+logging:
+  level:
+    org.springframework.web: DEBUG
+    main.blog.mapper: trace
+
 # mybatis
 mybatis-plus:
   global-config:
@@ -47,8 +52,8 @@ mybatis-plus:
       #驼峰下划线转换
       column-underline: true
       #逻辑删除配置
-      logic-delete-value: 0
-      logic-not-delete-value: 1
+      logic-delete-value: 1
+      logic-not-delete-value: 0
       db-type: mysql
     refresh: false
   configuration:

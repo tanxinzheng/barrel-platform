@@ -32,6 +32,7 @@
 		<module>boot-admin-server</module>
         <module>boot-service</module>
 		<module>boot-devops</module>
+		<module>boot-service-api</module>
 		<!--		<module>boot-admin-ui</module>-->
 	</modules>
 

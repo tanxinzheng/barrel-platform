@@ -2,7 +2,7 @@ package com.github.tanxinzheng.module.authorization.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.github.tanxinzheng.framework.model.RestResponse;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import com.github.tanxinzheng.module.authorization.model.GroupModel;
 import com.github.tanxinzheng.module.authorization.model.GroupPermissionModel;
 import com.github.tanxinzheng.test.TestAppController;
