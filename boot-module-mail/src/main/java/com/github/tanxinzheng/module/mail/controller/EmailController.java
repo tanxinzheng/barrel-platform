@@ -1,8 +1,8 @@
 package com.github.tanxinzheng.module.mail.controller;
 
+import com.github.tanxinzheng.framework.web.web.model.RestResponse;
 import com.github.tanxinzheng.module.mail.model.EmailModel;
 import com.github.tanxinzheng.module.mail.service.EmailService;
-import com.github.tanxinzheng.web.model.RestResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 

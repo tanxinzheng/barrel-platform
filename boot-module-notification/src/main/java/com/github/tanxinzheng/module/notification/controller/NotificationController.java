@@ -1,12 +1,12 @@
 package com.github.tanxinzheng.module.notification.controller;
 
 import com.github.pagehelper.Page;
+import com.github.tanxinzheng.framework.web.annotation.LoginUser;
+import com.github.tanxinzheng.framework.web.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.notification.model.NotificationModel;
 import com.github.tanxinzheng.module.notification.model.NotificationQuery;
 import com.github.tanxinzheng.module.notification.model.SendNotification;
 import com.github.tanxinzheng.module.notification.service.NotificationService;
-import com.github.tanxinzheng.web.annotation.LoginUser;
-import com.github.tanxinzheng.web.model.CurrentLoginUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.ArrayUtils;

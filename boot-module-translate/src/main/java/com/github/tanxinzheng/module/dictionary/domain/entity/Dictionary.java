@@ -1,13 +1,12 @@
 package com.github.tanxinzheng.module.dictionary.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.tanxinzheng.framework.model.BaseEntity;
 import lombok.Data;
 
-import java.lang.Boolean;
-import java.lang.String;
-import java.lang.Integer;
-import java.util.Date;
 import java.io.Serializable;
 
 @Data
@@ -15,19 +14,19 @@ import java.io.Serializable;
 public class Dictionary extends BaseEntity implements Serializable {
 
     /** 主键 */
-    @TableField(value = "ID")
+    @TableId(value = "ID", type = IdType.UUID)
     private String id;
     /** 字典组名称 */
     @TableField(value = "GROUP_NAME")
     private String groupName;
     /** 字典组代码 */
-    @TableId(value = "GROUP_CODE", type = IdType.UUID)
+    @TableId(value = "GROUP_CODE")
     private String groupCode;
     /** 名称 */
     @TableField(value = "DICTIONARY_NAME")
     private String dictionaryName;
     /** 代码 */
-    @TableId(value = "DICTIONARY_CODE", type = IdType.UUID)
+    @TableField(value = "DICTIONARY_CODE")
     private String dictionaryCode;
     /** 排序 */
     @TableField(value = "SORT")

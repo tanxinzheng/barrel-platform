@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.framework.poi;
 
-import com.github.tanxinzheng.web.model.RestResponse;
+import com.github.tanxinzheng.framework.web.model.RestResponse;
 import lombok.Data;
 
 /**

@@ -1,10 +1,10 @@
 package com.github.tanxinzheng.module.notification.controller;
 
 import com.github.tanxinzheng.framework.logger.ActionLog;
+import com.github.tanxinzheng.framework.web.annotation.LoginUser;
+import com.github.tanxinzheng.framework.web.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.notification.model.*;
 import com.github.tanxinzheng.module.notification.service.NotificationService;
-import com.github.tanxinzheng.web.annotation.LoginUser;
-import com.github.tanxinzheng.web.model.CurrentLoginUser;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
