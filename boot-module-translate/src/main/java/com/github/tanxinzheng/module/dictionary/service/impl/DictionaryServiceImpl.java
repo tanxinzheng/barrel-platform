@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryRequest;
 import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryResponse;
 import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class DictionaryServiceImpl implements DictionaryService {
+public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Dictionary> implements DictionaryService {
 
     @Resource
     DictionaryMapper dictionaryMapper;
@@ -85,9 +86,9 @@ public class DictionaryServiceImpl implements DictionaryService {
      * @return Page<DictionaryResponse>
      */
     @Override
-    public Page<DictionaryResponse> findPageDictionaryResponse(DictionaryRequest dictionaryRequest) {
-        Page<DictionaryResponse> dictionaryPage = new Page<>(dictionaryRequest.getPageNum(), dictionaryRequest.getPageSize());
-        return dictionaryMapper.findPage(dictionaryPage, dictionaryRequest.getQueryWrapper());
+    public Page<Dictionary> findPageDictionaryResponse(DictionaryRequest dictionaryRequest) {
+        Page<Dictionary> dictionaryPage = new Page<>(dictionaryRequest.getPageNum(), dictionaryRequest.getPageSize());
+        return (Page<Dictionary>) dictionaryMapper.selectPage(dictionaryPage, dictionaryRequest.getQueryWrapper());
     }
 
     /**

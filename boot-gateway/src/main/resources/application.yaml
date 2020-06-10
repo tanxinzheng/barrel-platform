@@ -1,12 +1,11 @@
 server:
   port: 9999 #提供者的端口
 spring:
+  profiles:
+    active: dev
   application:
     name: barrel-gateway
   cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850
     gateway:
       discovery:
         locator:
@@ -22,17 +21,30 @@ spring:
           uri: lb://barrel-dictionary
           predicates:
             - Path=/dictionary/**
+  redis:
+    database: 0
+    cluster:
+      max-redirects: 3
+    lettuce:
+      pool:
+        max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 100 # 连接池中的最大空闲连接
+        min-idle: 50 # 连接池中的最小空闲连接
+        max-wait: 6000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    timeout: 1000
 
 # 聚合文档配置
 barrel:
   document:
     resources:
-      - name: 授权模块
-        location: /blade-auth
-      - name: 工作台模块
-        location: /blade-desk
-      - name: 系统模块
-        location: /blade-system
+#      - name: 授权模块
+#        location: /barrel-auth
+#      - name: 工作台模块
+#        location: /barrel-desk
+#      - name: 系统模块
+#        location: /barrel-system
+      - name: 基础模块
+        location: /barrel-dictionary
 
 management:
   endpoints:

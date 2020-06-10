@@ -43,7 +43,7 @@ public interface DictionaryService {
      * @param   dictionaryRequest
      * @return  Page<DictionaryResponse>
      */
-    public Page<DictionaryResponse> findPageDictionaryResponse(DictionaryRequest dictionaryRequest);
+    public Page<Dictionary> findPageDictionaryResponse(DictionaryRequest dictionaryRequest);
 
     /**
      * 批量删除数据字典

@@ -2,8 +2,9 @@ package com.github.tanxinzheng.cloud.gateway.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tanxinzheng.framework.web.model.RestResponse;
-import com.github.tanxinzheng.jwt.support.JwtUtils;
+//import com.github.tanxinzheng.jwt.support.JwtUtils;
+import com.github.tanxinzheng.framework.model.BaseResultCode;
+import com.github.tanxinzheng.framework.model.RestResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -32,8 +33,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
         this.objectMapper = objectMapper;
     }
 
-    @Resource
-    JwtUtils jwtUtils;
+//    @Resource
+//    JwtUtils jwtUtils;
 
     /**
      * 过滤器
@@ -59,9 +60,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }else{
             //有token
             try {
-                if(!jwtUtils.validateToken(token)){
-                    return authErro(resp,"无效的令牌");
-                }
+//                if(!jwtUtils.validateToken(token)){
+//                    return authErro(resp,"无效的令牌");
+//                }
                 return chain.filter(exchange);
             }catch (ExpiredJwtException e){
                 log.error(e.getMessage(),e);
@@ -86,7 +87,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private Mono<Void> authErro(ServerHttpResponse resp,String mess) {
         resp.setStatusCode(HttpStatus.UNAUTHORIZED);
         resp.getHeaders().add("Content-Type","application/json;charset=UTF-8");
-        RestResponse<String> returnData = RestResponse.failed(HttpStatus.UNAUTHORIZED, mess);
+        RestResponse<String> returnData = RestResponse.failed(BaseResultCode.UNAUTHORIZED, mess);
         String returnStr = "";
         try {
             returnStr = objectMapper.writeValueAsString(returnData);

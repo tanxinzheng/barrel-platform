@@ -1,10 +1,8 @@
 package com.github.tanxinzheng.cloud.gateway.config;
 
-import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter;
-import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
-import com.alibaba.csp.sentinel.adapter.gateway.sc.exception.SentinelGatewayBlockExceptionHandler;
 import com.github.tanxinzheng.cloud.gateway.filter.CorsResponseHeaderFilter;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,27 +47,27 @@ public class GatewayConfiguration {
         this.viewResolvers = viewResolversProvider.getIfAvailable(Collections::emptyList);
         this.serverCodecConfigurer = serverCodecConfigurer;
     }
-
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SentinelGatewayBlockExceptionHandler sentinelGatewayBlockExceptionHandler() {
-        // Register the block exception handler for Spring Cloud Gateway.
-        return new SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
-    }
-
-    @Bean
-    @Order(-5)
-    public GlobalFilter sentinelGatewayFilter() {
-        return new SentinelGatewayFilter();
-    }
-
-    @PostConstruct
-    public void doInit() {
-        GatewayCallbackManager.setBlockHandler((exchange, ex) ->
-                ServerResponse.status(HttpStatus.TOO_MANY_REQUESTS)
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .body(fromValue(ex.getClass().getSimpleName())));
-    }
+//
+//    @Bean
+//    @Order(Ordered.HIGHEST_PRECEDENCE)
+//    public SentinelGatewayBlockExceptionHandler sentinelGatewayBlockExceptionHandler() {
+//        // Register the block exception handler for Spring Cloud Gateway.
+//        return new SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
+//    }
+//
+//    @Bean
+//    @Order(-5)
+//    public GlobalFilter sentinelGatewayFilter() {
+//        return new SentinelGatewayFilter();
+//    }
+//
+//    @PostConstruct
+//    public void doInit() {
+//        GatewayCallbackManager.setBlockHandler((exchange, ex) ->
+//                ServerResponse.status(HttpStatus.TOO_MANY_REQUESTS)
+//                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                        .body(fromValue(ex.getClass().getSimpleName())));
+//    }
 
     /**
      * 设置跨域

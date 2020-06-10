@@ -4,7 +4,7 @@ import com.github.tanxinzheng.framework.core.model.SelectIndex;
 import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
 import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
 import com.github.tanxinzheng.framework.core.service.SelectService;
-import com.github.tanxinzheng.framework.web.model.RestResponse;
+import com.github.tanxinzheng.framework.model.RestResponse;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

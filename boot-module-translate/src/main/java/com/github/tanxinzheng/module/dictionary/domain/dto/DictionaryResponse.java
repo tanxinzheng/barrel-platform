@@ -44,15 +44,15 @@ public class DictionaryResponse implements Serializable {
     @ApiModelProperty(value = "显示")
     private Boolean isShow;
     /** 创建人 */
-    @ApiModelProperty(value = "创建人")
     @AccountField
+    @ApiModelProperty(value = "创建人")
     private String createdUserId;
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")
     private Date createdTime;
     /** 更新人 */
-    @ApiModelProperty(value = "更新人")
     @AccountField
+    @ApiModelProperty(value = "更新人")
     private String updatedUserId;
     /** 更新时间 */
     @ApiModelProperty(value = "更新时间")

@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
-@Api(tags = "数据字典接口")
+@Api(tags = "数据字典")
 @RestController
 @RequestMapping(value = "/dictionary")
 public class DictionaryController {
@@ -31,7 +31,7 @@ public class DictionaryController {
      */
     @ApiOperation(value = "查询数据字典列表")
     @GetMapping
-    public Page<DictionaryResponse> getDictionaryList(DictionaryRequest dictionaryRequest){
+    public Page<Dictionary> getDictionaryList(DictionaryRequest dictionaryRequest){
         return dictionaryService.findPageDictionaryResponse(dictionaryRequest);
     }
 
