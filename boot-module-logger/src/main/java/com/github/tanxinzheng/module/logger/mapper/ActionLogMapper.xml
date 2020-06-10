@@ -3,7 +3,7 @@
 <mapper namespace="com.github.tanxinzheng.module.logger.mapper.ActionLogMapper" >
 
 
-    <insert id="insertActionLog" parameterType="com.github.tanxinzheng.module.logger.LogModel">
+    <insert id="insertActionLog" parameterType="com.github.tanxinzheng.module.logger.model.LogModel">
         INSERT INTO xmo_action_log(
                 id,
                 user_id,
@@ -27,38 +27,5 @@
 	            #{targetMethod}
 	            )
     </insert>
-    
-    <select id="getActionLogs" parameterType="com.github.tanxinzheng.module.logger.model.ActionLogQuery"
-            resultType="com.github.tanxinzheng.module.logger.LogModel">
-        SELECT
-        l.*
-        FROM
-        xmo_action_log l
-        LEFT JOIN xmo_user u ON u.ID = l.USER_ID
-        <where>
-            <if test="keyword">
-                AND (UPPER(u.username) LIKE CONCAT('%', UPPER(#{keyword}), '%')
-                    or UPPER(u.email) LIKE CONCAT('%', UPPER(#{keyword}), '%')
-                    or UPPER(u.PHONE_NUMBER) LIKE CONCAT('%', UPPER(#{keyword}), '%')
-                    or l.action_name LIKE CONCAT('%', UPPER(#{keyword}), '%'))
-            </if>
-            <if test="userId">
-                AND l.user_id = #{userId}
-            </if>
-            <if test="username">
-                AND (UPPER(u.username) = UPPER(#{username}) or UPPER(u.email) = UPPER(#{username}) or UPPER(u.PHONE_NUMBER) = UPPER(#{username}))
-            </if>
-            <if test="startActionDate">
-                <![CDATA[
-                AND date_format(action_date, '%Y-%m-%d') >= date_format(#{startActionDate},'%Y-%m-%d')
-                ]]>
-            </if>
-            <if test="endActionDate">
-                <![CDATA[
-                AND date_format(action_date, '%Y-%m-%d') <= date_format(#{endActionDate},'%Y-%m-%d')
-                ]]>
-            </if>
-        </where>
-        order by l.action_date desc
-    </select>
+
 </mapper>

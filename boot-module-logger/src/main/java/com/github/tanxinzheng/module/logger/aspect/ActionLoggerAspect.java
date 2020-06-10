@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tanxinzheng.framework.logger.ActionLog;
-import com.github.tanxinzheng.module.logger.LogModel;
+import com.github.tanxinzheng.module.logger.model.LogModel;
 import com.github.tanxinzheng.module.logger.service.LoggerService;
 import com.google.common.collect.Maps;
 import freemarker.cache.StringTemplateLoader;
@@ -27,7 +27,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
 
 /**

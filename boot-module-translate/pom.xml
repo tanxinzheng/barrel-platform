@@ -28,18 +28,14 @@
             <artifactId>boot-starter-web</artifactId>
             <version>${boot.fremework.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>boot-starter-jwt</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-starter-redis</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

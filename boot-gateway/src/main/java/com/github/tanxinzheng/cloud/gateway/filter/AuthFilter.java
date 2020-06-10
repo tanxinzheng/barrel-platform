@@ -2,8 +2,8 @@ package com.github.tanxinzheng.cloud.gateway.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tanxinzheng.framework.utils.JwtUtils;
 import com.github.tanxinzheng.framework.web.model.RestResponse;
+import com.github.tanxinzheng.jwt.support.JwtUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

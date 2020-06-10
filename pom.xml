@@ -49,6 +49,7 @@
 		<spring.cloud.version>2.2.0.RELEASE</spring.cloud.version>
 		<alibaba.cloud.version>2.2.1.RELEASE</alibaba.cloud.version>
 		<spring.boot.admin.version>2.2.2</spring.boot.admin.version>
+		<knife4j.version>2.0.2</knife4j.version>
 		<io.springfox.version>2.9.2</io.springfox.version>
 		<xxl.job.starter.version>1.0.1-RELEASE</xxl.job.starter.version>
 		<skipNpmBuild>false</skipNpmBuild>
@@ -71,6 +72,12 @@
 				<version>${alibaba.cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.xiaoymin</groupId>
+				<artifactId>knife4j-spring-ui</artifactId>
+				<version>${knife4j.version}</version>
 			</dependency>
 
 			<!-- spring cloud -->

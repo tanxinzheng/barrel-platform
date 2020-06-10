@@ -2,11 +2,12 @@ package com.github.tanxinzheng.module.logger.service;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
-import com.github.tanxinzheng.module.logger.LogModel;
+import com.github.tanxinzheng.module.logger.model.LogModel;
 import com.github.tanxinzheng.module.logger.mapper.ActionLogMapper;
 import com.github.tanxinzheng.module.logger.model.ActionLogQuery;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * Created by Jeng on 16/6/13.
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoggerService {
 
-    @Autowired
+    @Resource
     ActionLogMapper actionLogMapper;
 
     public void setLogInfo(LogModel logInfo) {

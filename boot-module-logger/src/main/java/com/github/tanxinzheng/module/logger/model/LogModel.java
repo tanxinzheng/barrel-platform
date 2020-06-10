@@ -1,5 +1,7 @@
-package com.github.tanxinzheng.module.logger;
+package com.github.tanxinzheng.module.logger.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.github.tanxinzheng.framework.model.BaseEntity;
 import com.github.tanxinzheng.module.dictionary.web.AccountField;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,7 +14,8 @@ import java.util.Date;
  * Created by Jeng on 16/3/20.
  */
 @Data
-public class LogModel implements Serializable{
+@TableName(value = "xmo_action_log")
+public class LogModel extends BaseEntity implements Serializable {
 
 
     @AccountField
