@@ -1,9 +1,9 @@
 package com.github.tanxinzheng.module.attachment.model;
 
 import com.github.tanxinzheng.framework.model.BaseEntity;
-import com.github.tanxinzheng.module.dictionary.web.AccountField;
-import com.github.tanxinzheng.module.dictionary.web.DictionaryTransfer;
-import com.github.tanxinzheng.web.json.DictionaryIndex;
+import com.github.tanxinzheng.framework.web.annotation.AccountField;
+import com.github.tanxinzheng.framework.web.annotation.DictionaryTransfer;
+import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
 import lombok.Data;
 
 import java.io.Serializable;

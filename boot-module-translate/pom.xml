@@ -26,7 +26,6 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>boot-starter-web</artifactId>
-            <version>${boot.fremework.version}</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.github.tanxinzheng</groupId>-->

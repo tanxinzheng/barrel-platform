@@ -1,12 +1,10 @@
 package com.github.tanxinzheng.module.logger;
 
-import com.github.tanxinzheng.module.dictionary.web.AccountField;
+import com.github.tanxinzheng.framework.web.annotation.AccountField;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Created by Jeng on 16/3/20.

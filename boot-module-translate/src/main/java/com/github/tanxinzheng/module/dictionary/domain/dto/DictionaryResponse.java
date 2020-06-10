@@ -1,8 +1,8 @@
 package com.github.tanxinzheng.module.dictionary.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.tanxinzheng.framework.web.annotation.AccountField;
 import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
-import com.github.tanxinzheng.module.dictionary.web.AccountField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
