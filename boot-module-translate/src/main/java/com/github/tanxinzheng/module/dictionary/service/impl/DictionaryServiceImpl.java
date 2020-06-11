@@ -1,14 +1,11 @@
 package com.github.tanxinzheng.module.dictionary.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryRequest;
+import com.github.tanxinzheng.framework.model.QueryParams;
 import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryResponse;
 import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
-import com.github.tanxinzheng.module.dictionary.domain.mapper.DictionaryMapper;
+import com.github.tanxinzheng.module.dictionary.mapper.DictionaryMapper;
 import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,7 +30,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
      */
     @Transactional
     @Override
-    public DictionaryResponse createDictionary(Dictionary dictionaryCreate) {
+    public DictionaryResponse add(Dictionary dictionaryCreate) {
         dictionaryMapper.insert(dictionaryCreate);
         Dictionary dictionary = dictionaryMapper.selectById(dictionaryCreate.getId());
         return DictionaryResponse.toResponse(dictionary);
@@ -47,7 +44,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
      */
     @Transactional
     @Override
-    public List<Dictionary> createDictionarys(List<Dictionary> dictionary) {
+    public List<Dictionary> batchAdd(List<Dictionary> dictionary) {
         dictionaryMapper.insertBatch(dictionary);
         List<String> ids = dictionary.stream().map(Dictionary::getId).collect(Collectors.toList());
         return dictionaryMapper.selectBatchIds(ids);
@@ -61,7 +58,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
      */
     @Transactional
     @Override
-    public DictionaryResponse updateDictionary(Dictionary dictionaryUpdate) {
+    public DictionaryResponse edit(Dictionary dictionaryUpdate) {
         dictionaryMapper.updateById(dictionaryUpdate);
         Dictionary dictionary = dictionaryMapper.selectById(dictionaryUpdate.getId());
         return DictionaryResponse.toResponse(dictionary);
@@ -74,21 +71,19 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
      * @return DictionaryResponse
      */
     @Override
-    public DictionaryResponse findOneDictionaryResponse(String id) {
+    public DictionaryResponse findOne(String id) {
         Dictionary dictionary = dictionaryMapper.selectById(id);
         return DictionaryResponse.toResponse(dictionary);
     }
 
     /**
      * 查询数据字典领域分页对象（带参数条件）
-     *
-     * @param dictionaryRequest
      * @return Page<DictionaryResponse>
      */
     @Override
-    public Page<Dictionary> findPageDictionaryResponse(DictionaryRequest dictionaryRequest) {
-        Page<Dictionary> dictionaryPage = new Page<>(dictionaryRequest.getPageNum(), dictionaryRequest.getPageSize());
-        return (Page<Dictionary>) dictionaryMapper.selectPage(dictionaryPage, dictionaryRequest.getQueryWrapper());
+    public Page<Dictionary> findPage(QueryParams queryParams) {
+        Page<Dictionary> dictionaryPage = new Page<>(queryParams.getPageNum(), queryParams.getPageSize());
+        return (Page<Dictionary>) dictionaryMapper.selectPage(dictionaryPage, queryParams.getQueryWrapper());
     }
 
     /**
@@ -99,7 +94,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
      */
     @Transactional
     @Override
-    public int deleteDictionary(List<String> ids) {
+    public int batchRemove(List<String> ids) {
         return dictionaryMapper.deleteBatchIds(ids);
     }
 
@@ -111,7 +106,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
      */
     @Transactional
     @Override
-    public int deleteDictionary(String id) {
+    public int remove(String id) {
         return dictionaryMapper.deleteById(id);
     }
 }

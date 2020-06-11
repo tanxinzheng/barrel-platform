@@ -2,7 +2,6 @@ package com.github.tanxinzheng.cloud.gateway.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.github.tanxinzheng.jwt.support.JwtUtils;
 import com.github.tanxinzheng.framework.model.BaseResultCode;
 import com.github.tanxinzheng.framework.model.RestResponse;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -18,9 +17,10 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
+//import com.github.tanxinzheng.jwt.support.JwtUtils;
 
 @Slf4j
 public class AuthFilter implements GlobalFilter, Ordered {

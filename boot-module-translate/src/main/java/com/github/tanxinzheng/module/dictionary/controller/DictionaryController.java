@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.module.dictionary.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryRequest;
+import com.github.tanxinzheng.framework.model.QueryParams;
 import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryResponse;
 import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
 import com.github.tanxinzheng.module.dictionary.service.DictionaryService;
@@ -26,13 +26,13 @@ public class DictionaryController {
 
     /**
      * 数据字典列表
-     * @param   dictionaryRequest    数据字典查询参数对象
+     * @param   queryParams    数据字典查询参数对象
      * @return  Page<DictionaryResponse> 数据字典领域分页对象
      */
     @ApiOperation(value = "查询数据字典列表")
     @GetMapping
-    public Page<Dictionary> getDictionaryList(DictionaryRequest dictionaryRequest){
-        return dictionaryService.findPageDictionaryResponse(dictionaryRequest);
+    public Page<Dictionary> findPage(QueryParams queryParams){
+        return dictionaryService.findPage(queryParams);
     }
 
     /**
@@ -42,8 +42,8 @@ public class DictionaryController {
      */
     @ApiOperation(value = "查询数据字典")
     @GetMapping(value = "/{id}")
-    public DictionaryResponse getDictionaryById(@PathVariable(value = "id") String id){
-        return dictionaryService.findOneDictionaryResponse(id);
+    public DictionaryResponse findOne(@PathVariable(value = "id") String id){
+        return dictionaryService.findOne(id);
     }
 
     /**
@@ -53,8 +53,8 @@ public class DictionaryController {
      */
     @ApiOperation(value = "新增数据字典")
     @PostMapping
-    public DictionaryResponse createDictionary(@RequestBody @Valid Dictionary dictionaryCreate) {
-        return dictionaryService.createDictionary(dictionaryCreate);
+    public DictionaryResponse add(@RequestBody @Valid Dictionary dictionaryCreate) {
+        return dictionaryService.add(dictionaryCreate);
     }
 
     /**
@@ -70,7 +70,7 @@ public class DictionaryController {
         if(StringUtils.isNotBlank(id)){
             dictionaryUpdate.setId(id);
         }
-        return dictionaryService.updateDictionary(dictionaryUpdate);
+        return dictionaryService.edit(dictionaryUpdate);
     }
 
     /**
@@ -80,7 +80,7 @@ public class DictionaryController {
     @ApiOperation(value = "删除单个数据字典")
     @DeleteMapping(value = "/{id}")
     public int deleteDictionary(@PathVariable(value = "id") String id){
-        return dictionaryService.deleteDictionary(id);
+        return dictionaryService.remove(id);
     }
 
     /**
@@ -90,7 +90,7 @@ public class DictionaryController {
     @ApiOperation(value = "批量删除数据字典")
     @DeleteMapping
     public int deleteDictionaries(@RequestBody List<String> ids){
-        return dictionaryService.deleteDictionary(ids);
+        return dictionaryService.batchRemove(ids);
     }
 
 }

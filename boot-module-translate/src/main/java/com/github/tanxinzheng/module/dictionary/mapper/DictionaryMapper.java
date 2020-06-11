@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.dictionary.domain.mapper;
+package com.github.tanxinzheng.module.dictionary.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

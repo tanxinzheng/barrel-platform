@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  boot-gateway:
+    networks:
+      work_net:
+        ipv4_address: 172.20.0.199
+    #restart: always
+    image: boot-gateway:latest
+    ports:
+      - "9999:9999"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+
+networks:
+  work_net:
+    external: true
