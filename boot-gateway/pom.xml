@@ -142,7 +142,7 @@
                     <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
                     <!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
                     <!--<dockerDirectory>docker</dockerDirectory>-->
-                    <imageName>${docker.image.prefix}/${project.build.finalName}:${project.version}</imageName>
+                    <imageName>${docker.image.prefix}/${project.build.finalName}:${boot.project.version}</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
 <!--                    <resources>-->
 <!--                        <resource>-->

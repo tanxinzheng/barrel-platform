@@ -16,23 +16,14 @@
 	<description>Boot Example</description>
 
 	<modules>
-		<module>boot-module-translate</module>
-		<module>boot-module-fss</module>
-		<module>boot-module-logger</module>
-		<module>boot-module-scheduler</module>
-		<module>boot-module-mail</module>
-		<module>boot-module-notification</module>
-		<module>boot-module-common</module>
-		<module>boot-module-account</module>
 		<module>boot-module-auth</module>
-		<module>boot-module-excel</module>
 		<module>boot-admin</module>
 		<module>boot-gateway</module>
 		<module>boot-config-server</module>
 		<module>boot-admin-server</module>
-        <module>boot-service</module>
 		<module>boot-devops</module>
 		<module>boot-service-api</module>
+		<module>boot-service</module>
         <!--		<module>boot-admin-ui</module>-->
 	</modules>
 
@@ -43,7 +34,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<boot.fremework.version>1.0.0-SNAPSHOT</boot.fremework.version>
-		<project.version>1.0.0-SNAPSHOT</project.version>
+		<boot.project.version>1.0.0-SNAPSHOT</boot.project.version>
 		<docker.image.prefix>barrel</docker.image.prefix>
 		<spring.boot.version>2.2.6.RELEASE</spring.boot.version>
 		<spring.cloud.dependencies.version>Hoxton.SR3</spring.cloud.dependencies.version>
@@ -61,7 +52,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -135,37 +125,37 @@
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>boot-module-translate</artifactId>
-				<version>${project.version}</version>
+				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>boot-module-fss</artifactId>
-				<version>${project.version}</version>
+				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>boot-module-auth</artifactId>
-				<version>${project.version}</version>
+				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>boot-module-account</artifactId>
-				<version>${project.version}</version>
+				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>boot-module-logger</artifactId>
-				<version>${project.version}</version>
+				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>boot-module-common</artifactId>
-				<version>${project.version}</version>
+				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>boot-module-notification</artifactId>
-				<version>${project.version}</version>
+				<version>${boot.project.version}</version>
 			</dependency>
 
 			<dependency>
