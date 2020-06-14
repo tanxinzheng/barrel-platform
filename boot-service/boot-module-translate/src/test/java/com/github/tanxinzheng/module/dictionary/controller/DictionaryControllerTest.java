@@ -54,7 +54,7 @@ public class DictionaryControllerTest {
 //                .andExpect(status().isOk());
 //    }
 //
-//    private RestResponse<DictionaryModel> create() throws Exception {
+//    private Result<DictionaryModel> create() throws Exception {
 //        DictionaryModel model = new DictionaryModel();
 //        model.setGroupCode(GROUP_CODE);
 //        model.setGroupName("测试分组");
@@ -68,14 +68,14 @@ public class DictionaryControllerTest {
 //                .andDo(print())
 //                .andExpect(status().isOk());
 //        String resultJson = actions.andReturn().getResponse().getContentAsString();
-//        RestResponse<DictionaryModel> restResponse = JSONObject.parseObject(resultJson, new TypeReference<RestResponse<DictionaryModel>>(){});
-//        dictionaryModel = restResponse.getData();
-//        return restResponse;
+//        Result<DictionaryModel> result = JSONObject.parseObject(resultJson, new TypeReference<Result<DictionaryModel>>(){});
+//        dictionaryModel = result.getData();
+//        return result;
 //    }
 //
 //    @Test
 //    public void test0createDictionary() throws Exception {
-//        RestResponse<DictionaryModel> resultJson = create();
+//        Result<DictionaryModel> resultJson = create();
 //        Assert.assertNotNull("新增数据字典，测试不通过", resultJson);
 //        Assert.assertNotNull("新增数据字典，测试不通过", resultJson.getData());
 //        Assert.assertNotNull("新增数据字典，测试不通过", resultJson.getData().getId());
@@ -90,9 +90,9 @@ public class DictionaryControllerTest {
 //                .andDo(print())
 //                .andExpect(status().isOk());
 //        String resultJson = actions.andReturn().getResponse().getContentAsString();
-//        RestResponse<List<DictionaryModel>> restResponse = JSONObject.parseObject(resultJson, new TypeReference<RestResponse<List<DictionaryModel>>>(){});
-//        Assert.assertNotNull("查询数据字典列表，测试不通过", restResponse);
-//        Assert.assertTrue("查询数据字典列表，测试不通过", restResponse.getData().size() > 0);
+//        Result<List<DictionaryModel>> result = JSONObject.parseObject(resultJson, new TypeReference<Result<List<DictionaryModel>>>(){});
+//        Assert.assertNotNull("查询数据字典列表，测试不通过", result);
+//        Assert.assertTrue("查询数据字典列表，测试不通过", result.getData().size() > 0);
 //    }
 //
 //    @Test

@@ -2,7 +2,7 @@ package com.github.tanxinzheng.module.menu.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.github.tanxinzheng.framework.model.TreeModel;
+import com.github.tanxinzheng.framework.model.TreeNode;
 import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.github.tanxinzheng.framework.utils.TreeUtils;
 import com.github.tanxinzheng.module.menu.mapper.MenuMapper;
@@ -204,17 +204,17 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<TreeModel> getTreeMenu(MenuQuery menuQuery) {
+    public List<TreeNode> getTreeMenu(MenuQuery menuQuery) {
         List<MenuModel> menuModelList = menuMapper.selectModel(menuQuery);
         if(CollectionUtils.isEmpty(menuModelList)){
             return null;
         }
-        List<TreeModel> treeModelList = Lists.newArrayList();
+        List<TreeNode> treeNodeList = Lists.newArrayList();
         menuModelList.stream().forEach(menuModel -> {
-            TreeModel<MenuModel> treeModel = new TreeModel(menuModel.getId(), menuModel.getTitle(), menuModel.getParentId());
-            treeModel.setValue(menuModel);
-            treeModelList.add(treeModel);
+            TreeNode<MenuModel> treeNode = new TreeNode(menuModel.getId(), menuModel.getTitle(), menuModel.getParentId());
+            treeNode.setValue(menuModel);
+            treeNodeList.add(treeNode);
         });
-        return TreeUtils.buildByRecursive(treeModelList);
+        return TreeUtils.buildByRecursive(treeNodeList);
     }
 }

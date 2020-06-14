@@ -16,7 +16,6 @@
 	<description>Boot Example</description>
 
 	<modules>
-		<module>boot-module-auth</module>
 		<module>boot-admin</module>
 		<module>boot-gateway</module>
 		<module>boot-config-server</module>
@@ -24,7 +23,9 @@
 		<module>boot-devops</module>
 		<module>boot-service-api</module>
 		<module>boot-service</module>
-        <!--		<module>boot-admin-ui</module>-->
+		<module>boot-auth</module>
+		<module>boot-api-authorization</module>
+		<!--		<module>boot-admin-ui</module>-->
 	</modules>
 
 	<properties>

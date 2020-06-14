@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.module.menu.controller;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.model.TreeModel;
+import com.github.tanxinzheng.framework.model.TreeNode;
 import com.github.tanxinzheng.module.menu.model.MenuModel;
 import com.github.tanxinzheng.module.menu.model.MenuQuery;
 import com.github.tanxinzheng.module.menu.service.MenuService;
@@ -104,7 +104,7 @@ public class MenuController {
      */
     @ApiOperation(value = "查询树形菜单")
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
-    public List<TreeModel> getTreeMenu(MenuQuery query){
+    public List<TreeNode> getTreeMenu(MenuQuery query){
         return menuService.getTreeMenu(query);
     }
 

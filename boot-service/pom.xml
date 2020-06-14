@@ -22,6 +22,7 @@
         <module>boot-module-notification</module>
         <module>boot-module-scheduler</module>
         <module>boot-module-translate</module>
+        <module>boot-module-authorization</module>
     </modules>
 
 </project>

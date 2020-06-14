@@ -2,7 +2,7 @@ package com.github.tanxinzheng.module.authorization.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.github.tanxinzheng.framework.model.RestResponse;
+import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.module.authorization.model.GroupModel;
 import com.github.tanxinzheng.module.authorization.model.GroupPermissionModel;
 import com.github.tanxinzheng.test.TestAppController;
@@ -44,9 +44,9 @@ public class GroupControllerTest extends TestAppController {
                 .andDo(print())
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
-        RestResponse<List<GroupModel>> restResponse = parseRestResponse(resultJson);
-        Assert.assertNotNull("查询用户组，测试不通过", restResponse);
-        Assert.assertTrue("查询用户组，测试不通过", restResponse.getData().size() > 0);
+        Result<List<GroupModel>> result = parseResult(resultJson);
+        Assert.assertNotNull("查询用户组，测试不通过", result);
+        Assert.assertTrue("查询用户组，测试不通过", result.getData().size() > 0);
     }
 
     @Test
@@ -67,9 +67,9 @@ public class GroupControllerTest extends TestAppController {
                 .andDo(print())
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
-        RestResponse<GroupModel> restResponse = parseRestResponse(resultJson);
-        Assert.assertNotNull(restResponse);
-        Assert.assertNotNull(restResponse.getData().getId());
+        Result<GroupModel> result = parseResult(resultJson);
+        Assert.assertNotNull(result);
+        Assert.assertNotNull(result.getData().getId());
     }
 
     @Test
@@ -97,9 +97,9 @@ public class GroupControllerTest extends TestAppController {
                 .andDo(print())
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
-        RestResponse<GroupPermissionModel> restResponse = JSONObject.parseObject(resultJson, new TypeReference<RestResponse<GroupPermissionModel>>(){});
-        Assert.assertNotNull(restResponse);
-        Assert.assertNotNull(restResponse.getData().getId());
+        Result<GroupPermissionModel> result = JSONObject.parseObject(resultJson, new TypeReference<Result<GroupPermissionModel>>(){});
+        Assert.assertNotNull(result);
+        Assert.assertNotNull(result.getData().getId());
     }
 
     @Test

@@ -1,13 +1,13 @@
 package com.github.tanxinzheng.framework.poi;
 
-import com.github.tanxinzheng.framework.model.RestResponse;
+import com.github.tanxinzheng.framework.model.Result;
 import lombok.Data;
 
 /**
  * Created by tanxinzheng on 16/12/10.
  */
 @Data
-public class ExcelImportResultModel extends RestResponse {
+public class ExcelImportResultModel extends Result {
 
     public ExcelImportResultModel() {
         super();

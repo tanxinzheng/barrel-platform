@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.authorization.controller;
 
-import com.github.tanxinzheng.framework.model.RestResponse;
+import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.module.authorization.constant.PermissionAction;
 import com.github.tanxinzheng.module.authorization.model.PermissionCreate;
 import com.github.tanxinzheng.module.authorization.model.PermissionModel;
@@ -163,10 +163,10 @@ public class PermissionController {
      */
     @ApiOperation(value = "获取所有未纳入权限控制资源")
     @GetMapping(value = "/sync")
-    public RestResponse syncAll(@RequestParam(value = "group", required = false) String swaggerGroup,
+    public Result syncAll(@RequestParam(value = "group", required = false) String swaggerGroup,
                                HttpServletRequest request) {
         permissionService.autoInitPermissions(swaggerGroup, "TEST");
-        return RestResponse.success("同步成功");
+        return Result.success("同步成功");
     }
 
 

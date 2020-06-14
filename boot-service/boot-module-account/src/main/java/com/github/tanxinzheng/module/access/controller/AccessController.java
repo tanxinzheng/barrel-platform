@@ -45,12 +45,12 @@ public class AccessController {
 //
 //    @ApiOperation(value = "用户登录")
 //    @PostMapping(value = "/login")
-//    public RestResponse login(@RequestBody @Valid LoginParam loginParam) {
+//    public Result login(@RequestBody @Valid LoginParam loginParam) {
 //        String token = accountService.login(loginParam.getUsername(), loginParam.getPassword());
 //        Map<String, String> result = Maps.newHashMap();
 //        result.put("accessToken", token);
 //        result.put("tokenType", TokenType.BEARER.getCode());
-//        return RestResponse.success(result);
+//        return Result.success(result);
 //    }
 
     /**

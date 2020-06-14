@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.module.menu.service;
 
 import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.model.TreeModel;
+import com.github.tanxinzheng.framework.model.TreeNode;
 import com.github.tanxinzheng.module.menu.model.Menu;
 import com.github.tanxinzheng.module.menu.model.MenuModel;
 import com.github.tanxinzheng.module.menu.model.MenuQuery;
@@ -109,5 +109,5 @@ public interface MenuService {
      * @param menuQuery
      * @return
      */
-    public List<TreeModel> getTreeMenu(MenuQuery menuQuery);
+    public List<TreeNode> getTreeMenu(MenuQuery menuQuery);
 }

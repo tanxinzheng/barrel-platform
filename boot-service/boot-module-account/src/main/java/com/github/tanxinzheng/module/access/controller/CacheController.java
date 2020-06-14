@@ -4,7 +4,7 @@ import com.github.tanxinzheng.framework.core.model.SelectIndex;
 import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
 import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
 import com.github.tanxinzheng.framework.core.service.SelectService;
-import com.github.tanxinzheng.framework.model.RestResponse;
+import com.github.tanxinzheng.framework.model.Result;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -71,8 +71,8 @@ public class CacheController {
      */
     @ApiOperation(value = "清除缓存")
     @DeleteMapping
-    public RestResponse clearCache(@RequestParam(value = "cacheKey") String cacheKey){
+    public Result clearCache(@RequestParam(value = "cacheKey") String cacheKey){
         cacheManager.getCache(cacheKey).clear();
-        return RestResponse.success("缓存清理成功");
+        return Result.success("缓存清理成功");
     }
 }

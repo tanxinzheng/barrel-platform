@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.menu.controller;
 
-import com.github.tanxinzheng.framework.model.TreeModel;
+import com.github.tanxinzheng.framework.model.TreeNode;
 import com.github.tanxinzheng.module.menu.model.MenuQuery;
 import com.github.tanxinzheng.module.menu.service.MenuService;
 import io.swagger.annotations.Api;
@@ -30,7 +30,7 @@ public class AccountMenuController {
      */
     @ApiOperation(value = "我的菜单")
     @GetMapping
-    public List<TreeModel> getAccountMenu(MenuQuery query){
+    public List<TreeNode> getAccountMenu(MenuQuery query){
         // TODO 添加当前登录人ID过滤条件
         return menuService.getTreeMenu(query);
     }

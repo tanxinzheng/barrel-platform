@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.module.authorization.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.tanxinzheng.framework.model.RestResponse;
+import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.module.authorization.model.PermissionModel;
 import com.github.tanxinzheng.test.TestAppController;
 import org.junit.After;
@@ -51,9 +51,9 @@ public class PermissionControllerTest extends TestAppController {
                 .andDo(print())
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();
-        RestResponse<List<PermissionModel>> restResponse = parseRestResponse(resultJson);
-        Assert.assertNotNull(restResponse);
-        Assert.assertTrue(restResponse.getData().size() > 0);
+        Result<List<PermissionModel>> result = parseResult(resultJson);
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.getData().size() > 0);
     }
 
     @Test

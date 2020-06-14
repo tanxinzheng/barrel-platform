@@ -3,7 +3,7 @@ package com.github.tanxinzheng.cloud.gateway.filter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tanxinzheng.framework.model.BaseResultCode;
-import com.github.tanxinzheng.framework.model.RestResponse;
+import com.github.tanxinzheng.framework.model.Result;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -87,7 +87,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private Mono<Void> authErro(ServerHttpResponse resp,String mess) {
         resp.setStatusCode(HttpStatus.UNAUTHORIZED);
         resp.getHeaders().add("Content-Type","application/json;charset=UTF-8");
-        RestResponse<String> returnData = RestResponse.failed(BaseResultCode.UNAUTHORIZED, mess);
+        Result<String> returnData = Result.failed(BaseResultCode.UNAUTHORIZED, mess);
         String returnStr = "";
         try {
             returnStr = objectMapper.writeValueAsString(returnData);
