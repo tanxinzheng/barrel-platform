@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.dictionary.domain.dto;
 
-import com.github.tanxinzheng.framework.model.QueryParams;
+import com.github.tanxinzheng.framework.mybatis.domian.QueryParams;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 

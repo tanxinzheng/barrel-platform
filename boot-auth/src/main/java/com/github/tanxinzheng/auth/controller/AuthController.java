@@ -8,7 +8,7 @@ import com.github.tanxinzheng.framework.exception.AuthException;
 import com.github.tanxinzheng.framework.secure.domain.AuthToken;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
-import com.github.tanxinzheng.module.feign.UserClient;
+import com.github.tanxinzheng.module.auth.feign.UserClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.RedisTemplate;

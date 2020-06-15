@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.module.dictionary.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.tanxinzheng.framework.model.QueryParams;
+import com.github.tanxinzheng.framework.mybatis.domian.QueryParams;
 import com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryResponse;
 import com.github.tanxinzheng.module.dictionary.domain.entity.Dictionary;
 

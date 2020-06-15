@@ -17,8 +17,14 @@ spring:
             - Path=/a/**
           filters:
             - StripPrefix=1
-        - id: barrel-dictionary           #网关路由到字典服务dictionary-service
+        # 字典服务
+        - id: barrel-dictionary
           uri: lb://barrel-dictionary
+          predicates:
+            - Path=/auth/**
+        # 认证服务
+        - id: barrel-auth
+          uri: lb://barrel-auth
           predicates:
             - Path=/dictionary/**
   redis:
@@ -37,8 +43,8 @@ spring:
 barrel:
   document:
     resources:
-#      - name: 授权模块
-#        location: /barrel-auth
+      - name: 授权模块
+        location: /barrel-auth
 #      - name: 工作台模块
 #        location: /barrel-desk
 #      - name: 系统模块

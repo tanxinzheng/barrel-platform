@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.feign;
+package com.github.tanxinzheng.module.auth.feign;
 
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import io.swagger.annotations.Api;
