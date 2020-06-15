@@ -1,8 +1,8 @@
 package com.github.tanxinzheng.module.authorization.service.impl;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.github.tanxinzheng.module.authorization.mapper.UserGroupMapper;
 import com.github.tanxinzheng.module.authorization.mapper.UserMapper;
 import com.github.tanxinzheng.module.authorization.model.*;
@@ -10,10 +10,10 @@ import com.github.tanxinzheng.module.authorization.service.UserGroupService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,12 +23,12 @@ import java.util.List;
  * @version 1.0.0
  */
 @Service
-public class UserGroupServiceImpl implements UserGroupService {
+public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup> implements UserGroupService {
 
-    @Autowired
+    @Resource
     UserGroupMapper userGroupMapper;
 
-    @Autowired
+    @Resource
     UserMapper userMapper;
 
     /**
@@ -169,9 +169,9 @@ public class UserGroupServiceImpl implements UserGroupService {
      */
     @Override
     public Page<UserGroupModel> getUserGroupModelPage(UserGroupQuery userGroupQuery) {
-        PageInterceptor.startPage(userGroupQuery);
+//        PageInterceptor.startPage(userGroupQuery);
         userGroupMapper.selectModel(userGroupQuery);
-        return PageInterceptor.endPage();
+        return null;
     }
 
     /**
@@ -232,9 +232,8 @@ public class UserGroupServiceImpl implements UserGroupService {
      */
     @Override
     public Page<GroupModel> getUserGroupsPage(UserGroupQuery userGroupQuery) {
-        PageInterceptor.startPage(userGroupQuery);
         userGroupMapper.selectUserGroup(userGroupQuery);
-        return PageInterceptor.endPage();
+        return ;
     }
 
     /**

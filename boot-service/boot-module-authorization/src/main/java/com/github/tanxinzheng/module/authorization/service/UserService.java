@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.authorization.service;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.tanxinzheng.module.authorization.model.User;
 import com.github.tanxinzheng.module.authorization.model.UserModel;
 import com.github.tanxinzheng.module.authorization.model.UserQuery;

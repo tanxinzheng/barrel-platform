@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.authorization.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.tanxinzheng.module.authorization.model.GroupModel;
 import com.github.tanxinzheng.module.authorization.model.UserGroup;
 import com.github.tanxinzheng.module.authorization.model.UserGroupModel;
@@ -15,7 +16,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @Mapper
-public interface UserGroupMapper {
+public interface UserGroupMapper extends BaseMapper<UserGroup> {
 
     List<UserGroup> select(UserGroupQuery userGroupQuery);
 

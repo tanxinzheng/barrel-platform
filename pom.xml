@@ -24,7 +24,6 @@
 		<module>boot-service-api</module>
 		<module>boot-service</module>
 		<module>boot-auth</module>
-		<module>boot-api-authorization</module>
 		<!--		<module>boot-admin-ui</module>-->
 	</modules>
 
@@ -110,6 +109,11 @@
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>boot-starter-web</artifactId>
+				<version>${boot.fremework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.tanxinzheng</groupId>
+				<artifactId>boot-starter-mybatis</artifactId>
 				<version>${boot.fremework.version}</version>
 			</dependency>
 			<dependency>

@@ -1,12 +1,11 @@
 package com.github.tanxinzheng.module.authorization.service.impl;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.tanxinzheng.framework.core.model.SelectIndex;
 import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
 import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
 import com.github.tanxinzheng.framework.core.service.SelectService;
 import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.web.dictionary.AccountInterpreterService;
@@ -19,11 +18,11 @@ import com.github.tanxinzheng.module.authorization.service.UserService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,7 +34,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService, AccountInterpreterService, SelectService {
 
-    @Autowired
+    @Resource
     UserMapper userMapper;
 
     /**
@@ -161,7 +160,6 @@ public class UserServiceImpl implements UserService, AccountInterpreterService, 
      */
     @Override
     public Page<UserModel> getUserModelPage(UserQuery userQuery) {
-        PageInterceptor.startPage(userQuery);
         userMapper.selectModel(userQuery);
         return PageInterceptor.endPage();
     }

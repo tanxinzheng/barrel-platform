@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.authorization.controller;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.module.authorization.model.*;
 import com.github.tanxinzheng.module.authorization.service.PermissionService;
@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    @Autowired
+    @Resource
     UserService userService;
 
     /**

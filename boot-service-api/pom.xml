@@ -14,6 +14,7 @@
 
     <modules>
         <module>boot-api-system</module>
+        <module>boot-api-authorization</module>
     </modules>
 
     <properties>
@@ -23,6 +24,14 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>boot-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

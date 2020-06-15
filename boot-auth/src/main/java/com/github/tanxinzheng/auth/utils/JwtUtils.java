@@ -13,37 +13,42 @@ import java.util.UUID;
 @Slf4j
 public class JwtUtils {
 
-
     /**
      * 生成token
      * @param username
+     * @param secret
+     * @param expiration
+     * @param issuer
+     * @param claims
      * @return
      */
-    public static String createToken(String username){
-        return createTokenByTime(username, jwtConfigProperties.getExpiration());
-    }
-
-    /**
-     * 生成token
-     * @param username
-     * @return
-     */
-    public static String createRefreshToken(String username, Long refreshTokenExpiration, String secret, String issuer){
-        return createTokenByTime(username, refreshTokenExpiration, secret, issuer);
-    }
-
-    private static String createTokenByTime(String username, Long expiration, String secret, String issuer){
+    private static String createToken(String username, String secret, Long expiration, String issuer, Claims claims){
         JwtBuilder jwtBuilder = Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .setSubject(username)
-                .setNotBefore(new Date())
-                .signWith(SignatureAlgorithm.HS256, secret);
+                .setNotBefore(new Date());
+        if(claims != null){
+            jwtBuilder.setClaims(claims);
+        }
         if(StringUtils.isNotBlank(issuer)){
             jwtBuilder.setIssuedAt(new Date());
             jwtBuilder.setIssuer(issuer);
         }
+        jwtBuilder.signWith(SignatureAlgorithm.HS256, secret);
         return jwtBuilder.compact();
+    }
+
+    /**
+     * 生成token
+     * @param username
+     * @param secret
+     * @param tokenExpiration
+     * @param issuer
+     * @return
+     */
+    public static String createToken(String username, String secret, Long tokenExpiration, String issuer){
+        return createToken(username, secret, tokenExpiration, issuer, null);
     }
 
     /**
@@ -60,18 +65,30 @@ public class JwtUtils {
     }
 
     /**
-     * 获取用户名
+     * 获取Claims
      * @param token
+     * @param secret
      * @return
      */
-    public String getUsernameByToken(String token, String secret){
-        if(!validateToken(token)){
+    public Claims getClaimsByToken(String token, String secret){
+        if(!validateToken(token, secret)){
             return null;
         }
         return Jwts.parser()
                     .setSigningKey(secret)
                     .parseClaimsJws(token)
-                    .getBody().getSubject();
+                    .getBody();
+    }
+
+    /**
+     * 获取Claims
+     * @param token
+     * @param secret
+     * @return
+     */
+    public String getUsernameByToken(String token, String secret){
+        Claims claims = getClaimsByToken(token, secret);
+        return claims.getSubject();
     }
 
     /**
@@ -79,23 +96,23 @@ public class JwtUtils {
      *
      * @param token       客户端传入的token
      */
-    public boolean validateToken(String token) {
-        return !isTokenExpired(token);
+    public boolean validateToken(String token, String secret) {
+        return !isTokenExpired(token, secret);
     }
 
     /**
      * 判断token是否已经过期
      */
-    private boolean isTokenExpired(String token) {
-        Date expiredDate = getExpiredDateFromToken(token);
+    private boolean isTokenExpired(String token, String secret) {
+        Date expiredDate = getExpiredDateFromToken(token, secret);
         return expiredDate.before(new Date());
     }
 
     /**
      * 从token中获取过期时间
      */
-    private Date getExpiredDateFromToken(String token) {
-        Claims claims = getClaimsFromToken(token);
+    private Date getExpiredDateFromToken(String token, String secret) {
+        Claims claims = getClaimsFromToken(token, secret);
         return claims.getExpiration();
     }
 
