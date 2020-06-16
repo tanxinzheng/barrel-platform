@@ -1,16 +1,17 @@
 package com.github.tanxinzheng.auth.controller;
 
 import com.github.tanxinzheng.auth.domain.dto.LoginRequest;
-import com.github.tanxinzheng.auth.utils.JwtUtils;
 import com.github.tanxinzheng.framework.constant.JwtConfigProperties;
 import com.github.tanxinzheng.framework.constant.TokenType;
 import com.github.tanxinzheng.framework.exception.AuthException;
 import com.github.tanxinzheng.framework.secure.domain.AuthToken;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
+import com.github.tanxinzheng.framework.utils.JwtUtils;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.module.auth.feign.UserClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 @Api(tags = "认证接口")
 @RestController
 @RequestMapping(value = "/auth")
+@Slf4j
 public class AuthController {
 
     private static final String ACCOUNT_AUTH_ERROR_COUNT = "COUNTER:ACCOUNT_AUTH_ERROR:";
