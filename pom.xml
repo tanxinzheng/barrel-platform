@@ -9,22 +9,22 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.tanxinzheng</groupId>
-	<artifactId>boot-parent</artifactId>
+	<artifactId>barrel-parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>boot-parent</name>
-	<description>Boot Example</description>
+	<name>barrel-parent</name>
+	<description>barrel Example</description>
 
 	<modules>
-		<module>boot-admin</module>
-		<module>boot-gateway</module>
-		<module>boot-config-server</module>
-		<module>boot-admin-server</module>
-		<module>boot-devops</module>
-		<module>boot-service-api</module>
-		<module>boot-service</module>
-		<module>boot-auth</module>
-		<!--		<module>boot-admin-ui</module>-->
+		<module>barrel-admin</module>
+		<module>barrel-gateway</module>
+		<module>barrel-config-server</module>
+		<module>barrel-admin-server</module>
+		<module>barrel-devops</module>
+		<module>barrel-service-api</module>
+		<module>barrel-service</module>
+		<module>barrel-auth</module>
+		<!--		<module>barrel-admin-ui</module>-->
 	</modules>
 
 	<properties>
@@ -98,68 +98,68 @@
 
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-core</artifactId>
+				<artifactId>barrel-core</artifactId>
 				<version>${boot.fremework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-starter-jwt</artifactId>
+				<artifactId>barrel-starter-jwt</artifactId>
 				<version>${boot.fremework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-starter-web</artifactId>
+				<artifactId>barrel-starter-web</artifactId>
 				<version>${boot.fremework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-starter-mybatis</artifactId>
+				<artifactId>barrel-starter-mybatis</artifactId>
 				<version>${boot.fremework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-starter-redis</artifactId>
+				<artifactId>barrel-starter-redis</artifactId>
 				<version>${boot.fremework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-starter-test</artifactId>
+				<artifactId>barrel-starter-test</artifactId>
 				<version>${boot.fremework.version}</version>
 			</dependency>
 			<!-- module jar -->
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-module-translate</artifactId>
+				<artifactId>barrel-module-translate</artifactId>
 				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-module-fss</artifactId>
+				<artifactId>barrel-module-fss</artifactId>
 				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-module-auth</artifactId>
+				<artifactId>barrel-module-auth</artifactId>
 				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-module-account</artifactId>
+				<artifactId>barrel-module-account</artifactId>
 				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-module-logger</artifactId>
+				<artifactId>barrel-module-logger</artifactId>
 				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-module-common</artifactId>
+				<artifactId>barrel-module-common</artifactId>
 				<version>${boot.project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>boot-module-notification</artifactId>
+				<artifactId>barrel-module-notification</artifactId>
 				<version>${boot.project.version}</version>
 			</dependency>
 
