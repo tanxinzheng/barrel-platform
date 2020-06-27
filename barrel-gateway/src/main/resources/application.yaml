@@ -21,12 +21,12 @@ spring:
         - id: barrel-dictionary
           uri: lb://barrel-dictionary
           predicates:
-            - Path=/auth/**
+            - Path=/dictionary/**
         # 认证服务
         - id: barrel-auth
           uri: lb://barrel-auth
           predicates:
-            - Path=/dictionary/**
+            - Path=/auth/**
   redis:
     database: 0
     cluster:

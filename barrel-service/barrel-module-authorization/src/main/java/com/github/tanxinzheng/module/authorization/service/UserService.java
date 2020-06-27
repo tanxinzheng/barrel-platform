@@ -1,113 +1,76 @@
 package com.github.tanxinzheng.module.authorization.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.tanxinzheng.module.authorization.model.User;
-import com.github.tanxinzheng.module.authorization.model.UserModel;
-import com.github.tanxinzheng.module.authorization.model.UserQuery;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.tanxinzheng.module.authorization.domain.dto.UserDTO;
+import com.github.tanxinzheng.module.authorization.domain.entity.UserDO;
 
 import java.util.List;
 
-/**
- * @author  tanxinzheng
- * @date    2017-6-16 22:59:54
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-6-25 15:43:46
  */
 public interface UserService {
 
     /**
-     * 新增数据字典
-     * @param  userModel   新增数据字典对象参数
-     * @return  UserModel    数据字典领域对象
+     * 新增用户
+     * @param  userCreate
+     * @return UserDTO
      */
-    public UserModel createUser(UserModel userModel);
+    public UserDTO createUser(UserDTO userCreate);
 
     /**
-     * 新增数据字典实体对象
-     * @param   user 新增数据字典实体对象参数
-     * @return  User 数据字典实体对象
+     * 批量新增用户
+     * @param user
+     * @return List<User>
      */
-    public User createUser(User user);
+    List<UserDTO> createUsers(List<UserDTO> user);
 
     /**
-    * 批量新增数据字典
-    * @param userModels     新增数据字典对象集合参数
-    * @return List<UserModel>    数据字典领域对象集合
+     * 更新用户
+     * @param   userUpdate
+     * @return  boolean
+     */
+    public boolean updateUser(UserDTO userUpdate);
+
+    /**
+     * 主键查询对象
+     * @param   id
+     * @return  UserDTO
+     */
+    public UserDTO findById(String id);
+
+
+    /**
+    * 查询集合对象
+    * @param queryWrapper
+    * @return List<UserDTO>
     */
-    List<UserModel> createUsers(List<UserModel> userModels);
+    public List<UserDTO> findList(QueryWrapper<UserDO> queryWrapper);
 
     /**
-    * 更新数据字典
-    *
-    * @param userModel 更新数据字典对象参数
-    * @param userQuery 过滤数据字典对象参数
-    */
-    public void updateUser(UserModel userModel, UserQuery userQuery);
-
-    /**
-     * 更新数据字典
-     * @param userModel    更新数据字典对象参数
-     */
-    public void updateUser(UserModel userModel);
-
-    /**
-     * 更新数据字典实体对象
-     * @param   user 新增数据字典实体对象参数
-     * @return  User 数据字典实体对象
-     */
-    public void updateUser(User user);
-
-    /**
-     * 批量删除数据字典
-     * @param ids   主键数组
-     */
-    public void deleteUser(String[] ids);
-
-    /**
-     * 删除数据字典
-     * @param id   主键
-     */
-    public void deleteUser(String id);
-
-    /**
-     * 查询数据字典领域分页对象（带参数条件）
-     * @param userQuery 查询参数
-     * @return Page<UserModel>   数据字典参数对象
-     */
-    public Page<UserModel> getUserModelPage(UserQuery userQuery);
-
-    /**
-     * 查询数据字典领域集合对象（带参数条件）
-     * @param userQuery 查询参数对象
-     * @return List<UserModel> 数据字典领域集合对象
-     */
-    public List<UserModel> getUserModelList(UserQuery userQuery);
-
-    /**
-     * 查询数据字典实体对象
-     * @param id 主键
-     * @return User 数据字典实体对象
-     */
-    public User getOneUser(String id);
-
-    /**
-     * 根据username查询用户
-     * @param username
+     * 查询用户领域分页对象
+     * @param page
+     * @param queryWrapper
      * @return
      */
-    public UserModel getOneUserModelByUsername(String username);
+    public IPage<UserDTO> findPage(IPage<UserDO> page, QueryWrapper<UserDO> queryWrapper);
 
     /**
-     * 根据主键查询单个对象
-     * @param id 主键
-     * @return UserModel 数据字典领域对象
+     * 批量删除用户
+     * @param  ids
+     * @return boolean
      */
-    public UserModel getOneUserModel(String id);
+    public boolean deleteUser(List<String> ids);
 
     /**
-     * 根据查询参数查询单个对象（此方法只用于提供精确查询单个对象，若结果数超过1，则会报错）
-     * @param userQuery 数据字典查询参数对象
-     * @return UserModel 数据字典领域对象
+     * 删除用户
+     * @param  id
+     * @return boolean
      */
-    public UserModel getOneUserModel(UserQuery userQuery);
+    public boolean deleteUser(String id);
 
 }

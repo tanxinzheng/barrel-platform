@@ -1,112 +1,83 @@
 package com.github.tanxinzheng.module.authorization.service;
 
-import com.github.pagehelper.Page;
-import com.github.tanxinzheng.module.authorization.model.Permission;
-import com.github.tanxinzheng.module.authorization.model.PermissionModel;
-import com.github.tanxinzheng.module.authorization.model.PermissionQuery;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.tanxinzheng.module.authorization.domain.dto.PermissionDTO;
+import com.github.tanxinzheng.module.authorization.domain.entity.PermissionDO;
 
 import java.util.List;
 
-/**
- * @author  tanxinzheng
- * @date    2017-7-25 1:52:35
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-6-25 15:43:46
  */
 public interface PermissionService {
 
     /**
-     * 新增权限
-     * @param  permissionModel   新增权限对象参数
-     * @return  PermissionModel    权限领域对象
+     * 新增权限资源
+     * @param  permissionCreate
+     * @return PermissionDTO
      */
-    public PermissionModel createPermission(PermissionModel permissionModel);
+    PermissionDTO createPermission(PermissionDTO permissionCreate);
 
     /**
-     * 新增权限实体对象
-     * @param   permission 新增权限实体对象参数
-     * @return  Permission 权限实体对象
+     * 批量新增权限资源
+     * @param permission
+     * @return List<Permission>
      */
-    public Permission createPermission(Permission permission);
+    List<PermissionDTO> createPermissions(List<PermissionDTO> permission);
 
     /**
-    * 批量新增权限
-    * @param permissionModels     新增权限对象集合参数
-    * @return List<PermissionModel>    权限领域对象集合
+     * 更新权限资源
+     * @param   permissionUpdate
+     * @return  boolean
+     */
+    boolean updatePermission(PermissionDTO permissionUpdate);
+
+    /**
+     * 主键查询对象
+     * @param   id
+     * @return  PermissionDTO
+     */
+    PermissionDTO findById(String id);
+
+
+    /**
+    * 查询集合对象
+    * @param queryWrapper
+    * @return List<PermissionDTO>
     */
-    List<PermissionModel> createPermissions(List<PermissionModel> permissionModels);
+    List<PermissionDTO> findList(QueryWrapper<PermissionDO> queryWrapper);
 
     /**
-    * 更新权限
-    *
-    * @param permissionModel 更新权限对象参数
-    * @param permissionQuery 过滤权限对象参数
-    */
-    public void updatePermission(PermissionModel permissionModel, PermissionQuery permissionQuery);
-
-    /**
-     * 更新权限
-     * @param permissionModel    更新权限对象参数
+     * 查询权限资源领域分页对象
+     * @param page
+     * @param queryWrapper
+     * @return
      */
-    public void updatePermission(PermissionModel permissionModel);
+    IPage<PermissionDTO> findPage(IPage<PermissionDO> page, QueryWrapper<PermissionDO> queryWrapper);
 
     /**
-     * 更新权限实体对象
-     * @param   permission 新增权限实体对象参数
-     * @return  Permission 权限实体对象
+     * 批量删除权限资源
+     * @param  ids
+     * @return boolean
      */
-    public void updatePermission(Permission permission);
+    boolean deletePermission(List<String> ids);
 
     /**
-     * 批量删除权限
-     * @param ids   主键数组
+     * 删除权限资源
+     * @param  id
+     * @return boolean
      */
-    public void deletePermission(String[] ids);
+    boolean deletePermission(String id);
 
     /**
-     * 删除权限
-     * @param id   主键
-     */
-    public void deletePermission(String id);
-
-    /**
-     * 查询权限领域分页对象（带参数条件）
-     * @param permissionQuery 查询参数
-     * @return Page<PermissionModel>   权限参数对象
-     */
-    public Page<PermissionModel> getPermissionModelPage(PermissionQuery permissionQuery);
-
-    /**
-     * 查询权限领域集合对象（带参数条件）
-     * @param permissionQuery 查询参数对象
-     * @return List<PermissionModel> 权限领域集合对象
-     */
-    public List<PermissionModel> getPermissionModelList(PermissionQuery permissionQuery);
-
-    /**
-     * 查询权限实体对象
-     * @param id 主键
-     * @return Permission 权限实体对象
-     */
-    public Permission getOnePermission(String id);
-
-    /**
-     * 根据主键查询单个对象
-     * @param id 主键
-     * @return PermissionModel 权限领域对象
-     */
-    public PermissionModel getOnePermissionModel(String id);
-
-    /**
-     * 根据查询参数查询单个对象（此方法只用于提供精确查询单个对象，若结果数超过1，则会报错）
-     * @param permissionQuery 权限查询参数对象
-     * @return PermissionModel 权限领域对象
-     */
-    public PermissionModel getOnePermissionModel(PermissionQuery permissionQuery);
-
-    /**
-     * 自动初始化权限数据
+     * 自动初始化权限表
      * @param swaggerGroup
      * @param updatedBy
      */
     void autoInitPermissions(String swaggerGroup, String updatedBy);
+
 }

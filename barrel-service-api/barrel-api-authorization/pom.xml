@@ -11,5 +11,12 @@
 
     <artifactId>barrel-api-authorization</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+<!--            <version>2.1.3.RELEASE</version>-->
+        </dependency>
+    </dependencies>
 
 </project>

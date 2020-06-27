@@ -3,12 +3,13 @@ package com.github.tanxinzheng.auth.controller;
 import com.github.tanxinzheng.auth.domain.dto.LoginRequest;
 import com.github.tanxinzheng.framework.constant.JwtConfigProperties;
 import com.github.tanxinzheng.framework.constant.TokenType;
-import com.github.tanxinzheng.framework.exception.AuthException;
+import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.framework.secure.domain.AuthToken;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.framework.utils.JwtUtils;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
-import com.github.tanxinzheng.module.auth.feign.UserClient;
+import com.github.tanxinzheng.module.auth.feign.IUserClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +32,13 @@ public class AuthController {
 
     private static final String ACCOUNT_AUTH_ERROR_COUNT = "COUNTER:ACCOUNT_AUTH_ERROR:";
 
+    private static final int ACCOUNT_AUTH_ERROR_COUNT_TIMEOUT = 10;
+
     @Resource
     JwtConfigProperties jwtConfigProperties;
 
     @Resource
-    UserClient userApiService;
+    IUserClient userApiService;
 
     @Resource
     RedisTemplate redisTemplate;
@@ -45,24 +48,28 @@ public class AuthController {
      * @param loginRequest
      * @return
      */
-    @PostMapping(value = "/login")
     @ApiOperation(value = "用户登录")
+    @PostMapping(value = "/login")
     public AuthToken login(@RequestBody @Validated @NotNull LoginRequest loginRequest){
         String errorCountKey = ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername();
         Long count = (Long) redisTemplate.opsForValue().get(errorCountKey);
-        if(count > 5l){
-            throw new AuthException("认证错误次数已超过5次，请稍后重试。");
+        if(count != null && count > 5){
+            throw new BusinessException("认证错误次数已超过5次，请{}分钟后重试。", ACCOUNT_AUTH_ERROR_COUNT_TIMEOUT);
         }
-        AuthUser authUser = userApiService.getUserByUsername(loginRequest.getUsername());
+        Result<AuthUser> result = userApiService.getUserByUsername(loginRequest.getUsername());
+        if(!result.isSuccess()){
+            throw new BusinessException(result.getMessage());
+        }
+        AuthUser authUser = result.getData();
         if(authUser == null){
-            throw new AuthException("该用户名未注册");
+            throw new BusinessException("该用户名未注册");
         }
         String rawPassword = PasswordHelper.encryptPassword(loginRequest.getPassword(), authUser.getSalt());
         if (!authUser.getPassword().equals(rawPassword)){
             count = redisTemplate.opsForValue().increment(ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername(), 1);
             // 设置认证失败错误次数缓存过期时间
-            redisTemplate.expire(ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername(), 10, TimeUnit.MINUTES);
-            throw new AuthException("用户名或密码不正确");
+            redisTemplate.expire(ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername(), ACCOUNT_AUTH_ERROR_COUNT_TIMEOUT, TimeUnit.MINUTES);
+            throw new BusinessException("用户名或密码不正确");
         }
         String accessToken = JwtUtils.createToken(authUser.getUsername(),
                 jwtConfigProperties.getSecret(),
@@ -78,7 +85,7 @@ public class AuthController {
         authToken.setRefreshToken(refreshToken);
         authToken.setUsername(authUser.getUsername());
         authToken.setTokenType(TokenType.BEARER.getCode());
-//        authToken.setExpiresIn();
+        authToken.setExpiresIn(jwtConfigProperties.getExpiration());
         return authToken;
     }
 

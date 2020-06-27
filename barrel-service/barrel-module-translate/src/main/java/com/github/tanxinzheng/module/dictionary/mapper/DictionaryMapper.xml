@@ -36,24 +36,4 @@
         #{dataVersion, jdbcType=INTEGER}
     </sql>
 
-    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO xmo_dictionary
-        (
-        <include refid="Base_Columns" />
-        )
-        VALUES
-        <foreach collection="list" item="item" open="(" separator="," close=")">
-            <include refid="Base_Properties" />
-        </foreach>
-    </insert>
-
-    <select id="findPage" resultType="com.github.tanxinzheng.module.dictionary.domain.dto.DictionaryResponse">
-        SELECT
-            <include refid="Base_Columns"></include>
-        FROM xmo_dictionary
-        <where>
-            ${ew.sqlSegment}
-        </where>
-    </select>
-
 </mapper>

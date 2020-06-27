@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://dev.ecs:3306/barrel?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/barrel?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: barrel_data
     password: Putdown#exhale6#ploys#Blunt
   cloud:

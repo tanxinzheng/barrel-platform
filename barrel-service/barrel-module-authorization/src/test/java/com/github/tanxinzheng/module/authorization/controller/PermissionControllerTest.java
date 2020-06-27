@@ -1,8 +1,6 @@
 package com.github.tanxinzheng.module.authorization.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.tanxinzheng.framework.model.Result;
-import com.github.tanxinzheng.module.authorization.model.PermissionModel;
 import com.github.tanxinzheng.test.TestAppController;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,8 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -44,16 +40,7 @@ public class PermissionControllerTest extends TestAppController {
 
     @Test
     public void getPermissionList() throws Exception {
-        ResultActions actions = mockMvc.perform(get("/permission")
-                .header(AUTHORIZATION, createToken())
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk());
-        String resultJson = actions.andReturn().getResponse().getContentAsString();
-        Result<List<PermissionModel>> result = parseResult(resultJson);
-        Assert.assertNotNull(result);
-        Assert.assertTrue(result.getData().size() > 0);
+
     }
 
     @Test

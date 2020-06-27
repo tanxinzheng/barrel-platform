@@ -1,38 +1,22 @@
 package com.github.tanxinzheng.module.authorization.mapper;
 
-import com.github.tanxinzheng.module.authorization.model.Permission;
-import com.github.tanxinzheng.module.authorization.model.PermissionModel;
-import com.github.tanxinzheng.module.authorization.model.PermissionQuery;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.tanxinzheng.module.authorization.domain.dto.PermissionDTO;
+import com.github.tanxinzheng.module.authorization.domain.entity.PermissionDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
-/**
- * @author  tanxinzheng
- * @date    2017-7-25 1:52:35
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-6-25 15:43:46
  */
 @Mapper
-public interface PermissionMapper {
+public interface PermissionMapper extends BaseMapper<PermissionDO> {
 
-    List<Permission> select(PermissionQuery permissionQuery);
-
-    List<PermissionModel> selectModel(PermissionQuery permissionQuery);
-
-    Permission selectByPrimaryKey(String primaryKey);
-
-    PermissionModel selectModelByPrimaryKey(String primaryKey);
-
-    int deleteByPrimaryKey(String primaryKey);
-
-    int deletesByPrimaryKey(@Param("ids") List<String> primaryKeys);
-
-    int insertSelective(Permission record);
-
-    int updateSelective(Permission record);
-
-    int updateSelectiveByQuery(@Param("record") Permission record, @Param("query") PermissionQuery example);
-
-    void insertByBatch(@Param(value = "list") List<PermissionModel> permissionModels);
+    IPage<PermissionDTO> findRolePermission(IPage<PermissionDTO> page,
+                                            @Param("roleId") String roleId,
+                                            @Param("isRelate") Boolean isRelate);
 }

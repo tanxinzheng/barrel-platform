@@ -1,27 +1,34 @@
 package com.github.tanxinzheng.module.authorization.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.tanxinzheng.framework.logger.ActionLog;
-import com.github.tanxinzheng.module.authorization.model.*;
-import com.github.tanxinzheng.module.authorization.service.PermissionService;
-import com.github.tanxinzheng.module.authorization.service.UserGroupService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.tanxinzheng.framework.mybatis.domian.QueryParams;
+import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
+import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.module.authorization.domain.dto.UserDTO;
+import com.github.tanxinzheng.module.authorization.domain.entity.UserDO;
+import com.github.tanxinzheng.module.authorization.domain.vo.RoleVO;
+import com.github.tanxinzheng.module.authorization.domain.vo.UserVO;
+import com.github.tanxinzheng.module.authorization.service.UserRoleRelationService;
 import com.github.tanxinzheng.module.authorization.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
-/**
- * @author  tanxinzheng
- * @date    2017-6-16 22:59:54
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-6-25 15:43:46
  */
-@Api(tags = {"用户管理"})
+@Slf4j
+@Api(tags = "用户接口")
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -29,57 +36,59 @@ public class UserController {
     @Resource
     UserService userService;
 
+    @Resource
+    UserRoleRelationService userRoleRelationService;
+
     /**
-     * 用户列表
-     * @param   userQuery    用户查询参数对象
-     * @return  Page<UserModel> 用户领域分页对象
+     * 分页查询用户集合
+     * @param queryParams
+     * @return
      */
-    @ApiOperation(value = "查询用户列表")
+    @ApiOperation(value = "分页查询用户")
     @GetMapping
-    public Page<UserModel> getUserList(UserQuery userQuery){
-        return userService.getUserModelPage(userQuery);
+    public IPage<UserVO> findPage(QueryParams<UserDO> queryParams){
+        IPage<UserDTO> page = userService.findPage(queryParams.getPage(), queryParams.getQueryWrapper());
+        return BeanCopierUtils.copy(page, UserVO.class);
     }
 
     /**
-     * 查询单个用户
+     * 主键查询用户
      * @param   id  主键
-     * @return  UserModel   用户领域对象
+     * @return  UserResponse   用户领域对象
      */
-    @ApiOperation(value = "查询用户")
+    @ApiOperation(value = "主键查询用户")
     @GetMapping(value = "/{id}")
-    public UserModel getUserById(@PathVariable(value = "id") String id){
-        return userService.getOneUserModel(id);
+    public UserVO findById(@PathVariable(value = "id") String id){
+        UserDTO userDTO = userService.findById(id);
+        return BeanCopierUtils.copy(userDTO, UserVO.class);
     }
 
     /**
      * 新增用户
-     * @param   userModel  新增对象参数
-     * @return  UserModel   用户领域对象
+     * @param userDTO
+     * @return
      */
     @ApiOperation(value = "新增用户")
-    @ActionLog(actionName = "新增用户")
     @PostMapping
-    public UserModel createUser(@RequestBody @Valid UserModel userModel) {
-        userModel.setPassword("123456");
-        return userService.createUser(userModel);
+    public UserVO create(@RequestBody @Valid UserDTO userDTO) {
+        userDTO = userService.createUser(userDTO);
+        return BeanCopierUtils.copy(userDTO, UserVO.class);
     }
 
     /**
      * 更新用户
      * @param id    主键
-     * @param userModel  更新对象参数
-     * @return  UserModel   用户领域对象
+     * @param userDTO  更新对象参数
+     * @return  UserResponse   用户领域对象
      */
     @ApiOperation(value = "更新用户")
-    @ActionLog(actionName = "更新用户")
     @PutMapping(value = "/{id}")
-    public UserModel updateUser(@PathVariable(value = "id") String id,
-                           @RequestBody @Valid UserModel userModel){
+    public boolean update(@PathVariable(value = "id") String id,
+                              @RequestBody @Valid UserDTO userDTO){
         if(StringUtils.isNotBlank(id)){
-            userModel.setId(id);
+            userDTO.setId(id);
         }
-        userService.updateUser(userModel);
-        return userService.getOneUserModel(id);
+        return userService.updateUser(userDTO);
     }
 
     /**
@@ -87,10 +96,9 @@ public class UserController {
      * @param id    主键
      */
     @ApiOperation(value = "删除单个用户")
-    @ActionLog(actionName = "删除单个用户")
     @DeleteMapping(value = "/{id}")
-    public void deleteUser(@PathVariable(value = "id") String id){
-        userService.deleteUser(id);
+    public boolean delete(@PathVariable(value = "id") String id){
+        return userService.deleteUser(id);
     }
 
     /**
@@ -98,59 +106,55 @@ public class UserController {
      * @param ids    查询参数对象
      */
     @ApiOperation(value = "批量删除用户")
-    @ActionLog(actionName = "批量删除用户")
     @DeleteMapping
-    public void deleteUsers(@RequestParam(value = "ids[]") String[] ids){
-        userService.deleteUser(ids);
+    public boolean batchDelete(@RequestBody List<String> ids){
+        AssertValid.notEmpty(ids, "数组参数不能为空");
+        return userService.deleteUser(ids);
     }
 
-    @Autowired
-    PermissionService permissionService;
+
 
     /**
-     * 查询用户组权限
-     * @param userId    用户主键
-     * @return
-     */
-    @ActionLog(actionName = "查询用户组所属权限")
-    @RequestMapping(value = "/{userId}/permission", method = RequestMethod.GET)
-    public List<PermissionModel> getUserPermission(
-            @PathVariable(value = "userId") String userId,
-            UserPermissionQuery userPermissionQuery){
-        userPermissionQuery.setUserId(userId);
-//        return userPermissionService.getUserPermissions(userPermissionQuery);
-        return null;
-    }
-
-    /**
-     * 查询用户组权限
-     * @param userId    用户主键
-     * @param userGroupQuery    查询参数
-     * @return
-     */
-    @ActionLog(actionName = "查询用户组所属权限")
-    @RequestMapping(value = "/{userId}/group", method = RequestMethod.GET)
-    public Page<GroupModel> getUserGroup(
-            @PathVariable(value = "userId") String userId,
-            UserGroupQuery userGroupQuery){
-        userGroupQuery.setUserId(userId);
-        return userGroupService.getUserGroupsPage(userGroupQuery);
-    }
-
-    @Autowired
-    UserGroupService userGroupService;
-
-    /**
-     * 批量新增用户组
+     * 批量新增角色所属权限
      * @param userId   用户主键
-     * @param groupIds     组主键集
-     * @return List<UserGroup>    用户组对象集
+     * @param roleIds  角色主键集
      */
-    @RequestMapping(value = "/{userId}/group", method = RequestMethod.POST)
-    public void createUserGroup(
+    @ApiOperation(value = "添加角色权限")
+    @PostMapping(value = "/{userId}/roles")
+    public boolean createGroupPermission(
             @PathVariable(value = "userId") String userId,
-            @RequestParam(value = "groupIds") String[] groupIds){
-        userGroupService.createUserGroups(userId, groupIds);
+            @RequestBody List<String> roleIds){
+        return userRoleRelationService.relateRoles(userId, roleIds, true);
     }
+
+    /**
+     * 批量移除角色权限
+     * @param roleId   角色主键
+     * @param permissionIds     权限主键集
+     */
+    @ApiOperation(value = "移除角色的权限")
+    @DeleteMapping(value = "/{userId}/roles")
+    public boolean deleteRolePermission(
+            @PathVariable(value = "userId") String userId,
+            @RequestBody List<String> roleIds){
+        AssertValid.notEmpty(roleIds, "角色数组参数不能为空");
+        return userRoleRelationService.relateRoles(userId, roleIds, false);
+    }
+
+    /**
+     * 查询角色已、未绑定权限
+     * @param userId
+     * @param isRelate
+     * @return
+     */
+    @ApiOperation(value = "查询角色已、未绑定权限")
+    @GetMapping(value = "/{userId}/roles")
+    public List<RoleVO> findRolePermission(@ApiParam(value = "用户主键") @PathVariable(value = "userId") String userId,
+                                           @RequestParam(value = "isRelate") Boolean isRelate){
+        return BeanCopierUtils.copy(userRoleRelationService.findUserRole(
+                userId,
+                isRelate), RoleVO.class);
+    }
+
 
 }

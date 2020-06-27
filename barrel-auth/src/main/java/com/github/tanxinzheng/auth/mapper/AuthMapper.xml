@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.tanxinzheng.module.authorization.mapper.UserMapper" >
+
+    <sql id="Base_Columns">
+        ID,
+        USERNAME,
+        NICKNAME,
+        SALT,
+        PASSWORD,
+        EMAIL,
+        PHONE_NUMBER,
+        AVATAR,
+        DISABLE,
+        UPDATED_BY,
+        UPDATED_TIME,
+        CREATED_BY,
+        CREATED_TIME
+    </sql>
+
+    <sql id="Base_Properties">
+        #{id, jdbcType=VARCHAR},
+        #{username, jdbcType=VARCHAR},
+        #{nickname, jdbcType=VARCHAR},
+        #{salt, jdbcType=VARCHAR},
+        #{password, jdbcType=VARCHAR},
+        #{email, jdbcType=VARCHAR},
+        #{phoneNumber, jdbcType=VARCHAR},
+        #{avatar, jdbcType=VARCHAR},
+        #{disable, jdbcType=VARCHAR},
+        #{updatedBy, jdbcType=VARCHAR},
+        #{updatedTime, jdbcType=TIMESTAMP},
+        #{createdBy, jdbcType=VARCHAR},
+        #{createdTime, jdbcType=TIMESTAMP}
+    </sql>
+
+    <select id="getAuthUserByUsername" resultType="com.github.tanxinzheng.framework.secure.domain.AuthUser">
+        select
+        <include refid="Base_Columns"></include>
+        from xmo_user
+        <where>
+            username = #{username} or phone_number = #{username} or email = #{username}
+        </where>
+    </select>
+
+</mapper>

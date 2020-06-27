@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "jwt.permit-urls",
+      "type": "java.lang.String",
+      "description": "Description for jwt.permit-urls."
+    },
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for jwt.secret."
+    }
+  ] }
