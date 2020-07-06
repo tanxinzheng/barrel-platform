@@ -8,7 +8,7 @@ import com.github.tanxinzheng.module.account.service.AccountService;
 import com.github.tanxinzheng.module.authorization.model.User;
 import com.github.tanxinzheng.module.authorization.model.UserModel;
 import com.github.tanxinzheng.module.authorization.model.UserQuery;
-import com.github.tanxinzheng.module.authorization.service.UserService;
+import com.github.tanxinzheng.module.system.authorization.service.UserService;
 import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

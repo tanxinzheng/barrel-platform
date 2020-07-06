@@ -1,13 +1,14 @@
 package com.github.tanxinzheng.module.scheduler.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.tanxinzheng.module.scheduler.mapper.ScheduleTaskMapper;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskModel;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskQuery;
 import com.github.tanxinzheng.module.scheduler.service.ScheduleTaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * Created by tanxinzheng on 17/8/9.
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScheduleTaskServiceImpl implements ScheduleTaskService {
 
-    @Autowired
+    @Resource
     ScheduleTaskMapper scheduleTaskMapper;
 
     /**
@@ -24,10 +25,9 @@ public class ScheduleTaskServiceImpl implements ScheduleTaskService {
      * @return
      */
     @Override
-    public Page<ScheduleTaskModel> getScheduleTaskPages(ScheduleTaskQuery scheduleTaskQuery) {
-        Page<ScheduleTaskModel> page = PageHelper.startPage(scheduleTaskQuery);
-        scheduleTaskMapper.selectModel(scheduleTaskQuery);
-        return page;
+    public IPage<ScheduleTaskModel> getScheduleTaskPages(ScheduleTaskQuery scheduleTaskQuery) {
+        IPage<ScheduleTaskModel> scheduleTaskModelIpage = new Page<>(scheduleTaskQuery.getPageNum(), scheduleTaskQuery.getPageSize());
+        return scheduleTaskMapper.selectScheduleTask(scheduleTaskModelIpage, scheduleTaskQuery);
     }
 
     @Override

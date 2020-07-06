@@ -1,36 +1,16 @@
 package com.github.tanxinzheng.module.notification.mapper;
 
-import com.github.tanxinzheng.module.notification.model.NotificationSend;
-import com.github.tanxinzheng.module.notification.model.NotificationSendModel;
-import com.github.tanxinzheng.module.notification.model.NotificationSendQuery;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.tanxinzheng.module.notification.domain.entity.NotificationSendDO;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
-/**
- * @author  tanxinzheng
- * @date    2017-8-24 17:42:48
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-7-6 23:27:09
  */
 @Mapper
-public interface NotificationSendMapper {
+public interface NotificationSendMapper extends BaseMapper<NotificationSendDO> {
 
-    List<NotificationSend> select(NotificationSendQuery notificationSendQuery);
-
-    List<NotificationSendModel> selectModel(NotificationSendQuery notificationSendQuery);
-
-    NotificationSend selectByPrimaryKey(String primaryKey);
-
-    NotificationSendModel selectModelByPrimaryKey(String primaryKey);
-
-    int deleteByPrimaryKey(String primaryKey);
-
-    int deletesByPrimaryKey(@Param("ids") List<String> primaryKeys);
-
-    int insertSelective(NotificationSend record);
-
-    int updateSelective(NotificationSend record);
-
-    int updateSelectiveByQuery(@Param("record") NotificationSend record, @Param("query") NotificationSendQuery example);
 }

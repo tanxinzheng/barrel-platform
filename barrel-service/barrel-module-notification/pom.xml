@@ -24,11 +24,6 @@
             <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>barrel-module-translate</artifactId>
-            <version>${boot.project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
         </dependency>

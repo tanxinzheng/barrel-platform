@@ -1,11 +1,10 @@
 package com.github.tanxinzheng.module.notification.service;
 
-import com.github.tanxinzheng.module.notification.model.NotificationTemplateModel;
-import com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery;
+import com.github.tanxinzheng.module.notification.domain.dto.NotificationTemplateDTO;
 import freemarker.cache.TemplateLoader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -15,16 +14,13 @@ import java.io.Reader;
 @Service
 public class NotificationTemplateLoader implements TemplateLoader {
 
-    @Autowired
+    @Resource
     NotificationTemplateService notificationTemplateService;
 
 
     @Override
-    public NotificationTemplateModel findTemplateSource(String templateCode) throws IOException {
-        NotificationTemplateQuery notificationTemplateQuery = new NotificationTemplateQuery();
-        notificationTemplateQuery.setTemplateCode(templateCode);
-        NotificationTemplateModel notificationTemplateModel =
-                notificationTemplateService.getOneNotificationTemplateModel(notificationTemplateQuery);
+    public NotificationTemplateDTO findTemplateSource(String templateCode) throws IOException {
+        NotificationTemplateDTO notificationTemplateModel = notificationTemplateService.findByCode(templateCode);
         if(notificationTemplateModel == null){
             return null;
         }

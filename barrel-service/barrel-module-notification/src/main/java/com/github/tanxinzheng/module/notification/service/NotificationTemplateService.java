@@ -1,105 +1,83 @@
 package com.github.tanxinzheng.module.notification.service;
 
-import com.github.pagehelper.Page;
-import com.github.tanxinzheng.module.notification.model.NotificationTemplate;
-import com.github.tanxinzheng.module.notification.model.NotificationTemplateModel;
-import com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.tanxinzheng.module.notification.domain.dto.NotificationTemplateDTO;
+import com.github.tanxinzheng.module.notification.domain.entity.NotificationTemplateDO;
 
 import java.util.List;
 
-/**
- * @author  tanxinzheng
- * @date    2017-8-24 17:42:48
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-7-6 23:27:09
  */
 public interface NotificationTemplateService {
 
     /**
      * 新增通知模板
-     * @param  notificationTemplateModel   新增通知模板对象参数
-     * @return  NotificationTemplateModel    通知模板领域对象
+     * @param  notificationTemplateCreate
+     * @return NotificationTemplateDTO
      */
-    public NotificationTemplateModel createNotificationTemplate(NotificationTemplateModel notificationTemplateModel);
+    public NotificationTemplateDTO createNotificationTemplate(NotificationTemplateDTO notificationTemplateCreate);
 
     /**
-     * 新增通知模板实体对象
-     * @param   notificationTemplate 新增通知模板实体对象参数
-     * @return  NotificationTemplate 通知模板实体对象
+     * 批量新增通知模板
+     * @param notificationTemplate
+     * @return List<NotificationTemplate>
      */
-    public NotificationTemplate createNotificationTemplate(NotificationTemplate notificationTemplate);
-
-    /**
-    * 批量新增通知模板
-    * @param notificationTemplateModels     新增通知模板对象集合参数
-    * @return List<NotificationTemplateModel>    通知模板领域对象集合
-    */
-    List<NotificationTemplateModel> createNotificationTemplates(List<NotificationTemplateModel> notificationTemplateModels);
-
-    /**
-    * 更新通知模板
-    *
-    * @param notificationTemplateModel 更新通知模板对象参数
-    * @param notificationTemplateQuery 过滤通知模板对象参数
-    */
-    public void updateNotificationTemplate(NotificationTemplateModel notificationTemplateModel, NotificationTemplateQuery notificationTemplateQuery);
+    List<NotificationTemplateDTO> createNotificationTemplates(List<NotificationTemplateDTO> notificationTemplate);
 
     /**
      * 更新通知模板
-     * @param notificationTemplateModel    更新通知模板对象参数
+     * @param   notificationTemplateUpdate
+     * @return  boolean
      */
-    public void updateNotificationTemplate(NotificationTemplateModel notificationTemplateModel);
+    public boolean updateNotificationTemplate(NotificationTemplateDTO notificationTemplateUpdate);
 
     /**
-     * 更新通知模板实体对象
-     * @param   notificationTemplate 新增通知模板实体对象参数
-     * @return  NotificationTemplate 通知模板实体对象
+     * 主键查询对象
+     * @param   id
+     * @return  NotificationTemplateDTO
      */
-    public void updateNotificationTemplate(NotificationTemplate notificationTemplate);
+    public NotificationTemplateDTO findById(String id);
+
+    /**
+     * 根据code查询对象
+     * @param code
+     * @return
+     */
+    public NotificationTemplateDTO findByCode(String code);
+
+
+    /**
+    * 查询集合对象
+    * @param queryWrapper
+    * @return List<NotificationTemplateDTO>
+    */
+    public List<NotificationTemplateDTO> findList(QueryWrapper<NotificationTemplateDO> queryWrapper);
+
+    /**
+     * 查询通知模板领域分页对象
+     * @param page
+     * @param queryWrapper
+     * @return
+     */
+    public IPage<NotificationTemplateDTO> findPage(IPage<NotificationTemplateDO> page, QueryWrapper<NotificationTemplateDO> queryWrapper);
 
     /**
      * 批量删除通知模板
-     * @param ids   主键数组
+     * @param  ids
+     * @return boolean
      */
-    public void deleteNotificationTemplate(String[] ids);
+    public boolean deleteNotificationTemplate(List<String> ids);
 
     /**
      * 删除通知模板
-     * @param id   主键
+     * @param  id
+     * @return boolean
      */
-    public void deleteNotificationTemplate(String id);
+    public boolean deleteNotificationTemplate(String id);
 
-    /**
-     * 查询通知模板领域分页对象（带参数条件）
-     * @param notificationTemplateQuery 查询参数
-     * @return Page<NotificationTemplateModel>   通知模板参数对象
-     */
-    public Page<NotificationTemplateModel> getNotificationTemplateModelPage(NotificationTemplateQuery notificationTemplateQuery);
-
-    /**
-     * 查询通知模板领域集合对象（带参数条件）
-     * @param notificationTemplateQuery 查询参数对象
-     * @return List<NotificationTemplateModel> 通知模板领域集合对象
-     */
-    public List<NotificationTemplateModel> getNotificationTemplateModelList(NotificationTemplateQuery notificationTemplateQuery);
-
-    /**
-     * 查询通知模板实体对象
-     * @param id 主键
-     * @return NotificationTemplate 通知模板实体对象
-     */
-    public NotificationTemplate getOneNotificationTemplate(String id);
-
-    /**
-     * 根据主键查询单个对象
-     * @param id 主键
-     * @return NotificationTemplateModel 通知模板领域对象
-     */
-    public NotificationTemplateModel getOneNotificationTemplateModel(String id);
-
-    /**
-     * 根据查询参数查询单个对象（此方法只用于提供精确查询单个对象，若结果数超过1，则会报错）
-     * @param notificationTemplateQuery 通知模板查询参数对象
-     * @return NotificationTemplateModel 通知模板领域对象
-     */
-    public NotificationTemplateModel getOneNotificationTemplateModel(NotificationTemplateQuery notificationTemplateQuery);
 }

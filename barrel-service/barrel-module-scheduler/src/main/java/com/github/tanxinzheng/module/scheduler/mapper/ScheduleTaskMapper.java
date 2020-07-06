@@ -1,10 +1,11 @@
 package com.github.tanxinzheng.module.scheduler.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskModel;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskQuery;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author  tanxinzheng
@@ -12,10 +13,10 @@ import java.util.List;
  * @version 1.0.0
  */
 @Mapper
-public interface ScheduleTaskMapper {
+public interface ScheduleTaskMapper extends BaseMapper {
 
-
-    List<ScheduleTaskModel> selectModel(ScheduleTaskQuery scheduleJobQuery);
+    IPage<ScheduleTaskModel> selectScheduleTask(@Param(value = "ew") IPage page,
+                                               @Param(value = "query") ScheduleTaskQuery scheduleJobQuery);
 
     void updateCronExpression(ScheduleTaskModel scheduleTaskModel);
 }

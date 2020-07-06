@@ -1,273 +1,162 @@
 package com.github.tanxinzheng.module.notification.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.core.model.SelectIndex;
-import com.github.tanxinzheng.framework.core.model.SelectOptionModel;
-import com.github.tanxinzheng.framework.core.model.SelectOptionQuery;
-import com.github.tanxinzheng.framework.core.service.SelectService;
-import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
+import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.module.notification.domain.dto.NotificationTemplateDTO;
+import com.github.tanxinzheng.module.notification.domain.entity.NotificationTemplateDO;
 import com.github.tanxinzheng.module.notification.mapper.NotificationTemplateMapper;
-import com.github.tanxinzheng.module.notification.model.NotificationTemplate;
-import com.github.tanxinzheng.module.notification.model.NotificationTemplateModel;
-import com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery;
 import com.github.tanxinzheng.module.notification.service.NotificationTemplateService;
 import com.google.common.collect.Lists;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- * @author  tanxinzheng
- * @date    2017-8-24 17:42:48
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-7-6 23:27:09
  */
+@Slf4j
 @Service
-public class NotificationTemplateServiceImpl implements NotificationTemplateService, SelectService {
+public class NotificationTemplateServiceImpl extends ServiceImpl<NotificationTemplateMapper, NotificationTemplateDO> implements NotificationTemplateService {
 
-    @Autowired
+    @Resource
     NotificationTemplateMapper notificationTemplateMapper;
 
     /**
      * 新增通知模板
      *
-     * @param notificationTemplateModel 新增通知模板对象参数
-     * @return NotificationTemplateModel    通知模板领域对象
+     * @param notificationTemplateDTO
+     * @return NotificationTemplateResponse
      */
-    @Override
     @Transactional
-    public NotificationTemplateModel createNotificationTemplate(NotificationTemplateModel notificationTemplateModel) {
-        NotificationTemplate notificationTemplate = createNotificationTemplate(notificationTemplateModel.getEntity());
-        if(notificationTemplate != null){
-            return getOneNotificationTemplateModel(notificationTemplate.getId());
+    @Override
+    public NotificationTemplateDTO createNotificationTemplate(NotificationTemplateDTO notificationTemplateDTO) {
+        AssertValid.notNull(notificationTemplateDTO, "notificationTemplateDTO参数不能为空");
+        NotificationTemplateDO notificationTemplate = notificationTemplateDTO.toDO(NotificationTemplateDO.class);
+        boolean isOk = save(notificationTemplate);
+        if(!isOk){
+            return null;
         }
-        return null;
+        return BeanCopierUtils.copy(notificationTemplate, NotificationTemplateDTO.class);
     }
 
-    /**
-     * 新增通知模板实体对象
-     *
-     * @param notificationTemplate 新增通知模板实体对象参数
-     * @return NotificationTemplate 通知模板实体对象
-     */
-    @Override
-    @Transactional
-    public NotificationTemplate createNotificationTemplate(NotificationTemplate notificationTemplate) {
-        notificationTemplateMapper.insertSelective(notificationTemplate);
-        return notificationTemplate;
-    }
-
-    /**
-    * 批量新增通知模板
-    *
-    * @param notificationTemplateModels 新增通知模板对象集合参数
-    * @return List<NotificationTemplateModel>    通知模板领域对象集合
-    */
-    @Override
-    @Transactional
-    public List<NotificationTemplateModel> createNotificationTemplates(List<NotificationTemplateModel> notificationTemplateModels) {
-        List<NotificationTemplateModel> notificationTemplateModelList = null;
-        for (NotificationTemplateModel notificationTemplateModel : notificationTemplateModels) {
-            notificationTemplateModel = createNotificationTemplate(notificationTemplateModel);
-            if(notificationTemplateModel != null){
-                if(notificationTemplateModelList == null){
-                    notificationTemplateModelList = new ArrayList<>();
-                }
-                notificationTemplateModelList.add(notificationTemplateModel);
-            }
-        }
-        return notificationTemplateModelList;
-    }
-
-    /**
-    * 更新通知模板
-    *
-    * @param notificationTemplateModel 更新通知模板对象参数
-    * @param notificationTemplateQuery 过滤通知模板对象参数
-    */
-    @Override
-    @Transactional
-    public void updateNotificationTemplate(NotificationTemplateModel notificationTemplateModel, NotificationTemplateQuery notificationTemplateQuery) {
-        notificationTemplateMapper.updateSelectiveByQuery(notificationTemplateModel.getEntity(), notificationTemplateQuery);
-    }
 
     /**
      * 更新通知模板
      *
-     * @param notificationTemplateModel 更新通知模板对象参数
+     * @param notificationTemplateDTO
+     * @return NotificationTemplateResponse
      */
-    @Override
     @Transactional
-    public void updateNotificationTemplate(NotificationTemplateModel notificationTemplateModel) {
-        updateNotificationTemplate(notificationTemplateModel.getEntity());
+    @Override
+    public boolean updateNotificationTemplate(NotificationTemplateDTO notificationTemplateDTO) {
+        AssertValid.notNull(notificationTemplateDTO, "notificationTemplateDTO不能为空");
+        NotificationTemplateDO notificationTemplateDO = BeanCopierUtils.copy(notificationTemplateDTO, NotificationTemplateDO.class);
+        return updateById(notificationTemplateDO);
     }
 
     /**
-     * 更新通知模板实体对象
+     * 批量新增通知模板
+     * @param notificationTemplates
+     * @return
+     */
+    @Transactional
+    @Override
+    public List<NotificationTemplateDTO> createNotificationTemplates(List<NotificationTemplateDTO> notificationTemplates) {
+        AssertValid.notEmpty(notificationTemplates, "notificationTemplates参数不能为空");
+        List<NotificationTemplateDO> notificationTemplateDOList = BeanCopierUtils.copy(notificationTemplates, NotificationTemplateDO.class);
+        boolean isOK = saveBatch(notificationTemplateDOList);
+        if(!isOK){
+            return Lists.newArrayList();
+        }
+        List<String> ids = notificationTemplateDOList.stream().map(NotificationTemplateDO::getId).collect(Collectors.toList());
+        List<NotificationTemplateDO> data = notificationTemplateMapper.selectBatchIds(ids);
+        return BeanCopierUtils.copy(data, NotificationTemplateDTO.class);
+    }
+
+
+    /**
+     * 主键查询对象
      *
-     * @param notificationTemplate 新增通知模板实体对象参数
-     * @return NotificationTemplate 通知模板实体对象
+     * @param id
+     * @return NotificationTemplateResponse
      */
     @Override
+    public NotificationTemplateDTO findById(String id) {
+        AssertValid.notNull(id, "id参数不能为空");
+        NotificationTemplateDO notificationTemplate = getById(id);
+        return BeanCopierUtils.copy(notificationTemplate, NotificationTemplateDTO.class);
+    }
+
+    /**
+     * 根据code查询对象
+     *
+     * @param templateCode
+     * @return
+     */
+    @Override
+    public NotificationTemplateDTO findByCode(String templateCode) {
+        LambdaQueryWrapper<NotificationTemplateDO> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(NotificationTemplateDO::getTemplateCode, templateCode);
+        NotificationTemplateDO notificationDO = getOne(lambdaQueryWrapper);
+        return BeanCopierUtils.copy(notificationDO, NotificationTemplateDTO.class);
+    }
+
+    /**
+    * 查询集合对象
+    *
+    * @param queryWrapper
+    * @return List<NotificationTemplateDTO>
+    */
+    @Override
+    public List<NotificationTemplateDTO> findList(QueryWrapper<NotificationTemplateDO> queryWrapper) {
+        return BeanCopierUtils.copy(list(queryWrapper), NotificationTemplateDTO.class);
+    }
+    /**
+     * 查询通知模板领域分页对象
+     * @param page
+     * @param queryWrapper
+     * @return
+     */
+    @Override
+    public IPage<NotificationTemplateDTO> findPage(IPage<NotificationTemplateDO> page, QueryWrapper<NotificationTemplateDO> queryWrapper) {
+        IPage<NotificationTemplateDO> data = (Page<NotificationTemplateDO>) page(page, queryWrapper);
+        return BeanCopierUtils.copy(data, NotificationTemplateDTO.class);
+    }
+
+    /**
+     * 批量删除通知模板
+     *
+     * @param ids
+     * @return int
+     */
     @Transactional
-    public void updateNotificationTemplate(NotificationTemplate notificationTemplate) {
-        notificationTemplateMapper.updateSelective(notificationTemplate);
+    @Override
+    public boolean deleteNotificationTemplate(List<String> ids) {
+        AssertValid.notEmpty(ids, "ids参数不能为空");
+        return removeByIds(ids);
     }
 
     /**
      * 删除通知模板
-     *
-     * @param ids 主键数组
+     * @param  id
+     * @return
      */
-    @Override
     @Transactional
-    public void deleteNotificationTemplate(String[] ids) {
-        notificationTemplateMapper.deletesByPrimaryKey(Arrays.asList(ids));
-    }
-
-    /**
-    * 删除通知模板
-    *
-    * @param id 主键
-    */
     @Override
-    @Transactional
-    public void deleteNotificationTemplate(String id) {
-        notificationTemplateMapper.deleteByPrimaryKey(id);
-    }
-
-    /**
-     * 查询通知模板领域分页对象（带参数条件）
-     *
-     * @param notificationTemplateQuery 查询参数
-     * @return Page<NotificationTemplateModel>   通知模板参数对象
-     */
-    @Override
-    public Page<NotificationTemplateModel> getNotificationTemplateModelPage(NotificationTemplateQuery notificationTemplateQuery) {
-        PageInterceptor.startPage(notificationTemplateQuery);
-        notificationTemplateMapper.selectModel(notificationTemplateQuery);
-        return PageInterceptor.endPage();
-    }
-
-    /**
-     * 查询通知模板领域集合对象（带参数条件）
-     *
-     * @param notificationTemplateQuery 查询参数对象
-     * @return List<NotificationTemplateModel> 通知模板领域集合对象
-     */
-    @Override
-    public List<NotificationTemplateModel> getNotificationTemplateModelList(NotificationTemplateQuery notificationTemplateQuery) {
-        return notificationTemplateMapper.selectModel(notificationTemplateQuery);
-    }
-
-    /**
-     * 查询通知模板实体对象
-     *
-     * @param id 主键
-     * @return NotificationTemplate 通知模板实体对象
-     */
-    @Override
-    public NotificationTemplate getOneNotificationTemplate(String id) {
-        return notificationTemplateMapper.selectByPrimaryKey(id);
-    }
-
-    /**
-     * 根据主键查询单个对象
-     *
-     * @param id 主键
-     * @return NotificationTemplateModel 通知模板领域对象
-     */
-    @Override
-    public NotificationTemplateModel getOneNotificationTemplateModel(String id) {
-        return notificationTemplateMapper.selectModelByPrimaryKey(id);
-    }
-
-    /**
-     * 根据查询参数查询单个对象（此方法只用于提供精确查询单个对象，若结果数超过1，则会报错）
-     *
-     * @param notificationTemplateQuery 通知模板查询参数对象
-     * @return NotificationTemplateModel 通知模板领域对象
-     */
-    @Override
-    public NotificationTemplateModel getOneNotificationTemplateModel(NotificationTemplateQuery notificationTemplateQuery) {
-        List<NotificationTemplateModel> notificationTemplateModelList = notificationTemplateMapper.selectModel(notificationTemplateQuery);
-        if(CollectionUtils.isEmpty(notificationTemplateModelList)){
-            return null;
-        }
-        if(notificationTemplateModelList.size() > 1){
-            throw new BusinessException();
-        }
-        return notificationTemplateModelList.get(0);
-    }
-
-    /**
-     * 翻译
-     *
-     * @param dictionaryType 字典类型
-     * @param dictionaryCode 字典代码
-     * @return
-     */
-//    @Override
-//    public Map<String, Object> translate(String dictionaryType, String dictionaryCode) {
-//        NotificationTemplateQuery notificationTemplateQuery = new NotificationTemplateQuery();
-//        List<NotificationTemplateModel> notificationTemplateModelList = getNotificationTemplateModelList(notificationTemplateQuery);
-//        if(CollectionUtils.isNotEmpty(notificationTemplateModelList)){
-//            return notificationTemplateModelList.stream().collect(Collectors.toMap(NotificationTemplateModel::getTemplateCode, NotificationTemplateModel::getTemplateName));
-//        }
-//        return Maps.newHashMap();
-//    }
-//
-//    /**
-//     * 字典索引
-//     *
-//     * @return
-//     */
-//    @Override
-//    public String getDictionaryIndex() {
-//        return DictionaryIndex.NOTIFICATION_TEMPLATE;
-//    }
-
-    /**
-     * 查询option数据
-     *
-     * @param selectOptionQuery
-     * @return
-     */
-    @Override
-    public List<SelectOptionModel> selectOptionModels(SelectOptionQuery selectOptionQuery) {
-        NotificationTemplateQuery notificationTemplateQuery = new NotificationTemplateQuery();
-        notificationTemplateQuery.setActive(Boolean.TRUE);
-        List<NotificationTemplateModel> notificationTemplateModelList = getNotificationTemplateModelList(notificationTemplateQuery);
-        if(CollectionUtils.isEmpty(notificationTemplateModelList)){
-            return Lists.newArrayList();
-        }
-        List<SelectOptionModel> selectOptionModelList = Lists.newArrayList();
-        int i = 0;
-        for (NotificationTemplateModel notificationTemplateModel : notificationTemplateModelList) {
-            SelectOptionModel selectOptionModel = new SelectOptionModel(
-                    SelectIndex.NOTIFICATION_TEMPLATE.name(),
-                    "通知模板",
-                    notificationTemplateModel.getTemplateCode(),
-                    notificationTemplateModel.getTemplateName(),
-                    i++
-            );
-            selectOptionModelList.add(selectOptionModel);
-        }
-        return selectOptionModelList;
-    }
-
-    /**
-     * 获取select index
-     *
-     * @return
-     */
-    @Override
-    public SelectIndex getSelectIndex() {
-        return SelectIndex.NOTIFICATION_TEMPLATE;
+    public boolean deleteNotificationTemplate(String id) {
+        AssertValid.notNull(id, "id参数不能为空");
+        return removeById(id);
     }
 }

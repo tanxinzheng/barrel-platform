@@ -37,16 +37,28 @@
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>barrel-module-translate</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
             <artifactId>barrel-starter-cloud</artifactId>
             <version>${boot.fremework.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

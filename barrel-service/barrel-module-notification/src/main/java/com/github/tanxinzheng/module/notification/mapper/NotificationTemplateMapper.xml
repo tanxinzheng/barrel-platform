@@ -2,153 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.tanxinzheng.module.notification.mapper.NotificationTemplateMapper" >
 
-    <insert id="insertSelective" parameterType="com.github.tanxinzheng.module.notification.model.NotificationTemplate" useGeneratedKeys="true" keyProperty="id" keyColumn="ID" >
-        <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE" >
-            SELECT replace(UUID(),'-','')
-        </selectKey>
-        insert into xmo_notification_template
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-          ID,
-                <if test="templateName != null" >
-                    TEMPLATE_NAME,
-                </if>
-                <if test="templateTitle != null" >
-                    TEMPLATE_TITLE,
-                </if>
-                <if test="templateBody != null" >
-                    TEMPLATE_BODY,
-                </if>
-                <if test="templateCode != null" >
-                    TEMPLATE_CODE,
-                </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-          #{id, jdbcType=VARCHAR},
-                <if test="templateName != null" >
-                #{templateName, jdbcType=VARCHAR},
-                </if>
-                <if test="templateTitle != null" >
-                #{templateTitle, jdbcType=VARCHAR},
-                </if>
-                <if test="templateBody != null" >
-                #{templateBody, jdbcType=VARCHAR},
-                </if>
-                <if test="templateCode != null" >
-                #{templateCode, jdbcType=VARCHAR},
-                </if>
-        </trim>
-    </insert>
+    <sql id="Base_Columns">
+        ID,
+        TEMPLATE_CODE,
+        TEMPLATE_TITLE,
+        TEMPLATE_BODY,
+        TEMPLATE_NAME
+    </sql>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-        delete from xmo_notification_template where ID = #{id}
-    </delete>
-
-    <delete id="deletesByPrimaryKey" parameterType="java.util.ArrayList" >
-        delete from xmo_notification_template where ID IN
-        <foreach collection="ids" item="item" separator="," open="(" close=")">
-        #{item}
-        </foreach>
-    </delete>
-
-    <update id="updateSelective" parameterType="com.github.tanxinzheng.module.notification.model.NotificationTemplate" >
-        update xmo_notification_template
-        <set>
-            <if test="id != null" >
-            ID = #{id, jdbcType=VARCHAR},
-            </if>
-            <if test="templateName != null" >
-            TEMPLATE_NAME = #{templateName, jdbcType=VARCHAR},
-            </if>
-            <if test="templateTitle != null" >
-            TEMPLATE_TITLE = #{templateTitle, jdbcType=VARCHAR},
-            </if>
-            <if test="templateBody != null" >
-            TEMPLATE_BODY = #{templateBody, jdbcType=VARCHAR},
-            </if>
-            <if test="templateCode != null" >
-            TEMPLATE_CODE = #{templateCode, jdbcType=VARCHAR},
-            </if>
-        </set>
-        WHERE ID = #{id}
-    </update>
-
-    <update id="updateSelectiveByQuery" parameterType="map" >
-        update xmo_notification_template
-        <set >
-            <if test="record.id != null" >
-            ID = #{id, jdbcType=VARCHAR},
-            </if>
-            <if test="record.templateName != null" >
-            TEMPLATE_NAME = #{templateName, jdbcType=VARCHAR},
-            </if>
-            <if test="record.templateTitle != null" >
-            TEMPLATE_TITLE = #{templateTitle, jdbcType=VARCHAR},
-            </if>
-            <if test="record.templateBody != null" >
-            TEMPLATE_BODY = #{templateBody, jdbcType=VARCHAR},
-            </if>
-            <if test="record.templateCode != null" >
-            TEMPLATE_CODE = #{templateCode, jdbcType=VARCHAR},
-            </if>
-        </set>
-        <if test="query != null" >
-            <include refid="Update_By_Query_Where_Clause"/>
-        </if>
-    </update>
-
-    <!--    查询消息    -->
-    <select id="select"
-            resultType="com.github.tanxinzheng.module.notification.model.NotificationTemplate"
-            parameterType="com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery">
-        SELECT * FROM xmo_notification_template
-        <include refid="Update_By_Query_Where_Clause"/>
-        ORDER BY ID
-    </select>
-
-    <select id="selectByPrimaryKey"
-            resultType="com.github.tanxinzheng.module.notification.model.NotificationTemplate"
-            parameterType="java.lang.String">
-        SELECT * FROM xmo_notification_template WHERE ID = #{id}
-    </select>
-
-    <select id="selectModelByPrimaryKey"
-            resultType="com.github.tanxinzheng.module.notification.model.NotificationTemplateModel"
-            parameterType="java.lang.String">
-        SELECT * FROM xmo_notification_template WHERE ID = #{id}
-    </select>
-
-    <select id="selectModel"
-            resultType="com.github.tanxinzheng.module.notification.model.NotificationTemplateModel"
-            parameterType="com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery">
-        SELECT * FROM xmo_notification_template
-        <include refid="Update_By_Query_Where_Clause"/>
-        ORDER BY id
-    </select>
-
-    <sql id="Update_By_Query_Where_Clause">
-        <where>
-            <if test="keyword">
-                AND ID LIKE CONCAT('%', #{keyword}, '%')
-            </if>
-            <if test="id">
-                AND ID = #{id}
-            </if>
-            <if test="templateCode">
-                AND TEMPLATE_CODE = #{templateCode}
-            </if>
-            <if test="ids">
-                AND ID IN
-                <foreach collection="ids" item="item" separator="," open="(" close=")">
-                #{item}
-                </foreach>
-            </if>
-            <if test="excludeIds">
-                AND ID NOT IN
-                <foreach collection="excludeIds" item="item" separator="," open="(" close=")">
-                #{item}
-                </foreach>
-            </if>
-        </where>
+    <sql id="Base_Properties">
+        #{id, jdbcType=VARCHAR},
+        #{templateCode, jdbcType=VARCHAR},
+        #{templateTitle, jdbcType=VARCHAR},
+        #{templateBody, jdbcType=VARCHAR},
+        #{templateName, jdbcType=VARCHAR}
     </sql>
 
 </mapper>

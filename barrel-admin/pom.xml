@@ -73,18 +73,6 @@
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>barrel-module-logger</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>barrel-module-translate</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>barrel-module-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
             <artifactId>barrel-module-notification</artifactId>
         </dependency>
 <!--        <dependency>-->

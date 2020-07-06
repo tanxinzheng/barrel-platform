@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.tanxinzheng.module.system.attachment.mapper.AttachmentMapper" >
+
+    <sql id="Base_Columns">
+        ID,
+        ATTACHMENT_GROUP,
+        ATTACHMENT_KEY,
+        ATTACHMENT_SIZE,
+        ATTACHMENT_PATH,
+        ATTACHMENT_SUFFIX,
+        ORIGIN_NAME,
+        UPLOAD_TIME,
+        UPLOAD_BY,
+        IS_PRIVATE
+    </sql>
+
+    <sql id="Base_Properties">
+        #{id, jdbcType=VARCHAR},
+        #{attachmentGroup, jdbcType=VARCHAR},
+        #{attachmentKey, jdbcType=VARCHAR},
+        #{attachmentSize, jdbcType=DECIMAL},
+        #{attachmentPath, jdbcType=VARCHAR},
+        #{attachmentSuffix, jdbcType=VARCHAR},
+        #{originName, jdbcType=VARCHAR},
+        #{uploadTime, jdbcType=TIMESTAMP},
+        #{uploadBy, jdbcType=VARCHAR},
+        #{isPrivate, jdbcType=VARCHAR}
+    </sql>
+
+</mapper>

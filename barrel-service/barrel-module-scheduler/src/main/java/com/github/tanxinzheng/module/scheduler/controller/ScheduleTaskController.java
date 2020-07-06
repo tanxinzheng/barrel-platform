@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.scheduler.controller;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.logger.ActionLog;
 import com.github.tanxinzheng.module.scheduler.QuartzManager;
@@ -58,9 +58,8 @@ public class ScheduleTaskController {
      * @return
      */
     @ApiOperation(value = "查询定时任务")
-    @ActionLog(actionName = "查询定时任务")
     @GetMapping
-    public Page<ScheduleTaskModel> getScheduleTaskList(ScheduleTaskQuery scheduleJobQuery) {
+    public IPage<ScheduleTaskModel> getScheduleTaskList(ScheduleTaskQuery scheduleJobQuery) {
         return scheduleTaskService.getScheduleTaskPages(scheduleJobQuery);
     }
 

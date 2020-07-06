@@ -1,232 +1,147 @@
 package com.github.tanxinzheng.module.notification.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.exception.BusinessException;
-import com.github.tanxinzheng.framework.mybatis.page.PageInterceptor;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
+import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.module.notification.domain.dto.NotificationReceiveDTO;
+import com.github.tanxinzheng.module.notification.domain.entity.NotificationReceiveDO;
 import com.github.tanxinzheng.module.notification.mapper.NotificationReceiveMapper;
-import com.github.tanxinzheng.module.notification.model.*;
 import com.github.tanxinzheng.module.notification.service.NotificationReceiveService;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- * @author  tanxinzheng
- * @date    2017-8-24 17:42:48
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-7-6 23:27:09
  */
+@Slf4j
 @Service
-public class NotificationReceiveServiceImpl implements NotificationReceiveService {
+public class NotificationReceiveServiceImpl extends ServiceImpl<NotificationReceiveMapper, NotificationReceiveDO> implements NotificationReceiveService {
 
-    @Autowired
+    @Resource
     NotificationReceiveMapper notificationReceiveMapper;
 
     /**
-     * 新增通知接收人
+     * 新增通知接收
      *
-     * @param notificationReceiveModel 新增通知接收人对象参数
-     * @return NotificationReceiveModel    通知接收人领域对象
+     * @param notificationReceiveDTO
+     * @return NotificationReceiveResponse
      */
-    @Override
     @Transactional
-    public NotificationReceiveModel createNotificationReceive(NotificationReceiveModel notificationReceiveModel) {
-        NotificationReceive notificationReceive = createNotificationReceive(notificationReceiveModel.getEntity());
-        if(notificationReceive != null){
-            return getOneNotificationReceiveModel(notificationReceive.getId());
-        }
-        return null;
-    }
-
-    /**
-     * 新增通知接收人实体对象
-     *
-     * @param notificationReceive 新增通知接收人实体对象参数
-     * @return NotificationReceive 通知接收人实体对象
-     */
     @Override
-    @Transactional
-    public NotificationReceive createNotificationReceive(NotificationReceive notificationReceive) {
-        notificationReceiveMapper.insertSelective(notificationReceive);
-        return notificationReceive;
-    }
-
-    /**
-    * 批量新增通知接收人
-    *
-    * @param notificationReceiveModels 新增通知接收人对象集合参数
-    * @return List<NotificationReceiveModel>    通知接收人领域对象集合
-    */
-    @Override
-    @Transactional
-    public List<NotificationReceiveModel> createNotificationReceives(List<NotificationReceiveModel> notificationReceiveModels) {
-        List<NotificationReceiveModel> notificationReceiveModelList = null;
-        for (NotificationReceiveModel notificationReceiveModel : notificationReceiveModels) {
-            notificationReceiveModel = createNotificationReceive(notificationReceiveModel);
-            if(notificationReceiveModel != null){
-                if(notificationReceiveModelList == null){
-                    notificationReceiveModelList = new ArrayList<>();
-                }
-                notificationReceiveModelList.add(notificationReceiveModel);
-            }
-        }
-        return notificationReceiveModelList;
-    }
-
-    /**
-    * 更新通知接收人
-    *
-    * @param notificationReceiveModel 更新通知接收人对象参数
-    * @param notificationReceiveQuery 过滤通知接收人对象参数
-    */
-    @Override
-    @Transactional
-    public void updateNotificationReceive(NotificationReceiveModel notificationReceiveModel, NotificationReceiveQuery notificationReceiveQuery) {
-        notificationReceiveMapper.updateSelectiveByQuery(notificationReceiveModel.getEntity(), notificationReceiveQuery);
-    }
-
-    /**
-     * 更新通知接收人
-     *
-     * @param notificationReceiveModel 更新通知接收人对象参数
-     */
-    @Override
-    @Transactional
-    public void updateNotificationReceive(NotificationReceiveModel notificationReceiveModel) {
-        updateNotificationReceive(notificationReceiveModel.getEntity());
-    }
-
-    /**
-     * 更新通知接收人实体对象
-     *
-     * @param notificationReceive 新增通知接收人实体对象参数
-     * @return NotificationReceive 通知接收人实体对象
-     */
-    @Override
-    @Transactional
-    public void updateNotificationReceive(NotificationReceive notificationReceive) {
-        notificationReceiveMapper.updateSelective(notificationReceive);
-    }
-
-    /**
-     * 删除通知接收人
-     *
-     * @param ids 主键数组
-     */
-    @Override
-    @Transactional
-    public void deleteNotificationReceive(String[] ids) {
-        notificationReceiveMapper.deletesByPrimaryKey(Arrays.asList(ids));
-    }
-
-    /**
-    * 删除通知接收人
-    *
-    * @param id 主键
-    */
-    @Override
-    @Transactional
-    public void deleteNotificationReceive(String id) {
-        notificationReceiveMapper.deleteByPrimaryKey(id);
-    }
-
-    /**
-     * 查询通知接收人领域分页对象（带参数条件）
-     *
-     * @param notificationReceiveQuery 查询参数
-     * @return Page<NotificationReceiveModel>   通知接收人参数对象
-     */
-    @Override
-    public Page<NotificationReceiveModel> getNotificationReceiveModelPage(NotificationReceiveQuery notificationReceiveQuery) {
-        PageInterceptor.startPage(notificationReceiveQuery);
-        notificationReceiveMapper.selectModel(notificationReceiveQuery);
-        return PageInterceptor.endPage();
-    }
-
-    /**
-     * 查询通知接收人领域集合对象（带参数条件）
-     *
-     * @param notificationReceiveQuery 查询参数对象
-     * @return List<NotificationReceiveModel> 通知接收人领域集合对象
-     */
-    @Override
-    public List<NotificationReceiveModel> getNotificationReceiveModelList(NotificationReceiveQuery notificationReceiveQuery) {
-        return notificationReceiveMapper.selectModel(notificationReceiveQuery);
-    }
-
-    /**
-     * 查询通知接收人实体对象
-     *
-     * @param id 主键
-     * @return NotificationReceive 通知接收人实体对象
-     */
-    @Override
-    public NotificationReceive getOneNotificationReceive(String id) {
-        return notificationReceiveMapper.selectByPrimaryKey(id);
-    }
-
-    /**
-     * 根据主键查询单个对象
-     *
-     * @param id 主键
-     * @return NotificationReceiveModel 通知接收人领域对象
-     */
-    @Override
-    public NotificationReceiveModel getOneNotificationReceiveModel(String id) {
-        return notificationReceiveMapper.selectModelByPrimaryKey(id);
-    }
-
-    /**
-     * 根据查询参数查询单个对象（此方法只用于提供精确查询单个对象，若结果数超过1，则会报错）
-     *
-     * @param notificationReceiveQuery 通知接收人查询参数对象
-     * @return NotificationReceiveModel 通知接收人领域对象
-     */
-    @Override
-    public NotificationReceiveModel getOneNotificationReceiveModel(NotificationReceiveQuery notificationReceiveQuery) {
-        List<NotificationReceiveModel> notificationReceiveModelList = notificationReceiveMapper.selectModel(notificationReceiveQuery);
-        if(CollectionUtils.isEmpty(notificationReceiveModelList)){
+    public NotificationReceiveDTO createNotificationReceive(NotificationReceiveDTO notificationReceiveDTO) {
+        AssertValid.notNull(notificationReceiveDTO, "notificationReceiveDTO参数不能为空");
+        NotificationReceiveDO notificationReceive = notificationReceiveDTO.toDO(NotificationReceiveDO.class);
+        boolean isOk = save(notificationReceive);
+        if(!isOk){
             return null;
         }
-        if(notificationReceiveModelList.size() > 1){
-            throw new BusinessException();
-        }
-        return notificationReceiveModelList.get(0);
+        return BeanCopierUtils.copy(notificationReceive, NotificationReceiveDTO.class);
+    }
+
+
+    /**
+     * 更新通知接收
+     *
+     * @param notificationReceiveDTO
+     * @return NotificationReceiveResponse
+     */
+    @Transactional
+    @Override
+    public boolean updateNotificationReceive(NotificationReceiveDTO notificationReceiveDTO) {
+        AssertValid.notNull(notificationReceiveDTO, "notificationReceiveDTO不能为空");
+        NotificationReceiveDO notificationReceiveDO = BeanCopierUtils.copy(notificationReceiveDTO, NotificationReceiveDO.class);
+        return updateById(notificationReceiveDO);
     }
 
     /**
-     * 查询接收人通知
-     * @param notificationQuery
+     * 批量新增通知接收
+     * @param notificationReceives
+     * @return
+     */
+    @Transactional
+    @Override
+    public List<NotificationReceiveDTO> createNotificationReceives(List<NotificationReceiveDTO> notificationReceives) {
+        AssertValid.notEmpty(notificationReceives, "notificationReceives参数不能为空");
+        List<NotificationReceiveDO> notificationReceiveDOList = BeanCopierUtils.copy(notificationReceives, NotificationReceiveDO.class);
+        boolean isOK = saveBatch(notificationReceiveDOList);
+        if(!isOK){
+            return Lists.newArrayList();
+        }
+        List<String> ids = notificationReceiveDOList.stream().map(NotificationReceiveDO::getId).collect(Collectors.toList());
+        List<NotificationReceiveDO> data = notificationReceiveMapper.selectBatchIds(ids);
+        return BeanCopierUtils.copy(data, NotificationReceiveDTO.class);
+    }
+
+
+    /**
+     * 主键查询对象
+     *
+     * @param id
+     * @return NotificationReceiveResponse
+     */
+    @Override
+    public NotificationReceiveDTO findById(String id) {
+        AssertValid.notNull(id, "id参数不能为空");
+        NotificationReceiveDO notificationReceive = getById(id);
+        return BeanCopierUtils.copy(notificationReceive, NotificationReceiveDTO.class);
+    }
+
+    /**
+    * 查询集合对象
+    *
+    * @param queryWrapper
+    * @return List<NotificationReceiveDTO>
+    */
+    @Override
+    public List<NotificationReceiveDTO> findList(QueryWrapper<NotificationReceiveDO> queryWrapper) {
+        return BeanCopierUtils.copy(list(queryWrapper), NotificationReceiveDTO.class);
+    }
+    /**
+     * 查询通知接收领域分页对象
+     * @param page
+     * @param queryWrapper
      * @return
      */
     @Override
-    public Page<NotificationModel> selectNotification(NotificationQuery notificationQuery) {
-        PageInterceptor.startPage(notificationQuery);
-        notificationReceiveMapper.selectNotification(notificationQuery);
-        return PageInterceptor.endPage();
+    public IPage<NotificationReceiveDTO> findPage(IPage<NotificationReceiveDO> page, QueryWrapper<NotificationReceiveDO> queryWrapper) {
+        IPage<NotificationReceiveDO> data = (Page<NotificationReceiveDO>) page(page, queryWrapper);
+        return BeanCopierUtils.copy(data, NotificationReceiveDTO.class);
     }
 
     /**
-     * 查询通知
+     * 批量删除通知接收
      *
-     * @param notificationId
-     * @return
+     * @param ids
+     * @return int
      */
+    @Transactional
     @Override
-    public NotificationModel selectOneNotificationModel(String notificationId) {
-        Assert.notNull(notificationId);
-        NotificationQuery notificationQuery = new NotificationQuery();
-        notificationQuery.setId(notificationId);
-        List<NotificationModel> data = notificationReceiveMapper.selectNotification(notificationQuery);
-        if(CollectionUtils.isEmpty(data)){
-            return null;
-        }
-        return data.get(0);
+    public boolean deleteNotificationReceive(List<String> ids) {
+        AssertValid.notEmpty(ids, "ids参数不能为空");
+        return removeByIds(ids);
     }
 
+    /**
+     * 删除通知接收
+     * @param  id
+     * @return
+     */
+    @Transactional
+    @Override
+    public boolean deleteNotificationReceive(String id) {
+        AssertValid.notNull(id, "id参数不能为空");
+        return removeById(id);
+    }
 }

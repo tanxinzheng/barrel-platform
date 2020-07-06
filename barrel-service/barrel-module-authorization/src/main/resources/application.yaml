@@ -2,7 +2,7 @@ server:
   port: 9008 #提供者的端口
 spring:
   application:
-    name: barrel-authorization
+    name: barrel-system
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://dev.local:3306/barrel?useUnicode=true&characterEncoding=utf-8&useSSL=false

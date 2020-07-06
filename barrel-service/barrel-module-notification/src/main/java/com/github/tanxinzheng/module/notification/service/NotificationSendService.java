@@ -1,91 +1,76 @@
 package com.github.tanxinzheng.module.notification.service;
 
-import com.github.pagehelper.Page;
-import com.github.tanxinzheng.module.notification.model.NotificationSend;
-import com.github.tanxinzheng.module.notification.model.NotificationSendModel;
-import com.github.tanxinzheng.module.notification.model.NotificationSendQuery;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.tanxinzheng.module.notification.domain.dto.NotificationSendDTO;
+import com.github.tanxinzheng.module.notification.domain.entity.NotificationSendDO;
 
 import java.util.List;
 
-/**
- * @author  tanxinzheng
- * @date    2017-8-24 17:42:48
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-7-6 23:27:09
  */
 public interface NotificationSendService {
 
     /**
-     * 新增通知发送人实体对象
-     * @param   notificationSend 新增通知发送人实体对象参数
-     * @return  NotificationSend 通知发送人实体对象
+     * 新增通知发送
+     * @param  notificationSendCreate
+     * @return NotificationSendDTO
      */
-    public NotificationSend createNotificationSend(NotificationSend notificationSend);
+    public NotificationSendDTO createNotificationSend(NotificationSendDTO notificationSendCreate);
 
     /**
-    * 更新通知发送人
-    *
-    * @param notificationSendModel 更新通知发送人对象参数
-    * @param notificationSendQuery 过滤通知发送人对象参数
+     * 批量新增通知发送
+     * @param notificationSend
+     * @return List<NotificationSend>
+     */
+    List<NotificationSendDTO> createNotificationSends(List<NotificationSendDTO> notificationSend);
+
+    /**
+     * 更新通知发送
+     * @param   notificationSendUpdate
+     * @return  boolean
+     */
+    public boolean updateNotificationSend(NotificationSendDTO notificationSendUpdate);
+
+    /**
+     * 主键查询对象
+     * @param   id
+     * @return  NotificationSendDTO
+     */
+    public NotificationSendDTO findById(String id);
+
+
+    /**
+    * 查询集合对象
+    * @param queryWrapper
+    * @return List<NotificationSendDTO>
     */
-    public void updateNotificationSend(NotificationSendModel notificationSendModel, NotificationSendQuery notificationSendQuery);
+    public List<NotificationSendDTO> findList(QueryWrapper<NotificationSendDO> queryWrapper);
 
     /**
-     * 更新通知发送人
-     * @param notificationSendModel    更新通知发送人对象参数
+     * 查询通知发送领域分页对象
+     * @param page
+     * @param queryWrapper
+     * @return
      */
-    public void updateNotificationSend(NotificationSendModel notificationSendModel);
+    public IPage<NotificationSendDTO> findPage(IPage<NotificationSendDO> page, QueryWrapper<NotificationSendDO> queryWrapper);
 
     /**
-     * 更新通知发送人实体对象
-     * @param   notificationSend 新增通知发送人实体对象参数
-     * @return  NotificationSend 通知发送人实体对象
+     * 批量删除通知发送
+     * @param  ids
+     * @return boolean
      */
-    public void updateNotificationSend(NotificationSend notificationSend);
+    public boolean deleteNotificationSend(List<String> ids);
 
     /**
-     * 批量删除通知发送人
-     * @param ids   主键数组
+     * 删除通知发送
+     * @param  id
+     * @return boolean
      */
-    public void deleteNotificationSend(String[] ids);
+    public boolean deleteNotificationSend(String id);
 
-    /**
-     * 删除通知发送人
-     * @param id   主键
-     */
-    public void deleteNotificationSend(String id);
-
-    /**
-     * 查询通知发送人领域分页对象（带参数条件）
-     * @param notificationSendQuery 查询参数
-     * @return Page<NotificationSendModel>   通知发送人参数对象
-     */
-    public Page<NotificationSendModel> getNotificationSendModelPage(NotificationSendQuery notificationSendQuery);
-
-    /**
-     * 查询通知发送人领域集合对象（带参数条件）
-     * @param notificationSendQuery 查询参数对象
-     * @return List<NotificationSendModel> 通知发送人领域集合对象
-     */
-    public List<NotificationSendModel> getNotificationSendModelList(NotificationSendQuery notificationSendQuery);
-
-    /**
-     * 查询通知发送人实体对象
-     * @param id 主键
-     * @return NotificationSend 通知发送人实体对象
-     */
-    public NotificationSend getOneNotificationSend(String id);
-
-    /**
-     * 根据主键查询单个对象
-     * @param id 主键
-     * @return NotificationSendModel 通知发送人领域对象
-     */
-    public NotificationSendModel getOneNotificationSendModel(String id);
-
-    /**
-     * 根据查询参数查询单个对象（此方法只用于提供精确查询单个对象，若结果数超过1，则会报错）
-     * @param notificationSendQuery 通知发送人查询参数对象
-     * @return NotificationSendModel 通知发送人领域对象
-     */
-    public NotificationSendModel getOneNotificationSendModel(NotificationSendQuery notificationSendQuery);
 }

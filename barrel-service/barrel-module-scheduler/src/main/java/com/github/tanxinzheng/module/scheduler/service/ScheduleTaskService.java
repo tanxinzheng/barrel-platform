@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.scheduler.service;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskModel;
 import com.github.tanxinzheng.module.scheduler.model.ScheduleTaskQuery;
 
@@ -14,7 +14,7 @@ public interface ScheduleTaskService {
      * @param scheduleJobQuery
      * @return
      */
-    Page<ScheduleTaskModel> getScheduleTaskPages(ScheduleTaskQuery scheduleJobQuery);
+    IPage<ScheduleTaskModel> getScheduleTaskPages(ScheduleTaskQuery scheduleJobQuery);
 
     /**
      * 修改定时任务

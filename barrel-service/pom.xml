@@ -14,14 +14,9 @@
 
     <modules>
         <module>barrel-module-account</module>
-        <module>barrel-module-common</module>
-        <module>barrel-module-excel</module>
-        <module>barrel-module-fss</module>
-        <module>barrel-module-logger</module>
         <module>barrel-module-mail</module>
         <module>barrel-module-notification</module>
         <module>barrel-module-scheduler</module>
-        <module>barrel-module-translate</module>
         <module>barrel-module-authorization</module>
     </modules>
 

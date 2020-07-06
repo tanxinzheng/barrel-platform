@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.tanxinzheng.module.system.logger.mapper.ActionLogMapper" >
+
+    <sql id="Base_Columns">
+        ID,
+        USER_ID,
+        ACTION_NAME,
+        ACTION_DATE,
+        ACTION_PARAMS,
+        CLIENT_IP,
+        ACTION_RESULT,
+        TARGET_CLASS,
+        TARGET_METHOD
+    </sql>
+
+    <sql id="Base_Properties">
+        #{id, jdbcType=VARCHAR},
+        #{userId, jdbcType=VARCHAR},
+        #{actionName, jdbcType=VARCHAR},
+        #{actionDate, jdbcType=TIMESTAMP},
+        #{actionParams, jdbcType=VARCHAR},
+        #{clientIp, jdbcType=VARCHAR},
+        #{actionResult, jdbcType=VARCHAR},
+        #{targetClass, jdbcType=VARCHAR},
+        #{targetMethod, jdbcType=VARCHAR}
+    </sql>
+
+</mapper>

@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.mail.controller;
 
-import com.github.tanxinzheng.framework.web.web.model.Result;
+import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.module.mail.model.EmailModel;
 import com.github.tanxinzheng.module.mail.service.EmailService;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +24,8 @@ public class EmailController {
      */
     @ApiOperation(value="测试邮件发送", notes="getEntityById")
     @PostMapping
-    public @ResponseBody Result sendEmail(@RequestBody @Valid EmailModel emailModel) {
+    public @ResponseBody
+    Result sendEmail(@RequestBody @Valid EmailModel emailModel) {
         emailService.sendEmail(emailModel);
         return Result.success("邮件发送成功");
     }

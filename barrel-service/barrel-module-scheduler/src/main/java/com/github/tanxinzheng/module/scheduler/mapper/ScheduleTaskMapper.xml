@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.github.tanxinzheng.module.scheduler.mapper.ScheduleTaskMapper" >
 
-    <select id="selectModel"
+    <select id="selectScheduleTask"
             resultType="com.github.tanxinzheng.module.scheduler.model.ScheduleTaskModel"
             parameterType="com.github.tanxinzheng.module.scheduler.model.ScheduleTaskQuery">
         select
@@ -22,21 +22,21 @@
             left join `xmo_qrtz_job_details` j on t.job_name = j.job_name and t.job_group = j.job_group
             left join `xmo_qrtz_cron_triggers` c on t.`TRIGGER_GROUP` = c.`TRIGGER_GROUP` and t.`TRIGGER_NAME` = c.`TRIGGER_NAME`
         <where>
-            <if test="keyword">
+            <if test="query.keyword">
                 AND (
-                  j.description LIKE CONCAT('%', #{keyword}, '%')
-                  OR j.job_name LIKE CONCAT('%', #{keyword}, '%')
-                  OR j.job_group LIKE CONCAT('%', #{keyword}, '%')
+                  j.description LIKE CONCAT('%', #{query.keyword}, '%')
+                  OR j.job_name LIKE CONCAT('%', #{query.keyword}, '%')
+                  OR j.job_group LIKE CONCAT('%', #{query.keyword}, '%')
                 )
             </if>
-            <if test="jobName">
-                AND j.job_name = #{jobName}
+            <if test="query.jobName">
+                AND j.job_name = #{query.jobName}
             </if>
-            <if test="jobGroup">
-                AND j.job_group = #{jobGroup}
+            <if test="query.jobGroup">
+                AND j.job_group = #{query.jobGroup}
             </if>
-            <if test="triggerState">
-                AND t.trigger_state = #{triggerState}
+            <if test="query.triggerState">
+                AND t.trigger_state = #{query.triggerState}
             </if>
         </where>
     </select>

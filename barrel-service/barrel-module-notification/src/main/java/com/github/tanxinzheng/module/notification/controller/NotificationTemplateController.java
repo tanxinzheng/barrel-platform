@@ -1,78 +1,88 @@
 package com.github.tanxinzheng.module.notification.controller;
 
-import com.github.pagehelper.Page;
-import com.github.tanxinzheng.module.notification.model.NotificationTemplateModel;
-import com.github.tanxinzheng.module.notification.model.NotificationTemplateQuery;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.tanxinzheng.framework.mybatis.domian.QueryParams;
+import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
+import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.module.notification.domain.dto.NotificationTemplateDTO;
+import com.github.tanxinzheng.module.notification.domain.entity.NotificationTemplateDO;
+import com.github.tanxinzheng.module.notification.domain.vo.NotificationTemplateVO;
 import com.github.tanxinzheng.module.notification.service.NotificationTemplateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
-/**
- * @author  tanxinzheng
- * @date    2017-8-24 17:42:48
- * @version 1.0.0
+/*
+ * @Description TODO
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-7-6 23:27:09
  */
-@Api(tags = {"消息管理"})
+@Slf4j
+@Api(tags = "通知模板接口")
 @RestController
-@RequestMapping(value = "/notification/template")
+@RequestMapping(value = "/notification_template")
 public class NotificationTemplateController {
 
-    @Autowired
+    @Resource
     NotificationTemplateService notificationTemplateService;
 
     /**
+     * 分页查询通知模板集合
+     * @param queryParams
+     * @return
+     */
+    @ApiOperation(value = "分页查询通知模板")
+    @GetMapping
+    public IPage<NotificationTemplateVO> findPage(QueryParams<NotificationTemplateDO> queryParams){
+        IPage<NotificationTemplateDTO> page = notificationTemplateService.findPage(queryParams.getPage(), queryParams.getQueryWrapper());
+        return BeanCopierUtils.copy(page, NotificationTemplateVO.class);
+    }
+
+    /**
+     * 主键查询通知模板
+     * @param   id  主键
+     * @return  NotificationTemplateResponse   通知模板领域对象
+     */
+    @ApiOperation(value = "主键查询通知模板")
+    @GetMapping(value = "/{id}")
+    public NotificationTemplateVO findById(@PathVariable(value = "id") String id){
+        NotificationTemplateDTO notificationTemplateDTO = notificationTemplateService.findById(id);
+        return BeanCopierUtils.copy(notificationTemplateDTO, NotificationTemplateVO.class);
+    }
+
+    /**
      * 新增通知模板
-     * @param   notificationTemplateModel  新增对象参数
-     * @return  NotificationTemplateModel   通知模板领域对象
+     * @param notificationTemplateDTO
+     * @return
      */
     @ApiOperation(value = "新增通知模板")
     @PostMapping
-    public NotificationTemplateModel createNotificationTemplate(@RequestBody @Valid NotificationTemplateModel notificationTemplateModel) {
-        return notificationTemplateService.createNotificationTemplate(notificationTemplateModel);
-    }
-
-    /**
-     * 通知模板列表
-     * @param   notificationTemplateQuery    通知模板查询参数对象
-     * @return  Page<NotificationTemplateModel> 通知模板领域分页对象
-     */
-    @ApiOperation(value = "查询通知模板列表")
-    @GetMapping
-    public Page<NotificationTemplateModel> getNotificationTemplateList(NotificationTemplateQuery notificationTemplateQuery){
-        return notificationTemplateService.getNotificationTemplateModelPage(notificationTemplateQuery);
-    }
-
-    /**
-     * 查询单个通知模板
-     * @param   id  主键
-     * @return  NotificationTemplateModel   通知模板领域对象
-     */
-    @ApiOperation(value = "查询通知模板")
-    @GetMapping(value = "/{id}")
-    public NotificationTemplateModel getNotificationTemplateById(@PathVariable(value = "id") String id){
-        return notificationTemplateService.getOneNotificationTemplateModel(id);
+    public NotificationTemplateVO create(@RequestBody @Valid NotificationTemplateDTO notificationTemplateDTO) {
+        notificationTemplateDTO = notificationTemplateService.createNotificationTemplate(notificationTemplateDTO);
+        return BeanCopierUtils.copy(notificationTemplateDTO, NotificationTemplateVO.class);
     }
 
     /**
      * 更新通知模板
      * @param id    主键
-     * @param notificationTemplateModel  更新对象参数
-     * @return  NotificationTemplateModel   通知模板领域对象
+     * @param notificationTemplateDTO  更新对象参数
+     * @return  NotificationTemplateResponse   通知模板领域对象
      */
     @ApiOperation(value = "更新通知模板")
     @PutMapping(value = "/{id}")
-    public NotificationTemplateModel updateNotificationTemplate(@PathVariable(value = "id") String id,
-                           @RequestBody @Valid NotificationTemplateModel notificationTemplateModel){
+    public boolean update(@PathVariable(value = "id") String id,
+                              @RequestBody @Valid NotificationTemplateDTO notificationTemplateDTO){
         if(StringUtils.isNotBlank(id)){
-            notificationTemplateModel.setId(id);
+            notificationTemplateDTO.setId(id);
         }
-        notificationTemplateService.updateNotificationTemplate(notificationTemplateModel);
-        return notificationTemplateService.getOneNotificationTemplateModel(id);
+        return notificationTemplateService.updateNotificationTemplate(notificationTemplateDTO);
     }
 
     /**
@@ -81,18 +91,19 @@ public class NotificationTemplateController {
      */
     @ApiOperation(value = "删除单个通知模板")
     @DeleteMapping(value = "/{id}")
-    public void deleteNotificationTemplate(@PathVariable(value = "id") String id){
-        notificationTemplateService.deleteNotificationTemplate(id);
+    public boolean delete(@PathVariable(value = "id") String id){
+        return notificationTemplateService.deleteNotificationTemplate(id);
     }
 
     /**
      *  删除通知模板
-     * @param notificationTemplateQuery    查询参数对象
+     * @param ids    查询参数对象
      */
     @ApiOperation(value = "批量删除通知模板")
     @DeleteMapping
-    public void deleteNotificationTemplates(NotificationTemplateQuery notificationTemplateQuery){
-        notificationTemplateService.deleteNotificationTemplate(notificationTemplateQuery.getIds());
+    public boolean batchDelete(@RequestBody List<String> ids){
+        AssertValid.notEmpty(ids, "数组参数不能为空");
+        return notificationTemplateService.deleteNotificationTemplate(ids);
     }
 
 
