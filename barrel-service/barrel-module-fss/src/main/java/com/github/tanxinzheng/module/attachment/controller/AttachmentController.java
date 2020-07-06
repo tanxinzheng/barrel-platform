@@ -1,82 +1,88 @@
 package com.github.tanxinzheng.module.attachment.controller;
 
-import com.github.pagehelper.Page;
-import com.github.tanxinzheng.framework.web.annotation.LoginUser;
-import com.github.tanxinzheng.framework.web.web.model.CurrentLoginUser;
-import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
-import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.tanxinzheng.framework.mybatis.domian.QueryParams;
+import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
+import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.module.attachment.domain.dto.AttachmentDTO;
+import com.github.tanxinzheng.module.attachment.domain.entity.AttachmentDO;
+import com.github.tanxinzheng.module.attachment.domain.vo.AttachmentVO;
 import com.github.tanxinzheng.module.attachment.service.AttachmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
- * @author  tanxinzheng
- * @date    2017-8-6 15:56:07
- * @version 1.0.0
+ * @Description 附件接口
+ * @Author tanxinzheng
+ * @Email  tanxinzheng@139.com
+ * @Date   2020-7-6 16:47:03
  */
-@Api(tags = {"文件管理"})
+@Slf4j
+@Api(tags = "附件接口")
 @RestController
 @RequestMapping(value = "/attachment")
 public class AttachmentController {
 
-    @Autowired
+    @Resource
     AttachmentService attachmentService;
 
     /**
-     * 附件列表
-     * @param   attachmentQuery    附件查询参数对象
-     * @return  Page<AttachmentModel> 附件领域分页对象
+     * 分页查询附件集合
+     * @param queryParams
+     * @return
      */
-    @ApiOperation(value = "查询附件列表")
+    @ApiOperation(value = "分页查询附件")
     @GetMapping
-    public Page<AttachmentModel> getAttachmentList(AttachmentQuery attachmentQuery){
-        return attachmentService.getAttachmentModelPage(attachmentQuery);
+    public IPage<AttachmentVO> findPage(QueryParams<AttachmentDO> queryParams){
+        IPage<AttachmentDTO> page = attachmentService.findPage(queryParams.getPage(), queryParams.getQueryWrapper());
+        return BeanCopierUtils.copy(page, AttachmentVO.class);
     }
 
     /**
-     * 查询单个附件
+     * 主键查询附件
      * @param   id  主键
-     * @return  AttachmentModel   附件领域对象
+     * @return  AttachmentResponse   附件领域对象
      */
-    @ApiOperation(value = "查询附件")
+    @ApiOperation(value = "主键查询附件")
     @GetMapping(value = "/{id}")
-    public AttachmentModel getAttachmentById(@PathVariable(value = "id") String id){
-        return attachmentService.getOneAttachmentModel(id);
+    public AttachmentVO findById(@PathVariable(value = "id") String id){
+        AttachmentDTO attachmentDTO = attachmentService.findById(id);
+        return BeanCopierUtils.copy(attachmentDTO, AttachmentVO.class);
     }
 
     /**
      * 新增附件
-     * @param   attachmentModel  新增对象参数
-     * @return  AttachmentModel   附件领域对象
+     * @param attachmentDTO
+     * @return
      */
     @ApiOperation(value = "新增附件")
     @PostMapping
-    public AttachmentModel createAttachment(@LoginUser CurrentLoginUser loginUser, @RequestBody @Valid AttachmentModel attachmentModel) {
-        attachmentModel.setUploadUserId(loginUser.getId());
-        attachmentModel.setCreatedUserId(loginUser.getId());
-        return attachmentService.createAttachment(attachmentModel);
+    public AttachmentVO create(@RequestBody @Valid AttachmentDTO attachmentDTO) {
+        attachmentDTO = attachmentService.createAttachment(attachmentDTO);
+        return BeanCopierUtils.copy(attachmentDTO, AttachmentVO.class);
     }
 
     /**
      * 更新附件
      * @param id    主键
-     * @param attachmentModel  更新对象参数
-     * @return  AttachmentModel   附件领域对象
+     * @param attachmentDTO  更新对象参数
+     * @return  AttachmentResponse   附件领域对象
      */
     @ApiOperation(value = "更新附件")
     @PutMapping(value = "/{id}")
-    public AttachmentModel updateAttachment(@PathVariable(value = "id") String id,
-                           @RequestBody @Valid AttachmentModel attachmentModel){
+    public boolean update(@PathVariable(value = "id") String id,
+                              @RequestBody @Valid AttachmentDTO attachmentDTO){
         if(StringUtils.isNotBlank(id)){
-            attachmentModel.setId(id);
+            attachmentDTO.setId(id);
         }
-        attachmentService.updateAttachment(attachmentModel);
-        return attachmentService.getOneAttachmentModel(id);
+        return attachmentService.updateAttachment(attachmentDTO);
     }
 
     /**
@@ -85,18 +91,19 @@ public class AttachmentController {
      */
     @ApiOperation(value = "删除单个附件")
     @DeleteMapping(value = "/{id}")
-    public void deleteAttachment(@PathVariable(value = "id") String id){
-        attachmentService.deleteAttachment(id);
+    public boolean delete(@PathVariable(value = "id") String id){
+        return attachmentService.deleteAttachment(id);
     }
 
     /**
      *  删除附件
-     * @param attachmentQuery    查询参数对象
+     * @param ids    查询参数对象
      */
     @ApiOperation(value = "批量删除附件")
     @DeleteMapping
-    public void deleteAttachments(@RequestBody AttachmentQuery attachmentQuery){
-        attachmentService.deleteAttachment(attachmentQuery.getIds());
+    public boolean batchDelete(@RequestBody List<String> ids){
+        AssertValid.notEmpty(ids, "数组参数不能为空");
+        return attachmentService.deleteAttachment(ids);
     }
 
 

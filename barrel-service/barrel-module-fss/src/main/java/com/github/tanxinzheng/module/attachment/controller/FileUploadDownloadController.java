@@ -1,11 +1,13 @@
 package com.github.tanxinzheng.module.attachment.controller;
 
 import com.aliyun.oss.common.utils.IOUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.web.annotation.LoginUser;
-import com.github.tanxinzheng.framework.web.web.model.CurrentLoginUser;
-import com.github.tanxinzheng.module.attachment.model.AttachmentModel;
-import com.github.tanxinzheng.module.attachment.model.AttachmentQuery;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
+import com.github.tanxinzheng.module.attachment.domain.dto.AttachmentDTO;
+import com.github.tanxinzheng.module.attachment.domain.entity.AttachmentDO;
 import com.github.tanxinzheng.module.attachment.service.AttachmentService;
 import com.github.tanxinzheng.module.fss.model.FileStorageResult;
 import com.github.tanxinzheng.module.fss.service.FileStoreService;
@@ -60,9 +62,12 @@ public class FileUploadDownloadController {
      */
     @ApiOperation(value = "上传文件")
     @PostMapping(value = "/upload")
-    public AttachmentModel upload(@LoginUser CurrentLoginUser loginUser,
+    public AttachmentDTO upload(@LoginUser CurrentLoginUser loginUser,
                                   @RequestParam("file") MultipartFile file) throws IOException {
-        return attachmentService.createAttachment(loginUser.getId(), file);
+        AttachmentDTO attachmentDTO = new AttachmentDTO();
+        attachmentDTO.setUploadBy(loginUser.getId());
+        attachmentDTO.setMultipartFile(file);
+        return attachmentService.createAttachment(attachmentDTO);
     }
 
     /**
@@ -74,12 +79,12 @@ public class FileUploadDownloadController {
     @ApiOperation(value = "下载文件")
     @RequestMapping(value = "/download")
     public ResponseEntity download(@RequestParam("fileKey") String fileKey) throws IOException {
-        AttachmentModel attachmentModel = attachmentService.getOneAttachmentModelCache(fileKey);
-        String key = attachmentModel.getAttachmentPath() + File.separator + attachmentModel.getAttachmentKey();
+        AttachmentDTO attachmentDTO = attachmentService.findByFileKey(fileKey);
+        String key = attachmentDTO.getAttachmentPath() + File.separator + attachmentDTO.getAttachmentKey();
         FileStorageResult result = fileStoreService.getFile(key);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDispositionFormData("attachment", URLEncoder.encode(
-                attachmentModel.getOriginName(), "UTF-8"));
+                attachmentDTO.getOriginName(), "UTF-8"));
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         byte[] bytes = IOUtils.readStreamAsByteArray(result.getInputStream());
         return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.CREATED);
@@ -100,10 +105,10 @@ public class FileUploadDownloadController {
         if(StringUtils.isBlank(fileZipName)){
             fileZipName = "批量下载_" + DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date());
         }
-        AttachmentQuery attachmentQuery = new AttachmentQuery();
-        attachmentQuery.setAttachmentKeys(fileKeys);
-        List<AttachmentModel> attachmentModelList = attachmentService.getAttachmentModelList(attachmentQuery);
-        if(CollectionUtils.isEmpty(attachmentModelList)){
+        LambdaQueryWrapper<AttachmentDO> lambdaQuery = Wrappers.lambdaQuery();
+        lambdaQuery.in(AttachmentDO::getAttachmentKey, fileKeys);
+        List<AttachmentDTO> attachmentDTOList = attachmentService.findList(lambdaQuery);
+        if(CollectionUtils.isEmpty(attachmentDTOList)){
             return;
         }
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
@@ -114,9 +119,10 @@ public class FileUploadDownloadController {
         fileZipName = new String(fileZipName.getBytes("UTF-8"), "ISO-8859-1");
         response.addHeader("Content-Disposition", "attachment;filename=" + fileZipName);
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
-        for (AttachmentModel attachmentModel : attachmentModelList) {
-            zipFile(attachmentModel.getAttachmentPath() + File.separator + attachmentModel.getAttachmentKey(),
-                    attachmentModel.getOriginName(), zipOutputStream);
+        for (AttachmentDTO attachmentDTO : attachmentDTOList) {
+            zipFile(attachmentDTO.getAttachmentPath() +
+                            File.separator + attachmentDTO.getAttachmentKey(),
+                    attachmentDTO.getOriginName(), zipOutputStream);
         }
         zipOutputStream.close();
         response.getOutputStream().close();
