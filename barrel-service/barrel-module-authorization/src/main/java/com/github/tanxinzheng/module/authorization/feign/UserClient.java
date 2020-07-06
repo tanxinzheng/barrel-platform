@@ -50,7 +50,7 @@ public class UserClient implements IUserClient {
                 .eq(UserDO::getPhoneNumber, username);
         UserDO userDO = userMapper.selectOne(lambdaQueryWrapper);
         AssertValid.notNull(userDO, "该用户名未注册");
-        AssertValid.isTrue(userDO.getDisable(), "该用户已被禁用，若要启用，请联系管理员。");
+        AssertValid.isTrue(!userDO.getDisable(), "该用户已被禁用，若要启用，请联系管理员。");
         AuthUser authUser = BeanCopierUtils.copy(userDO, AuthUser.class);
         return Result.success(authUser);
     }
