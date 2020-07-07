@@ -24,10 +24,10 @@ import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Api(tags = "认证接口")
 @RestController
 @RequestMapping(value = "/auth")
-@Slf4j
 public class AuthController {
 
     private static final String ACCOUNT_AUTH_ERROR_COUNT = "COUNTER:ACCOUNT_AUTH_ERROR:";

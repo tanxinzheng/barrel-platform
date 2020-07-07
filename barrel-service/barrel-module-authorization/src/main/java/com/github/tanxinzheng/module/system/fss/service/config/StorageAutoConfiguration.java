@@ -2,6 +2,7 @@ package com.github.tanxinzheng.module.system.fss.service.config;
 
 import com.github.tanxinzheng.module.system.fss.service.AliyunStorage;
 import com.github.tanxinzheng.module.system.fss.service.StorageService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,9 @@ public class StorageAutoConfiguration {
     public StorageService storageService() {
         StorageService storageService = new StorageService();
         String active = this.properties.getActive();
+        if(StringUtils.isBlank(active)){
+            return null;
+        }
         storageService.setActive(active);
         if (active.equals("local")) {
 //            storageService.setStorage(localStorage());
@@ -52,11 +56,11 @@ public class StorageAutoConfiguration {
     @Bean
     public AliyunStorage aliyunStorage() {
         AliyunStorage aliyunStorage = new AliyunStorage();
-        StorageProperties.Aliyun aliyun = this.properties.getAliyun();
-        aliyunStorage.setAccessKeyId(aliyun.getAccessKeyId());
-        aliyunStorage.setAccessKeySecret(aliyun.getAccessKeySecret());
-        aliyunStorage.setBucketName(aliyun.getBucketName());
-        aliyunStorage.setEndpoint(aliyun.getEndpoint());
+//        StorageProperties.Aliyun aliyun = this.properties.getAliyun();
+//        aliyunStorage.setAccessKeyId(aliyun.getAccessKeyId());
+//        aliyunStorage.setAccessKeySecret(aliyun.getAccessKeySecret());
+//        aliyunStorage.setBucketName(aliyun.getBucketName());
+//        aliyunStorage.setEndpoint(aliyun.getEndpoint());
         return aliyunStorage;
     }
 

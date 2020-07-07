@@ -12,7 +12,10 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.github.tanxinzheng.**")
-@ComponentScan(basePackages = {"com.github.tanxinzheng.**"})
+@ComponentScan(basePackages = {
+        "com.github.tanxinzheng.**",
+        "springfox.documentation.swagger2.**"
+})
 public class AuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class, args);

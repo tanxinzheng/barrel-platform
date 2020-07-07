@@ -19,3 +19,9 @@ spring:
         - 127.0.0.1:7003
         - 127.0.0.1:7004
         - 127.0.0.1:7005
+
+logging:
+  level:
+    org.springframework.web: INFO
+    main.blog.mapper: INFO
+  config: classpath:logback-dev.xml
