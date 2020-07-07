@@ -1,6 +1,5 @@
-package com.github.tanxinzheng.auth.controller;
+package com.github.tanxinzheng.module.auth.controller;
 
-import com.github.tanxinzheng.auth.domain.dto.LoginRequest;
 import com.github.tanxinzheng.framework.constant.JwtConfigProperties;
 import com.github.tanxinzheng.framework.constant.TokenType;
 import com.github.tanxinzheng.framework.exception.BusinessException;
@@ -9,6 +8,7 @@ import com.github.tanxinzheng.framework.secure.domain.AuthToken;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.framework.utils.JwtUtils;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
+import com.github.tanxinzheng.module.auth.domain.dto.LoginRequest;
 import com.github.tanxinzheng.module.auth.feign.IUserClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

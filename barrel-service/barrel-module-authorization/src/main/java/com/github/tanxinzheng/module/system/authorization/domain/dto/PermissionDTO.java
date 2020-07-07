@@ -61,7 +61,7 @@ public class PermissionDTO extends BaseModel implements Serializable {
     @NotBlank(message = "创建人为必填项")
     @Length(max = 32, message = "创建人字符长度限制[0,32]")
     @ApiModelProperty(value = "创建人")
-    private String createdUserId;
+    private String createdBy;
     /** 创建时间 */
     @NotNull(message = "创建时间为必填项")
     @ApiModelProperty(value = "创建时间")
@@ -70,7 +70,7 @@ public class PermissionDTO extends BaseModel implements Serializable {
     @NotBlank(message = "更新人为必填项")
     @Length(max = 32, message = "更新人字符长度限制[0,32]")
     @ApiModelProperty(value = "更新人")
-    private String updatedUserId;
+    private String updatedBy;
     /** 更新时间 */
     @NotNull(message = "更新时间为必填项")
     @ApiModelProperty(value = "更新时间")

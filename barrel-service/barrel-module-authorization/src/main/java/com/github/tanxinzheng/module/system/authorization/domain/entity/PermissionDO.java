@@ -45,14 +45,14 @@ public class PermissionDO extends BaseEntity implements Serializable {
     @TableField(value = "PARENT_ID")
     private String parentId;
     /** 创建人 */
-    @TableField(value = "CREATED_USER_ID")
-    private String createdUserId;
+    @TableField(value = "CREATED_BY")
+    private String createdBy;
     /** 创建时间 */
     @TableField(value = "CREATED_TIME")
     private LocalDateTime createdTime;
     /** 更新人 */
-    @TableField(value = "UPDATED_USER_ID")
-    private String updatedUserId;
+    @TableField(value = "UPDATED_BY")
+    private String updatedBy;
     /** 更新时间 */
     @TableField(value = "UPDATED_TIME")
     private LocalDateTime updatedTime;

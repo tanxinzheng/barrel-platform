@@ -18,7 +18,7 @@ import java.util.List;
  *
  */
 @FeignClient(
-        value = "barrel-authorization"
+        value = "barrel-system"
 )
 @Api(tags = {"Feign接口", "认证服务"})
 public interface IUserClient {

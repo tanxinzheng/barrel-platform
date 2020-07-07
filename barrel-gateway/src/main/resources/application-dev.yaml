@@ -25,3 +25,10 @@ logging:
     org.springframework.web: INFO
     main.blog.mapper: INFO
   config: classpath:logback-dev.xml
+
+jwt:
+  secret: 123456
+  permitUrls:
+    - /barrel-system/v2/api-docs
+    - /barrel-auth/v2/api-docs
+    - /barrel-auth/auth/login

@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.auth;
+package com.github.tanxinzheng.module.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.github.tanxinzheng.**")
 @ComponentScan(basePackages = {
-        "com.github.tanxinzheng.**",
-        "springfox.documentation.swagger2.**"
+        "com.github.tanxinzheng.**"
 })
 public class AuthApplication {
     public static void main(String[] args) {

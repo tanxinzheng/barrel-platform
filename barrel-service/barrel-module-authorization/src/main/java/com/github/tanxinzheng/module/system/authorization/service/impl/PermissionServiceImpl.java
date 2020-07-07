@@ -188,8 +188,8 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
                 permission.setDescription(operationMap.get(httpMethod).getSummary());
                 permission.setPermissionKey(httpMethod.name().toUpperCase() + ":" + stringPathEntry.getKey());
                 permission.setActive(Boolean.TRUE);
-                permission.setCreatedUserId(updatedBy);
-                permission.setUpdatedUserId(updatedBy);
+                permission.setCreatedBy(updatedBy);
+                permission.setUpdatedBy(updatedBy);
                 newList.add(permission);
             }
         }
@@ -213,7 +213,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
                 oldPermission.setDescription(newPermission.getDescription());
                 oldPermission.setPermissionAction(newPermission.getPermissionAction());
                 oldPermission.setUpdatedTime(LocalDateTime.now());
-                oldPermission.setUpdatedUserId(newPermission.getUpdatedUserId());
+                oldPermission.setUpdatedBy(newPermission.getUpdatedBy());
                 oldUpdateList.add(oldPermission);
             }
         });

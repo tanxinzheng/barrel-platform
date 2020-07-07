@@ -1,6 +1,5 @@
-package com.github.tanxinzheng.auth.domain.dto;
+package com.github.tanxinzheng.module.auth.domain.dto;
 
-import com.github.tanxinzheng.framework.secure.domain.AuthType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +19,6 @@ public class LoginRequest implements Serializable {
     private String password;
     @ApiModelProperty(value = "校验码")
     private String validCode;
-    @ApiModelProperty(value = "认证类型")
-    private AuthType authType;
+//    @ApiModelProperty(value = "认证类型")
+//    private AuthType authType;
 }

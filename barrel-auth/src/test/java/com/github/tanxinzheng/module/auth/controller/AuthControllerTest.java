@@ -1,11 +1,11 @@
-package com.github.tanxinzheng.auth.controller;
+package com.github.tanxinzheng.module.auth.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.github.tanxinzheng.auth.AuthApplication;
-import com.github.tanxinzheng.auth.domain.dto.LoginRequest;
-import com.github.tanxinzheng.auth.domain.dto.LoginResponse;
 import com.github.tanxinzheng.framework.model.Result;
+import com.github.tanxinzheng.module.auth.AuthApplication;
+import com.github.tanxinzheng.module.auth.domain.dto.LoginRequest;
+import com.github.tanxinzheng.module.auth.domain.dto.LoginResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;

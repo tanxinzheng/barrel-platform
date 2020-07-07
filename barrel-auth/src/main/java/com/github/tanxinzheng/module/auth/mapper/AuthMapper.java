@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.auth.mapper;
+package com.github.tanxinzheng.module.auth.mapper;
 
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import org.apache.ibatis.annotations.Mapper;

@@ -14,7 +14,6 @@
 
     <modules>
         <module>barrel-api-system</module>
-        <module>barrel-api-authorization</module>
     </modules>
 
     <properties>

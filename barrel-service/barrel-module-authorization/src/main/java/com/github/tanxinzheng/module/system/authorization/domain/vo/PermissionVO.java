@@ -34,11 +34,11 @@ public class PermissionVO implements Serializable {
     @ApiModelProperty(value = "父节点")
     private String parentId;
     @ApiModelProperty(value = "创建人")
-    private String createdUserId;
+    private String createdBy;
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createdTime;
     @ApiModelProperty(value = "更新人")
-    private String updatedUserId;
+    private String updatedBy;
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updatedTime;
 
