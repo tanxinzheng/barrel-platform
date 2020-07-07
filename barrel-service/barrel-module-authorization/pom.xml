@@ -8,7 +8,7 @@
         <groupId>com.github.tanxinzheng</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>barrel-module-authorization</artifactId>
+    <artifactId>barrel-system</artifactId>
     <packaging>jar</packaging>
 
     <properties>
@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>barrel-api-authorization</artifactId>
+            <artifactId>barrel-api-system</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -59,6 +59,10 @@
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
