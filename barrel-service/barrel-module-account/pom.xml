@@ -23,11 +23,11 @@
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>barrel-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>barrel-module-authorization</artifactId>
-            <version>${boot.project.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.tanxinzheng</groupId>-->
+<!--            <artifactId>barrel-module-authorization</artifactId>-->
+<!--            <version>${boot.project.version}</version>-->
+<!--        </dependency>-->
 <!--        <dependency>-->
 <!--            <groupId>com.github.tanxinzheng</groupId>-->
 <!--            <artifactId>barrel-starter-test</artifactId>-->

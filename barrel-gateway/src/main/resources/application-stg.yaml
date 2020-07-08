@@ -20,7 +20,7 @@ logging:
   config: classpath:logback-stg.xml
 
 jwt:
-  secret: 123456
+  secret: 12a3f1d401ea4a6187267627d8b25024
   permitUrls:
     - /barrel-system/v2/api-docs
     - /barrel-auth/v2/api-docs

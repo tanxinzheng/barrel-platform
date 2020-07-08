@@ -2,7 +2,7 @@ server:
   port: 9999 #提供者的端口
 spring:
   profiles:
-    active: stg
+    active: #spring.profiles.active#
   application:
     name: barrel-gateway
   cloud:

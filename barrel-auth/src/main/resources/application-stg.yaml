@@ -20,10 +20,5 @@ logging:
   config: classpath:logback-stg.xml
 
 jwt:
-  secret: 23424
-  permit-urls:
-    - /error
-    - /actuator/**
-    - /auth/**
-    - /index.html
+  secret: 12a3f1d401ea4a6187267627d8b25024
 
