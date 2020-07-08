@@ -18,34 +18,44 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: barrel-plateform
-
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-      - name: Install Barrel Framework
-        run: |
-            mvn install -f barrel-framework/pom.xml
-
-      - name: Install Barrel Platform
-        run: |
-            mvn install -f barrel-plateform/pom.xml -Pstg
-
-      - name: Copy jar to deploy directory
-        run: |
-            rm -rf deploy
-            mkdir deploy
-            cp barrel-plateform/barrel-auth/target/barrel-auth-1.0.0-SNAPSHOT.jar deploy
-            cp barrel-plateform/barrel-gateway/target/barrel-gateway.jar deploy
-            cp barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system-1.0.0-SNAPSHOT.jar deploy
+#
+#      - name: Set up JDK 1.8
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 1.8
+#      - name: Install Barrel Framework
+#        run: |
+#            mvn install -f barrel-framework/pom.xml
+#
+#      - name: Install Barrel Platform
+#        run: |
+#            mvn install -f barrel-plateform/pom.xml -Pstg
+#
+#      - name: Copy jar to deploy directory
+#        run: |
+#            rm -rf deploy
+#            mkdir deploy
+#            cp barrel-plateform/barrel-auth/target/barrel-auth-1.0.0-SNAPSHOT.jar deploy
+#            cp barrel-plateform/barrel-gateway/target/barrel-gateway.jar deploy
+#            cp barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system-1.0.0-SNAPSHOT.jar deploy
 
       # Deploy
-      - name: Deploy Barrel Jar
-        uses: easingthemes/ssh-deploy@v2.0.7
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.ALIYUN_ECS_PRI_KEY }}
-          ARGS: "-avz --delete"
-          SOURCE: "deploy"
-          REMOTE_HOST: ${{ secrets.ALIYUN_ECS_HOST }}
-          REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
-          TARGET: "/app/deploy"
+#      - name: Deploy Barrel Jar
+#        uses: easingthemes/ssh-deploy@v2.0.7
+#        env:
+#          SSH_PRIVATE_KEY: ${{ secrets.ALIYUN_ECS_PRI_KEY }}
+#          ARGS: "-avz --delete"
+#          SOURCE: "deploy"
+#          REMOTE_HOST: ${{ secrets.ALIYUN_ECS_HOST }}
+#          REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
+#          TARGET: "/app/deploy"
+
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.ALIYUN_ECS_HOST }}
+          username: ${{ secrets.ALIYUN_ECS_USER }}
+          port: 22
+          key: ${{ secrets.ALIYUN_ECS_PRI_KEY }}
+          source: "barrel-plateform/readme.md,barrel-plateform/pom.xml"
+          target: "/app/deploy"
