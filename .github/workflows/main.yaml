@@ -11,6 +11,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: tanxinzheng/barrel-framework
+          ref: 1.0.0-home
           path: barrel-framework
 
       - name: Checkout tools repo
