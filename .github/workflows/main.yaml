@@ -68,6 +68,7 @@ jobs:
           username: ${{ secrets.ALIYUN_ECS_USER }}
           password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
           script: |
+             export BASE_ENV=/etc/profile
              sudo ln -s /app/deploy/deploy/barrel-gateway.jar  /etc/init.d/barrel-gateway
              sudo ln -s /app/deploy/deploy/barrel-auth.jar  /etc/init.d/barrel-auth
              sudo ln -s /app/deploy/deploy/barrel-system.jar  /etc/init.d/barrel-system
