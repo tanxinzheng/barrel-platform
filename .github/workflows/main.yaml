@@ -1,4 +1,4 @@
-name: Java CI
+name: Deploy Aliyun
 
 on: [push]
 
@@ -31,18 +31,13 @@ jobs:
         run: |
             mvn install -f barrel-plateform/pom.xml -Pstg
 
-#      - name: Package Barrel Server API
-#        run: |
-#            mvn install -f barrel-plateform/barrel-service-api/pom.xml
-#
-#      - name: Package Barrel Gateway
-#        run: |
-#            mvn package -f barrel-plateform/barrel-gateway/pom.xml -Pstg
-#
-#      - name: Package Barrel Auth
-#        run: |
-#            mvn package -f barrel-plateform/barrel-auth/pom.xml -Pstg
-#
-#      - name: Package Barrel Module System
-#        run: |
-#            mvn package -f barrel-plateform/barrel-service/barrel-module-authorization/pom.xml -Pstg
+      # Deploy
+#      - name: Deploy Barrel Jar
+#        uses: easingthemes/ssh-deploy@v2.0.7
+#        env:
+#          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
+#          ARGS: "-avz --delete"
+#          SOURCE: "[Current File Dir]"
+#          REMOTE_HOST: "172.26.34.184"
+#          REMOTE_USER: "root"
+#          TARGET: "/app/deploy"
