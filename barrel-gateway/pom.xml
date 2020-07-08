@@ -128,7 +128,7 @@
     </dependencies>
 
     <build>
-        <finalName>barrel-gateway</finalName>
+        <finalName>${artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
