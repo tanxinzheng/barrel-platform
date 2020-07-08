@@ -37,7 +37,7 @@ jobs:
             mkdir deploy
             cp barrel-plateform/barrel-auth/target/barrel-auth-1.0.0-SNAPSHOT.jar deploy
             cp barrel-plateform/barrel-gateway/target/barrel-gateway.jar deploy
-            cp barrel-plateform/barrel-service/target/barrel-module-authorization/target/barrel-system-1.0.0-SNAPSHOT.jar deploy
+            cp barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system-1.0.0-SNAPSHOT.jar deploy
 
       # Deploy
       - name: Deploy Barrel Jar
