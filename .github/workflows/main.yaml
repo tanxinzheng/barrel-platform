@@ -21,7 +21,7 @@ jobs:
 
       - name: test ip
         run: |
-          curl 39.98.252.178:22
+             curl 39.98.252.178:22
 
 #
 #      - name: Set up JDK 1.8
