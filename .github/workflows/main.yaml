@@ -19,11 +19,6 @@ jobs:
         with:
           path: barrel-plateform
 
-      - name: test ip
-        run: |
-             curl 39.98.252.178:22
-
-#
 #      - name: Set up JDK 1.8
 #        uses: actions/setup-java@v1
 #        with:
@@ -55,14 +50,12 @@ jobs:
 #          REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
 #          TARGET: "/app/deploy"
 
-
-
-#      - name: copy file via ssh key
-#        uses: appleboy/scp-action@master
-#        with:
-#          host: ${{ secrets.ALIYUN_ECS_HOST }}
-#          username: ${{ secrets.ALIYUN_ECS_USER }}
-#          port: 22
-#          key: ${{ secrets.ALIYUN_ECS_PRI_KEY }}
-#          source: "barrel-plateform/readme.md,barrel-plateform/pom.xml"
-#          target: "/app/deploy"
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.ALIYUN_ECS_HOST }}
+          username: ${{ secrets.ALIYUN_ECS_USER }}
+          password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
+          port: 22
+          source: "barrel-plateform/readme.md,barrel-plateform/pom.xml"
+          target: "/app/deploy"
