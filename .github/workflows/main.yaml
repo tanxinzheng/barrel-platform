@@ -32,12 +32,12 @@ jobs:
             mvn install -f barrel-plateform/pom.xml -Pstg
 
       # Deploy
-#      - name: Deploy Barrel Jar
-#        uses: easingthemes/ssh-deploy@v2.0.7
-#        env:
-#          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-#          ARGS: "-avz --delete"
-#          SOURCE: "[Current File Dir]"
-#          REMOTE_HOST: "172.26.34.184"
-#          REMOTE_USER: "root"
-#          TARGET: "/app/deploy"
+      - name: Deploy Barrel Jar
+        uses: easingthemes/ssh-deploy@v2.0.7
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.ALIYUN_ECS_PRI_KEY }}
+          ARGS: "-avz --delete"
+          SOURCE: "barrel-plateform/barrel-auth/target/barrel-auth-1.0.0-SNAPSHOT.jar"
+          REMOTE_HOST: "172.26.34.184"
+          REMOTE_USER: "root"
+          TARGET: "/app/deploy"
