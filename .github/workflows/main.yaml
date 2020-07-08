@@ -50,12 +50,16 @@ jobs:
 #          REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
 #          TARGET: "/app/deploy"
 
-      - name: copy file via ssh key
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.ALIYUN_ECS_HOST }}
-          username: ${{ secrets.ALIYUN_ECS_USER }}
-          port: 22
-          key: ${{ secrets.ALIYUN_ECS_PRI_KEY }}
-          source: "barrel-plateform/readme.md,barrel-plateform/pom.xml"
-          target: "/app/deploy"
+       - name: test ip
+         run: |
+            curl ${{ secrets.ALIYUN_ECS_HOST }}:22
+
+#      - name: copy file via ssh key
+#        uses: appleboy/scp-action@master
+#        with:
+#          host: ${{ secrets.ALIYUN_ECS_HOST }}
+#          username: ${{ secrets.ALIYUN_ECS_USER }}
+#          port: 22
+#          key: ${{ secrets.ALIYUN_ECS_PRI_KEY }}
+#          source: "barrel-plateform/readme.md,barrel-plateform/pom.xml"
+#          target: "/app/deploy"
