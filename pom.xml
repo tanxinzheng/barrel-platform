@@ -17,13 +17,13 @@
 
 	<modules>
 		<module>barrel-gateway</module>
-		<module>barrel-config-server</module>
-		<module>barrel-admin-server</module>
-		<module>barrel-devops</module>
+<!--		<module>barrel-config-server</module>-->
+<!--		<module>barrel-admin-server</module>-->
+<!--		<module>barrel-devops</module>-->
 		<module>barrel-service-api</module>
 		<module>barrel-service</module>
 		<module>barrel-auth</module>
-		<module>barrel-admin</module>
+<!--		<module>barrel-admin</module>-->
 		<!--		<module>barrel-admin-ui</module>-->
 	</modules>
 

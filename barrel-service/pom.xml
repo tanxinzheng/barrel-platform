@@ -13,10 +13,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>barrel-module-account</module>
-        <module>barrel-module-mail</module>
-        <module>barrel-module-notification</module>
-        <module>barrel-module-scheduler</module>
+<!--        <module>barrel-module-account</module>-->
+<!--        <module>barrel-module-mail</module>-->
+<!--        <module>barrel-module-notification</module>-->
+<!--        <module>barrel-module-scheduler</module>-->
         <module>barrel-module-authorization</module>
     </modules>
 

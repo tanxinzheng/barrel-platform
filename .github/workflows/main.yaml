@@ -27,18 +27,22 @@ jobs:
         run: |
             mvn install -f barrel-framework/pom.xml
 
-      - name: Package Barrel Server API
+      - name: Install Barrel Platform
         run: |
-            mvn install -f barrel-plateform/barrel-service-api/pom.xml
+            mvn install -f barrel-plateform/pom.xml -Pstg
 
-      - name: Package Barrel Gateway
-        run: |
-            mvn package -f barrel-plateform/barrel-gateway/pom.xml -Pstg
-
-      - name: Package Barrel Auth
-        run: |
-            mvn package -f barrel-plateform/barrel-auth/pom.xml -Pstg
-
-      - name: Package Barrel Module System
-        run: |
-            mvn package -f barrel-plateform/barrel-service/barrel-module-authorization/pom.xml -Pstg
+#      - name: Package Barrel Server API
+#        run: |
+#            mvn install -f barrel-plateform/barrel-service-api/pom.xml
+#
+#      - name: Package Barrel Gateway
+#        run: |
+#            mvn package -f barrel-plateform/barrel-gateway/pom.xml -Pstg
+#
+#      - name: Package Barrel Auth
+#        run: |
+#            mvn package -f barrel-plateform/barrel-auth/pom.xml -Pstg
+#
+#      - name: Package Barrel Module System
+#        run: |
+#            mvn package -f barrel-plateform/barrel-service/barrel-module-authorization/pom.xml -Pstg
