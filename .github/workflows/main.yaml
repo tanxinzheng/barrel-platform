@@ -13,31 +13,31 @@ jobs:
           repository: tanxinzheng/barrel-framework
           ref: 1.0.0
           path: barrel-framework
-
-      - name: Checkout tools repo
-        uses: actions/checkout@v2
-        with:
-          path: barrel-plateform
-
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-      - name: Install Barrel Framework
-        run: |
-            mvn install -f barrel-framework/pom.xml
-
-      - name: Install Barrel Platform
-        run: |
-            mvn install -f barrel-plateform/pom.xml -Pstg
-
-      - name: Copy jar to deploy directory
-        run: |
-            rm -rf deploy
-            mkdir deploy
-            cp barrel-plateform/barrel-auth/target/barrel-auth.jar deploy
-            cp barrel-plateform/barrel-gateway/target/barrel-gateway.jar deploy
-            cp barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.jar deploy
+#
+#      - name: Checkout tools repo
+#        uses: actions/checkout@v2
+#        with:
+#          path: barrel-plateform
+#
+#      - name: Set up JDK 1.8
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 1.8
+#      - name: Install Barrel Framework
+#        run: |
+#            mvn install -f barrel-framework/pom.xml
+#
+#      - name: Install Barrel Platform
+#        run: |
+#            mvn install -f barrel-plateform/pom.xml -Pstg
+#
+#      - name: Copy jar to deploy directory
+#        run: |
+#            rm -rf deploy
+#            mkdir deploy
+#            cp barrel-plateform/barrel-auth/target/barrel-auth.jar deploy
+#            cp barrel-plateform/barrel-gateway/target/barrel-gateway.jar deploy
+#            cp barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.jar deploy
 
       # Deploy
 #      - name: Deploy Barrel Jar
@@ -55,26 +55,30 @@ jobs:
         with:
           host: ${{ secrets.ALIYUN_ECS_HOST }}
           port: ${{ secrets.ALIYUN_ECS_PORT }}
-          username: ${{ secrets.ALIYUN_ECS_USER }}
-          password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
-          source: "deploy/barrel-auth.jar,deploy/barrel-gateway.jar,deploy/barrel-system.jar"
+          username: admin
+          key: ${{ secrets.ALIYUN_PRI_KEY }}
+#          password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
+#          source: "deploy/barrel-auth.jar,deploy/barrel-gateway.jar,deploy/barrel-system.jar"
+          source: "barrel-framework/pom.xml"
           target: "/app/deploy"
 
-      - name: Start Spring Boot Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.ALIYUN_ECS_HOST }}
-          port: ${{ secrets.ALIYUN_ECS_PORT }}
-          username: ${{ secrets.ALIYUN_ECS_USER }}
-          password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
-          script: |
-             export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
-             rm -f /etc/init.d/barrel-gateway
-             rm -f /etc/init.d/barrel-auth
-             rm -f /etc/init.d/barrel-system
-             sudo ln -s /app/deploy/deploy/barrel-gateway.jar  /etc/init.d/barrel-gateway
-             sudo ln -s /app/deploy/deploy/barrel-auth.jar  /etc/init.d/barrel-auth
-             sudo ln -s /app/deploy/deploy/barrel-system.jar  /etc/init.d/barrel-system
-             /etc/init.d/barrel-gateway restart
-             /etc/init.d/barrel-auth restart
-             /etc/init.d/barrel-system restart
+
+#
+#      - name: Start Spring Boot Server
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.ALIYUN_ECS_HOST }}
+#          port: ${{ secrets.ALIYUN_ECS_PORT }}
+#          username: ${{ secrets.ALIYUN_ECS_USER }}
+#          password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
+#          script: |
+#             export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
+#             rm -f /etc/init.d/barrel-gateway
+#             rm -f /etc/init.d/barrel-auth
+#             rm -f /etc/init.d/barrel-system
+#             sudo ln -s /app/deploy/deploy/barrel-gateway.jar  /etc/init.d/barrel-gateway
+#             sudo ln -s /app/deploy/deploy/barrel-auth.jar  /etc/init.d/barrel-auth
+#             sudo ln -s /app/deploy/deploy/barrel-system.jar  /etc/init.d/barrel-system
+#             /etc/init.d/barrel-gateway restart
+#             /etc/init.d/barrel-auth restart
+#             /etc/init.d/barrel-system restart
