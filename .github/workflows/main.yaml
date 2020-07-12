@@ -36,7 +36,7 @@ jobs:
 
       - name: Copy jar to deploy directory
         run: |
-            unzip barrel-plateform/barrel-auth/target/barrel-auth.zip barrel-plateform/barrel-auth/target
+            unzip -o barrel-plateform/barrel-auth/target/barrel-auth.zip -d barrel-plateform/barrel-auth/target
 
       # Deploy
       - name: Rsync Barrel Jar
