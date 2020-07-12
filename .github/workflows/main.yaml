@@ -40,16 +40,20 @@ jobs:
 
       # Deploy
       - name: Rsync Barrel Jar
-        uses: AEnterprise/rsync-deploy@v1.0
         env:
           DEPLOY_KEY: ${{ secrets.ALIYUN_PRI_KEY }}
-          ARGS: "-e -c -u --delete"
-          SERVER_PORT: 22
-          FOLDER: "barrel-plateform/barrel-auth/target/barrel-auth"
-          SERVER_IP: ${{ secrets.ALIYUN_ECS_HOST }}
-          USERNAME: ${{ secrets.ALIYUN_ECS_USER }}
-          SERVER_DESTINATION:  "/app/deploy/barrel-auth"
-
+          ARGS: "-avu --delete"
+          REMOTE_PORT: ${{ secrets.ALIYUN_ECS_PORT }}
+          REMOTE_HOST: ${{ secrets.ALIYUN_ECS_HOST }}
+          REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
+          SOURCE: "barrel-plateform/barrel-auth/target/barrel-auth"
+          TARGET:  "/app/deploy/"
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan $REMOTE_HOST >> ~/.ssh/known_hosts
+          rsync $ARGS $SOURCE $REMOTE_USER@$REMOTE_HOST:$TARGET
 #
 #            cp barrel-plateform/barrel-auth/target/barrel-auth.jar barrel-auth/config
 #            cp barrel-plateform/barrel-gateway/target/barrel-gateway.jar barrel-gateway
