@@ -36,7 +36,7 @@ jobs:
 
       - name: Copy jar to deploy directory
         run: |
-            unzip barrel-plateform/barrel-auth/target/barrel-auth.zip
+            unzip barrel-plateform/barrel-auth/target/barrel-auth.zip barrel-plateform/barrel-auth/target
 
       # Deploy
       - name: Rsync Barrel Jar
@@ -46,7 +46,7 @@ jobs:
           REMOTE_PORT: ${{ secrets.ALIYUN_ECS_PORT }}
           REMOTE_HOST: ${{ secrets.ALIYUN_ECS_HOST }}
           REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
-          SOURCE: "barrel-auth/target/barrel-auth"
+          SOURCE: "barrel-plateform/barrel-auth/target/barrel-auth"
           TARGET:  "/app/deploy/"
         run: |
           mkdir -p ~/.ssh/
