@@ -19,15 +19,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-    </profiles>
-
     <dependencies>
         <!--Spring-->
         <dependency>
@@ -139,11 +130,41 @@
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <executable>true</executable>
+                    <archive>
+                        <manifest>
+                            <!--                            //指定Springboot程序启动类-->
+                            <mainClass>com.github.tanxinzheng.cloud.gateway.GatewayApplication</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <!--                            //指定依赖的jar包相对于本程序jar的位置-->
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>./</Class-Path>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- tag::plugin[] -->
             <plugin>

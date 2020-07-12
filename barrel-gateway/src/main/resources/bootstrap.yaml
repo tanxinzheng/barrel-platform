@@ -14,7 +14,7 @@ spring:
         shared-configs:
           - data-id: common.yaml
             refresh: true
-          - data-id: gateway-router.yaml
+          - data-id: common-router.yaml
             refresh: true
           - data-id: common-jwt.yaml
             refresh: true

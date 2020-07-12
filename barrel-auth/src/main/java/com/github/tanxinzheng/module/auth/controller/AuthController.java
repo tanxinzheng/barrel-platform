@@ -38,10 +38,11 @@ public class AuthController {
     JwtConfigProperties jwtConfigProperties;
 
     @Resource
-    IUserClient userApiService;
+    RedisTemplate redisTemplate;
 
     @Resource
-    RedisTemplate redisTemplate;
+    IUserClient userApiService;
+
 
     /**
      * 用户登录
