@@ -19,6 +19,7 @@ jobs:
           key: ${{ secrets.ALIYUN_PRI_KEY }}
           script: |
             export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
+            export BASH_ENV=/etc/profile
             echo $PATH
             rm -rf barrel-framework
             rm -rf barrel-plateform
