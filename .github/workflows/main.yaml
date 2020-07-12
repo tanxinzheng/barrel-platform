@@ -36,7 +36,9 @@ jobs:
 
       - name: Copy jar to deploy directory
         run: |
-            unzip -o barrel-plateform/barrel-auth/target/barrel-auth.zip -d barrel-plateform/barrel-auth/target
+            unzip -o barrel-plateform/barrel-auth/target/barrel-auth.zip -d deploy
+            unzip -o barrel-plateform/barrel-gateway/target/barrel-gateway.zip -d deploy
+            unzip -o barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.zip -d deploy
 
       # Deploy
       - name: Rsync Barrel Jar
@@ -46,7 +48,7 @@ jobs:
           REMOTE_PORT: ${{ secrets.ALIYUN_ECS_PORT }}
           REMOTE_HOST: ${{ secrets.ALIYUN_ECS_HOST }}
           REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
-          SOURCE: "barrel-plateform/barrel-auth/target/barrel-auth"
+          SOURCE: "deploy"
           TARGET:  "/app/deploy/"
         run: |
           mkdir -p ~/.ssh/
@@ -55,32 +57,6 @@ jobs:
           ssh-keyscan $REMOTE_HOST >> ~/.ssh/known_hosts
           ls
           rsync $ARGS $SOURCE $REMOTE_USER@$REMOTE_HOST:$TARGET
-#
-#            cp barrel-plateform/barrel-auth/target/barrel-auth.jar barrel-auth/config
-#            cp barrel-plateform/barrel-gateway/target/barrel-gateway.jar barrel-gateway
-#            cp barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.jar barrel-gateway
-#
-#      # Deploy
-#      - name: Deploy Barrel Jar
-#        uses: easingthemes/ssh-deploy@v2.0.7
-#        env:
-#          SSH_PRIVATE_KEY: ${{ secrets.ALIYUN_PRI_KEY }}
-#          ARGS: "-avz --delete"
-#          SOURCE: "deploy"
-#          REMOTE_HOST: ${{ secrets.ALIYUN_ECS_HOST }}
-#          REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
-#          TARGET: "/app/deploy"
-#
-#      - name: Scp files deploy directory
-#        uses: appleboy/scp-action@master
-#        with:
-#          host: ${{ secrets.ALIYUN_ECS_HOST }}
-#          port: ${{ secrets.ALIYUN_ECS_PORT }}
-#          username: ${{ secrets.ALIYUN_ECS_USER }}
-#          key: ${{ secrets.ALIYUN_PRI_KEY }}
-##          password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
-#          source: "deploy/barrel-auth.jar,deploy/barrel-gateway.jar,deploy/barrel-system.jar"
-#          target: "/app/deploy"
 
       - name: Restart Spring Boot Server
         uses: appleboy/ssh-action@master
@@ -89,7 +65,8 @@ jobs:
           port: ${{ secrets.ALIYUN_ECS_PORT }}
           username: ${{ secrets.ALIYUN_ECS_USER }}
           key: ${{ secrets.ALIYUN_PRI_KEY }}
-          #password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
           script: |
              export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
              sudo systemctl restart barrel-auth
+             sudo systemctl restart barrel-system
+             sudo systemctl restart barrel-gateway
