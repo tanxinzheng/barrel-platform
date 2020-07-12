@@ -18,3 +18,8 @@ mybatis-plus:
     cache-enabled: false
   type-aliases-package: com.github.tanxinzheng.**.model,com.github.tanxinzheng.**.entity
   mapper-locations: classpath:com/**/mapper/*.xml
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    main.blog.mapper: trace

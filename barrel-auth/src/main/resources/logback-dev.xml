@@ -4,8 +4,9 @@
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
     <!--  Define the storage location of the log files. (勿在LogBack里面使用相对路径)                                                                         -->
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-    <property name="LOG_LEVEL" value="DEBUG" />
-    <property name="LOG_HOME" value="./target/logs" />
+    <springProperty scope="context" name="application.name" source="spring.application.name"/>
+    <springProperty scope="context" name="log.file.path" source="logging.file.path"/>
+
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
     <!--  Console output                                                                                                        -->
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
@@ -17,7 +18,7 @@
     
     <appender name="FILE-INFO"  class="ch.qos.logback.core.rolling.RollingFileAppender">   
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME}/info.%d{yyyyMMdd}.log</FileNamePattern>
+            <FileNamePattern>${log.file.path}/${application.name}/info.%d{yyyyMMdd}.log</FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>   
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -37,7 +38,7 @@
     <appender name="FILE-ERROR"  class="ch.qos.logback.core.rolling.RollingFileAppender">   
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
            	<!-- 【begin 开发阶段配置】 -->    
-           	<FileNamePattern>${LOG_HOME}/error.%d{yyyyMMdd}.log</FileNamePattern>
+           	<FileNamePattern>${log.file.path}/${application.name}/error.%d{yyyyMMdd}.log</FileNamePattern>
 		    <!-- 【end 开发阶段配置】 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>   
@@ -67,7 +68,7 @@
     <logger name="io.netty" level="ERROR"/>
     <logger name="com.zaxxer" level="ERROR"/>
 
-    <root level="${LOG_LEVEL}">
+    <root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE-ERROR" />
 		<appender-ref ref="FILE-INFO" />

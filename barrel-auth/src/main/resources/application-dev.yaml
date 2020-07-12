@@ -16,11 +16,7 @@ spring:
         - 127.0.0.1:7004
         - 127.0.0.1:7005
 
-logging:
-  level:
-    org.springframework.web: DEBUG
-    main.blog.mapper: trace
-  config: classpath:logback-dev.xml
+
 
 
 jwt:

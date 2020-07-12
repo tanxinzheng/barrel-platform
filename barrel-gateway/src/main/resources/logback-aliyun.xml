@@ -4,9 +4,9 @@
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
     <!--  Define the storage location of the log files. (勿在LogBack里面使用相对路径)                                                                         -->
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-    <property name="LOG_LEVEL" value="INFO" />
-    <property name="LOG_HOME" value="/app/logs/${spring.application.name}" />
 
+    <springProperty scope="context" name="application.name" source="spring.application.name"/>
+    <springProperty scope="context" name="log.file.path" source="logging.file.path"/>
     <springProperty scope="context" name="aliyun.endpoint" source="aliyun.endpoint"/>
     <springProperty scope="context" name="aliyun.accessKeyId" source="aliyun.accessKeyId"/>
     <springProperty scope="context" name="aliyun.accessKeySecret" source="aliyun.accessKeySecret"/>
@@ -24,7 +24,7 @@
 
     <appender name="FILE-INFO"  class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME}/info.%d{yyyyMMdd}.log</FileNamePattern>
+            <FileNamePattern>${log.file.path}/${application.name}/info.%d{yyyyMMdd}.log</FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -44,7 +44,7 @@
     <appender name="FILE-ERROR"  class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 【begin 开发阶段配置】 -->
-            <FileNamePattern>${LOG_HOME}/error.%d{yyyyMMdd}.log</FileNamePattern>
+            <FileNamePattern>${log.file.path}/${application.name}/error.%d{yyyyMMdd}.log</FileNamePattern>
             <!-- 【end 开发阶段配置】 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -107,7 +107,7 @@
     <logger name="com.zaxxer" level="INFO"/>
 
 
-    <root level="${LOG_LEVEL}">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE-ERROR" />
         <appender-ref ref="FILE-INFO" />
