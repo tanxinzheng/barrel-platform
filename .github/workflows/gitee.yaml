@@ -18,6 +18,8 @@ jobs:
           username: ${{ secrets.ALIYUN_ECS_USER }}
           key: ${{ secrets.ALIYUN_PRI_KEY }}
           script: |
+            export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
+            echo $PATH
             rm -rf barrel-framework
             rm -rf barrel-plateform
             git clone https://gitee.com/tanxinzheng/barrel-framework.git
@@ -30,7 +32,6 @@ jobs:
             unzip -o barrel-plateform/barrel-gateway/target/barrel-gateway.zip -d /app/deploy
             unzip -o barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.zip -d /app/deploy
 
-            export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
             sudo systemctl restart barrel-auth
             sudo systemctl restart barrel-system
             sudo systemctl restart barrel-gateway
