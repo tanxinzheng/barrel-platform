@@ -44,7 +44,7 @@ jobs:
       - name: Rsync Barrel Jar
         env:
           DEPLOY_KEY: ${{ secrets.ALIYUN_PRI_KEY }}
-          ARGS: "-avu --delete"
+          ARGS: "-avzu --delete"
           REMOTE_PORT: ${{ secrets.ALIYUN_ECS_PORT }}
           REMOTE_HOST: ${{ secrets.ALIYUN_ECS_HOST }}
           REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
