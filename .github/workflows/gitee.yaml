@@ -18,4 +18,4 @@ jobs:
           username: ${{ secrets.ALIYUN_ECS_USER }}
           key: ${{ secrets.ALIYUN_PRI_KEY }}
           script: |
-            sh /home/admin/deploy.sh
+            bash -l /home/admin/deploy.sh
