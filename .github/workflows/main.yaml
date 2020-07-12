@@ -53,7 +53,7 @@ jobs:
           echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $REMOTE_HOST >> ~/.ssh/known_hosts
-          ll
+          ls
           rsync $ARGS $SOURCE $REMOTE_USER@$REMOTE_HOST:$TARGET
 #
 #            cp barrel-plateform/barrel-auth/target/barrel-auth.jar barrel-auth/config
