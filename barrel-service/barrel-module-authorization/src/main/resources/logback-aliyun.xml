@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+    <!--  Define the storage location of the log files. (勿在LogBack里面使用相对路径)                                                                         -->
+    <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+    <property name="LOG_LEVEL" value="INFO" />
+    <property name="LOG_HOME" value="/app/logs/${spring.application.name}" />
+
+    <springProperty scope="context" name="aliyun.endpoint" source="aliyun.endpoint"/>
+    <springProperty scope="context" name="aliyun.accessKeyId" source="aliyun.accessKeyId"/>
+    <springProperty scope="context" name="aliyun.accessKeySecret" source="aliyun.accessKeySecret"/>
+    <springProperty scope="context" name="aliyun.project" source="aliyun.project"/>
+    <springProperty scope="context" name="aliyun.logStore" source="aliyun.logStore"/>
+
+    <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+    <!--  Console output                                                                                                        -->
+    <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} userId: %X{userId} requestId: %X{requestId} [%thread] %-5level %X{ip} %logger{50} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE-INFO"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/info.%d{yyyyMMdd}.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} userId: %X{userId} requestId: %X{requestId} [%thread] %-5level %X{ip} %logger{50} - %msg%n</pattern>
+        </layout>
+        <!--  File Max Size -->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="FILE-ERROR"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 【begin 开发阶段配置】 -->
+            <FileNamePattern>${LOG_HOME}/error.%d{yyyyMMdd}.log</FileNamePattern>
+            <!-- 【end 开发阶段配置】 -->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} userId: %X{userId} requestId: %X{requestId} [%thread] %-5level %X{ip} %logger{50} - %msg%n</pattern>
+        </layout>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <!--为了防止进程退出时，内存中的数据丢失，请加上此选项-->
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+
+    <appender name="ALIYUN-LOGHUB-APPENDER" class="com.aliyun.openservices.log.logback.LoghubAppender">
+        <!--必选项-->
+        <!-- 账号及网络配置 -->
+        <endpoint>${aliyun.endpoint}</endpoint>
+        <accessKeyId>${aliyun.accessKeyId}</accessKeyId>
+        <accessKeySecret>${aliyun.accessKeySecret}</accessKeySecret>
+
+        <!-- sls 项目配置 -->
+        <project>${aliyun.project}</project>
+        <logStore>${aliyun.logStore}</logStore>
+        <!--必选项 (end)-->
+
+        <!-- 可选项 -->
+        <!--        <topic>topic1</topic>-->
+        <!--        <source>source1</source>-->
+
+        <!-- 可选项 详见 '参数说明'-->
+        <totalSizeInBytes>104857600</totalSizeInBytes>
+        <maxBlockMs>60000</maxBlockMs>
+        <ioThreadCount>8</ioThreadCount>
+        <batchSizeThresholdInBytes>524288</batchSizeThresholdInBytes>
+        <batchCountThreshold>4096</batchCountThreshold>
+        <lingerMs>2000</lingerMs>
+        <retries>10</retries>
+        <baseRetryBackoffMs>100</baseRetryBackoffMs>
+        <maxRetryBackoffMs>100</maxRetryBackoffMs>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter"><!-- 打印WARN,ERROR级别的日志 -->
+            <level>ERROR</level>
+        </filter>
+        <mdcFields>THREAD_ID,MDC_KEY</mdcFields>
+    </appender>
+
+    <!-- 可用来获取StatusManager中的状态 -->
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+    <!-- 解决debug模式下循环发送的问题 -->
+    <logger name="org.apache.http.impl.conn.Wire" level="WARN" />
+
+    <logger name="com.aliyun.openservices.aliyun.log" level="INFO" />
+    <logger name="com.alibaba.nacos.client" level="INFO" />
+    <logger name="com.zaxxer" level="INFO"/>
+
+
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE-ERROR" />
+        <appender-ref ref="FILE-INFO" />
+        <appender-ref ref="ALIYUN-LOGHUB-APPENDER"/>
+    </root>
+
+</configuration>

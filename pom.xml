@@ -55,6 +55,7 @@
 			<id>dev</id>
 			<properties>
 				<spring.profiles.active>dev</spring.profiles.active>
+				<spring.cloud.nacos.config.namespace>76827065-24d5-4c70-b861-934f6823fec4</spring.cloud.nacos.config.namespace>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -64,6 +65,7 @@
 			<id>stg</id>
 			<properties>
 				<spring.profiles.active>stg</spring.profiles.active>
+				<spring.cloud.nacos.config.namespace>83c078e9-5f16-42c7-93ec-1f33cdb96688</spring.cloud.nacos.config.namespace>
 			</properties>
 		</profile>
 	</profiles>
@@ -360,6 +362,16 @@
 				<version>2.3.2</version>
 			</dependency>
 
+			<dependency>
+				<groupId>com.google.protobuf</groupId>
+				<artifactId>protobuf-java</artifactId>
+				<version>2.5.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aliyun.openservices</groupId>
+				<artifactId>aliyun-log-logback-appender</artifactId>
+				<version>0.1.15</version>
+			</dependency>
 			<!--	解决Spring Boot 2.2.3 不兼容 Spring Cloud Hoxton.SR1 -->
 <!--			<dependency>-->
 <!--				<groupId>io.projectreactor.netty</groupId>-->
@@ -376,37 +388,24 @@
 	</dependencyManagement>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.7</version>
-				<executions>
-					<execution>
-						<id>default-resources</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target/classes</outputDirectory>
-							<useDefaultDelimiters>false</useDefaultDelimiters>
-							<delimiters>
-								<delimiter>#</delimiter>
-							</delimiters>
-							<resources>
-								<resource>
-									<directory>src/main/resources/</directory>
-									<filtering>true</filtering>
-								</resource>
-								<resource>
-									<directory>src/main/resources.${spring.profiles.active}</directory>
-									<filtering>false</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
+				<configuration>
+					<encoding>utf-8</encoding>
+					<useDefaultDelimiters>true</useDefaultDelimiters>
+				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

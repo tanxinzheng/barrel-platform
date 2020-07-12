@@ -1,0 +1,18 @@
+server:
+  port: 10110 #提供者的端口
+spring:
+  application:
+    name: barrel-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.tanxz.com:80
+        namespace: @spring.cloud.nacos.config.namespace@
+      config:
+        server-addr: nacos.tanxz.com:80
+        namespace: @spring.cloud.nacos.config.namespace@
+        shared-configs:
+          - data-id: common.yaml
+            refresh: true
+          - data-id: common-jwt.yaml
+            refresh: true

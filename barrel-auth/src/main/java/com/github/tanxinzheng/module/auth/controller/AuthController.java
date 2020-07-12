@@ -52,7 +52,7 @@ public class AuthController {
     @PostMapping(value = "/login")
     public AuthToken login(@RequestBody @Validated @NotNull LoginRequest loginRequest){
         String errorCountKey = ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername();
-        Long count = (Long) redisTemplate.opsForValue().get(errorCountKey);
+        Integer count = (Integer) redisTemplate.opsForValue().get(errorCountKey);
         if(count != null && count > 5){
             throw new BusinessException("认证错误次数已超过5次，请{}分钟后重试。", ACCOUNT_AUTH_ERROR_COUNT_TIMEOUT);
         }
@@ -66,7 +66,7 @@ public class AuthController {
         }
         String rawPassword = PasswordHelper.encryptPassword(loginRequest.getPassword(), authUser.getSalt());
         if (!authUser.getPassword().equals(rawPassword)){
-            count = redisTemplate.opsForValue().increment(ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername(), 1);
+            redisTemplate.opsForValue().increment(ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername(), 1);
             // 设置认证失败错误次数缓存过期时间
             redisTemplate.expire(ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername(), ACCOUNT_AUTH_ERROR_COUNT_TIMEOUT, TimeUnit.MINUTES);
             throw new BusinessException("用户名或密码不正确");

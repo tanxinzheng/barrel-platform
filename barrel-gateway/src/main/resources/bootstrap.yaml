@@ -1,0 +1,23 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: barrel-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.tanxz.com:80
+        namespace: @spring.cloud.nacos.config.namespace@
+      config:
+        server-addr: nacos.tanxz.com:80
+        namespace: @spring.cloud.nacos.config.namespace@
+        shared-configs:
+          - data-id: common.yaml
+            refresh: true
+          - data-id: gateway-router.yaml
+            refresh: true
+          - data-id: common-jwt.yaml
+            refresh: true
+          - data-id: common-barrel.properties
+            refresh: true
+        encode: UTF-8
