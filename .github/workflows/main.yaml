@@ -86,6 +86,4 @@ jobs:
           #password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
           script: |
              export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
-#             sudo systemctl restart barrel-gateway
              sudo systemctl restart barrel-auth
-#             sudo systemctl restart barrel-system
