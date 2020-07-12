@@ -1,0 +1,36 @@
+name: Deploy Aliyun
+
+on:
+  push:
+    branches:
+      - 1.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Restart Spring Boot Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.ALIYUN_ECS_HOST }}
+          port: ${{ secrets.ALIYUN_ECS_PORT }}
+          username: ${{ secrets.ALIYUN_ECS_USER }}
+          key: ${{ secrets.ALIYUN_PRI_KEY }}
+          script: |
+            rm -rf barrel-framework
+            rm -rf barrel-plateform
+            git clone https://gitee.com/tanxinzheng/barrel-framework.git
+            git clone https://gitee.com/tanxinzheng/barrel-platform.git
+
+            mvn install -f barrel-framework/pom.xml
+            mvn install -f barrel-plateform/pom.xml -Pstg
+
+            unzip -o barrel-plateform/barrel-auth/target/barrel-auth.zip -d /app/deploy
+            unzip -o barrel-plateform/barrel-gateway/target/barrel-gateway.zip -d /app/deploy
+            unzip -o barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.zip -d /app/deploy
+
+            export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
+            sudo systemctl restart barrel-auth
+            sudo systemctl restart barrel-system
+            sudo systemctl restart barrel-gateway
