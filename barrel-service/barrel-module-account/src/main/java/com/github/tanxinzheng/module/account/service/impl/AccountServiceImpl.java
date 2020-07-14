@@ -2,16 +2,19 @@ package com.github.tanxinzheng.module.account.service.impl;
 
 import com.github.tanxinzheng.framework.constant.JwtConfigProperties;
 import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.model.Result;
+import com.github.tanxinzheng.framework.secure.domain.AuthUser;
+import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
-import com.github.tanxinzheng.jwt.support.JwtUtils;
+import com.github.tanxinzheng.module.account.mapper.AccountMapper;
 import com.github.tanxinzheng.module.account.model.AccountDetail;
 import com.github.tanxinzheng.module.account.service.AccountService;
+import com.github.tanxinzheng.module.auth.feign.IUserClient;
 import com.github.tanxinzheng.module.authorization.model.User;
 import com.github.tanxinzheng.module.authorization.model.UserModel;
 import com.github.tanxinzheng.module.authorization.model.UserQuery;
-import com.github.tanxinzheng.module.system.authorization.service.UserService;
 import com.github.tanxinzheng.module.system.fss.model.FileStorageInfo;
 import com.github.tanxinzheng.module.system.fss.model.FileStorageResult;
 import com.github.tanxinzheng.module.system.fss.service.FileStoreService;
@@ -24,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+
 /**
  * Created by tanxinzheng on 2018/12/1.
  */
@@ -31,14 +36,14 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    @Autowired
-    UserService userService;
+    @Resource
+    IUserClient userClient;
+
+    @Resource
+    AccountMapper accountMapper;
 
     @Autowired
     FileStoreService fileStoreService;
-
-    @Autowired
-    JwtUtils jwtUtils;
 
     @Autowired
     JwtConfigProperties jwtConfigProperties;
@@ -50,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Transactional
     @Override
-    public void updateNickName(String userId, AccountDetail accountDetail) {
+    public boolean updateNickName(String userId, AccountDetail accountDetail) {
         User user = new User();
         user.setId(accountDetail.getId());
         user.setNickname(accountDetail.getName());
@@ -63,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
      * @param phone
      */
     @Override
-    public void bindPhone(String userId, String phone) {
+    public boolean bindPhone(String userId, String phone) {
         Assert.isTrue(PhoneValidator.getInstance().isValid(phone), "请输入正确格式的手机号码");
         UserQuery userQuery = new UserQuery();
         userQuery.setPhone(phone);
@@ -81,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
      * @param email
      */
     @Override
-    public void bindEmail(String userId, String email) {
+    public boolean bindEmail(String userId, String email) {
         Assert.isTrue(EmailValidator.getInstance().isValid(email), "请输入正确格式的邮箱");
         UserQuery userQuery = new UserQuery();
         userQuery.setEmail(email);
@@ -99,8 +104,8 @@ public class AccountServiceImpl implements AccountService {
      * @param wechatId
      */
     @Override
-    public void bindWechat(String userId, String wechatId) {
-
+    public boolean bindWechat(String userId, String wechatId) {
+        return false;
     }
 
     /**
@@ -111,16 +116,18 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     @Transactional
-    public void updatePassword(String userId, String oldPassword, String newPassword) {
-        User query = userService.getOneUser(userId);
-        String encryptPassword = PasswordHelper.encryptPassword(oldPassword, query.getSalt());
+    public boolean updatePassword(String userId, String oldPassword, String newPassword) {
+        AssertValid.notBlank(userId, "参数不能为空");
+        Result<AuthUser> authUserResult = userClient.getUserByUserId(userId);
+        AssertValid.isTrue(null != authUserResult && authUserResult.isSuccess(), "未找到该用户");
+        AuthUser authUser = authUserResult.getData();
+        AssertValid.notNull(authUser, "未找到该用户");
+        String encryptPassword = PasswordHelper.encryptPassword(oldPassword, authUser.getSalt());
         Assert.isTrue(encryptPassword.equals(oldPassword), "输入的旧密码不正确");
-        String salt = UUIDGenerator.getInstance().getUUID();
-        String newEncryptPassword = PasswordHelper.encryptPassword(newPassword, salt);
-        User user = new User();
-        user.setId(userId);
-        user.setSalt(salt);
-        user.setPassword(newEncryptPassword);
+        String newSalt = UUIDGenerator.getInstance().getUUID();
+        String newEncryptPassword = PasswordHelper.encryptPassword(newPassword, newSalt);
+        int result = accountMapper.updatePassword(userId, newSalt, newEncryptPassword);
+        return result == 1;
     }
 
     /**
@@ -130,7 +137,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     @Transactional
-    public void updateAvatar(String userId, MultipartFile file) {
+    public boolean updateAvatar(String userId, MultipartFile file) {
         if(file.isEmpty()){
             throw new IllegalArgumentException("请选择有效的图片");
         }
@@ -151,6 +158,12 @@ public class AccountServiceImpl implements AccountService {
         updateUser.setId(userId);
         updateUser.setAvatar(fileKey);
         userService.updateUser(updateUser);
+    }
+
+    private AuthUser getAuthUser(String username){
+        Result<AuthUser> authUserResult = userClient.getUserByUsername(username);
+        AssertValid.isTrue(null != authUserResult && authUserResult.isSuccess(), "未找到该用户");
+        return authUserResult.getData();
     }
 
 }

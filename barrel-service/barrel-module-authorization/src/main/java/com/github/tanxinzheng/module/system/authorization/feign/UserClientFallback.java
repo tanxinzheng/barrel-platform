@@ -17,6 +17,17 @@ public class UserClientFallback implements IUserClient {
         return Result.failed(BaseResultCode.SYSTEM_ERROR);
     }
 
+    /**
+     * 查询主键用户
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public Result<AuthUser> getUserByUserId(String userId) {
+        return Result.failed(BaseResultCode.SYSTEM_ERROR);
+    }
+
     @Override
     public Result<List<String>> getRoles(String username) {
         return Result.failed(BaseResultCode.SYSTEM_ERROR);

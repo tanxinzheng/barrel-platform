@@ -23,17 +23,10 @@
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>barrel-core</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>barrel-module-authorization</artifactId>-->
-<!--            <version>${boot.project.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.tanxinzheng</groupId>-->
-<!--            <artifactId>barrel-starter-test</artifactId>-->
-<!--            <version>1.0.0-SNAPSHOT</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>barrel-api-system</artifactId>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

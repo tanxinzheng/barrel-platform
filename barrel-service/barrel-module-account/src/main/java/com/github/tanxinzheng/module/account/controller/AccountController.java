@@ -8,12 +8,12 @@ import com.github.tanxinzheng.module.verification.service.VerificationCodeServic
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.util.Set;
 
 /**
@@ -24,10 +24,10 @@ import java.util.Set;
 @RequestMapping(value = "/account")
 public class AccountController {
 
-    @Autowired
+    @Resource
     AccountService accountService;
 
-    @Autowired
+    @Resource
     VerificationCodeService verificationCodeService;
 
     /**
@@ -83,7 +83,7 @@ public class AccountController {
      */
     @PutMapping(value = "/bind")
     @ApiOperation(value = "绑定手机、邮箱")
-    public void bind(@LoginUser CurrentLoginUser loginUser,
+    public boolean bind(@LoginUser CurrentLoginUser loginUser,
                      @RequestParam(value = "type") Integer type,
                      @RequestParam(value = "receiver") String receiver,
                      @RequestParam(value = "code") String code){
@@ -91,11 +91,9 @@ public class AccountController {
         verificationCodeService.checkCode(receiver, code);
         switch (type){
             case 1:
-                accountService.bindEmail(loginUser.getId(), receiver);
-                break;
+                return accountService.bindEmail(loginUser.getId(), receiver);
             case 2:
-                accountService.bindPhone(loginUser.getId(), receiver);
-                break;
+                return accountService.bindPhone(loginUser.getId(), receiver);
             default:
                 throw new IllegalArgumentException("仅支持的两种绑定类型：1-邮箱，2-手机");
         }
@@ -108,9 +106,9 @@ public class AccountController {
      */
     @PostMapping(value = "/avatar")
     @ApiOperation(value = "更换头像")
-    public void updateAvatar(@LoginUser CurrentLoginUser loginUser,
+    public boolean updateAvatar(@LoginUser CurrentLoginUser loginUser,
                              @RequestPart(value = "file") MultipartFile file) {
-        accountService.updateAvatar(loginUser.getId(), file);
+        return accountService.updateAvatar(loginUser.getId(), file);
     }
 
 

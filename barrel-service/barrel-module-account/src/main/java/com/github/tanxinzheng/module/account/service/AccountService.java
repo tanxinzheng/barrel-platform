@@ -11,37 +11,37 @@ public interface AccountService {
     /**
      * 更新账户基本信息
      */
-    void updateNickName(String userId, AccountDetail accountDetail);
+    boolean updateNickName(String userId, AccountDetail accountDetail);
 
     /**
      * 绑定手机
      * @param phone
      */
-    void bindPhone(String userId, String phone);
+    boolean bindPhone(String userId, String phone);
 
     /**
      * 绑定Email
      * @param email
      */
-    void bindEmail(String userId, String email);
+    boolean bindEmail(String userId, String email);
 
     /**
      * 绑定微信
      * @param wechatId
      */
-    void bindWechat(String userId, String wechatId);
+    boolean bindWechat(String userId, String wechatId);
 
     /**
      * 更新密码
      * @param oldPassword
      * @param newPassword
      */
-    void updatePassword(String userId, String oldPassword, String newPassword);
+    boolean updatePassword(String userId, String oldPassword, String newPassword);
 
     /**
      * 更新头像
      * @param file
      */
-    void updateAvatar(String userId, MultipartFile file);
+    boolean updateAvatar(String userId, MultipartFile file);
 
 }

@@ -7,6 +7,7 @@ import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.module.auth.feign.IUserClient;
 import com.github.tanxinzheng.module.system.authorization.domain.dto.RoleDTO;
+import com.github.tanxinzheng.module.system.authorization.domain.dto.UserDTO;
 import com.github.tanxinzheng.module.system.authorization.domain.entity.UserDO;
 import com.github.tanxinzheng.module.system.authorization.mapper.UserMapper;
 import com.github.tanxinzheng.module.system.authorization.service.UserRoleRelationService;
@@ -49,9 +50,21 @@ public class UserClient implements IUserClient {
                 .or()
                 .eq(UserDO::getPhoneNumber, username);
         UserDO userDO = userMapper.selectOne(lambdaQueryWrapper);
-        AssertValid.notNull(userDO, "该用户名未注册");
-        AssertValid.isTrue(!userDO.getDisable(), "该用户已被禁用，若要启用，请联系管理员。");
         AuthUser authUser = BeanCopierUtils.copy(userDO, AuthUser.class);
+        return Result.success(authUser);
+    }
+
+    /**
+     * 查询主键用户
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public Result<AuthUser> getUserByUserId(String userId) {
+        AssertValid.notBlank(userId, "主键查询参数不能为空");
+        UserDTO userDTO = userService.findById(userId);
+        AuthUser authUser = BeanCopierUtils.copy(userDTO, AuthUser.class);
         return Result.success(authUser);
     }
 

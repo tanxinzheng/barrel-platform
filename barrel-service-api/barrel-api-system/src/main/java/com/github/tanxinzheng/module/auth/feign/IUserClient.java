@@ -34,6 +34,18 @@ public interface IUserClient {
     Result<AuthUser> getUserByUsername(@RequestParam(value = "username") String username);
 
     /**
+     * 查询主键用户
+     * @param userId
+     * @return
+     */
+    @ApiOperation(value = "根据主键查询用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户ID")
+    })
+    @GetMapping(value = "/user-info/{id}")
+    Result<AuthUser> getUserByUserId(@PathVariable(value = "id") String userId);
+
+    /**
      * 查询用户角色
      * @param id
      * @return

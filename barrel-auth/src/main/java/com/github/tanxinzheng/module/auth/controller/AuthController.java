@@ -6,6 +6,7 @@ import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.framework.secure.domain.AuthToken;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
+import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.framework.utils.JwtUtils;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.module.auth.domain.dto.LoginRequest;
@@ -62,9 +63,8 @@ public class AuthController {
             throw new BusinessException(result.getMessage());
         }
         AuthUser authUser = result.getData();
-        if(authUser == null){
-            throw new BusinessException("该用户名未注册");
-        }
+        AssertValid.notNull(authUser, "该用户名未注册");
+        AssertValid.isTrue(!authUser.isDisable(), "该用户已被禁用，若要启用，请联系管理员。");
         String rawPassword = PasswordHelper.encryptPassword(loginRequest.getPassword(), authUser.getSalt());
         if (!authUser.getPassword().equals(rawPassword)){
             redisTemplate.opsForValue().increment(ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername(), 1);
