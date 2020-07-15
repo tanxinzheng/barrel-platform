@@ -1,89 +1,72 @@
-name: Deploy Aliyun
-
-on:
-  push:
-    branches:
-      - 1.0.0
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Barrel Framework
-        uses: actions/checkout@v2
-        with:
-          repository: tanxinzheng/barrel-framework
-          ref: 1.0.0
-          path: barrel-framework
-
-      - name: Checkout tools repo
-        uses: actions/checkout@v2
-        with:
-          path: barrel-plateform
-
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-      - name: Install Barrel Framework
-        run: |
-            mvn install -f barrel-framework/pom.xml
-
-      - name: Install Barrel Platform
-        run: |
-            mvn install -f barrel-plateform/pom.xml -Pstg
-
-      - name: Copy jar to deploy directory
-        run: |
-            unzip barrel-plateform/barrel-auth/target/barrel-auth.zip
-
-      # Deploy
-      - name: Deploy Barrel Jar
-        uses: easingthemes/ssh-deploy@v2.1.4
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.ALIYUN_PRI_KEY }}
-          ARGS: "-avz --delete"
-          SOURCE: "barrel-plateform/barrel-auth/target/barrel-auth"
-          REMOTE_HOST: ${{ secrets.ALIYUN_ECS_HOST }}
-          REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
-          TARGET: "/app/deploy/barrel-auth"
-
+#name: Deploy Aliyun
 #
-#            cp barrel-plateform/barrel-auth/target/barrel-auth.jar barrel-auth/config
-#            cp barrel-plateform/barrel-gateway/target/barrel-gateway.jar barrel-gateway
-#            cp barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.jar barrel-gateway
+#on:
+#  push:
+#    branches:
+#      - 1.0.0
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout Barrel Framework
+#        uses: actions/checkout@v2
+#        with:
+#          repository: tanxinzheng/barrel-framework
+#          ref: 1.0.0
+#          path: barrel-framework
+#
+#      - name: Checkout tools repo
+#        uses: actions/checkout@v2
+#        with:
+#          path: barrel-plateform
+#
+#      - name: Set up JDK 1.8
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 1.8
+#      - name: Install Barrel Framework
+#        run: |
+#            mvn install -f barrel-framework/pom.xml
+#
+#      - name: Install Barrel Platform
+#        run: |
+#            mvn install -f barrel-plateform/pom.xml -Pstg
+#
+#      - name: Copy jar to deploy directory
+#        run: |
+#            unzip -o barrel-plateform/barrel-auth/target/barrel-auth.zip -d deploy
+#            unzip -o barrel-plateform/barrel-gateway/target/barrel-gateway.zip -d deploy
+#            unzip -o barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.zip -d deploy
 #
 #      # Deploy
-#      - name: Deploy Barrel Jar
-#        uses: easingthemes/ssh-deploy@v2.0.7
+#      - name: Rsync Barrel Jar
 #        env:
-#          SSH_PRIVATE_KEY: ${{ secrets.ALIYUN_PRI_KEY }}
-#          ARGS: "-avz --delete"
-#          SOURCE: "deploy"
+#          DEPLOY_KEY: ${{ secrets.ALIYUN_PRI_KEY }}
+#          ARGS: "-avzu --delete"
+#          REMOTE_PORT: ${{ secrets.ALIYUN_ECS_PORT }}
 #          REMOTE_HOST: ${{ secrets.ALIYUN_ECS_HOST }}
 #          REMOTE_USER: ${{ secrets.ALIYUN_ECS_USER }}
-#          TARGET: "/app/deploy"
+#          SOURCE: "deploy"
+#          TARGET:  "/app/deploy/"
+#        run: |
+#          mkdir -p ~/.ssh/
+#          echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+#          chmod 600 ~/.ssh/id_rsa
+#          ssh-keyscan $REMOTE_HOST >> ~/.ssh/known_hosts
+#          ls
+#          rsync $ARGS $SOURCE $REMOTE_USER@$REMOTE_HOST:$TARGET
 #
-#      - name: Scp files deploy directory
-#        uses: appleboy/scp-action@master
+#      - name: Restart Spring Boot Server
+#        uses: appleboy/ssh-action@master
 #        with:
 #          host: ${{ secrets.ALIYUN_ECS_HOST }}
 #          port: ${{ secrets.ALIYUN_ECS_PORT }}
 #          username: ${{ secrets.ALIYUN_ECS_USER }}
 #          key: ${{ secrets.ALIYUN_PRI_KEY }}
-##          password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
-#          source: "deploy/barrel-auth.jar,deploy/barrel-gateway.jar,deploy/barrel-system.jar"
-#          target: "/app/deploy"
-
-      - name: Restart Spring Boot Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.ALIYUN_ECS_HOST }}
-          port: ${{ secrets.ALIYUN_ECS_PORT }}
-          username: ${{ secrets.ALIYUN_ECS_USER }}
-          key: ${{ secrets.ALIYUN_PRI_KEY }}
-          #password: ${{ secrets.ALIYUN_ECS_PASSWORD }}
-          script: |
-             export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
-             sudo systemctl restart barrel-auth
+#          script: |
+#             export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
+#             sudo systemctl restart barrel-auth
+#             sudo systemctl restart barrel-system
+#             sudo systemctl restart barrel-gateway

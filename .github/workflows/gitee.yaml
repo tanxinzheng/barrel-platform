@@ -1,0 +1,21 @@
+name: Deploy Aliyun
+
+on:
+  push:
+    branches:
+      - 1.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Restart Spring Boot Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.ALIYUN_ECS_HOST }}
+          port: ${{ secrets.ALIYUN_ECS_PORT }}
+          username: ${{ secrets.ALIYUN_ECS_USER }}
+          key: ${{ secrets.ALIYUN_PRI_KEY }}
+          script: |
+            bash -l /home/admin/deploy.sh
