@@ -7,11 +7,11 @@
 
     <springProperty scope="context" name="application.name" source="spring.application.name"/>
     <springProperty scope="context" name="log.file.path" source="logging.file.path"/>
-    <springProperty scope="context" name="aliyun.endpoint" source="aliyun.endpoint"/>
-    <springProperty scope="context" name="aliyun.accessKeyId" source="aliyun.accessKeyId"/>
-    <springProperty scope="context" name="aliyun.accessKeySecret" source="aliyun.accessKeySecret"/>
-    <springProperty scope="context" name="aliyun.project" source="aliyun.project"/>
-    <springProperty scope="context" name="aliyun.logStore" source="aliyun.logStore"/>
+    <springProperty scope="context" name="aliyun.endpoint" source="aliyun.sls.endpoint"/>
+    <springProperty scope="context" name="aliyun.accessKeyId" source="aliyun.sls.accessKeyId"/>
+    <springProperty scope="context" name="aliyun.accessKeySecret" source="aliyun.sls.accessKeySecret"/>
+    <springProperty scope="context" name="aliyun.project" source="aliyun.sls.project"/>
+    <springProperty scope="context" name="aliyun.logStore" source="aliyun.sls.logStore"/>
 
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
     <!--  Console output                                                                                                        -->

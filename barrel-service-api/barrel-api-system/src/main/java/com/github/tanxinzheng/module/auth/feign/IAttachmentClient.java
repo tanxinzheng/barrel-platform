@@ -17,9 +17,9 @@ import java.util.List;
  * Hello world!
  *
  */
-@FeignClient(value = "barrel-user-info")
-@Api(tags = {"Feign接口", "用户服务"})
-public interface IUserClient {
+@FeignClient(value = "barrel-attachment")
+@Api(tags = {"Feign接口", "附件服务"})
+public interface IAttachmentClient {
 
     /**
      * 查询用户

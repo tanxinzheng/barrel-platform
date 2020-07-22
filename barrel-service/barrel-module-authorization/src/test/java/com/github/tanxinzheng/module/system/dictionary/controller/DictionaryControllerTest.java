@@ -1,14 +1,9 @@
 package com.github.tanxinzheng.module.system.dictionary.controller;
 
-import com.github.tanxinzheng.AppTestConfig;
+import com.github.tanxinzheng.AppTest;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -16,10 +11,7 @@ import org.springframework.web.context.WebApplicationContext;
 /**
  * Created by tanxinzheng on 2018/11/20.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = AppTestConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class DictionaryControllerTest {
+public class DictionaryControllerTest extends AppTest {
 
     String GROUP_CODE = "TEST_GROUP";
 

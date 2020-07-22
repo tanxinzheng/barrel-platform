@@ -43,6 +43,7 @@ public class AccountController {
         accountModel.setEmail(loginUser.getEmail());
         accountModel.setId(loginUser.getId());
         accountModel.setPhone(loginUser.getPhone());
+        accountModel.setName(loginUser.getName());
         return accountModel;
     }
 

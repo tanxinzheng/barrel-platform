@@ -1,6 +1,7 @@
 package com.github.tanxinzheng.module.system.fss.model;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.InputStream;
  * Created by tanxinzheng on 2018/7/22.
  */
 @Data
+@Slf4j
 public class FileStorageResult {
 
     private String key;
@@ -53,14 +55,18 @@ public class FileStorageResult {
                 result.setFileSize(bytes.length);
             }
         } catch (IOException e) {
-
+            log.error(e.getMessage(), e);
         }
         return result;
     }
 
     public static FileStorageResult FAIL() {
+        return FAIL("FSSClient操作文件失败");
+    }
+
+    public static FileStorageResult FAIL(String msg) {
         FileStorageResult fileStorageResult = new FileStorageResult();
-        fileStorageResult.setMessage("FSSClient操作文件失败");
+        fileStorageResult.setMessage(msg);
         return fileStorageResult;
     }
 

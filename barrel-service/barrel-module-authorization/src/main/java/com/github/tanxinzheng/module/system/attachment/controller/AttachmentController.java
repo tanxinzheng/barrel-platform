@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.tanxinzheng.framework.mybatis.domian.QueryParams;
 import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.framework.web.annotation.LoginUser;
+import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
+import com.github.tanxinzheng.module.system.attachment.domain.dto.AttachmentCreateDTO;
 import com.github.tanxinzheng.module.system.attachment.domain.dto.AttachmentDTO;
 import com.github.tanxinzheng.module.system.attachment.domain.entity.AttachmentDO;
 import com.github.tanxinzheng.module.system.attachment.domain.vo.AttachmentVO;
@@ -12,10 +15,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -59,12 +65,23 @@ public class AttachmentController {
 
     /**
      * 新增附件
-     * @param attachmentDTO
+     * @param currentLoginUser
+     * @param attachmentCreateDTO
      * @return
      */
     @ApiOperation(value = "新增附件")
     @PostMapping
-    public AttachmentVO create(@RequestBody @Valid AttachmentDTO attachmentDTO) {
+    public AttachmentVO create(@LoginUser CurrentLoginUser currentLoginUser,
+                               @RequestBody @Valid AttachmentCreateDTO attachmentCreateDTO) {
+        AssertValid.isTrue(!attachmentCreateDTO.getFile().isEmpty(), "附件文件不能为空");
+        MultipartFile file = attachmentCreateDTO.getFile();
+        AttachmentDTO attachmentDTO = new AttachmentDTO();
+        attachmentDTO.setAttachmentGroup(attachmentCreateDTO.getAttachmentGroup());
+        attachmentDTO.setAttachmentSize(file.getSize());
+        attachmentDTO.setUploadBy(currentLoginUser.getId());
+        attachmentDTO.setUploadTime(LocalDateTime.now());
+        attachmentDTO.setMultipartFile(file);
+        attachmentDTO.setIsPrivate(attachmentCreateDTO.getIsPrivate());
         attachmentDTO = attachmentService.createAttachment(attachmentDTO);
         return BeanCopierUtils.copy(attachmentDTO, AttachmentVO.class);
     }
@@ -77,11 +94,14 @@ public class AttachmentController {
      */
     @ApiOperation(value = "更新附件")
     @PutMapping(value = "/{id}")
-    public boolean update(@PathVariable(value = "id") String id,
-                              @RequestBody @Valid AttachmentDTO attachmentDTO){
+    public boolean update(@LoginUser CurrentLoginUser loginUser,
+                          @PathVariable(value = "id") String id,
+                          @RequestBody @Valid AttachmentDTO attachmentDTO){
         if(StringUtils.isNotBlank(id)){
             attachmentDTO.setId(id);
         }
+        attachmentDTO.setUpdatedBy(loginUser.getId());
+        attachmentDTO.setUpdatedTime(LocalDateTime.now());
         return attachmentService.updateAttachment(attachmentDTO);
     }
 

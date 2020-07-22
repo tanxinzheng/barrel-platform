@@ -2,7 +2,7 @@ package com.github.tanxinzheng.module.system.fss;
 
 import com.github.tanxinzheng.module.system.fss.model.FileStorageInfo;
 import com.github.tanxinzheng.module.system.fss.model.FileStorageResult;
-import com.github.tanxinzheng.module.system.fss.service.FileStoreService;
+import com.github.tanxinzheng.module.system.fss.service.FileStorage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,10 +24,10 @@ import java.io.InputStream;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FSSStartApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-public class FileStoreServiceByOssTest {
+public class FileStorageByOssTest {
 
     @Autowired
-    private FileStoreService fileOperation;
+    private FileStorage fileOperation;
 
     private InputStream inputStream;
     private FileStorageInfo fileStorageInfo;

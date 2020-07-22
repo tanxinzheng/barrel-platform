@@ -5,18 +5,23 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.module.system.attachment.domain.dto.AttachmentDTO;
 import com.github.tanxinzheng.module.system.attachment.domain.entity.AttachmentDO;
 import com.github.tanxinzheng.module.system.attachment.mapper.AttachmentMapper;
 import com.github.tanxinzheng.module.system.attachment.service.AttachmentService;
+import com.github.tanxinzheng.module.system.fss.model.FileStorageInfo;
+import com.github.tanxinzheng.module.system.fss.model.FileStorageResult;
+import com.github.tanxinzheng.module.system.fss.service.StorageService;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +38,9 @@ public class AttachmentServiceImpl extends ServiceImpl<AttachmentMapper, Attachm
     @Resource
     AttachmentMapper attachmentMapper;
 
+    @Resource
+    StorageService storageService;
+
     /**
      * 新增附件
      *
@@ -47,6 +55,12 @@ public class AttachmentServiceImpl extends ServiceImpl<AttachmentMapper, Attachm
         boolean isOk = save(attachment);
         if(!isOk){
             return null;
+        }
+        FileStorageInfo fileStorageInfo = new FileStorageInfo(attachmentDTO.getMultipartFile());
+        fileStorageInfo.setFileName(attachment.getAttachmentKey());
+        FileStorageResult result = storageService.newFile(fileStorageInfo);
+        if(!result.isSuccess()){
+            throw new BusinessException(result.getMessage());
         }
         return BeanCopierUtils.copy(attachment, AttachmentDTO.class);
     }

@@ -1,7 +1,7 @@
 package com.github.tanxinzheng.module.system.authorization.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.tanxinzheng.test.TestAppController;
+import com.github.tanxinzheng.AppTest;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class PermissionControllerTest extends TestAppController {
+public class PermissionControllerTest extends AppTest {
 
     @Before
     public void setUp() throws Exception {

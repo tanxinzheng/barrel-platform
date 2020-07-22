@@ -1,7 +1,6 @@
 package com.github.tanxinzheng.module.account.service.impl;
 
 import com.github.tanxinzheng.framework.constant.JwtConfigProperties;
-import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.framework.utils.AssertValid;
@@ -9,19 +8,10 @@ import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
 import com.github.tanxinzheng.module.account.mapper.AccountMapper;
-import com.github.tanxinzheng.module.account.model.AccountDetail;
 import com.github.tanxinzheng.module.account.service.AccountService;
 import com.github.tanxinzheng.module.auth.feign.IUserClient;
-import com.github.tanxinzheng.module.authorization.model.User;
-import com.github.tanxinzheng.module.authorization.model.UserModel;
-import com.github.tanxinzheng.module.authorization.model.UserQuery;
-import com.github.tanxinzheng.module.system.fss.model.FileStorageInfo;
-import com.github.tanxinzheng.module.system.fss.model.FileStorageResult;
-import com.github.tanxinzheng.module.system.fss.service.FileStoreService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -42,24 +32,19 @@ public class AccountServiceImpl implements AccountService {
     @Resource
     AccountMapper accountMapper;
 
-    @Autowired
-    FileStoreService fileStoreService;
-
-    @Autowired
+    @Resource
     JwtConfigProperties jwtConfigProperties;
 
     /**
      * 更新账户基本信息
-     *
-     * @param accountDetail
+     * @param userId
+     * @param nickname
+     * @return
      */
     @Transactional
     @Override
-    public boolean updateNickName(String userId, AccountDetail accountDetail) {
-        User user = new User();
-        user.setId(accountDetail.getId());
-        user.setNickname(accountDetail.getName());
-        userService.updateUser(user);
+    public boolean updateNickName(String userId, String nickname) {
+        return accountMapper.updateNickname(userId, nickname) > 0;
     }
 
     /**
@@ -70,14 +55,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean bindPhone(String userId, String phone) {
         Assert.isTrue(PhoneValidator.getInstance().isValid(phone), "请输入正确格式的手机号码");
-        UserQuery userQuery = new UserQuery();
-        userQuery.setPhone(phone);
-        UserModel exitUser = userService.getOneUserModel(userQuery);
-        Assert.isNull(exitUser, "该手机号码已被绑定");
-        User user = new User();
-        user.setId(userId);
-        user.setPhoneNumber(phone);
-        userService.updateUser(user);
+        Result<AuthUser> authUserResult = userClient.getUserByUsername(phone);
+        Assert.notNull(authUserResult.getData(), "该手机号码已被绑定");
+        return accountMapper.bindPhone(phone, userId) > 0;
     }
 
     /**
@@ -88,14 +68,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean bindEmail(String userId, String email) {
         Assert.isTrue(EmailValidator.getInstance().isValid(email), "请输入正确格式的邮箱");
-        UserQuery userQuery = new UserQuery();
-        userQuery.setEmail(email);
-        UserModel exitUser = userService.getOneUserModel(userQuery);
-        Assert.isNull(exitUser, "该邮箱已被绑定");
-        User user = new User();
-        user.setId(userId);
-        user.setEmail(email);
-        userService.updateUser(user);
+        Result<AuthUser> authUserResult = userClient.getUserByUsername(email);
+        Assert.notNull(authUserResult.getData(), "该邮箱已被绑定");
+        return accountMapper.bindEmail(email, userId) > 0;
     }
 
     /**
@@ -141,23 +116,21 @@ public class AccountServiceImpl implements AccountService {
         if(file.isEmpty()){
             throw new IllegalArgumentException("请选择有效的图片");
         }
-        User user = userService.getOneUser(userId);
-        if(StringUtils.isNotBlank(user.getAvatar())){
-            // 删除旧头像
-            FileStorageResult info = fileStoreService.getFile(user.getAvatar());
-            fileStoreService.deleteFile(info.getStoragePath());
-        }
-        // 保存新头像
-        FileStorageInfo fileStorageInfo = new FileStorageInfo(file);
-        FileStorageResult fileStorageResult = fileStoreService.newFile(fileStorageInfo);
-        if(!fileStorageResult.isSuccess()){
-            throw new BusinessException("图片上传失败");
-        }
-        String fileKey = UUIDGenerator.getInstance().getUUID();
-        User updateUser = new User();
-        updateUser.setId(userId);
-        updateUser.setAvatar(fileKey);
-        userService.updateUser(updateUser);
+        Result<AuthUser> result = userClient.getUserByUserId(userId);
+//        if(result.getData() != null && StringUtils.isNotBlank(result.getData().getAvatar())){
+//            // 删除旧头像
+//            FileStorageResult info = fileStoreService.getFile(user.getAvatar());
+//            fileStoreService.deleteFile(info.getStoragePath());
+//        }+
+//        // 保存新头像
+//        FileStorageInfo fileStorageInfo = new FileStorageInfo(file);
+//        FileStorageResult fileStorageResult = fileStoreService.newFile(fileStorageInfo);
+//        if(!fileStorageResult.isSuccess()){
+//            throw new BusinessException("图片上传失败");
+//        }
+//        String fileKey = UUIDGenerator.getInstance().getUUID();
+//
+        return false;
     }
 
     private AuthUser getAuthUser(String username){

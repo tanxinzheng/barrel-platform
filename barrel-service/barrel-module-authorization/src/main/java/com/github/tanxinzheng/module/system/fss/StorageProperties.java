@@ -1,8 +1,8 @@
-package com.github.tanxinzheng.module.system.fss.service.config;
+package com.github.tanxinzheng.module.system.fss;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "storage")
+@ConfigurationProperties(prefix = "fss")
 public class StorageProperties {
     private String active;
     private Local local;

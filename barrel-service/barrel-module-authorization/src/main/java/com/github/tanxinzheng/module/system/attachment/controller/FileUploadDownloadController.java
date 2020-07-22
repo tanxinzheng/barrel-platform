@@ -9,7 +9,7 @@ import com.github.tanxinzheng.module.system.attachment.domain.dto.AttachmentDTO;
 import com.github.tanxinzheng.module.system.attachment.domain.entity.AttachmentDO;
 import com.github.tanxinzheng.module.system.attachment.service.AttachmentService;
 import com.github.tanxinzheng.module.system.fss.model.FileStorageResult;
-import com.github.tanxinzheng.module.system.fss.service.FileStoreService;
+import com.github.tanxinzheng.module.system.fss.service.StorageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +53,7 @@ public class FileUploadDownloadController {
     AttachmentService attachmentService;
 
     @Resource
-    FileStoreService fileStoreService;
+    StorageService fileStoreService;
 
     /**
      * 文件上传

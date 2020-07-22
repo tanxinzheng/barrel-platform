@@ -11,7 +11,7 @@ public interface AccountService {
     /**
      * 更新账户基本信息
      */
-    boolean updateNickName(String userId, AccountDetail accountDetail);
+    boolean updateNickName(String userId, String nickname);
 
     /**
      * 绑定手机

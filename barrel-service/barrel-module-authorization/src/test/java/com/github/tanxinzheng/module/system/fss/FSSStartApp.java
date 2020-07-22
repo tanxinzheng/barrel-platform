@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Created by tanxinzheng on 2018/9/25.
  */
-@EnableFSSAliyun
 @SpringBootApplication
 //@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class FSSStartApp {

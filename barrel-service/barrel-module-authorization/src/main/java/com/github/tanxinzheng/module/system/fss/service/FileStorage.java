@@ -6,34 +6,34 @@ import com.github.tanxinzheng.module.system.fss.model.FileStorageResult;
 import java.io.IOException;
 
 
-public interface FileStoreService {
+public interface FileStorage {
 
     /**
      * 是否存在文件
-     * @param filePathAndName
+     * @param key
      * @return
      */
-    public boolean existFile(String filePathAndName);
+    public boolean existFile(String key);
 
     /**
      * 根据路径获取文件流
+     * @param key
      * @return
-     * @throws IOException
      */
-    public FileStorageResult getFile(String filePathAndName);
+    public FileStorageResult getFile(String key);
 
     /**
      * 保存文件
      * @param fileStorageInfo
      * @return
-     * @throws IOException
      */
     public FileStorageResult newFile(FileStorageInfo fileStorageInfo);
 
     /**
-     * 删除文件
-     * @param filePathAndName
+     * 根据fileKey删除文件
+     * @param key
+     * @return
      */
-    public boolean deleteFile(String filePathAndName);
+    public boolean deleteFile(String key);
 
 }

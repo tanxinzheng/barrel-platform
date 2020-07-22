@@ -2,7 +2,7 @@ package com.github.tanxinzheng.module.system.fss;
 
 import com.github.tanxinzheng.module.system.fss.model.FileStorageInfo;
 import com.github.tanxinzheng.module.system.fss.model.FileStorageResult;
-import com.github.tanxinzheng.module.system.fss.service.FileStoreServiceByFastDFS;
+import com.github.tanxinzheng.module.system.fss.adapter.FastDFSStorage;
 
 import java.io.InputStream;
 
@@ -12,7 +12,7 @@ import java.io.InputStream;
  */
 public class FileStoreServiceByFastDFSTest {
 
-    private FileStoreServiceByFastDFS fileStoreService;
+    private FastDFSStorage fileStoreService;
 
     private InputStream inputStream;
 

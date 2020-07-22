@@ -6,4 +6,28 @@
         update xmo_user from set salt = #{newSalt}, password = #{newPassword} where id = #{userId}
     </update>
 
+    <update id="updateNickname">
+        update xmo_user from set nickname = #{nickname} where id = #{userId}
+    </update>
+
+    <select id="existPhone">
+        select count(1) from xmo_user
+        <where>
+            <if test="email">
+                AND email = #{email}
+            </if>
+            <if test="phone">
+                AND phone_number = #{phone}
+            </if>
+        </where>
+    </select>
+
+    <update id="bindEmail">
+        update xmo_user set email = #{email} where id = #{id}
+    </update>
+
+    <update id="bindPhone">
+        update xmo_user set phone_number = #{phone} where id = #{id}
+    </update>
+
 </mapper>

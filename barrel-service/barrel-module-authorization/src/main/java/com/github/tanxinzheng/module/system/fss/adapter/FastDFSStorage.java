@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.system.fss.service;
+package com.github.tanxinzheng.module.system.fss.adapter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
  * Created by tanxinzheng on 2018/7/20.
  */
 @Slf4j
-public class FileStoreServiceByFastDFS  {
+public class FastDFSStorage {
 
 //    private static TrackerServer trackerServer;
 //    private static TrackerClient trackerClient;

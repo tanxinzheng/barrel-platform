@@ -39,7 +39,7 @@ public class AttachmentDTO extends BaseModel implements Serializable {
     /** 附件大小 */
     @NotNull(message = "附件大小为必填项")
     @ApiModelProperty(value = "附件大小")
-    private BigDecimal attachmentSize;
+    private Long attachmentSize;
     /** 附件URL */
     @NotBlank(message = "附件URL为必填项")
     @Length(max = 200, message = "附件URL字符长度限制[0,200]")
@@ -70,6 +70,7 @@ public class AttachmentDTO extends BaseModel implements Serializable {
     private Boolean isPrivate;
 
     /** 文件信息 */
+    @NotNull(message = "请选择需要上传的附件")
     private MultipartFile multipartFile;
 
 }
