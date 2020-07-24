@@ -9,6 +9,8 @@ import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.annotation.Resource;
+
 /**
  * Created by tanxinzheng on 17/8/7.
  */
@@ -18,7 +20,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
     public static final String VALIDATE_CODE_CACHE_NAME = "VerificationCode";
 
-    @Autowired
+    @Resource
     CacheManager cacheManager;
 
     /**

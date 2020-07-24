@@ -31,7 +31,7 @@ public interface IUserClient {
             @ApiImplicitParam(name = "username", value = "用户名")
     })
     @GetMapping(value = "/user-info/username")
-    Result<AuthUser> getUserByUsername(@RequestParam(value = "username") String username);
+    AuthUser getUserByUsername(@RequestParam(value = "username") String username);
 
     /**
      * 查询主键用户
@@ -43,7 +43,7 @@ public interface IUserClient {
             @ApiImplicitParam(name = "id", value = "用户ID")
     })
     @GetMapping(value = "/user-info/{id}")
-    Result<AuthUser> getUserByUserId(@PathVariable(value = "id") String userId);
+    AuthUser getUserByUserId(@PathVariable(value = "id") String userId);
 
     /**
      * 查询用户角色
@@ -54,7 +54,7 @@ public interface IUserClient {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户主键")
     })
-    @GetMapping(value = "/user-info/{id}/roles") 
-    Result<List<String>> getRoles(@PathVariable(value = "id") String id);
+    @GetMapping(value = "/user-info/{id}/roles")
+    List<String> getRoles(@PathVariable(value = "id") String id);
 
 }

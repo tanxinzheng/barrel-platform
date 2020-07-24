@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.account.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /*
@@ -7,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
  * @Author tanxinzheng
  * @Date 2020/7/14
  */
+@Mapper
 public interface AccountMapper {
 
     int updatePassword(@Param(value = "userId") String userId,

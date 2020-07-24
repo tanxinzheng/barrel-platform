@@ -26,6 +26,11 @@
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>barrel-module-account</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
             <artifactId>barrel-starter-redis</artifactId>
         </dependency>
         <dependency>

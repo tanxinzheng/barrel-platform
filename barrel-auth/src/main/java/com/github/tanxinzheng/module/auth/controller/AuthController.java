@@ -11,6 +11,7 @@ import com.github.tanxinzheng.framework.utils.JwtUtils;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.module.auth.domain.dto.LoginRequest;
 import com.github.tanxinzheng.module.auth.feign.IUserClient;
+import com.github.tanxinzheng.module.auth.mapper.AuthMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +45,9 @@ public class AuthController {
     @Resource
     IUserClient userApiService;
 
+    @Resource
+    AuthMapper authMapper;
+
 
     /**
      * 用户登录
@@ -58,11 +62,7 @@ public class AuthController {
         if(count != null && count > 5){
             throw new BusinessException("认证错误次数已超过5次，请{}分钟后重试。", ACCOUNT_AUTH_ERROR_COUNT_TIMEOUT);
         }
-        Result<AuthUser> result = userApiService.getUserByUsername(loginRequest.getUsername());
-        if(!result.isSuccess()){
-            throw new BusinessException(result.getMessage());
-        }
-        AuthUser authUser = result.getData();
+        AuthUser authUser = userApiService.getUserByUsername(loginRequest.getUsername());
         AssertValid.notNull(authUser, "该用户名未注册");
         AssertValid.isTrue(!authUser.isDisable(), "该用户已被禁用，若要启用，请联系管理员。");
         String rawPassword = PasswordHelper.encryptPassword(loginRequest.getPassword(), authUser.getSalt());

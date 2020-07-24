@@ -32,12 +32,12 @@ public class CacheController {
 
     Map<SelectIndex, SelectService> selectServiceMap = Maps.newHashMap();
 
-    @Autowired
-    public void register(List<SelectService> serviceList){
-        for (SelectService selectService : serviceList) {
-            selectServiceMap.put(selectService.getSelectIndex(), selectService);
-        }
-    }
+//    @Autowired
+//    public void register(List<SelectService> serviceList){
+//        for (SelectService selectService : serviceList) {
+//            selectServiceMap.put(selectService.getSelectIndex(), selectService);
+//        }
+//    }
 
     /**
      * 数据字典列表

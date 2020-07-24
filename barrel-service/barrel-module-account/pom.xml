@@ -11,6 +11,7 @@
     <groupId>com.github.tanxinzheng</groupId>
     <artifactId>barrel-module-account</artifactId>
     <version>${boot.project.version}</version>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

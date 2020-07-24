@@ -55,8 +55,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean bindPhone(String userId, String phone) {
         Assert.isTrue(PhoneValidator.getInstance().isValid(phone), "请输入正确格式的手机号码");
-        Result<AuthUser> authUserResult = userClient.getUserByUsername(phone);
-        Assert.notNull(authUserResult.getData(), "该手机号码已被绑定");
+        AuthUser authUser = userClient.getUserByUsername(phone);
+        Assert.notNull(authUser, "该手机号码已被绑定");
         return accountMapper.bindPhone(phone, userId) > 0;
     }
 
@@ -68,8 +68,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean bindEmail(String userId, String email) {
         Assert.isTrue(EmailValidator.getInstance().isValid(email), "请输入正确格式的邮箱");
-        Result<AuthUser> authUserResult = userClient.getUserByUsername(email);
-        Assert.notNull(authUserResult.getData(), "该邮箱已被绑定");
+        AuthUser authUser = userClient.getUserByUsername(email);
+        Assert.notNull(authUser, "该邮箱已被绑定");
         return accountMapper.bindEmail(email, userId) > 0;
     }
 
@@ -93,9 +93,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public boolean updatePassword(String userId, String oldPassword, String newPassword) {
         AssertValid.notBlank(userId, "参数不能为空");
-        Result<AuthUser> authUserResult = userClient.getUserByUserId(userId);
-        AssertValid.isTrue(null != authUserResult && authUserResult.isSuccess(), "未找到该用户");
-        AuthUser authUser = authUserResult.getData();
+        AuthUser authUser = userClient.getUserByUserId(userId);
         AssertValid.notNull(authUser, "未找到该用户");
         String encryptPassword = PasswordHelper.encryptPassword(oldPassword, authUser.getSalt());
         Assert.isTrue(encryptPassword.equals(oldPassword), "输入的旧密码不正确");
@@ -116,7 +114,7 @@ public class AccountServiceImpl implements AccountService {
         if(file.isEmpty()){
             throw new IllegalArgumentException("请选择有效的图片");
         }
-        Result<AuthUser> result = userClient.getUserByUserId(userId);
+        AuthUser result = userClient.getUserByUserId(userId);
 //        if(result.getData() != null && StringUtils.isNotBlank(result.getData().getAvatar())){
 //            // 删除旧头像
 //            FileStorageResult info = fileStoreService.getFile(user.getAvatar());
@@ -131,12 +129,6 @@ public class AccountServiceImpl implements AccountService {
 //        String fileKey = UUIDGenerator.getInstance().getUUID();
 //
         return false;
-    }
-
-    private AuthUser getAuthUser(String username){
-        Result<AuthUser> authUserResult = userClient.getUserByUsername(username);
-        AssertValid.isTrue(null != authUserResult && authUserResult.isSuccess(), "未找到该用户");
-        return authUserResult.getData();
     }
 
 }
