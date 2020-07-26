@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.auth.controller;
+package com.github.tanxinzheng.module.system.controller;
 
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 

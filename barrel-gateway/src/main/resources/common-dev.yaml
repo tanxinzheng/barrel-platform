@@ -4,6 +4,7 @@ spring:
     url: jdbc:mysql://dev.local:3306/barrel?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: barrel_data
     password: Putdown#exhale6#ploys#Blunt
+
   redis:
     database: 0
     cluster:
@@ -15,14 +16,33 @@ spring:
         - 127.0.0.1:7003
         - 127.0.0.1:7004
         - 127.0.0.1:7005
+    lettuce:
+      pool:
+        max-active:  100
+        max-idle: 100
+        min-idle: 50
+        max-wait: 6000
+    timeout: 1000
 
-
-
+logging:
+  level:
+    org.springframework.web: DEBUG
+    main.blog.mapper: trace
+  config: classpath:logback-dev.xml
+  file:
+    path: .\target\logs
 
 jwt:
   secret: 123456
   permit-urls:
     - /error
     - /actuator/**
-    - /system/**
+    - /auth/**
     - /index.html
+
+aliyun:
+  endpoint: cn-zhangjiakou.log.aliyuncs.com
+  accessKeyId: LTAI4G9V5oKNubhNz517RpuR
+  accessKeySecret: pqHsq3TONu4B8YpMctUBWWRQHuiEc7
+  project: barrel
+  logStore: barrel-logstore

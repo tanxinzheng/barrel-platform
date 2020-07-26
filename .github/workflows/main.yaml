@@ -36,7 +36,7 @@
 #
 #      - name: Copy jar to deploy directory
 #        run: |
-#            unzip -o barrel-plateform/barrel-auth/target/barrel-auth.zip -d deploy
+#            unzip -o barrel-plateform/barrel-system/target/barrel-system.zip -d deploy
 #            unzip -o barrel-plateform/barrel-gateway/target/barrel-gateway.zip -d deploy
 #            unzip -o barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.zip -d deploy
 #
@@ -67,6 +67,6 @@
 #          key: ${{ secrets.ALIYUN_PRI_KEY }}
 #          script: |
 #             export RUN_AS_USER=${{ secrets.ALIYUN_ECS_USER }}
-#             sudo systemctl restart barrel-auth
+#             sudo systemctl restart barrel-system
 #             sudo systemctl restart barrel-system
 #             sudo systemctl restart barrel-gateway

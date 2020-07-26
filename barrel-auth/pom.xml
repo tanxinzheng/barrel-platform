@@ -26,11 +26,6 @@
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
-            <artifactId>barrel-module-account</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tanxinzheng</groupId>
             <artifactId>barrel-starter-redis</artifactId>
         </dependency>
         <dependency>
@@ -122,7 +117,7 @@
                     <archive>
                         <manifest>
                             <!--                            //指定Springboot程序启动类-->
-                            <mainClass>com.github.tanxinzheng.module.auth.AuthApplication</mainClass>
+                            <mainClass>com.github.tanxinzheng.module.system.AuthApplication</mainClass>
                             <addClasspath>true</addClasspath>
                             <!--                            //指定依赖的jar包相对于本程序jar的位置-->
                             <classpathPrefix>lib/</classpathPrefix>

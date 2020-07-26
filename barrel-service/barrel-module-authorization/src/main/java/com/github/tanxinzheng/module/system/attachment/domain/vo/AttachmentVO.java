@@ -3,7 +3,9 @@ package com.github.tanxinzheng.module.system.attachment.domain.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -36,8 +38,12 @@ public class AttachmentVO implements Serializable {
     private LocalDateTime uploadTime;
     @ApiModelProperty(value = "上传人ID")
     private String uploadBy;
-    @ApiModelProperty(value = "是否私有")
-    private Boolean isPrivate;
+    @ApiModelProperty(value = "关联ID")
+    private String relationId;
+    @ApiModelProperty(value = "属主：PUBLIC-公共可读，PRIVATE-私人可读，,<ROLE>-根据权限组可读")
+    private String owner;
+    @ApiModelProperty(value = "是否已删除")
+    private Boolean isDelete;
 
 
 }

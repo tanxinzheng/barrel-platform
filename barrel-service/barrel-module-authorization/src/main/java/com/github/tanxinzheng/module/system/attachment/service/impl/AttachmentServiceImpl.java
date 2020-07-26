@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.module.system.attachment.domain.dto.AttachmentDTO;
 import com.github.tanxinzheng.module.system.attachment.domain.entity.AttachmentDO;
 import com.github.tanxinzheng.module.system.attachment.mapper.AttachmentMapper;
@@ -51,13 +52,19 @@ public class AttachmentServiceImpl extends ServiceImpl<AttachmentMapper, Attachm
     @Override
     public AttachmentDTO createAttachment(AttachmentDTO attachmentDTO) {
         AssertValid.notNull(attachmentDTO, "attachmentDTO参数不能为空");
-        AttachmentDO attachment = attachmentDTO.toDO(AttachmentDO.class);
+        String key = UUIDGenerator.getInstance().getUUID();
+        FileStorageInfo fileStorageInfo = new FileStorageInfo(attachmentDTO.getMultipartFile(), attachmentDTO.getAttachmentGroup(), key);
+        AttachmentDO attachment = BeanCopierUtils.copy(attachmentDTO, AttachmentDO.class);
+        attachment.setAttachmentKey(key);
+        attachment.setAttachmentSize(fileStorageInfo.getFileSize());
+        attachment.setOriginName(attachmentDTO.getMultipartFile().getOriginalFilename());
+        attachment.setAttachmentSuffix(fileStorageInfo.getFileExt());
+        attachment.setIsDelete(Boolean.FALSE);
+        attachment.setAttachmentPath(fileStorageInfo.getFullPath());
         boolean isOk = save(attachment);
         if(!isOk){
             return null;
         }
-        FileStorageInfo fileStorageInfo = new FileStorageInfo(attachmentDTO.getMultipartFile());
-        fileStorageInfo.setFileName(attachment.getAttachmentKey());
         FileStorageResult result = storageService.newFile(fileStorageInfo);
         if(!result.isSuccess()){
             throw new BusinessException(result.getMessage());

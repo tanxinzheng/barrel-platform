@@ -4,6 +4,13 @@ spring:
     url: jdbc:mysql://dev.local:3306/barrel?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: barrel_data
     password: Putdown#exhale6#ploys#Blunt
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850
+#        server-addr: dev.ecs:8848
+#        namespace: 76827065-24d5-4c70-b861-934f6823fec4
+
   redis:
     database: 0
     cluster:
@@ -16,13 +23,8 @@ spring:
         - 127.0.0.1:7004
         - 127.0.0.1:7005
 
-
-
-
-jwt:
-  secret: 123456
-  permit-urls:
-    - /error
-    - /actuator/**
-    - /system/**
-    - /index.html
+logging:
+  level:
+    org.springframework.web: DEBUG
+    main.blog.mapper: trace
+  config: classpath:logback-dev.xml

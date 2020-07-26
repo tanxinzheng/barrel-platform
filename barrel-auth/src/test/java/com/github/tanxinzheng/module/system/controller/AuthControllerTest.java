@@ -1,11 +1,11 @@
-package com.github.tanxinzheng.module.auth.controller;
+package com.github.tanxinzheng.module.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.github.tanxinzheng.framework.model.Result;
-import com.github.tanxinzheng.module.auth.AuthApplication;
-import com.github.tanxinzheng.module.auth.domain.dto.LoginRequest;
-import com.github.tanxinzheng.module.auth.domain.dto.LoginResponse;
+import com.github.tanxinzheng.module.system.AuthApplication;
+import com.github.tanxinzheng.module.system.domain.dto.LoginRequest;
+import com.github.tanxinzheng.module.system.domain.dto.LoginResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -60,7 +60,7 @@ public class AuthControllerTest {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("admin");
         loginRequest.setPassword("123456");
-        ResultActions actions = mockMvc.perform(post("/auth/login")
+        ResultActions actions = mockMvc.perform(post("/system/login")
                 .content(JSONObject.toJSONString(loginRequest))
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -76,7 +76,7 @@ public class AuthControllerTest {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("admin2");
         loginRequest.setPassword("admin123");
-        ResultActions actions = mockMvc.perform(post("/auth/login")
+        ResultActions actions = mockMvc.perform(post("/system/login")
                 .content(JSONObject.toJSONString(loginRequest))
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))

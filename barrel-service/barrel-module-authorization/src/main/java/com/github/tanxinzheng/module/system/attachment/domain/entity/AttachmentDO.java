@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.tanxinzheng.framework.model.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -32,7 +33,7 @@ public class AttachmentDO extends BaseEntity implements Serializable {
     private String attachmentKey;
     /** 附件大小 */
     @TableField(value = "ATTACHMENT_SIZE")
-    private BigDecimal attachmentSize;
+    private Long attachmentSize;
     /** 附件URL */
     @TableField(value = "ATTACHMENT_PATH")
     private String attachmentPath;
@@ -48,9 +49,15 @@ public class AttachmentDO extends BaseEntity implements Serializable {
     /** 上传人ID */
     @TableField(value = "UPLOAD_BY")
     private String uploadBy;
-    /** 是否私有 */
-    @TableField(value = "IS_PRIVATE")
-    private Boolean isPrivate;
+    /** 关联ID */
+    @TableField(value = "RELATION_ID")
+    private String relationId;
+    /** 属主 */
+    @TableField(value = "OWNER")
+    private String owner;
+    /** 是否已删除:  Y-已删除，N-未删除 */
+    @TableField(value = "IS_DELETE")
+    private Boolean isDelete;
 
 
 }

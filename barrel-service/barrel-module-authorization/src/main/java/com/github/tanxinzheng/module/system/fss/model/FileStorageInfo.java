@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -22,7 +23,7 @@ public class FileStorageInfo {
     private String contentType;
     private FileStorageNameValuePair[] mateList;
 
-    public FileStorageInfo(MultipartFile multipartFile) {
+    public FileStorageInfo(MultipartFile multipartFile, String group, String fileKey) {
         try {
             this.content = multipartFile.getBytes();
         } catch (IOException e) {
@@ -30,7 +31,7 @@ public class FileStorageInfo {
         }
         String originalFileName = multipartFile.getOriginalFilename();
         this.fileExt = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-        this.fileName = multipartFile.getName();
+        this.fileName = group + "/" + fileKey + "." + fileExt;
         this.fileSize = multipartFile.getSize();
         this.contentType = multipartFile.getContentType();
     }
@@ -54,7 +55,7 @@ public class FileStorageInfo {
     }
 
     public String getFullPath(){
-        return fileName + "." + fileExt;
+        return fileName;
     }
 
     @Data

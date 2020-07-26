@@ -31,7 +31,7 @@ jwt:
   permit-urls:
     - /error
     - /actuator/**
-    - /auth/**
+    - /system/**
     - /index.html
 
     ## swagger 免登陆资源，生产环境关闭

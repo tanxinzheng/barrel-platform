@@ -1,6 +1,6 @@
 package com.github.tanxinzheng.module.account.service.impl;
 
-import com.github.tanxinzheng.framework.constant.JwtConfigProperties;
+import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.framework.utils.AssertValid;
@@ -9,7 +9,7 @@ import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
 import com.github.tanxinzheng.module.account.mapper.AccountMapper;
 import com.github.tanxinzheng.module.account.service.AccountService;
-import com.github.tanxinzheng.module.auth.feign.IUserClient;
+import com.github.tanxinzheng.module.system.feign.ISystemClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
@@ -27,13 +27,12 @@ import javax.annotation.Resource;
 public class AccountServiceImpl implements AccountService {
 
     @Resource
-    IUserClient userClient;
+    ISystemClient systemClient;
 
     @Resource
     AccountMapper accountMapper;
 
-    @Resource
-    JwtConfigProperties jwtConfigProperties;
+
 
     /**
      * 更新账户基本信息
@@ -44,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     @Override
     public boolean updateNickName(String userId, String nickname) {
-        return accountMapper.updateNickname(userId, nickname) > 0;
+        return accountMapper.updateNickname(userId, nickname) == 0;
     }
 
     /**
@@ -55,9 +54,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean bindPhone(String userId, String phone) {
         Assert.isTrue(PhoneValidator.getInstance().isValid(phone), "请输入正确格式的手机号码");
-        AuthUser authUser = userClient.getUserByUsername(phone);
-        Assert.notNull(authUser, "该手机号码已被绑定");
-        return accountMapper.bindPhone(phone, userId) > 0;
+        Result<AuthUser> authUserResult = systemClient.getUserByUsername(phone);
+        Assert.notNull(authUserResult.getData(), "该手机号码已被绑定");
+        return accountMapper.bindPhone(phone, userId) == 1;
     }
 
     /**
@@ -68,9 +67,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean bindEmail(String userId, String email) {
         Assert.isTrue(EmailValidator.getInstance().isValid(email), "请输入正确格式的邮箱");
-        AuthUser authUser = userClient.getUserByUsername(email);
-        Assert.notNull(authUser, "该邮箱已被绑定");
-        return accountMapper.bindEmail(email, userId) > 0;
+        Result<AuthUser> authUserResult = systemClient.getUserByUsername(email);
+        Assert.notNull(authUserResult.getData(), "该邮箱已被绑定");
+        return accountMapper.bindEmail(email, userId) == 1;
     }
 
     /**
@@ -93,14 +92,14 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public boolean updatePassword(String userId, String oldPassword, String newPassword) {
         AssertValid.notBlank(userId, "参数不能为空");
-        AuthUser authUser = userClient.getUserByUserId(userId);
-        AssertValid.notNull(authUser, "未找到该用户");
+        Result<AuthUser> authUserResult = systemClient.getUserByUserId(userId);
+        AssertValid.isTrue(authUserResult.isSuccess(), "未找到该用户");
+        AuthUser authUser = authUserResult.getData();
         String encryptPassword = PasswordHelper.encryptPassword(oldPassword, authUser.getSalt());
         Assert.isTrue(encryptPassword.equals(oldPassword), "输入的旧密码不正确");
         String newSalt = UUIDGenerator.getInstance().getUUID();
         String newEncryptPassword = PasswordHelper.encryptPassword(newPassword, newSalt);
-        int result = accountMapper.updatePassword(userId, newSalt, newEncryptPassword);
-        return result == 1;
+        return accountMapper.updatePassword(userId, newSalt, newEncryptPassword) == 1;
     }
 
     /**
@@ -114,21 +113,11 @@ public class AccountServiceImpl implements AccountService {
         if(file.isEmpty()){
             throw new IllegalArgumentException("请选择有效的图片");
         }
-        AuthUser result = userClient.getUserByUserId(userId);
-//        if(result.getData() != null && StringUtils.isNotBlank(result.getData().getAvatar())){
-//            // 删除旧头像
-//            FileStorageResult info = fileStoreService.getFile(user.getAvatar());
-//            fileStoreService.deleteFile(info.getStoragePath());
-//        }+
-//        // 保存新头像
-//        FileStorageInfo fileStorageInfo = new FileStorageInfo(file);
-//        FileStorageResult fileStorageResult = fileStoreService.newFile(fileStorageInfo);
-//        if(!fileStorageResult.isSuccess()){
-//            throw new BusinessException("图片上传失败");
-//        }
-//        String fileKey = UUIDGenerator.getInstance().getUUID();
-//
-        return false;
+        Result<String> result = systemClient.uploadAttachment(file, "AVATAR", "PRIVATE", null);
+        if(!result.isSuccess()){
+            throw new BusinessException("上传头像操作失败");
+        }
+        return accountMapper.updateAvatar(userId, result.getData()) == 1;
     }
 
 }

@@ -1,8 +1,8 @@
 server:
-  port: 9999
+  port: 9006 #提供者的端口
 spring:
   application:
-    name: barrel-gateway
+    name: barrel-account
   cloud:
     nacos:
       discovery:
@@ -14,8 +14,5 @@ spring:
         shared-configs:
           - data-id: common.yaml
             refresh: true
-          - data-id: common-router.yaml
+          - data-id: common-aliyun.yaml
             refresh: true
-          - data-id: common-jwt.yaml
-            refresh: true
-        encode: UTF-8

@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.auth.domain.dto;
+package com.github.tanxinzheng.module.system.domain.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -37,14 +37,8 @@ public class AccountController {
      */
     @GetMapping
     @ApiOperation(value = "个人资料")
-    public AccountModel accountSetting(@LoginUser CurrentLoginUser loginUser){
-        AccountModel accountModel = new AccountModel();
-        accountModel.setAvatar(loginUser.getAvatar());
-        accountModel.setEmail(loginUser.getEmail());
-        accountModel.setId(loginUser.getId());
-        accountModel.setPhone(loginUser.getPhone());
-        accountModel.setName(loginUser.getName());
-        return accountModel;
+    public CurrentLoginUser accountSetting(@LoginUser CurrentLoginUser loginUser){
+        return loginUser;
     }
 
     /**
@@ -69,10 +63,10 @@ public class AccountController {
      */
     @PutMapping(value = "/password")
     @ApiOperation(value = "修改密码")
-    public void updatePassword(@LoginUser CurrentLoginUser loginUser,
+    public boolean updatePassword(@LoginUser CurrentLoginUser loginUser,
                                @RequestParam(value = "oldPassword") String oldPassword,
                               @RequestParam(value = "password") String password){
-        accountService.updatePassword(loginUser.getId(), oldPassword, password);
+        return accountService.updatePassword(loginUser.getId(), oldPassword, password);
     }
 
     /**
@@ -111,6 +105,5 @@ public class AccountController {
                              @RequestPart(value = "file") MultipartFile file) {
         return accountService.updateAvatar(loginUser.getId(), file);
     }
-
 
 }

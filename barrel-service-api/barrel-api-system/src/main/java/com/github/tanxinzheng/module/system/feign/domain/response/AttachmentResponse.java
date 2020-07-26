@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.system.attachment.domain.dto;
+package com.github.tanxinzheng.module.system.feign.domain.response;
 
 import com.github.tanxinzheng.framework.model.BaseModel;
 import io.swagger.annotations.ApiModel;
@@ -10,18 +10,17 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /*
- * @Description 附件表
+ * @Description TODO
  * @Author tanxinzheng
  * @Email  tanxinzheng@139.com
  * @Date   2020-7-6 16:47:03
  */
 @Data
 @ApiModel(value = "附件")
-public class AttachmentDTO extends BaseModel implements Serializable {
+public class AttachmentResponse extends BaseModel implements Serializable {
     /** 主键 */
     @Length(max = 32, message = "主键字符长度限制[0,32]")
     @ApiModelProperty(value = "主键")
@@ -64,18 +63,12 @@ public class AttachmentDTO extends BaseModel implements Serializable {
     @Length(max = 32, message = "上传人ID字符长度限制[0,32]")
     @ApiModelProperty(value = "上传人ID")
     private String uploadBy;
-    /** 关联ID */
-    @ApiModelProperty(value = "关联ID")
-    private String relationId;
-    /** 属主 */
-    @NotNull(message = "属主为必填项")
-    @ApiModelProperty(value = "属主：PUBLIC-公共可读，PRIVATE-私人可读，,<ROLE>-根据权限组可读")
-    private String owner;
+    /** 是否私有 */
+    @NotNull(message = "是否私有为必填项")
+    @ApiModelProperty(value = "是否私有")
+    private Boolean isPrivate;
     /** 文件信息 */
-    @NotNull(message = "请选择需要上传的文件")
-    @ApiModelProperty(value = "文件流")
+    @NotNull(message = "请选择需要上传的附件")
     private MultipartFile multipartFile;
-    /** 是否已删除 */
-    @ApiModelProperty(value = "是否已删除")
-    private Boolean isDelete;
+
 }

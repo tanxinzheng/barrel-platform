@@ -18,9 +18,13 @@ public interface AccountMapper {
     int updateNickname(@Param(value = "userId") String userId,
                        @Param(value = "nickname") String nickname);
 
+    int updateAvatar(@Param(value = "userId") String userId,
+                       @Param(value = "avatar") String avatar);
+
     int bindEmail(@Param(value = "email") String email,
                   @Param(value = "id") String id);
 
     int bindPhone(@Param(value = "phone") String phone,
                   @Param(value = "id") String id);
+
 }

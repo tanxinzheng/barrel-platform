@@ -6,7 +6,6 @@ import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.framework.web.annotation.LoginUser;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
-import com.github.tanxinzheng.module.system.attachment.domain.dto.AttachmentCreateDTO;
 import com.github.tanxinzheng.module.system.attachment.domain.dto.AttachmentDTO;
 import com.github.tanxinzheng.module.system.attachment.domain.entity.AttachmentDO;
 import com.github.tanxinzheng.module.system.attachment.domain.vo.AttachmentVO;
@@ -66,22 +65,15 @@ public class AttachmentController {
     /**
      * 新增附件
      * @param currentLoginUser
-     * @param attachmentCreateDTO
+     * @param attachmentDTO
      * @return
      */
     @ApiOperation(value = "新增附件")
     @PostMapping
     public AttachmentVO create(@LoginUser CurrentLoginUser currentLoginUser,
-                               @RequestBody @Valid AttachmentCreateDTO attachmentCreateDTO) {
-        AssertValid.isTrue(!attachmentCreateDTO.getFile().isEmpty(), "附件文件不能为空");
-        MultipartFile file = attachmentCreateDTO.getFile();
-        AttachmentDTO attachmentDTO = new AttachmentDTO();
-        attachmentDTO.setAttachmentGroup(attachmentCreateDTO.getAttachmentGroup());
-        attachmentDTO.setAttachmentSize(file.getSize());
+                               @RequestBody @Valid AttachmentDTO attachmentDTO) {
+        AssertValid.isTrue(!attachmentDTO.getMultipartFile().isEmpty(), "附件文件不能为空");
         attachmentDTO.setUploadBy(currentLoginUser.getId());
-        attachmentDTO.setUploadTime(LocalDateTime.now());
-        attachmentDTO.setMultipartFile(file);
-        attachmentDTO.setIsPrivate(attachmentCreateDTO.getIsPrivate());
         attachmentDTO = attachmentService.createAttachment(attachmentDTO);
         return BeanCopierUtils.copy(attachmentDTO, AttachmentVO.class);
     }

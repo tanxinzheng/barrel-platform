@@ -78,11 +78,7 @@ public class AliyunStorage implements FileStorage {
     }
 
     public OSSClient getClient(){
-        if(client == null) {
-            createOSSClientConnection();
-        }
-        client.shutdown();
-        return client;
+        return new OSSClient(endpoint, accessKeyId, accessKeySecret);
     }
 
     @Override
@@ -127,8 +123,7 @@ public class AliyunStorage implements FileStorage {
             PutObjectResult result = getClient().putObject(getBucketName(),
                     fileStorageInfo.getFullPath(),
                     fileStorageInfo.getInputStream(), meta);
-            if(null == result || result.getResponse() == null
-                    || !result.getResponse().isSuccessful()){
+            if(null == result){
                 return FileStorageResult.FAIL();
             }
             return FileStorageResult.SUCCESS(fileStorageInfo.getFullPath(), fileStorageInfo.getInputStream());
