@@ -33,7 +33,7 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<boot.fremework.version>1.0.0-SNAPSHOT</boot.fremework.version>
+		<boot.framework.version>1.0.0-SNAPSHOT</boot.framework.version>
 		<boot.project.version>1.0.0-SNAPSHOT</boot.project.version>
 		<docker.image.prefix>barrel</docker.image.prefix>
 		<spring.boot.version>2.2.6.RELEASE</spring.boot.version>
@@ -54,7 +54,6 @@
 		<profile>
 			<id>dev</id>
 			<properties>
-				<spring.profiles.active>dev</spring.profiles.active>
 				<spring.cloud.nacos.config.namespace>76827065-24d5-4c70-b861-934f6823fec4</spring.cloud.nacos.config.namespace>
 			</properties>
 			<activation>
@@ -64,7 +63,6 @@
 		<profile>
 			<id>stg</id>
 			<properties>
-				<spring.profiles.active>stg</spring.profiles.active>
 				<spring.cloud.nacos.config.namespace>83c078e9-5f16-42c7-93ec-1f33cdb96688</spring.cloud.nacos.config.namespace>
 			</properties>
 		</profile>
@@ -118,37 +116,37 @@
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>barrel-core</artifactId>
-				<version>${boot.fremework.version}</version>
+				<version>${boot.framework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>barrel-starter-jwt</artifactId>
-				<version>${boot.fremework.version}</version>
+				<version>${boot.framework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>barrel-starter-web</artifactId>
-				<version>${boot.fremework.version}</version>
+				<version>${boot.framework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>barrel-starter-mybatis</artifactId>
-				<version>${boot.fremework.version}</version>
+				<version>${boot.framework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>barrel-starter-cloud</artifactId>
-				<version>${boot.fremework.version}</version>
+				<version>${boot.framework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>barrel-starter-redis</artifactId>
-				<version>${boot.fremework.version}</version>
+				<version>${boot.framework.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>barrel-starter-test</artifactId>
-				<version>${boot.fremework.version}</version>
+				<version>${boot.framework.version}</version>
 			</dependency>
 			<!-- module jar -->
 			<dependency>

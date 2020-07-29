@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
             <artifactId>barrel-core</artifactId>
-            <version>${boot.fremework.version}</version>
+            <version>${boot.framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
