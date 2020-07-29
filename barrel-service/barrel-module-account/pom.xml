@@ -65,7 +65,7 @@
                     <archive>
                         <manifest>
                             <!--                            //指定Springboot程序启动类-->
-                            <mainClass>com.github.tanxinzheng.module.system.SystemApplication</mainClass>
+                            <mainClass>com.github.tanxinzheng.module.AccountApplication</mainClass>
                             <addClasspath>true</addClasspath>
                             <!--                            //指定依赖的jar包相对于本程序jar的位置-->
                             <classpathPrefix>lib/</classpathPrefix>

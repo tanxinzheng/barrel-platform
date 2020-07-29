@@ -4,8 +4,8 @@ export BASH_ENV=/etc/profile
 echo $PATH
 rm -rf barrel-framework
 rm -rf barrel-plateform
-git clone https://gitee.com/tanxinzheng/barrel-framework.git
-git clone https://gitee.com/tanxinzheng/barrel-platform.git
+git clone -b 1.0.0 https://gitee.com/tanxinzheng/barrel-framework.git
+git clone -b 1.0.0 https://gitee.com/tanxinzheng/barrel-platform.git
 
 mvn install -f barrel-framework/pom.xml
 mvn install -f barrel-plateform/pom.xml -Pstg
