@@ -18,6 +18,7 @@ import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
@@ -102,7 +103,11 @@ public class AuthController {
         currentLoginUser.setUsername(authUser.getUsername());
         currentLoginUser.setName(authUser.getNickname());
         currentLoginUser.setPhone(authUser.getPhoneNumber());
-        currentLoginUser.setRoles(Sets.newHashSet(authUser.getRoles()));
+        if(CollectionUtils.isNotEmpty(authUser.getRoles())){
+            currentLoginUser.setRoles(Sets.newHashSet(authUser.getRoles()));
+        }else{
+            currentLoginUser.setRoles(Sets.newHashSet());
+        }
         redisTemplate.opsForValue().set(jwtConfigProperties.getTokenHeaderName() + ":" + authToken.getAccessToken(), currentLoginUser, 3, TimeUnit.HOURS);
     }
 
