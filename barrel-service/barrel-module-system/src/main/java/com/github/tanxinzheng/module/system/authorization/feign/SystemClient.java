@@ -2,18 +2,19 @@ package com.github.tanxinzheng.module.system.authorization.feign;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.tanxinzheng.framework.model.Result;
+import com.github.tanxinzheng.framework.model.TreeNode;
 import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.module.system.attachment.domain.dto.AttachmentDTO;
 import com.github.tanxinzheng.module.system.attachment.service.AttachmentService;
-import com.github.tanxinzheng.module.system.feign.ISystemClient;
 import com.github.tanxinzheng.module.system.authorization.domain.dto.RoleDTO;
 import com.github.tanxinzheng.module.system.authorization.domain.dto.UserDTO;
 import com.github.tanxinzheng.module.system.authorization.domain.entity.UserDO;
 import com.github.tanxinzheng.module.system.authorization.mapper.UserMapper;
 import com.github.tanxinzheng.module.system.authorization.service.UserRoleRelationService;
 import com.github.tanxinzheng.module.system.authorization.service.UserService;
+import com.github.tanxinzheng.module.system.feign.ISystemClient;
 import com.github.tanxinzheng.module.system.feign.domain.response.AttachmentResponse;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
@@ -31,7 +32,7 @@ import java.util.List;
  * @Date 2020/6/27
  */
 @ApiIgnore
-@RestController
+@RestController(value = ISystemClient.CLIENT_API_PREFIX)
 public class SystemClient implements ISystemClient {
 
     @Resource
@@ -127,5 +128,16 @@ public class SystemClient implements ISystemClient {
         attachmentDTO.setOwner(owner);
         attachmentDTO = attachmentService.createAttachment(attachmentDTO);
         return Result.success(attachmentDTO.getAttachmentKey());
+    }
+
+    /**
+     * 查询树形菜单
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public Result<TreeNode> selectTreeMenu(String userId) {
+        return null;
     }
 }

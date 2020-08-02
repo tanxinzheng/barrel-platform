@@ -17,7 +17,7 @@
 <!--        <module>barrel-module-mail</module>-->
 <!--        <module>barrel-module-notification</module>-->
 <!--        <module>barrel-module-scheduler</module>-->
-        <module>barrel-module-authorization</module>
+        <module>barrel-module-system</module>
     </modules>
 
     <dependencyManagement>

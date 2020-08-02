@@ -38,6 +38,15 @@ public class PermissionDO extends BaseEntity implements Serializable {
     /** 权限描述 */
     @TableField(value = "DESCRIPTION")
     private String description;
+    /** 资源类型： MENU-菜单，BUTTON-按钮 */
+    @TableField(value = "PERMISSION_TYPE")
+    private String permissionType;
+    /** 图标 */
+    @TableField(value = "ICON")
+    private String icon;
+    /** 排序 */
+    @TableField(value = "SORT")
+    private Integer sort;
     /** 激活 */
     @TableField(value = "ACTIVE")
     private Boolean active;

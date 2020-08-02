@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.system.authorization.domain.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.github.tanxinzheng.framework.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -49,6 +50,15 @@ public class PermissionDTO extends BaseModel implements Serializable {
     @Length(max = 2000, message = "权限描述字符长度限制[0,2000]")
     @ApiModelProperty(value = "权限描述")
     private String description;
+    /** 资源类型： MENU-菜单，BUTTON-按钮 */
+    @ApiModelProperty(value = "资源类型： MENU-菜单，BUTTON-按钮")
+    private String permissionType;
+    /** 图标 */
+    @ApiModelProperty(value = "图标")
+    private String icon;
+    /** 排序 */
+    @ApiModelProperty(value = "排序")
+    private Integer sort;
     /** 激活 */
     @NotNull(message = "激活为必填项")
     @ApiModelProperty(value = "激活")

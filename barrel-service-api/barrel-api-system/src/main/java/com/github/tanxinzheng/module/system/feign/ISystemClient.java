@@ -1,6 +1,7 @@
 package com.github.tanxinzheng.module.system.feign;
 
 import com.github.tanxinzheng.framework.model.Result;
+import com.github.tanxinzheng.framework.model.TreeNode;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.module.system.feign.fallback.UserClientFallbackFactory;
 import com.github.tanxinzheng.module.system.feign.domain.response.AttachmentResponse;
@@ -22,6 +23,8 @@ import java.util.List;
 @FeignClient(value = "barrel-system", fallbackFactory = UserClientFallbackFactory.class)
 @Api(tags = {"Feign接口", "系统服务"})
 public interface ISystemClient {
+
+    public static final String CLIENT_API_PREFIX = "/feign-api";
 
     /**
      * 查询用户
@@ -89,4 +92,17 @@ public interface ISystemClient {
                                     @RequestParam(value = "group") String group,
                                     @RequestParam(value = "owner") String owner,
                                     @RequestParam(value = "relationId", required = false) String relationId);
+
+
+    /**
+     * 查询树形菜单
+     * @param userId
+     * @return
+     */
+    @ApiOperation(value = "查询树形菜单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "userId")
+    })
+    @GetMapping(value = "/menu/tree")
+    Result<TreeNode> selectTreeMenu(@RequestParam(value = "userId") String userId);
 }

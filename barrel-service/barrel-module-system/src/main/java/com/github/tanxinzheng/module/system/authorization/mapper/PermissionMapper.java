@@ -7,6 +7,8 @@ import com.github.tanxinzheng.module.system.authorization.domain.entity.Permissi
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /*
  * @Description TODO
  * @Author tanxinzheng
@@ -19,4 +21,6 @@ public interface PermissionMapper extends BaseMapper<PermissionDO> {
     IPage<PermissionDTO> findRolePermission(IPage<PermissionDTO> page,
                                             @Param("roleId") String roleId,
                                             @Param("isRelate") Boolean isRelate);
+
+    List<PermissionDTO> findUserPermission(@Param(value = "userId") String userId);
 }

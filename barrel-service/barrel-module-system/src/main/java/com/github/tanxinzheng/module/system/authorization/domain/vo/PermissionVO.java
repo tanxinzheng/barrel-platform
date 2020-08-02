@@ -29,6 +29,12 @@ public class PermissionVO implements Serializable {
     private String permissionAction;
     @ApiModelProperty(value = "权限描述")
     private String description;
+    @ApiModelProperty(value = "资源类型： MENU-菜单，BUTTON-按钮")
+    private String permissionType;
+    @ApiModelProperty(value = "图标")
+    private String icon;
+    @ApiModelProperty(value = "排序")
+    private Integer sort;
     @ApiModelProperty(value = "激活")
     private Boolean active;
     @ApiModelProperty(value = "父节点")

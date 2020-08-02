@@ -135,7 +135,7 @@ public class RoleController {
     @ApiOperation(value = "移除角色的权限")
     @DeleteMapping(value = "/{roleId}/permissions")
     public boolean deleteRolePermission(
-            @PathVariable(value = "roleId") String roleId,
+            @PathVariable(value = "roleId", required = true) String roleId,
             @RequestBody List<String> permissionIds){
         AssertValid.notEmpty(permissionIds, "权限数组参数不能为空");
         return rolePermissionRelationService.relatePermission(roleId, permissionIds, false);

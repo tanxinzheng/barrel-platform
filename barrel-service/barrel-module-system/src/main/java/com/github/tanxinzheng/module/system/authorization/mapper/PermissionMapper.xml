@@ -39,6 +39,9 @@
             p.PERMISSION_GROUP,
             p.PERMISSION_URL,
             p.PERMISSION_ACTION,
+            p.PERMISSION_TYPE,
+            p.ICON,
+            p.SORT,
             p.DESCRIPTION,
             p.ACTIVE
         FROM
@@ -54,5 +57,32 @@
         </where>
     </select>
 
+    <select id="findUserPermission" resultType="com.github.tanxinzheng.module.system.authorization.domain.dto.PermissionDTO" >
+        SELECT
+            p.ID,
+            p.PERMISSION_KEY,
+            p.PERMISSION_GROUP,
+            p.PERMISSION_URL,
+            p.PERMISSION_ACTION,
+            p.PERMISSION_TYPE,
+            p.ICON,
+            p.SORT,
+            p.DESCRIPTION,
+            p.ACTIVE
+        FROM
+            xmo_role_permission_relation rpr
+            INNER JOIN xmo_permission p ON p.id = rpr.permission_id
+            LEFT JOIN xmo_role r ON r.id = rpr.role_id
+            LEFT JOIN xmo_user_role_relation urr ON urr.ROLE_ID = r.id
+            LEFT JOIN xmo_user u ON urr.USER_ID = u.id
+        <where>
+                u.DISABLE = 'N'
+            AND r.ACTIVE = 'Y'
+            AND p.ACTIVE = 'Y'
+            <if test="userId">
+                u.id = #{userId}
+            </if>
+        </where>
+    </select>
 
 </mapper>
