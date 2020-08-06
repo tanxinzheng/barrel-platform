@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.account.account.model;
+package com.github.tanxinzheng.module.account.model;
 
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
 import lombok.Data;

@@ -11,7 +11,8 @@ import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.auth.domain.dto.LoginRequest;
-import com.github.tanxinzheng.module.auth.feign.ISystemClient;
+import com.github.tanxinzheng.module.auth.mapper.AuthMapper;
+import com.github.tanxinzheng.module.system.feign.ISystemClient;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +45,10 @@ public class AuthController {
 
     @Resource
     RedisTemplate redisTemplate;
+
+    @Resource
+    AuthMapper authMapper;
+
 
     @Resource
     ISystemClient userApiService;

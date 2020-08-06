@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.account.account.service;
+package com.github.tanxinzheng.module.account.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

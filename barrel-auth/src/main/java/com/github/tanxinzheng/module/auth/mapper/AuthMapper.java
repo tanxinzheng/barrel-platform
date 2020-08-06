@@ -17,5 +17,5 @@ public interface AuthMapper {
 
     AuthUser getAuthUserByUsername(@Param(value = "username") String username);
 
-    List<String> getUserRoles(@Param(value = "userId") String userId);
+//    List<String> getUserRoles(@Param(value = "userId") String userId);
 }

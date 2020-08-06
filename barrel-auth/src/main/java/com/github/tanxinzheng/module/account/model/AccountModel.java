@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.account.account.model;
+package com.github.tanxinzheng.module.account.model;
 
 import com.github.tanxinzheng.framework.web.annotation.DictionaryTransfer;
 import com.github.tanxinzheng.framework.web.json.DictionaryIndex;

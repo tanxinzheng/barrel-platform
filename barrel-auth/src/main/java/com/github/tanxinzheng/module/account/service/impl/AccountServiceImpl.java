@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.account.account.service.impl;
+package com.github.tanxinzheng.module.account.service.impl;
 
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.model.Result;
@@ -7,11 +7,12 @@ import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
-import com.github.tanxinzheng.module.account.account.mapper.AccountMapper;
-import com.github.tanxinzheng.module.account.account.service.AccountService;
-import com.github.tanxinzheng.module.auth.feign.ISystemClient;
+import com.github.tanxinzheng.module.account.mapper.AccountMapper;
+import com.github.tanxinzheng.module.account.service.AccountService;
+import com.github.tanxinzheng.module.system.feign.ISystemClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -29,10 +30,8 @@ public class AccountServiceImpl implements AccountService {
     @Resource
     ISystemClient systemClient;
 
-    @Resource
+    @Autowired
     AccountMapper accountMapper;
-
-
 
     /**
      * 更新账户基本信息

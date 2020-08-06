@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.account.account.mapper;
+package com.github.tanxinzheng.module.account.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
