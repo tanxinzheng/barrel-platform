@@ -15,8 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDiscoveryClient
 @SpringCloudApplication
 @ComponentScan(basePackages = {
-        "com.github.tanxinzheng.**",
-        "springfox.documentation.swagger2.**"
+        "com.github.tanxinzheng.**"
 })
 public class GatewayApplication {
     public static void main(String[] args) {
