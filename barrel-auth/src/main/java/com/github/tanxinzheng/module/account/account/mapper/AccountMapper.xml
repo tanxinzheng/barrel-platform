@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.tanxinzheng.module.account.account.mapper.AccountMapper" >
+
+    <update id="updatePassword">
+        update xmo_user from set salt = #{newSalt}, password = #{newPassword} where id = #{userId}
+    </update>
+
+    <update id="updateNickname">
+        update xmo_user from set nickname = #{nickname} where id = #{userId}
+    </update>
+
+    <update id="updateAvatar">
+        update xmo_user from set avatar = #{avatar} where id = #{userId}
+    </update>
+
+    <update id="bindEmail">
+        update xmo_user set email = #{email} where id = #{id}
+    </update>
+
+    <update id="bindPhone">
+        update xmo_user set phone_number = #{phone} where id = #{id}
+    </update>
+
+</mapper>

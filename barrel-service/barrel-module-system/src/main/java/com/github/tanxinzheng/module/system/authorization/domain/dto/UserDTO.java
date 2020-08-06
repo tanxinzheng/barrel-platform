@@ -35,7 +35,6 @@ public class UserDTO extends BaseModel implements Serializable {
     @ApiModelProperty(value = "真实姓名")
     private String nickname;
     /** 密码盐值 */
-    @NotBlank(message = "密码盐值为必填项")
     @Length(max = 50, message = "密码盐值字符长度限制[0,50]")
     @ApiModelProperty(value = "密码盐值")
     private String salt;
@@ -57,7 +56,6 @@ public class UserDTO extends BaseModel implements Serializable {
     @ApiModelProperty(value = "头像")
     private String avatar;
     /** 锁定 */
-    @NotNull(message = "锁定为必填项")
     @ApiModelProperty(value = "锁定")
     private Boolean disable;
     /** 更新人 */

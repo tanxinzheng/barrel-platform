@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.framework.utils.PasswordHelper;
+import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.module.system.authorization.domain.dto.UserDTO;
 import com.github.tanxinzheng.module.system.authorization.domain.entity.UserDO;
 import com.github.tanxinzheng.module.system.authorization.mapper.UserMapper;
@@ -42,7 +44,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         AssertValid.notNull(userDTO, "userDTO参数不能为空");
-        UserDO user = userDTO.toDO(UserDO.class);
+        UserDO user = BeanCopierUtils.copy(userDTO, UserDO.class);
+        String salt = UUIDGenerator.getInstance().getUUID();
+        String realPassword = PasswordHelper.encryptPassword(user.getPassword(), salt);
+        user.setPassword(realPassword);
+        user.setSalt(salt);
         boolean isOk = save(user);
         if(!isOk){
             return null;
