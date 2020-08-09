@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.account.service;
+package com.github.tanxinzheng.module.verification.service;
 
 /**
  * 验证码服务接口

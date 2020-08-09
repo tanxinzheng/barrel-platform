@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.account.access.controller;
+package com.github.tanxinzheng.module.access.controller;
 
 import com.github.tanxinzheng.framework.core.model.SelectIndex;
 import com.github.tanxinzheng.framework.core.model.SelectOptionModel;

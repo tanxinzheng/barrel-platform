@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.account.service;
 
+import com.github.tanxinzheng.module.account.model.AccountDetail;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

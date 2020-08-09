@@ -2,8 +2,9 @@ package com.github.tanxinzheng.module.account.controller;
 
 import com.github.tanxinzheng.framework.web.annotation.LoginUser;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
+import com.github.tanxinzheng.module.account.model.AccountModel;
 import com.github.tanxinzheng.module.account.service.AccountService;
-import com.github.tanxinzheng.module.account.service.VerificationCodeService;
+import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
 import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

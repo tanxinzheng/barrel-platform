@@ -14,6 +14,9 @@ import org.springframework.context.annotation.ComponentScan;
         "com.github.tanxinzheng.**",
         "springfox.documentation.swagger2.**"
 })
+@MapperScan(basePackages = {
+        "com.github.tanxinzheng.module.**.mapper.**"
+})
 public class SystemApplication {
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.account.access.controller;
+package com.github.tanxinzheng.module.access.controller;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

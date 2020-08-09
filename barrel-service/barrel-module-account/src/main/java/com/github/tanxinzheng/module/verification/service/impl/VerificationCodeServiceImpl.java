@@ -1,8 +1,10 @@
-package com.github.tanxinzheng.module.account.service.impl;
+package com.github.tanxinzheng.module.verification.service.impl;
 
-import com.github.tanxinzheng.module.account.service.VerificationCodeService;
+import com.github.tanxinzheng.cache.utils.RedisUtils;
+import com.github.tanxinzheng.module.verification.service.VerificationCodeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;

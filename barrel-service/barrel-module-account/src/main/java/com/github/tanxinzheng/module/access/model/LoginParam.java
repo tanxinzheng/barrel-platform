@@ -1,4 +1,4 @@
-package com.github.tanxinzheng.module.account.access.model;
+package com.github.tanxinzheng.module.access.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
