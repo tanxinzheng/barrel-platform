@@ -27,3 +27,10 @@ management:
 spring:
   profiles:
     active: fss
+  mail:
+    nickname: IT服务助手
+    username: it-support@tanxz.com
+    password: R5sMyokE6e7p3uzRka6Rx559PhM9eHXE
+    host: smtp.tanxz.com
+    properties:
+      mail.smtp.ssl.enable: true

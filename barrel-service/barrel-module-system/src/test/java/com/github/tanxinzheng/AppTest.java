@@ -1,5 +1,6 @@
 package com.github.tanxinzheng;
 
+import com.github.tanxinzheng.module.system.SystemApplication;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
@@ -12,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {SystemApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AppTest {
 

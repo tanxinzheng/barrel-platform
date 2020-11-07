@@ -16,6 +16,7 @@
 	<description>barrel Example</description>
 
 	<modules>
+		<module>barrel-tools</module>
 		<module>barrel-service-api</module>
 		<module>barrel-gateway</module>
 		<module>barrel-auth</module>
@@ -193,6 +194,11 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-data-redis</artifactId>
+				<version>${spring.boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-mail</artifactId>
 				<version>${spring.boot.version}</version>
 			</dependency>
             <dependency>

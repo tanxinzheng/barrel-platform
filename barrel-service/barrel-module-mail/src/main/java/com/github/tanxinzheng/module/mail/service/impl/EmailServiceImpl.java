@@ -18,6 +18,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.io.InputStream;
@@ -29,11 +30,11 @@ import java.io.InputStream;
 @Slf4j
 public class EmailServiceImpl implements EmailService {
 
-    @Autowired
+    @Resource
     private JavaMailSender mailSender;
     @Value("${spring.mail.username}")
     private String emailFrom;
-    @Autowired
+    @Resource
     private FreeMarkerConfigurer configurer;
 
     /**

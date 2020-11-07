@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -45,6 +46,7 @@ public class UserDTO extends BaseModel implements Serializable {
     private String password;
     /** 邮箱 */
     @Length(max = 30, message = "邮箱字符长度限制[0,30]")
+    @Email
     @ApiModelProperty(value = "邮箱")
     private String email;
     /** 手机号码 */
