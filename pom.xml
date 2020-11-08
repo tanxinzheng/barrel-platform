@@ -55,6 +55,7 @@
 		<profile>
 			<id>dev</id>
 			<properties>
+				<spring.cloud.nacos.server-addr>39.98.252.178:8848</spring.cloud.nacos.server-addr>
 				<spring.cloud.nacos.config.namespace>76827065-24d5-4c70-b861-934f6823fec4</spring.cloud.nacos.config.namespace>
 			</properties>
 			<activation>
@@ -64,6 +65,7 @@
 		<profile>
 			<id>stg</id>
 			<properties>
+				<spring.cloud.nacos.server-addr>nacos.tanxz.com:80</spring.cloud.nacos.server-addr>
 				<spring.cloud.nacos.config.namespace>83c078e9-5f16-42c7-93ec-1f33cdb96688</spring.cloud.nacos.config.namespace>
 			</properties>
 		</profile>

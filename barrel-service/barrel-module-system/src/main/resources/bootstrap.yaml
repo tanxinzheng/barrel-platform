@@ -6,10 +6,12 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: nacos.tanxz.com:80
+        #        server-addr: nacos.tanxz.com:80
+        server-addr: @spring.cloud.nacos.server-addr@
         namespace: @spring.cloud.nacos.config.namespace@
       config:
-        server-addr: nacos.tanxz.com:80
+        #        server-addr: nacos.tanxz.com:80
+        server-addr: @spring.cloud.nacos.server-addr@
         namespace: @spring.cloud.nacos.config.namespace@
         shared-configs:
           - data-id: common.yaml
