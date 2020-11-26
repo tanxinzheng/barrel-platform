@@ -176,38 +176,20 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
-                    <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
-                    <!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
-                    <!--<dockerDirectory>docker</dockerDirectory>-->
-                    <imageName>${docker.image.prefix}/${project.build.finalName}:${boot.project.version}</imageName>
+                    <!-- 镜像地址 -->
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <!-- docker的DockerFile配置文件路径 -->
                     <dockerDirectory>src/main/docker</dockerDirectory>
-<!--                    <resources>-->
-<!--                        <resource>-->
-<!--                            <targetPath>/var/deploy</targetPath>-->
-<!--                            <directory>${project.build.directory}</directory>-->
-<!--                            <include>${project.build.finalName}.${project.packaging}</include>-->
-<!--                        </resource>-->
-<!--                    </resources>-->
-<!--                    <entryPoint>["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]</entryPoint>-->
+                    <!-- 远程docker容器的地址 -->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.zip</include>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
-<!--            &lt;!&ndash; tag::plugin[] &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>com.spotify</groupId>-->
-<!--                <artifactId>docker-maven-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
-<!--                    <dockerDirectory>src/main/docker</dockerDirectory>-->
-<!--                    <resources>-->
-<!--                        <resource>-->
-<!--                            <targetPath>/</targetPath>-->
-<!--                            <directory>${project.build.directory}</directory>-->
-<!--                            <include>${project.build.finalName}.jar</include>-->
-<!--                        </resource>-->
-<!--                    </resources>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash; end::plugin[] &ndash;&gt;-->
         </plugins>
     </build>
 

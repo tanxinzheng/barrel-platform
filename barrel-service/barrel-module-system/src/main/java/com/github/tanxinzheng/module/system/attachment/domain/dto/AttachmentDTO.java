@@ -3,14 +3,16 @@ package com.github.tanxinzheng.module.system.attachment.domain.dto;
 import com.github.tanxinzheng.framework.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /*
@@ -20,6 +22,9 @@ import java.time.LocalDateTime;
  * @Date   2020-7-6 16:47:03
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(value = "附件")
 public class AttachmentDTO extends BaseModel implements Serializable {
     /** 主键 */

@@ -5,14 +5,12 @@ MAINTAINER tanxinzheng "tanxinzheng@139.com"
 # 环境变量
 ENV DEPLOY_PATH=/var/deploy/barrel
 ENV LOG_PATH=/var/deploy/barrel/logs
-ENV APP_PORT=9999
-ENV APP_JAR_NAME=barrel-gateway
-ENV APP_DEPLOY_FILE=barrel-gateway.zip
-ENV APP_JAR_FILE=$DEPLOY_PATH/apps/barrel-gateway.jar
+ENV APP_PORT=10110
+ENV APP_JAR_NAME=barrel-auth
+ENV APP_DEPLOY_FILE=barrel-auth.zip
+ENV APP_JAR_FILE=$DEPLOY_PATH/apps/barrel-auth.jar
 ENV APP_JAR_CONFIG=$DEPLOY_PATH/apps/config
 ENV APP_JAR_LIB=$DEPLOY_PATH/apps/lib
-
-ENV spring_profiles_active=dev
 
 WORKDIR $DEPLOY_PATH
 
@@ -20,7 +18,7 @@ ADD $APP_DEPLOY_FILE $DEPLOY_PATH/$APP_DEPLOY_FILE
 RUN unzip $APP_DEPLOY_FILE
 RUN mv $APP_JAR_NAME apps
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom -Dloader.path=${APP_JAR_LIB},${APP_JAR_CONFIG}","-jar","/var/deploy/barrel/apps/barrel-gateway.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom -Dloader.path=${APP_JAR_LIB},${APP_JAR_CONFIG}","-jar","/var/deploy/barrel/apps/barrel-auth.jar"]
 
 # 端口
 EXPOSE $APP_PORT

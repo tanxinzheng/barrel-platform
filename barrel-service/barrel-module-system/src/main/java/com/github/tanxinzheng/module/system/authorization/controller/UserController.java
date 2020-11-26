@@ -12,7 +12,6 @@ import com.github.tanxinzheng.module.system.authorization.service.UserRoleRelati
 import com.github.tanxinzheng.module.system.authorization.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -122,7 +121,7 @@ public class UserController {
     @ApiOperation(value = "添加角色权限")
     @PostMapping(value = "/{userId}/roles")
     public boolean createGroupPermission(
-            @PathVariable(value = "userId") String userId,
+            @PathVariable(value = "userId", required = true) String userId,
             @RequestBody List<String> roleIds){
         return userRoleRelationService.relateRoles(userId, roleIds, true);
     }
@@ -135,7 +134,7 @@ public class UserController {
     @ApiOperation(value = "移除角色的权限")
     @DeleteMapping(value = "/{userId}/roles")
     public boolean deleteRolePermission(
-            @PathVariable(value = "userId") String userId,
+            @PathVariable(value = "userId", required = true) String userId,
             @RequestBody List<String> roleIds){
         AssertValid.notEmpty(roleIds, "角色数组参数不能为空");
         return userRoleRelationService.relateRoles(userId, roleIds, false);
@@ -149,7 +148,7 @@ public class UserController {
      */
     @ApiOperation(value = "查询角色已、未绑定权限")
     @GetMapping(value = "/{userId}/roles")
-    public List<RoleVO> findRolePermission(@ApiParam(value = "用户主键") @PathVariable(value = "userId") String userId,
+    public List<RoleVO> findRolePermission(@PathVariable(value = "userId", required = true) String userId,
                                            @RequestParam(value = "isRelate") Boolean isRelate){
         return BeanCopierUtils.copy(userRoleRelationService.findUserRole(
                 userId,

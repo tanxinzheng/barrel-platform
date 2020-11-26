@@ -13,7 +13,6 @@ import com.github.tanxinzheng.module.system.authorization.service.RolePermission
 import com.github.tanxinzheng.module.system.authorization.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -122,7 +121,7 @@ public class RoleController {
     @ApiOperation(value = "添加角色权限")
     @PostMapping(value = "/{roleId}/permissions")
     public boolean createGroupPermission(
-            @PathVariable(value = "roleId") String roleId,
+            @PathVariable(value = "roleId", required = true) String roleId,
             @RequestBody List<String> permissionIds){
         return rolePermissionRelationService.relatePermission(roleId, permissionIds, true);
     }
@@ -149,7 +148,7 @@ public class RoleController {
      */
     @ApiOperation(value = "查询角色已、未绑定权限")
     @GetMapping(value = "/{roleId}/permissions")
-    public IPage<PermissionVO> findRolePermission(@ApiParam(value = "角色主键") @PathVariable(value = "roleId") String roleId,
+    public IPage<PermissionVO> findRolePermission(@PathVariable(value = "roleId", required = true) String roleId,
                                                   @RequestBody RolePermissionQuery rolePermissionQuery){
         return BeanCopierUtils.copy(rolePermissionRelationService.findRolePermission(rolePermissionQuery.getPageNum(),
                 rolePermissionQuery.getPageSize(),

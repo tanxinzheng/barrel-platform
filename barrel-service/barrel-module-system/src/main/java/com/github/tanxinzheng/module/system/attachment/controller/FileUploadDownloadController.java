@@ -3,10 +3,13 @@ package com.github.tanxinzheng.module.system.attachment.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.tanxinzheng.framework.exception.BusinessException;
+import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.web.annotation.LoginUser;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.system.attachment.domain.dto.AttachmentDTO;
+import com.github.tanxinzheng.module.system.attachment.domain.dto.FileUploadRequestDTO;
 import com.github.tanxinzheng.module.system.attachment.domain.entity.AttachmentDO;
+import com.github.tanxinzheng.module.system.attachment.domain.vo.AttachmentVO;
 import com.github.tanxinzheng.module.system.attachment.service.AttachmentService;
 import com.github.tanxinzheng.module.system.fss.model.FileStorageResult;
 import com.github.tanxinzheng.module.system.fss.service.StorageService;
@@ -26,11 +29,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -62,12 +65,19 @@ public class FileUploadDownloadController {
      */
     @ApiOperation(value = "上传文件")
     @PostMapping(value = "/upload")
-    public AttachmentDTO upload(@LoginUser CurrentLoginUser loginUser,
-                                  @RequestParam("file") MultipartFile file) throws IOException {
-        AttachmentDTO attachmentDTO = new AttachmentDTO();
+    public AttachmentVO upload(@LoginUser CurrentLoginUser loginUser,
+                               @Valid FileUploadRequestDTO fileUploadRequestDTO) throws IOException {
+        AttachmentDTO attachmentDTO = AttachmentDTO.builder()
+                .owner(fileUploadRequestDTO.getOwner())
+                .relationId(fileUploadRequestDTO.getRelationId())
+                .attachmentGroup(fileUploadRequestDTO.getRelationType())
+                .uploadBy(loginUser.getId())
+                .multipartFile(fileUploadRequestDTO.getMultipartFile())
+                .build();
         attachmentDTO.setUploadBy(loginUser.getId());
-        attachmentDTO.setMultipartFile(file);
-        return attachmentService.createAttachment(attachmentDTO);
+        attachmentDTO.setCreatedBy(loginUser.getId());
+        attachmentDTO = attachmentService.createAttachment(attachmentDTO);
+        return BeanCopierUtils.copy(attachmentDTO, AttachmentVO.class);
     }
 
     /**
