@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: barrel-system
+  profiles:
+    active: fss
   cloud:
     nacos:
       discovery:

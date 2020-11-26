@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.system.authorization.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -7,11 +8,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
+import com.github.tanxinzheng.module.system.authorization.constant.PermissionType;
 import com.github.tanxinzheng.module.system.authorization.domain.dto.PermissionDTO;
 import com.github.tanxinzheng.module.system.authorization.domain.entity.PermissionDO;
 import com.github.tanxinzheng.module.system.authorization.mapper.PermissionMapper;
 import com.github.tanxinzheng.module.system.authorization.service.PermissionService;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import io.swagger.models.HttpMethod;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
@@ -168,12 +171,13 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
 
     @Transactional
     @Override
-    public void autoInitPermissions(String swaggerGroup, String updatedBy) {
+    public Map<String, Integer> autoInitPermissions(String swaggerGroup, String updatedBy) {
         String groupName = Optional.ofNullable(swaggerGroup).orElse(Docket.DEFAULT_GROUP_NAME);
         Documentation documentation = documentationCache.documentationByGroup(groupName);
+        Map<String, Documentation> documentationMap = documentationCache.all();
         List<PermissionDO> newList = Lists.newArrayList();
         if (documentation == null) {
-            return;
+            return Maps.newHashMap();
         }
         Swagger swagger = mapper.mapDocumentation(documentation);
         Map<String, Path> map = swagger.getPaths();
@@ -183,17 +187,22 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             for (HttpMethod httpMethod : operationMap.keySet()) {
                 PermissionDO permission = new PermissionDO();
                 permission.setId(UUIDGenerator.getInstance().getUUID());
+                permission.setPermissionGroup(groupName);
                 permission.setPermissionUrl(stringPathEntry.getKey());
                 permission.setPermissionAction(httpMethod.name().toUpperCase());
                 permission.setDescription(operationMap.get(httpMethod).getSummary());
                 permission.setPermissionKey(httpMethod.name().toUpperCase() + ":" + stringPathEntry.getKey());
+                permission.setPermissionType(PermissionType.URL.name());
                 permission.setActive(Boolean.TRUE);
                 permission.setCreatedBy(updatedBy);
                 permission.setUpdatedBy(updatedBy);
+                permission.setUpdatedTime(LocalDateTime.now());
+                permission.setCreatedTime(LocalDateTime.now());
                 newList.add(permission);
             }
         }
-        QueryWrapper queryWrapper = new QueryWrapper();
+        LambdaQueryWrapper<PermissionDO> queryWrapper = new LambdaQueryWrapper();
+        queryWrapper.eq(PermissionDO::getPermissionType, PermissionType.URL.name());
         List<PermissionDO> oldList = baseMapper.selectList(queryWrapper);
         Map<String, PermissionDO> oldMap = oldList.stream().collect(Collectors.toMap(PermissionDO::getPermissionKey, Function.identity()));
         Map<String, PermissionDO> newMap = newList.stream().collect(Collectors.toMap(PermissionDO::getPermissionKey, Function.identity()));
@@ -201,8 +210,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         List<PermissionDO> newInsertList = Lists.newArrayList();
         newMap.forEach((key, newPermission) -> {
             PermissionDO oldPermission = oldMap.get(key);
-            Optional<PermissionDO> model = Optional.of(oldPermission);
-            if(!model.isPresent()){
+            if(oldPermission == null){
                 // 历史权限资源不存在
                 newInsertList.add(newPermission);
             }else if(!newPermission.getDescription().equals(oldPermission.getDescription())
@@ -225,14 +233,19 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
                 oldDeleteList.add(oldPermission.getId());
             }
         });
+        Map<String, Integer> result = Maps.newHashMap();
         if(CollectionUtils.isNotEmpty(newInsertList)){
             saveBatch(newInsertList);
+            result.put("add", newInsertList.size());
         }
         if(CollectionUtils.isNotEmpty(oldDeleteList)){
             removeByIds(oldDeleteList);
+            result.put("remove", oldDeleteList.size());
         }
         if(CollectionUtils.isNotEmpty(oldUpdateList)){
             updateBatchById(oldUpdateList);
+            result.put("update", oldUpdateList.size());
         }
+        return result;
     }
 }

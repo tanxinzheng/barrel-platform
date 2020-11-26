@@ -8,22 +8,37 @@ services:
     restart: always
     image: barrel/barrel-gateway:latest
     container_name: barrel-gateway
+    tty: true
     ports:
       - "9999:9999"
     environment:
-      - "SPRING_PROFILES_ACTIVE=dev"
+      - "NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78"
 
   barrel-auth:
     networks:
       work_net:
-        ipv4_address: 172.20.0.201
+        ipv4_address: 172.20.0.202
     restart: always
     image: barrel/barrel-auth:latest
     container_name: barrel-auth
+    tty: true
     ports:
       - "10110:10110"
     environment:
-      - "SPRING_PROFILES_ACTIVE=dev"
+      - "NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78"
+
+  barrel-system:
+    networks:
+      work_net:
+        ipv4_address: 172.20.0.201
+    restart: always
+    image: barrel/barrel-system:latest
+    container_name: barrel-system
+    tty: true
+    ports:
+      - "9008:9008"
+    environment:
+      - "NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78"
 
 networks:
   work_net:

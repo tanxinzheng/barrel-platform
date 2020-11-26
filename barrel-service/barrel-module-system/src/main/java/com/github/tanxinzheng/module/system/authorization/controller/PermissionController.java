@@ -16,9 +16,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /*
  * @Description TODO
@@ -114,11 +114,10 @@ public class PermissionController {
      * @return
      */
     @ApiOperation(value = "获取所有未纳入权限控制资源")
-    @GetMapping(value = "/sync")
-    public Result syncAll(@RequestParam(value = "group", required = false) String swaggerGroup,
-                          HttpServletRequest request) {
-        permissionService.autoInitPermissions(swaggerGroup, "TEST");
-        return Result.success("同步成功");
+    @PostMapping(value = "/sync")
+    public Result syncAll(@RequestParam(value = "group", required = false) String swaggerGroup) {
+        Map<String, Integer> result = permissionService.autoInitPermissions(swaggerGroup, "ROBOT");
+        return Result.success(result);
     }
 
 }

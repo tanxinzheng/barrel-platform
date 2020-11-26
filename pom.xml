@@ -64,6 +64,13 @@
 			</activation>
 		</profile>
 		<profile>
+			<id>sit</id>
+			<properties>
+				<spring.cloud.nacos.server-addr>https://nacos.tanxz.com</spring.cloud.nacos.server-addr>
+				<spring.cloud.nacos.config.namespace>638b14b0-f81f-44c7-a9c3-f8f4058c8e78</spring.cloud.nacos.config.namespace>
+			</properties>
+		</profile>
+		<profile>
 			<id>stg</id>
 			<properties>
 				<spring.cloud.nacos.server-addr>https://nacos.tanxz.com</spring.cloud.nacos.server-addr>

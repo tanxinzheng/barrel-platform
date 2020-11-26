@@ -160,7 +160,7 @@ public class FileUploadDownloadController {
      * @throws IOException
      */
     @ApiOperation(value = "下载临时文件")
-    @RequestMapping(value = "/download/temps")
+    @PostMapping(value = "/download/temps")
     public ResponseEntity downloadTempFile(@RequestParam("file") String filename,
                                    HttpServletRequest request) throws IOException {
         String realFilename = URLDecoder.decode(filename, "UTF-8");

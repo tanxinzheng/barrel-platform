@@ -39,12 +39,15 @@ public class FileUploadDownloadControllerTest extends AppTest {
 
         ResultActions actions = mockMvc.perform(multipart("/file/upload")
                 .file(new MockMultipartFile("multipartFile", "测试文件.yml",",multipart/form-data", FileUtils.readFileToByteArray(new File(filePath))))
-                .file("relationId", "JUNIT".getBytes())
-                .file("relationType", "JUNIT".getBytes())
-                .file("owner", "PUBLIC".getBytes())
+                .file(new MockMultipartFile("relationId", "test.txt",",multipart/form-data", "JUNIT".getBytes()))
+                .file(new MockMultipartFile("relationType", "test.txt",",multipart/form-data", "JUNIT".getBytes()))
+                .file(new MockMultipartFile("owner", "test.txt",",multipart/form-data", "JUNIT".getBytes()))
+//                .file("relationId", "JUNIT".getBytes())
+//                .file("relationType", "JUNIT".getBytes())
+//                .file("owner", "PUBLIC".getBytes())
                 .header(AUTHORIZATION, createToken())
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .accept(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(print())
                 .andExpect(status().isOk());
         String resultJson = actions.andReturn().getResponse().getContentAsString();

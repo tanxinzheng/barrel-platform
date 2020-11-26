@@ -6,6 +6,7 @@ import com.github.tanxinzheng.module.system.authorization.domain.dto.PermissionD
 import com.github.tanxinzheng.module.system.authorization.domain.entity.PermissionDO;
 
 import java.util.List;
+import java.util.Map;
 
 /*
  * @Description TODO
@@ -77,7 +78,8 @@ public interface PermissionService {
      * 自动初始化权限表
      * @param swaggerGroup
      * @param updatedBy
+     * @return
      */
-    void autoInitPermissions(String swaggerGroup, String updatedBy);
+    Map<String, Integer> autoInitPermissions(String swaggerGroup, String updatedBy);
 
 }

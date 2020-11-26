@@ -101,6 +101,24 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 镜像地址 -->
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <!-- docker的DockerFile配置文件路径 -->
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <!-- 远程docker容器的地址 -->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.zip</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
