@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
   barrel-gateway:
@@ -39,6 +39,17 @@ services:
       - "9008:9008"
     environment:
       - "NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78"
+
+  barrel-admin:
+    networks:
+      work_net:
+        ipv4_address: 172.20.0.203
+    restart: always
+    image: barrel/barrel-admin:latest
+    container_name: barrel-admin
+    tty: true
+    ports:
+      - "9901:9901"
 
 networks:
   work_net:

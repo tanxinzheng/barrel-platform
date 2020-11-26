@@ -1,5 +1,5 @@
 server:
-  port: 10103
+  port: 9901
   undertow:
     # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
     io-threads: 4
@@ -17,3 +17,10 @@ spring:
         ignored-services:
           - consul
           - serverAddr
+  application:
+    name: barrel-admin
+  cloud:
+    nacos:
+      discovery:
+        server-addr: @spring.cloud.nacos.server-addr@
+        namespace: @spring.cloud.nacos.config.namespace@

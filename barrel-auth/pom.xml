@@ -135,7 +135,7 @@
                     <!-- 镜像地址 -->
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
                     <!-- docker的DockerFile配置文件路径 -->
-                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <dockerDirectory>docker</dockerDirectory>
                     <!-- 远程docker容器的地址 -->
                     <resources>
                         <resource>
