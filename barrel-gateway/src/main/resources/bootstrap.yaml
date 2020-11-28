@@ -22,4 +22,6 @@ spring:
             refresh: true
           - data-id: common-jwt.yaml
             refresh: true
+          - data-id: common-sleuth.yaml
+            refresh: true
         encode: UTF-8

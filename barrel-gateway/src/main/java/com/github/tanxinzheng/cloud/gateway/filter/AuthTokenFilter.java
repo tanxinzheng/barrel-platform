@@ -3,14 +3,8 @@ package com.github.tanxinzheng.cloud.gateway.filter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tanxinzheng.framework.constant.JwtConfigProperties;
-import com.github.tanxinzheng.framework.exception.AuthException;
 import com.github.tanxinzheng.framework.model.BaseResultCode;
 import com.github.tanxinzheng.framework.model.Result;
-import com.github.tanxinzheng.framework.utils.JwtUtils;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +23,6 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Date;
 
 
 @Slf4j
@@ -85,6 +78,7 @@ public class AuthTokenFilter implements GlobalFilter, Ordered {
                 }
                 return chain.filter(exchange);
             }catch (Exception e){
+                log.error(e.getMessage(), e);
                 return authError(resp, e.getMessage());
             }
         }

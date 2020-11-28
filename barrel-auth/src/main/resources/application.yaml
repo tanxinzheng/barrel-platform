@@ -23,4 +23,3 @@ logging:
   level:
     org.springframework.web: DEBUG
     main.blog.mapper: trace
-

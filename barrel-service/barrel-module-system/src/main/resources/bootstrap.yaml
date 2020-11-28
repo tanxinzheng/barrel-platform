@@ -20,3 +20,5 @@ spring:
             refresh: true
           - data-id: common-aliyun.yaml
             refresh: true
+          - data-id: common-sleuth.yaml
+            refresh: true

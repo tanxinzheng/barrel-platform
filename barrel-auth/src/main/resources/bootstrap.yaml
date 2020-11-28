@@ -9,11 +9,12 @@ spring:
         server-addr: @spring.cloud.nacos.server-addr@
         namespace: @spring.cloud.nacos.config.namespace@
       config:
-        #        server-addr: nacos.tanxz.com:80
         server-addr: @spring.cloud.nacos.server-addr@
         namespace: @spring.cloud.nacos.config.namespace@
         shared-configs:
           - data-id: common.yaml
             refresh: true
           - data-id: common-jwt.yaml
+            refresh: true
+          - data-id: common-sleuth.yaml
             refresh: true
