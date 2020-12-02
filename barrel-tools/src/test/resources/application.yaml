@@ -1,0 +1,19 @@
+spring:
+  redis:
+    cluster:
+      max-redirects: 3
+      nodes:
+        - 127.0.0.1:7000
+        - 127.0.0.1:7001
+        - 127.0.0.1:7002
+        - 127.0.0.1:7003
+        - 127.0.0.1:7004
+        - 127.0.0.1:7005
+    lettuce:
+      pool:
+        max-active:  100
+        max-idle: 100
+        min-idle: 50
+        max-wait: 6000
+    timeout: 10000
+    password: redis2020
