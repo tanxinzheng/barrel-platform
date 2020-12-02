@@ -8,20 +8,20 @@ spring:
   cloud:
     nacos:
       discovery:
-        #        server-addr: nacos.tanxz.com:80
         server-addr: @spring.cloud.nacos.server-addr@
         namespace: @spring.cloud.nacos.config.namespace@
       config:
-#        server-addr: nacos.tanxz.com:80
         server-addr: @spring.cloud.nacos.server-addr@
         namespace: @spring.cloud.nacos.config.namespace@
         shared-configs:
-          - data-id: common.yaml
+          - data-id: common-db.yaml
             refresh: true
-          - data-id: common-router.yaml
+          - data-id: common-redis.yaml
             refresh: true
           - data-id: common-jwt.yaml
             refresh: true
-          - data-id: common-sleuth.yaml
+          - data-id: common-router.yaml
             refresh: true
+#          - data-id: common-sleuth.yaml
+#            refresh: true
         encode: UTF-8

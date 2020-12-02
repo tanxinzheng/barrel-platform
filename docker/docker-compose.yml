@@ -12,7 +12,7 @@ services:
     ports:
       - "9999:9999"
     environment:
-      - "NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78"
+      - NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78
 
   barrel-auth:
     networks:
@@ -25,7 +25,7 @@ services:
     ports:
       - "10110:10110"
     environment:
-      - "NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78"
+      - NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78
 
   barrel-system:
     networks:
@@ -38,7 +38,7 @@ services:
     ports:
       - "9008:9008"
     environment:
-      - "NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78"
+      - NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78"
 
   barrel-admin:
     networks:

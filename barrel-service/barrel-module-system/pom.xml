@@ -102,7 +102,7 @@
                 <executions>
                     <execution>
                         <id>make-assembly</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
@@ -122,7 +122,7 @@
                         <resource>
                             <targetPath>/</targetPath>
                             <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.zip</include>
+                            <include>${project.build.finalName}.tar.gz</include>
                         </resource>
                     </resources>
                 </configuration>

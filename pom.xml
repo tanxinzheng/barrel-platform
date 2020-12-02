@@ -160,41 +160,41 @@
 				<version>${boot.framework.version}</version>
 			</dependency>
 			<!-- module jar -->
-			<dependency>
-				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>barrel-module-translate</artifactId>
-				<version>${boot.project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>barrel-module-fss</artifactId>
-				<version>${boot.project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>barrel-module-auth</artifactId>
-				<version>${boot.project.version}</version>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>barrel-module-translate</artifactId>-->
+<!--				<version>${boot.project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>barrel-module-fss</artifactId>-->
+<!--				<version>${boot.project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>barrel-module-auth</artifactId>-->
+<!--				<version>${boot.project.version}</version>-->
+<!--			</dependency>-->
 			<dependency>
 				<groupId>com.github.tanxinzheng</groupId>
 				<artifactId>barrel-module-account</artifactId>
 				<version>${boot.project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>barrel-module-logger</artifactId>
-				<version>${boot.project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>barrel-module-common</artifactId>
-				<version>${boot.project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.tanxinzheng</groupId>
-				<artifactId>barrel-module-notification</artifactId>
-				<version>${boot.project.version}</version>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>barrel-module-logger</artifactId>-->
+<!--				<version>${boot.project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>barrel-module-common</artifactId>-->
+<!--				<version>${boot.project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>com.github.tanxinzheng</groupId>-->
+<!--				<artifactId>barrel-module-notification</artifactId>-->
+<!--				<version>${boot.project.version}</version>-->
+<!--			</dependency>-->
 
 			<dependency>
 				<groupId>org.springframework.boot</groupId>

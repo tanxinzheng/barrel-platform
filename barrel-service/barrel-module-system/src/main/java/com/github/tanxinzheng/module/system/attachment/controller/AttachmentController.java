@@ -63,6 +63,18 @@ public class AttachmentController {
     }
 
     /**
+     * 主键查询附件
+     * @param   fileKey  主键
+     * @return  AttachmentResponse   附件领域对象
+     */
+    @ApiOperation(value = "主键查询附件")
+    @GetMapping(value = "/fileKey/{fileKey}")
+    public AttachmentVO findByFileKey(@PathVariable(value = "fileKey") String fileKey){
+        AttachmentDTO attachmentDTO = attachmentService.findByFileKey(fileKey);
+        return BeanCopierUtils.copy(attachmentDTO, AttachmentVO.class);
+    }
+
+    /**
      * 新增附件
      * @param currentLoginUser
      * @param attachmentDTO
