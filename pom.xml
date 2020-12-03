@@ -12,8 +12,8 @@
 	<artifactId>barrel-parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>barrel-parent</name>
-	<description>barrel Example</description>
+	<name>barrel-platform</name>
+	<description>Barrel Platform</description>
 
 	<modules>
 		<module>barrel-tools</module>
