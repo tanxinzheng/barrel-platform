@@ -1,6 +1,6 @@
 package com.github.tanxinzheng;
 
-import com.github.tanxinzheng.framework.constant.JwtConfigProperties;
+import com.github.tanxinzheng.framework.secure.config.SecureProperties;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.system.SystemApplication;
@@ -52,7 +52,7 @@ public class AppTest {
     private static String accessToken = "";
 
     @Resource
-    JwtConfigProperties jwtConfigProperties;
+    SecureProperties secureProperties;
 
     RestTemplate testRestTemplate;
 
@@ -93,7 +93,7 @@ public class AppTest {
                 .name("junit test")
                 .username("junit")
                 .build();
-        redisTemplate.opsForValue().set(jwtConfigProperties.getTokenHeaderName() + ":" + accessToken, currentLoginUser, 3, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set(secureProperties.getTokenHeaderName() + ":" + accessToken, currentLoginUser, 3, TimeUnit.HOURS);
     }
 
 }

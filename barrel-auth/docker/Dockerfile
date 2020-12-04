@@ -5,7 +5,7 @@ MAINTAINER tanxinzheng "tanxinzheng@139.com"
 # 环境变量
 ENV DEPLOY_PATH=/var/deploy/barrel
 ENV LOG_PATH=/var/deploy/barrel/logs
-ENV APP_PORT=10110
+ENV APP_PORT=9901
 ENV APP_JAR_NAME=barrel-auth
 ENV APP_DEPLOY_FILE=barrel-auth.tar.gz
 ENV APP_JAR_FILE=$DEPLOY_PATH/apps/barrel-auth.jar

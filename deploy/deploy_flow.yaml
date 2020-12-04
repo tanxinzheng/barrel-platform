@@ -1,0 +1,6 @@
+datasouce:
+  db-type: mysql
+  ddl-files:
+    - deploy/db/ddl/barrel-ddl_all.sql
+  dml-files:
+    -
