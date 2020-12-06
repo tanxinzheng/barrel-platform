@@ -19,7 +19,7 @@ ADD $APP_DEPLOY_FILE $DEPLOY_PATH
 #RUN unzip $APP_DEPLOY_FILE
 RUN mv $APP_JAR_NAME apps
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom -Dloader.path=${APP_JAR_LIB},${APP_JAR_CONFIG} -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}","-jar","/var/deploy/barrel/apps/barrel-gateway.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom -Dfile.encoding=utf-8 -Dloader.path=${APP_JAR_LIB},${APP_JAR_CONFIG} -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}","-jar","/var/deploy/barrel/apps/barrel-gateway.jar"]
 
 # 端口
 EXPOSE $APP_PORT

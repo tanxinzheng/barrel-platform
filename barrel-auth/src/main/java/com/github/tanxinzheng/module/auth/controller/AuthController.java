@@ -1,9 +1,9 @@
 package com.github.tanxinzheng.module.auth.controller;
 
-import com.github.tanxinzheng.framework.constant.JwtConfigProperties;
 import com.github.tanxinzheng.framework.constant.TokenType;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.model.Result;
+import com.github.tanxinzheng.framework.secure.config.SecureProperties;
 import com.github.tanxinzheng.framework.secure.domain.AuthToken;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.framework.utils.AssertValid;
@@ -41,14 +41,13 @@ public class AuthController {
     private static final int ACCOUNT_AUTH_ERROR_COUNT_TIMEOUT = 10;
 
     @Resource
-    JwtConfigProperties jwtConfigProperties;
+    SecureProperties secureProperties;
 
     @Resource
     RedisTemplate redisTemplate;
 
     @Resource
     AuthMapper authMapper;
-
 
     @Resource
     ISystemClient userApiService;
@@ -61,6 +60,9 @@ public class AuthController {
     @ApiOperation(value = "用户登录")
     @PostMapping(value = "/login")
     public AuthToken login(@RequestBody @Validated @NotNull LoginRequest loginRequest){
+        if(secureProperties.isEnableCaptchaCheck()){
+            AssertValid.notBlank(loginRequest.getValidCode(), "请输入验证码");
+        }
         String errorCountKey = ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername();
         Integer count = (Integer) redisTemplate.opsForValue().get(errorCountKey);
         if(count != null && count > 5){
@@ -91,7 +93,7 @@ public class AuthController {
         authToken.setUserId(authUser.getId());
         authToken.setUsername(authUser.getUsername());
         authToken.setTokenType(TokenType.BEARER.getCode());
-        authToken.setExpiresIn(jwtConfigProperties.getExpiration());
+        authToken.setExpiresIn(secureProperties.getExpiration());
         loginSuccessHandler(authUser, authToken);
         return authToken;
     }
@@ -109,7 +111,7 @@ public class AuthController {
         }else{
             currentLoginUser.setRoles(Sets.newHashSet());
         }
-        redisTemplate.opsForValue().set(jwtConfigProperties.getTokenHeaderName() + ":" + authToken.getAccessToken(), currentLoginUser, 3, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set(secureProperties.getTokenHeaderName() + ":" + authToken.getAccessToken(), currentLoginUser, 3, TimeUnit.HOURS);
     }
 
 }

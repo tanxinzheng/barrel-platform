@@ -23,7 +23,7 @@ services:
     container_name: barrel-auth
     tty: true
     ports:
-      - "10110:10110"
+      - "9901:9901"
     environment:
       - NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78
 
@@ -36,9 +36,9 @@ services:
     container_name: barrel-system
     tty: true
     ports:
-      - "9008:9008"
+      - "9902:9902"
     environment:
-      - NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78"
+      - NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78
 
   barrel-admin:
     networks:
@@ -49,18 +49,18 @@ services:
     container_name: barrel-admin
     tty: true
     ports:
-      - "9901:9901"
-
-  barrel-zipkin:
-    image: openzipkin/zipkin
-    container_name: barrel-zipkin
-    networks:
-      work_net:
-        ipv4_address: 172.20.0.204
-    restart: always
-    tty: true
-    ports:
-      - "9411:9411"
+      - "9998:9998"
+#
+#  barrel-zipkin:
+#    image: openzipkin/zipkin
+#    container_name: barrel-zipkin
+#    networks:
+#      work_net:
+#        ipv4_address: 172.20.0.204
+#    restart: always
+#    tty: true
+#    ports:
+#      - "9411:9411"
 
 networks:
   work_net:

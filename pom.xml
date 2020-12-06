@@ -12,8 +12,8 @@
 	<artifactId>barrel-parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>barrel-parent</name>
-	<description>barrel Example</description>
+	<name>barrel-platform</name>
+	<description>Barrel Platform</description>
 
 	<modules>
 		<module>barrel-tools</module>
@@ -21,11 +21,7 @@
 		<module>barrel-gateway</module>
 		<module>barrel-auth</module>
 		<module>barrel-service</module>
-<!--		<module>barrel-config-server</module>-->
-		<module>barrel-admin-server</module>
-<!--		<module>barrel-devops</module>-->
-<!--		<module>barrel-admin</module>-->
-		<!--		<module>barrel-admin-ui</module>-->
+		<module>barrel-admin</module>
 	</modules>
 
 	<properties>
@@ -47,6 +43,7 @@
 		<knife4j.version>2.0.2</knife4j.version>
 		<io.springfox.version>2.9.2</io.springfox.version>
 		<xxl.job.starter.version>1.0.1-RELEASE</xxl.job.starter.version>
+		<hutool.version>5.5.1</hutool.version>
 		<skipNpmBuild>false</skipNpmBuild>
 		<skipTests>false</skipTests>
 	</properties>
@@ -100,7 +97,11 @@
 				<artifactId>knife4j-spring-ui</artifactId>
 				<version>${knife4j.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
 			<!-- spring cloud -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>

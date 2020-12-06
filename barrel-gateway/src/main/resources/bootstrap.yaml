@@ -18,9 +18,7 @@ spring:
             refresh: true
           - data-id: common-redis.yaml
             refresh: true
-          - data-id: common-jwt.yaml
-            refresh: true
-          - data-id: common-router.yaml
+          - data-id: application-gateway.yaml
             refresh: true
 #          - data-id: common-sleuth.yaml
 #            refresh: true

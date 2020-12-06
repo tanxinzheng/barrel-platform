@@ -10,9 +10,9 @@ git clone -b 1.0.0 https://gitee.com/tanxinzheng/barrel-platform.git
 mvn install -f barrel-framework/pom.xml
 mvn install -f barrel-plateform/pom.xml -Pstg
 
-unzip -o barrel-plateform/barrel-system/target/barrel-system.zip -d /app/deploy
-unzip -o barrel-plateform/barrel-gateway/target/barrel-gateway.zip -d /app/deploy
-unzip -o barrel-plateform/barrel-service/barrel-module-authorization/target/barrel-system.zip -d /app/deploy
+tar -zxvf barrel-plateform/barrel-system/target/barrel-system.tar.gz -C /app/deploy
+tar -zxvf barrel-plateform/barrel-gateway/target/barrel-gateway.tar.gz -C /app/deploy
+tar -zxvf barrel-plateform/barrel-service/barrel-module-system/target/barrel-system.tar.gz -C /app/deploy
 
 echo "Restart Barrel-Auth Start...."
 sudo systemctl restart barrel-system
