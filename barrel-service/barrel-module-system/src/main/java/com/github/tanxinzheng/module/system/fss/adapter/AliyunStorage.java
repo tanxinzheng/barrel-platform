@@ -103,7 +103,10 @@ public class AliyunStorage implements FileStorage {
         try {
             createOSSClientConnection();
             OSSObject ossObject = getClient().getObject(getBucketName(), filePath);
-            return FileStorageResult.SUCCESS(filePath, ossObject.getObjectContent());
+            FileStorageResult fileStorageResult = FileStorageResult.SUCCESS(filePath, ossObject.getObjectContent());
+            fileStorageResult.setLastModified(ossObject.getObjectMetadata().getLastModified().getTime());
+            fileStorageResult.setFileSize(ossObject.getObjectMetadata().getContentLength());
+            return fileStorageResult;
         } catch (Exception e) {
             log.error("OSSClient getObject fail, filePath: {}, error message: {}", filePath, e.getMessage(), e);
         }

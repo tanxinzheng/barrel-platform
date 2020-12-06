@@ -25,7 +25,14 @@ public class FileStorageInfo {
 
     public FileStorageInfo(MultipartFile multipartFile, String group, String fileKey) {
         try {
+            InputStream inputStream = multipartFile.getInputStream();
             this.content = multipartFile.getBytes();
+            if(inputStream != null){
+                int len1 = inputStream.available();
+                content = new byte[len1];
+                inputStream.read(content);
+            }
+            inputStream.close();
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

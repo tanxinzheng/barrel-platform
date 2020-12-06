@@ -2,7 +2,10 @@ package com.github.tanxinzheng.module.system.attachment.domain.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
@@ -17,6 +20,9 @@ import java.time.LocalDateTime;
  * @Date   2020-7-6 16:47:03
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(value = "附件")
 public class AttachmentVO implements Serializable {
 
@@ -27,7 +33,7 @@ public class AttachmentVO implements Serializable {
     @ApiModelProperty(value = "附件KEY")
     private String attachmentKey;
     @ApiModelProperty(value = "附件大小")
-    private BigDecimal attachmentSize;
+    private Long attachmentSize;
     @ApiModelProperty(value = "附件URL")
     private String attachmentPath;
     @ApiModelProperty(value = "附件后缀")

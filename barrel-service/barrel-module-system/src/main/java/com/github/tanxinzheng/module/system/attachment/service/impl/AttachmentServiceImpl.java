@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,6 +62,12 @@ public class AttachmentServiceImpl extends ServiceImpl<AttachmentMapper, Attachm
         attachment.setAttachmentSuffix(fileStorageInfo.getFileExt());
         attachment.setIsDelete(Boolean.FALSE);
         attachment.setAttachmentPath(fileStorageInfo.getFullPath());
+        attachment.setUploadTime(LocalDateTime.now());
+        attachment.setUploadBy(attachmentDTO.getUploadBy());
+        attachment.setCreatedBy(attachment.getUploadBy());
+        attachment.setCreatedTime(LocalDateTime.now());
+        attachment.setUpdatedBy(attachment.getUploadBy());
+        attachment.setUpdatedTime(LocalDateTime.now());
         boolean isOk = save(attachment);
         if(!isOk){
             return null;
@@ -69,7 +76,21 @@ public class AttachmentServiceImpl extends ServiceImpl<AttachmentMapper, Attachm
         if(!result.isSuccess()){
             throw new BusinessException(result.getMessage());
         }
-        return BeanCopierUtils.copy(attachment, AttachmentDTO.class);
+        return AttachmentDTO.builder()
+                .attachmentGroup(attachment.getAttachmentGroup())
+                .attachmentKey(attachment.getAttachmentKey())
+                .attachmentPath(attachment.getAttachmentPath())
+                .attachmentSuffix(attachment.getAttachmentSuffix())
+                .attachmentSize(attachment.getAttachmentSize())
+                .attachmentSize(attachment.getAttachmentSize())
+                .id(attachment.getId())
+                .isDelete(attachment.getIsDelete())
+                .originName(attachment.getOriginName())
+                .owner(attachment.getOwner())
+                .relationId(attachment.getRelationId())
+                .uploadTime(attachment.getUploadTime())
+                .uploadBy(attachment.getUploadBy())
+                .build();
     }
 
 
@@ -179,6 +200,10 @@ public class AttachmentServiceImpl extends ServiceImpl<AttachmentMapper, Attachm
     @Override
     public boolean deleteAttachment(String id) {
         AssertValid.notNull(id, "id参数不能为空");
+        AttachmentDO attachmentDO = getById(id);
+        boolean success = storageService.deleteFile(attachmentDO.getAttachmentPath());
+        AssertValid.isTrue(success, "删除文件失败，文件ID：{}", id);
         return removeById(id);
     }
+
 }

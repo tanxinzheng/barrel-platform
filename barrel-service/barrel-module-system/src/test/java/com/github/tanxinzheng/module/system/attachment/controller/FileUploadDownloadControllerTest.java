@@ -35,13 +35,10 @@ public class FileUploadDownloadControllerTest extends AppTest {
     @Test
     public void upload() throws Exception {
         // 上传
-        String filePath = "/Users/jeng/tanxinzheng-repo/xmomen-repo/webapp/spring-boot-example/barrel-service/barrel-module-system/src/test/resources/application.yml";
+        String filePath = "E:\\xmomen-repo\\webapp\\barrel-parent\\barrel-service\\barrel-module-system\\src\\test\\resources\\demo\\测试Excel文件预览.xlsx";
 
         ResultActions actions = mockMvc.perform(multipart("/file/upload")
-                .file(new MockMultipartFile("multipartFile", "测试文件.yml",",multipart/form-data", FileUtils.readFileToByteArray(new File(filePath))))
-                .file(new MockMultipartFile("relationId", "test.txt",",multipart/form-data", "JUNIT".getBytes()))
-                .file(new MockMultipartFile("relationType", "test.txt",",multipart/form-data", "JUNIT".getBytes()))
-                .file(new MockMultipartFile("owner", "test.txt",",multipart/form-data", "JUNIT".getBytes()))
+                .file(new MockMultipartFile("multipartFile", "测试Excel文件预览",",multipart/form-data", FileUtils.readFileToByteArray(new File(filePath))))
 //                .file("relationId", "JUNIT".getBytes())
 //                .file("relationType", "JUNIT".getBytes())
 //                .file("owner", "PUBLIC".getBytes())

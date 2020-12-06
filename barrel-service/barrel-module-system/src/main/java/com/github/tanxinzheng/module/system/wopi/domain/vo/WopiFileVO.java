@@ -22,18 +22,16 @@ public class WopiFileVO {
     private Long version;
     @JsonProperty(value = "SHA256")
     private String sha256;
-    @JsonProperty(value = "UserCanWriter")
-    private Boolean userCanWriter;
     @JsonProperty(value = "SupportsUpdate")
     private Boolean supportsUpdate;
     @JsonProperty(value = "SupportsLocks")
     private Boolean supportsLocks;
     @JsonProperty(value = "WebEditingDisabled")
     private Boolean webEditingDisabled;
-    @JsonProperty(value = "HostViewUrl")
-    private String hostViewUrl;
-    @JsonProperty(value = "ClientUrl")
-    private String clientUrl;
+//    @JsonProperty(value = "HostViewUrl")
+//    private String hostViewUrl;
+//    @JsonProperty(value = "ClientUrl")
+//    private String clientUrl;
     @JsonProperty(value = "AllowExternalMarketplace")
     private Boolean allowExternalMarketplace;
     @JsonProperty(value = "UserCanWrite")

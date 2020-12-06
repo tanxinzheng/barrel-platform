@@ -57,7 +57,7 @@
 
     <logger name="com.alibaba.nacos.client.Worker.longPolling" level="ERROR"/>
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE-ERROR" />
         <appender-ref ref="FILE-INFO" />

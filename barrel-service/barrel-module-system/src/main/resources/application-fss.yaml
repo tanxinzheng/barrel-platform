@@ -2,14 +2,6 @@ fss:
   active: aliyun
   aliyun:
     endpoint: http://oss-cn-zhangjiakou.aliyuncs.com
-    accessKeyId: LTAI4G9V5oKNubhNz517RpuR
-    accessKeySecret: pqHsq3TONu4B8YpMctUBWWRQHuiEc7
+    accessKeyId: LTAI4G8iZgyAVxh6L7M1bCV8
+    accessKeySecret: UzKJdXOjparpRkDPfTHtLMUOozG6B7
     bucketName: barrel-stg
-
-aliyun:
-  sls:
-    endpoint: cn-zhangjiakou.log.aliyuncs.com
-    accessKeyId: LTAI4G9V5oKNubhNz517RpuR
-    accessKeySecret: pqHsq3TONu4B8YpMctUBWWRQHuiEc7
-    project: barrel
-    logStore: barrel-logstore

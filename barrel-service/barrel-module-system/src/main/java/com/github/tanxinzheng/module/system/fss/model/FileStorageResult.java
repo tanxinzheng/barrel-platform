@@ -1,7 +1,12 @@
 package com.github.tanxinzheng.module.system.fss.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -10,8 +15,11 @@ import java.io.InputStream;
 /**
  * Created by tanxinzheng on 2018/7/22.
  */
-@Data
 @Slf4j
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FileStorageResult {
 
     private String key;
@@ -19,14 +27,12 @@ public class FileStorageResult {
     private byte[] content;
     private String fileExt;
     private boolean success;
+    private Long lastModified;
     private String message;
     private String fileName;
     private long fileSize;
     private String storagePath;
     private String url;
-
-    public FileStorageResult() {
-    }
 
     public static FileStorageResult SUCCESS(String storagePath) {
         FileStorageResult fileStorageResult = new FileStorageResult();
@@ -47,12 +53,7 @@ public class FileStorageResult {
         FileStorageResult result = FileStorageResult.SUCCESS(storagePath);
         try {
             if(inputStream != null){
-                int len1 = inputStream.available();
-                byte[] bytes = new byte[len1];
-                inputStream.read(bytes);
-                inputStream.close();
-                result.setContent(bytes);
-                result.setFileSize(bytes.length);
+                result.setContent(IOUtils.toByteArray(inputStream));
             }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
