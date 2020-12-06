@@ -19,7 +19,7 @@ public class WopiFileVO {
     @JsonProperty(value = "OwnerId")
     private String ownerId;
     @JsonProperty(value = "Version")
-    private String version;
+    private Long version;
     @JsonProperty(value = "SHA256")
     private String sha256;
     @JsonProperty(value = "UserCanWriter")
@@ -34,5 +34,9 @@ public class WopiFileVO {
     private String hostViewUrl;
     @JsonProperty(value = "ClientUrl")
     private String clientUrl;
+    @JsonProperty(value = "AllowExternalMarketplace")
+    private Boolean allowExternalMarketplace;
+    @JsonProperty(value = "UserCanWrite")
+    private Boolean userCanWrite;
 
 }
