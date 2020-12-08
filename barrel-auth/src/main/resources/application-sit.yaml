@@ -1,6 +1,6 @@
 logging:
   config: classpath:logback-sit.xml
   file:
-    path: ${project.basedir}/target/logs
+    path: /var/logs/barrel
   level:
-    root: debug
+    root: info

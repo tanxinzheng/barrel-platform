@@ -1,0 +1,6 @@
+logging:
+  config: classpath:logback.xml
+  file:
+    path: ./target/logs
+  level:
+    root: debug

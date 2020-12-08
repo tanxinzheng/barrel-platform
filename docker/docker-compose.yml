@@ -10,9 +10,11 @@ services:
     container_name: barrel-gateway
     tty: true
     ports:
-      - "9999:9999"
+      - "9899:9999"
+    env_file:
+      - .env
     environment:
-      - NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78
+      - JAVA_OPTS="-Dlogging.path.file=/var/logs/barrel -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}"
 
   barrel-auth:
     networks:
@@ -23,9 +25,11 @@ services:
     container_name: barrel-auth
     tty: true
     ports:
-      - "9901:9901"
+      - "9801:9901"
+    env_file:
+      - .env
     environment:
-      - NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78
+      - JAVA_OPTS=--spring.profiles.active=sit -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
 
   barrel-system:
     networks:
@@ -36,9 +40,11 @@ services:
     container_name: barrel-system
     tty: true
     ports:
-      - "9902:9902"
+      - "9802:9902"
+    env_file:
+      - .env
     environment:
-      - NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78
+      - JAVA_OPTS="-Dlogging.path.file=/var/logs/barrel -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}"
 
   barrel-admin:
     networks:
@@ -49,7 +55,11 @@ services:
     container_name: barrel-admin
     tty: true
     ports:
-      - "9998:9998"
+      - "9898:9998"
+    env_file:
+      - .env
+    environment:
+      - JAVA_OPTS="-Dlogging.path.file=/var/logs/barrel -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}"
 #
 #  barrel-zipkin:
 #    image: openzipkin/zipkin

@@ -2,24 +2,24 @@ FROM tanxz/jdk1.8:latest
 
 MAINTAINER tanxinzheng "tanxinzheng@139.com"
 
-# 环境变量
-ENV DEPLOY_PATH=/var/deploy/barrel
-ENV LOG_PATH=/var/deploy/barrel/logs
+# 设置应用环境变量
+ENV DEPLOY_PATH=/var/deploy
+ENV APP_PATH=/var/deploy/barrel-auth
 ENV APP_PORT=9901
-ENV APP_JAR_NAME=barrel-auth
 ENV APP_DEPLOY_FILE=barrel-auth.tar.gz
-ENV APP_JAR_FILE=$DEPLOY_PATH/apps/barrel-auth.jar
-ENV APP_JAR_CONFIG=$DEPLOY_PATH/apps/config
-ENV APP_JAR_LIB=$DEPLOY_PATH/apps/lib
-ENV NACOS_CONFIG_NAMESPACE=638b14b0-f81f-44c7-a9c3-f8f4058c8e78
+ENV APP_JAR_FILE=$APP_PATH/barrel-auth.jar
+ENV APP_JAR_CONFIG=$APP_PATH/config
+ENV APP_JAR_LIB=$APP_PATH/lib
+ENV JAVA_OPTS=$JAVA_OPTS
 
-WORKDIR $DEPLOY_PATH
+WORKDIR $APP_PATH
 
 ADD $APP_DEPLOY_FILE $DEPLOY_PATH
 
-RUN mv $APP_JAR_NAME apps
-
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom -Dloader.path=${APP_JAR_LIB},${APP_JAR_CONFIG} -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}","-jar","/var/deploy/barrel/apps/barrel-auth.jar"]
+COPY entrypoint.sh /var/run/
+RUN chmod -R 755 /var/run/entrypoint.sh
 
 # 端口
 EXPOSE $APP_PORT
+
+ENTRYPOINT ["/var/run/entrypoint.sh"]

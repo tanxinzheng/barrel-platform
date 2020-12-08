@@ -4,7 +4,6 @@ MAINTAINER tanxinzheng "tanxinzheng@139.com"
 
 # 环境变量
 ENV DEPLOY_PATH=/var/deploy/barrel
-ENV LOG_PATH=/var/deploy/barrel/logs
 ENV APP_PORT=9998
 ENV APP_JAR_NAME=barrel-admin
 ENV APP_DEPLOY_FILE=barrel-admin.jar
@@ -17,7 +16,7 @@ WORKDIR $DEPLOY_PATH
 
 ADD $APP_DEPLOY_FILE $APP_JAR_FILE
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/var/deploy/barrel/apps/barrel-admin.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom $JAVA_OPTS","-jar","/var/deploy/barrel/apps/barrel-admin.jar"]
 
 # 端口
 EXPOSE $APP_PORT

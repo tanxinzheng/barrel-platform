@@ -18,7 +18,7 @@
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} userId: %X{userId} requestId: %X{requestId} [%thread] %-5level %X{ip} %logger{50} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} userId: %X{userId} requestId: %X{requestId} [%thread] ${AnsiColor.BLUE}%-5level %X{ip} %logger{50} - %msg%n</pattern>
         </layout>
     </appender>
 

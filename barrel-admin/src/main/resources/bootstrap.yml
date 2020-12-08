@@ -22,5 +22,5 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: @spring.cloud.nacos.server-addr@
-        namespace: @spring.cloud.nacos.config.namespace@
+        server-addr: ${NACOS_SERVER_ADDR:https://nacos.tanxz.com}
+        namespace: ${NACOS_CONFIG_NAMCESPACE:76827065-24d5-4c70-b861-934f6823fec4}

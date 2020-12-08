@@ -18,7 +18,7 @@ WORKDIR $DEPLOY_PATH
 ADD $APP_DEPLOY_FILE $DEPLOY_PATH
 RUN mv $APP_JAR_NAME apps
 
-ENTRYPOINT ["java", "-jar", "-Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=fss -Dloader.path=${APP_JAR_LIB},${APP_JAR_CONFIG} -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}","/var/deploy/barrel/apps/barrel-system.jar"]
+ENTRYPOINT ["java", "-jar", "-Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=fss $JAVA_OPTS -Dloader.path=${APP_JAR_LIB},${APP_JAR_CONFIG}","/var/deploy/barrel/apps/barrel-system.jar"]
 
 # 端口
 EXPOSE $APP_PORT
