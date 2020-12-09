@@ -13,8 +13,6 @@ services:
       - "9899:9999"
     env_file:
       - .env
-    environment:
-      - JAVA_OPTS="-Dlogging.path.file=/var/logs/barrel -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}"
 
   barrel-auth:
     networks:
@@ -43,8 +41,6 @@ services:
       - "9802:9902"
     env_file:
       - .env
-    environment:
-      - JAVA_OPTS="-Dlogging.path.file=/var/logs/barrel -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}"
 
   barrel-admin:
     networks:
@@ -59,7 +55,7 @@ services:
     env_file:
       - .env
     environment:
-      - JAVA_OPTS="-Dlogging.path.file=/var/logs/barrel -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}"
+      - JAVA_OPTS=--spring.profiles.active=sit -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
 #
 #  barrel-zipkin:
 #    image: openzipkin/zipkin

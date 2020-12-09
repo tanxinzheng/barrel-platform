@@ -12,7 +12,7 @@
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
 
     <!-- 添加自定义日志颜色参数：可自动根据日志级别打印不同颜色的日志等级 -->
-    <conversionRule conversionWord="autocolor" converterClass="com.github.tanxinzheng.framework.logger.LogbackColorful"/>
+<!--    <conversionRule conversionWord="autocolor" converterClass="com.github.tanxinzheng.framework.logger.LogbackColorful"/>-->
     <!-- 控制台输出日志规则  -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!--  默认控制台输出格式  -->
@@ -23,7 +23,7 @@
         <!-- 使用自定义颜色配置，对性能消耗有影响，正式环境需注释控制台输出日志打印 -->
         <encoder>
             <!--  自定义控制台日志输出格式，添加日根据日志级别打印不同颜色的效果，便于识别错误日子  -->
-            <pattern>%autocolor(%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Shanghai} %-5level [%X{requestId}] [%thread]) %logger{50} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Shanghai} %-5level [%X{requestId}] [%thread] %logger{50} - %msg%n</pattern>
         </encoder>
     </appender>
 
