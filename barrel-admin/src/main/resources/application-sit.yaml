@@ -1,6 +1,6 @@
 logging:
   config: classpath:logback-sit.xml
   file:
-    path: /var/logs/barrel
+    path: /var/log/barrel
   level:
     root: info

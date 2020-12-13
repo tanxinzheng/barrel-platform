@@ -9,10 +9,14 @@ services:
     image: barrel/barrel-gateway:latest
     container_name: barrel-gateway
     tty: true
+    extra_hosts:
+      - "redis.docker.local:172.20.0.4"
     ports:
-      - "9899:9999"
+      - "9999:9999"
     env_file:
       - .env
+    environment:
+      - JAVA_OPTS=--spring.profiles.active=sit,redis -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
 
   barrel-auth:
     networks:
@@ -22,12 +26,14 @@ services:
     image: barrel/barrel-auth:latest
     container_name: barrel-auth
     tty: true
+    extra_hosts:
+      - "redis.docker.local:172.20.0.4"
     ports:
-      - "9801:9901"
+      - "9901:9901"
     env_file:
       - .env
     environment:
-      - JAVA_OPTS=--spring.profiles.active=sit -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
+      - JAVA_OPTS=--spring.profiles.active=sit,redis -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
 
   barrel-system:
     networks:
@@ -37,10 +43,14 @@ services:
     image: barrel/barrel-system:latest
     container_name: barrel-system
     tty: true
+    extra_hosts:
+      - "redis.docker.local:172.20.0.4"
     ports:
       - "9802:9902"
     env_file:
       - .env
+    environment:
+      - JAVA_OPTS=--spring.profiles.active=sit,redis,fss -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
 
   barrel-admin:
     networks:

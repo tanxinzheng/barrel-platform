@@ -1,6 +1,18 @@
 logging:
   config: classpath:logback-sit.xml
   file:
-    path: /var/logs/barrel
+    path: /var/log/barrel
   level:
     root: info
+
+barrel:
+  auth:
+    ignore-urls:
+      - /**/v2/api-docs
+      - /barrel-auth/auth/login
+  document:
+    resources:
+      - name: "授权模块"
+        location: /barrel-auth
+      - name: "SYSTEM"
+        location: /barrel-system

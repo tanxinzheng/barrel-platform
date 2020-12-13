@@ -16,10 +16,8 @@ spring:
         shared-configs:
           - data-id: common-db.yaml
             refresh: true
-          - data-id: common-redis.yaml
+          - data-id: common-barrel-gateway.yaml
             refresh: true
-          - data-id: application-gateway.yaml
-            refresh: true
-#          - data-id: common-sleuth.yaml
-#            refresh: true
         encode: UTF-8
+        file-extension: yaml
+        prefix: common

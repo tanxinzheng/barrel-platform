@@ -9,5 +9,4 @@ ${AnsiColor.BLUE}:: Spring Profiles Active           :: ${AnsiColor.RED} ${sprin
 ---------------------------------------------------------------------------------------------
 ${AnsiColor.BLUE}:: spring.cloud.nacos.discovery.namespace  :: ${AnsiColor.RED} ${spring.cloud.nacos.discovery.namespace}
 ${AnsiColor.BLUE}:: spring.cloud.nacos.config.namespace     :: ${AnsiColor.RED} ${spring.cloud.nacos.config.namespace}
-
-
+${AnsiColor.DEFAULT}

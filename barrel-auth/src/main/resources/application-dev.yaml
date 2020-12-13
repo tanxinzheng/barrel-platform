@@ -1,5 +1,5 @@
 logging:
-  config: classpath:logback-sit.xml
+  config: classpath:logback-dev.xml
   file:
     path: ${project.basedir}/target/logs
   level:

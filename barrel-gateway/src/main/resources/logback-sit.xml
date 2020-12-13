@@ -5,7 +5,7 @@
     <!--  Define the storage location of the log files. (勿在LogBack里面使用相对路径)                                                                         -->
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
     <springProperty scope="context" name="application.name" source="spring.application.name"/>
-    <springProperty scope="context" name="log.file.path" source="logging.file.path"/>
+    <springProperty scope="context" name="logging.file.path" source="logging.file.path"/>
 
     <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
     <!--  Console output                                                                                                        -->
@@ -23,15 +23,15 @@
         <!-- 使用自定义颜色配置，对性能消耗有影响，正式环境需注释控制台输出日志打印 -->
         <encoder>
             <!--  自定义控制台日志输出格式，添加日根据日志级别打印不同颜色的效果，便于识别错误日子  -->
-            <pattern>%autocolor(%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Shanghai} %-5level [%X{requestId}] [%thread]) %logger{50} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Shanghai} %-5level [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId}] [%X{requestId}] [%thread] %logger{50} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${log.file.path}/${application.name}/info.log</file>
+        <file>${logging.file.path}/${application.name}/info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <FileNamePattern>${log.file.path}/${application.name}/info.%d{yyyyMMdd}.%i.log</FileNamePattern>
+            <FileNamePattern>${logging.file.path}/${application.name}/info.%d{yyyyMMdd}.%i.log</FileNamePattern>
             <!-- 日志文件最大保留天数 -->
             <MaxHistory>30</MaxHistory>
             <!-- 最大文件滚动策略 -->
@@ -46,7 +46,7 @@
         <!-- 日志文件的输出格式规则 -->
         <layout class="ch.qos.logback.classic.PatternLayout">
             <!-- 格式化输出：%d: 表示日志  %-5level: 级别从左显示级别 %X{ip}：自定义MDC参数-requestId %n：换行符 -->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Shanghai} %-5level [%X{requestId}] [%thread] %logger{50} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Shanghai} %-5level [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId}] [%X{requestId}] [%thread] %logger{50} - %msg%n</pattern>
         </layout>
         <!-- 此日志文件只接收某级别的日志，用于记录重要业务日志文件时使用 -->
 <!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->

@@ -14,7 +14,5 @@ spring:
         shared-configs:
           - data-id: common-db.yaml
             refresh: true
-          - data-id: common-redis.yaml
-            refresh: true
-#          - data-id: common-sleuth.yaml
-#            refresh: true
+        prefix: common
+        file-extension: yaml
