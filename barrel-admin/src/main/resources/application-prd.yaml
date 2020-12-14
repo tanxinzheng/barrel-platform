@@ -1,0 +1,6 @@
+logging:
+  config: classpath:logback-prd.xml
+  file:
+    path: /var/log/barrel
+  level:
+    root: info
