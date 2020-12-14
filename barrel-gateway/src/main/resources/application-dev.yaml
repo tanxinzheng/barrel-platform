@@ -4,9 +4,3 @@ logging:
     path: ${project.basedir}/target/logs
   level:
     root: debug
-
-barrel:
-  auth:
-    ignore-urls:
-      - /**/v2/api-docs
-      - /barrel-auth/auth/login

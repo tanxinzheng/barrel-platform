@@ -16,7 +16,7 @@ spring:
         shared-configs:
           - data-id: common-db.yaml
             refresh: true
-          - data-id: common-barrel-gateway.yaml
+          - data-id: barrel-gateway.yaml
             refresh: true
         encode: UTF-8
         file-extension: yaml
