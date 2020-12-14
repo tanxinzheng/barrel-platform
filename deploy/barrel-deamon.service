@@ -6,7 +6,7 @@ After=syslog.target
 User=admin
 LibArg=lib
 ConfigArg=config/
-ExecStart=/usr/bin/java -jar /app/deploy/barrel-auth/barrel-auth.jar $LibArg $ConfigArg
+ExecStart=/usr/bin/java -jar /app/deploy/barrel-auth/barrel-auth.jar $LibArg $ConfigArg $JAVA_OPTS
 SuccessExitStatus=143
 
 [Install]

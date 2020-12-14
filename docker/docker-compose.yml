@@ -46,7 +46,7 @@ services:
     extra_hosts:
       - "redis.docker.local:172.20.0.4"
     ports:
-      - "9802:9902"
+      - "9902:9902"
     env_file:
       - .env
     environment:
@@ -61,7 +61,7 @@ services:
     container_name: barrel-admin
     tty: true
     ports:
-      - "9898:9998"
+      - "9998:9998"
     env_file:
       - .env
     environment:
