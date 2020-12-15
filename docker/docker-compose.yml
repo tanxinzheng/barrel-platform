@@ -35,23 +35,6 @@ services:
     environment:
       - JAVA_OPTS=--spring.profiles.active=sit,redis -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
 
-  barrel-system:
-    networks:
-      work_net:
-        ipv4_address: 172.20.0.201
-    restart: always
-    image: barrel/barrel-system:latest
-    container_name: barrel-system
-    tty: true
-    extra_hosts:
-      - "redis.docker.local:172.20.0.4"
-    ports:
-      - "9902:9902"
-    env_file:
-      - .env
-    environment:
-      - JAVA_OPTS=--spring.profiles.active=sit,redis,fss -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
-
   barrel-admin:
     networks:
       work_net:
