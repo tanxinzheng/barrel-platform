@@ -7,10 +7,10 @@ spring:
     nacos:
       discovery:
         server-addr: nacos.tanxz.com:80
-        namespace: ${NACOS_CONFIG_NAMCESPACE:76827065-24d5-4c70-b861-934f6823fec4}
+        namespace: ${NACOS_CONFIG_NAMESPACE:76827065-24d5-4c70-b861-934f6823fec4}
       config:
         server-addr: nacos.tanxz.com:80
-        namespace: ${NACOS_CONFIG_NAMCESPACE:76827065-24d5-4c70-b861-934f6823fec4}
+        namespace: ${NACOS_CONFIG_NAMESPACE:76827065-24d5-4c70-b861-934f6823fec4}
         shared-configs:
           - data-id: common.yaml
             refresh: true

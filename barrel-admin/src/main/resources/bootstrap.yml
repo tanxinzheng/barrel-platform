@@ -23,7 +23,7 @@ spring:
     nacos:
       discovery:
         server-addr: ${NACOS_SERVER_ADDR:https://nacos.tanxz.com}
-        namespace: ${NACOS_CONFIG_NAMCESPACE:76827065-24d5-4c70-b861-934f6823fec4}
+        namespace: ${NACOS_CONFIG_NAMESPACE:76827065-24d5-4c70-b861-934f6823fec4}
       config:
         server-addr: ${NACOS_SERVER_ADDR:https://nacos.tanxz.com}
         namespace: ${NACOS_CONFIG_NAMESPACE:76827065-24d5-4c70-b861-934f6823fec4}

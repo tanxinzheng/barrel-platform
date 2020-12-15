@@ -4,7 +4,7 @@ After=syslog.target
 
 [Service]
 User=admin
-Environment='JAVA_OPTS=--spring.profiles.active=prd,redis,aliyun -Dfile.encoding=utf-8 --NACOS_CONFIG_NAMCESPACE=76827065-24d5-4c70-b861-934f6823fec4'
+Environment='JAVA_OPTS=--spring.profiles.active=prd,redis,aliyun -Dfile.encoding=utf-8 --NACOS_CONFIG_NAMESPACE=76827065-24d5-4c70-b861-934f6823fec4'
 ExecStart=/usr/bin/java -jar /app/deploy/barrel-auth/barrel-auth.jar $JAVA_OPTS
 SuccessExitStatus=143
 
