@@ -1,5 +1,4 @@
 
-
 ${AnsiColor.BLUE}:: Spring Boot Version              :: ${AnsiColor.RED} ${spring-boot.version}
 ${AnsiColor.BLUE}:: Spring Barrel Framework Version  :: ${AnsiColor.RED} ${boot.framework.version}
 ${AnsiColor.BLUE}:: Application Name                 :: ${AnsiColor.RED} ${spring.application.name}
@@ -9,5 +8,4 @@ ${AnsiColor.BLUE}:: Spring Profiles Active           :: ${AnsiColor.RED} ${sprin
 ---------------------------------------------------------------------------------------------
 ${AnsiColor.BLUE}:: spring.cloud.nacos.discovery.namespace  :: ${AnsiColor.RED} ${spring.cloud.nacos.discovery.namespace}
 ${AnsiColor.BLUE}:: spring.cloud.nacos.config.namespace     :: ${AnsiColor.RED} ${spring.cloud.nacos.config.namespace}
-
-
+${AnsiColor.DEFAULT}

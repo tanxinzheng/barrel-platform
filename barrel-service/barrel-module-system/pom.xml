@@ -25,6 +25,12 @@
         </dependency>
         <dependency>
             <groupId>com.github.tanxinzheng</groupId>
+            <artifactId>barrel-account</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.tanxinzheng</groupId>
             <artifactId>barrel-starter-cloud</artifactId>
             <version>${boot.framework.version}</version>
         </dependency>

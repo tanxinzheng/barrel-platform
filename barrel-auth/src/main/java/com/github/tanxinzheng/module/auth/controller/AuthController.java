@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -96,6 +97,17 @@ public class AuthController {
         authToken.setExpiresIn(secureProperties.getExpiration());
         loginSuccessHandler(authUser, authToken);
         return authToken;
+    }
+
+    /**
+     * 用户退出登录
+     * @return
+     */
+    @ApiOperation(value = "用户退出登录")
+    @PostMapping(value = "/logout")
+    public void logout(HttpServletRequest request) {
+        String accessToken = request.getHeader(secureProperties.getTokenHeaderName());
+        redisTemplate.delete(secureProperties.getTokenHeaderName() + ":" + accessToken);
     }
 
     private void loginSuccessHandler(AuthUser authUser, AuthToken authToken){
