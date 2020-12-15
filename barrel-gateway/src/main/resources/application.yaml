@@ -12,21 +12,9 @@ spring:
           enabled: true
       routes:
         # 认证服务
-        - id: barrel-auth
-          uri: lb://barrel-auth
+        - id: barrel-api
+          uri: lb://barrel-api
           predicates:
-            - Path=/barrel-auth/**
-          filters:
-            - StripPrefix=1
-        - id: barrel-system
-          uri: lb://barrel-system
-          predicates:
-            - Path=/barrel-system/**
-          filters:
-            - StripPrefix=1
-        - id: barrel-account
-          uri: lb://barrel-account
-          predicates:
-            - Path=/barrel-account/**
+            - Path=/barrel-api/**
           filters:
             - StripPrefix=1

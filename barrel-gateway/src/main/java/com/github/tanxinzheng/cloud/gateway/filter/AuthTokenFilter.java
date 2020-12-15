@@ -6,10 +6,8 @@ import com.github.tanxinzheng.framework.model.BaseResultCode;
 import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.framework.secure.config.SecureProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -25,7 +23,6 @@ import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 
 @Slf4j
@@ -33,8 +30,6 @@ import java.util.Arrays;
 public class AuthTokenFilter implements GlobalFilter, Ordered {
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
-
-    private String[] skipAuthUrls;
 
     private ObjectMapper objectMapper;
 
@@ -50,11 +45,6 @@ public class AuthTokenFilter implements GlobalFilter, Ordered {
     @Resource
     RedisTemplate redisTemplate;
 
-    @Autowired
-    public void init(){
-        skipAuthUrls = secureProperties.getIgnoreUrls();
-    }
-
     /**
      * 过滤器
      *
@@ -65,9 +55,9 @@ public class AuthTokenFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String url = exchange.getRequest().getURI().getPath();
-
+        String[] skipAuthUrls = secureProperties.getIgnoreUrls();
         //跳过不需要验证的路径
-        if (ArrayUtils.isNotEmpty(skipAuthUrls)) {
+        if (ArrayUtils.isNotEmpty(secureProperties.getIgnoreUrls())) {
             for (String skipAuthUrl : skipAuthUrls) {
                 if(antPathMatcher.match(skipAuthUrl, url)){
                     return chain.filter(exchange);

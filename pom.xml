@@ -19,8 +19,8 @@
 		<module>barrel-tools</module>
 		<module>barrel-service-api</module>
 		<module>barrel-gateway</module>
-		<module>barrel-auth</module>
 		<module>barrel-service</module>
+		<module>barrel-auth</module>
 		<module>barrel-admin</module>
 	</modules>
 

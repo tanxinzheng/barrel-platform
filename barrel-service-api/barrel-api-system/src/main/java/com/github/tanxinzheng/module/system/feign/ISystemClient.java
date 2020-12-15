@@ -3,8 +3,8 @@ package com.github.tanxinzheng.module.system.feign;
 import com.github.tanxinzheng.framework.model.Result;
 import com.github.tanxinzheng.framework.model.TreeNode;
 import com.github.tanxinzheng.framework.secure.domain.AuthUser;
-import com.github.tanxinzheng.module.system.feign.fallback.UserClientFallbackFactory;
 import com.github.tanxinzheng.module.system.feign.domain.response.AttachmentResponse;
+import com.github.tanxinzheng.module.system.feign.fallback.UserClientFallbackFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,10 +20,13 @@ import java.util.List;
  * Hello world!
  *
  */
-@FeignClient(value = "barrel-system", fallbackFactory = UserClientFallbackFactory.class)
+@FeignClient(value = "barrel-api", fallbackFactory = UserClientFallbackFactory.class)
 @Api(tags = {"Feign接口", "系统服务"})
 public interface ISystemClient {
 
+    /**
+     * 为防止feign接口和controller接口冲突，建议统一自定义feign接口前缀
+     */
     public static final String CLIENT_API_PREFIX = "/feign-api";
 
     /**
@@ -35,7 +38,7 @@ public interface ISystemClient {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username", value = "用户名")
     })
-    @GetMapping(value = "/user-info/username")
+    @GetMapping(value = CLIENT_API_PREFIX + "/user-info/username")
     Result<AuthUser> getUserByUsername(@RequestParam(value = "username") String username);
 
     /**
@@ -47,7 +50,7 @@ public interface ISystemClient {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID")
     })
-    @GetMapping(value = "/user-info/{id}")
+    @GetMapping(value = CLIENT_API_PREFIX + "/user-info/{id}")
     Result<AuthUser> getUserByUserId(@PathVariable(value = "id") String userId);
 
     /**
@@ -59,7 +62,7 @@ public interface ISystemClient {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户主键")
     })
-    @GetMapping(value = "/user-info/{id}/roles")
+    @GetMapping(value = CLIENT_API_PREFIX + "/user-info/{id}/roles")
     Result<List<String>> getRoles(@PathVariable(value = "id") String id);
 
 
@@ -72,7 +75,7 @@ public interface ISystemClient {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "fileKey", value = "文件Key")
     })
-    @GetMapping(value = "/attachment/{fileKey}")
+    @GetMapping(value = CLIENT_API_PREFIX + "/attachment/{fileKey}")
     Result<AttachmentResponse> selectByFileKey(@PathVariable(value = "fileKey") String fileKey);
 
 
@@ -87,7 +90,7 @@ public interface ISystemClient {
             @ApiImplicitParam(name = "owner", value = "权限属主：PUBLIC-公共可读，PRIVATE-私人可读，<ROLE>-权限组可读"),
             @ApiImplicitParam(name = "relationId", value = "关联ID")
     })
-    @PostMapping(value = "/attachment/upload", produces = { MediaType.MULTIPART_FORM_DATA_VALUE }, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PostMapping(value = CLIENT_API_PREFIX + "/attachment/upload", produces = { MediaType.MULTIPART_FORM_DATA_VALUE }, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     Result<String> uploadAttachment(@RequestPart("file") MultipartFile file,
                                     @RequestParam(value = "group") String group,
                                     @RequestParam(value = "owner") String owner,
@@ -103,6 +106,6 @@ public interface ISystemClient {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "userId")
     })
-    @GetMapping(value = "/menu/tree")
+    @GetMapping(value = CLIENT_API_PREFIX + "/menu/tree")
     Result<TreeNode> selectTreeMenu(@RequestParam(value = "userId") String userId);
 }

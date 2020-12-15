@@ -2,12 +2,13 @@ server:
   port: 9901 #提供者的端口
 spring:
   application:
-    name: barrel-auth
+    name: barrel-api
   cloud:
     nacos:
       discovery:
         server-addr: ${NACOS_SERVER_ADDR:https://nacos.tanxz.com}
         namespace: ${NACOS_CONFIG_NAMCESPACE:76827065-24d5-4c70-b861-934f6823fec4}
+        service: barrel-api
       config:
         server-addr: ${NACOS_SERVER_ADDR:https://nacos.tanxz.com}
         namespace: ${NACOS_CONFIG_NAMCESPACE:76827065-24d5-4c70-b861-934f6823fec4}

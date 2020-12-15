@@ -36,8 +36,3 @@ barrel:
   office-online:
     preview-server: http://192.168.83.131
     wopi-server: http://192.168.83.1:9902
-logging:
-  level:
-    org.springframework.web: DEBUG
-  file:
-    path: logback-dev.xml
