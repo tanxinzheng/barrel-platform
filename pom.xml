@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.tanxinzheng</groupId>
-	<artifactId>barrel-parent</artifactId>
+	<artifactId>barrel-platform</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>barrel-platform</name>

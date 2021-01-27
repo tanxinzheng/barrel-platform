@@ -1,6 +1,7 @@
 package com.github.tanxinzheng.module.system.logger.domain.dto;
 
 import com.github.tanxinzheng.framework.model.BaseModel;
+import com.github.tanxinzheng.framework.web.annotation.AccountField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class ActionLogDTO extends BaseModel implements Serializable {
     /** 用户ID */
     @Length(max = 32, message = "用户ID字符长度限制[0,32]")
     @ApiModelProperty(value = "用户ID")
+    @AccountField
     private String userId;
     /** 操作名称 */
     @NotBlank(message = "操作名称为必填项")

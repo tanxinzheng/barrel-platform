@@ -1,6 +1,7 @@
 package com.github.tanxinzheng.module.account.service;
 
 import com.github.tanxinzheng.module.account.model.AccountDetail;
+import com.github.tanxinzheng.module.account.model.AccountModel;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -9,7 +10,17 @@ import org.springframework.web.multipart.MultipartFile;
 public interface AccountService {
 
     /**
-     * 更新账户基本信息
+     * 查询账户信息
+     * @param userId
+     * @return
+     */
+    AccountModel getAccountInfo(String userId);
+
+    /**
+     * 更新账户昵称
+     * @param userId
+     * @param nickname
+     * @return
      */
     boolean updateNickName(String userId, String nickname);
 

@@ -1,5 +1,7 @@
 package com.github.tanxinzheng.module.system.authorization.domain.vo;
 
+import com.github.tanxinzheng.framework.web.annotation.AccountField;
+import com.github.tanxinzheng.framework.web.annotation.DictionaryTransfer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -33,12 +35,15 @@ public class UserVO implements Serializable {
     private String phoneNumber;
     @ApiModelProperty(value = "头像")
     private String avatar;
+    @DictionaryTransfer(type = "DISABLE")
     @ApiModelProperty(value = "锁定")
     private Boolean disable;
+    @AccountField
     @ApiModelProperty(value = "更新人")
     private String updatedBy;
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updatedTime;
+    @AccountField
     @ApiModelProperty(value = "创建人")
     private String createdBy;
     @ApiModelProperty(value = "注册时间")

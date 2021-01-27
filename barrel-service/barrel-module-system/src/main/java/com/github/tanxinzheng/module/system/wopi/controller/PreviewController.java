@@ -48,7 +48,7 @@ public class PreviewController {
      * @param response
      * @throws IOException
      */
-    @ApiOperation(value = "查询接口")
+    @ApiOperation(value = "文件预览跳转")
     @GetMapping(value = "/{fileKey}")
     public void redirectPreviewUrl(@PathVariable(value = "fileKey", required = true) String fileKey,
                                    HttpServletRequest request,
@@ -69,7 +69,12 @@ public class PreviewController {
 
     /**
      * 图片预览
-     * */
+     * @param fileKey
+     * @param request
+     * @param response
+     * @param path
+     */
+    @ApiOperation(value = "图片预览")
     @GetMapping("/image/{fileKey}")
     public void getUserLogo(@PathVariable(value = "fileKey") String fileKey,
                             HttpServletRequest request,

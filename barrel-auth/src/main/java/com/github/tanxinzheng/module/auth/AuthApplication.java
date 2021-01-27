@@ -17,7 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Hello world!
  */
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "com.github.tanxinzheng.**"
+})
 @EnableFeignClients(basePackages = "com.github.tanxinzheng.**")
 @ComponentScan(basePackages = {
         "com.github.tanxinzheng.**",
@@ -43,7 +45,7 @@ public class AuthApplication extends AbstractSwaggerConfig {
                         "谭新政",
                         "https://www.github.com/tanxinzheng",
                         "tanxinzheng@139.com"))
-                .version("1.0")
+                .version("1.0.0")
                 .build();
     }
 }

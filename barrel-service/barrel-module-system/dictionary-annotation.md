@@ -58,11 +58,11 @@ public class AppTestConfig extends WebMvcConfigurerAdapter {
 public class DemoModel {
 
     private String id;
-    @DictionaryTransfer(index = "USER", fieldName = "account")
+    @DictionaryTransfer(type = "USER", fieldName = "account")
     private String userId;
-    @DictionaryTransfer(index = "SEX")
+    @DictionaryTransfer(type = "SEX")
     private String sex;
-    @DictionaryTransfer(index = "DISABLE", fieldName = "disableName")
+    @DictionaryTransfer(type = "DISABLE", fieldName = "disableName")
     private String disable;
     
 }

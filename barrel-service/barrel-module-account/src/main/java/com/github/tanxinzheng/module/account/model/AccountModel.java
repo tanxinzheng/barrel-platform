@@ -5,6 +5,7 @@ import com.github.tanxinzheng.framework.web.json.DictionaryIndex;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  * Created by tanxinzheng on 16/9/2.
  */
 @ApiModel(value = "账号")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -27,7 +29,7 @@ public class AccountModel implements AccountDetail {
     private String email;
     @ApiModelProperty(value = "手机号码")
     private String phone;
-    @DictionaryTransfer(index = DictionaryIndex.ATTACHMENT_KEY, fieldName = "avatarUrl")
+    @DictionaryTransfer(type = DictionaryIndex.ATTACHMENT_KEY, fieldName = "avatarUrl")
     @ApiModelProperty(value = "头像")
     private String avatar;
     @ApiModelProperty(value = "最后登录时间")

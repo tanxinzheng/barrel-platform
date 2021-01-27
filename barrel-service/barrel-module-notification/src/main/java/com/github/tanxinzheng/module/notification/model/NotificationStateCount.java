@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 public class NotificationStateCount implements Serializable {
 
-    @DictionaryTransfer(index = DictionaryIndex.NOTIFICATION_DATA_STATE, fieldName = "dataStateDesc")
+    @DictionaryTransfer(type = DictionaryIndex.NOTIFICATION_DATA_STATE, fieldName = "dataStateDesc")
     private String dataState;
     private int number;
 }

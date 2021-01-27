@@ -37,7 +37,7 @@ public class NotificationModel extends BaseModel implements Serializable {
     @AccountField(fieldName = "senderName")
     private String sender;
     private Date sendTime;
-    @DictionaryTransfer(index = DictionaryIndex.NOTIFICATION_DATA_STATE, fieldName = "dataStateName")
+    @DictionaryTransfer(type = DictionaryIndex.NOTIFICATION_DATA_STATE, fieldName = "dataStateName")
     private String dataState;
     /** 标题 */
     //@Excel(name = "标题")

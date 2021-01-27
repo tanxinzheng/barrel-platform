@@ -8,6 +8,7 @@ import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
 import com.github.tanxinzheng.framework.validator.PhoneValidator;
 import com.github.tanxinzheng.module.account.mapper.AccountMapper;
+import com.github.tanxinzheng.module.account.model.AccountModel;
 import com.github.tanxinzheng.module.account.service.AccountService;
 import com.github.tanxinzheng.module.system.feign.ISystemClient;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,29 @@ public class AccountServiceImpl implements AccountService {
     @Resource
     AccountMapper accountMapper;
 
-
+    /**
+     * 查询账户信息
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public AccountModel getAccountInfo(String userId) {
+        Result<AuthUser> authUserResult = systemClient.getUserByUserId(userId);
+        Assert.isTrue(authUserResult.isSuccess(), authUserResult.getMessage());
+        AuthUser authUser = authUserResult.getData();
+        if(authUser == null){
+            return null;
+        }
+//        Assert.notNull(authUser, "authUser Object must not null.");
+        return AccountModel.builder()
+                .email(authUser.getEmail())
+                .id(authUser.getId())
+                .name(authUser.getNickname())
+                .phone(authUser.getPhoneNumber())
+                .avatar(authUser.getAvatar())
+                .build();
+    }
 
     /**
      * 更新账户基本信息

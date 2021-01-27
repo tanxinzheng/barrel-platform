@@ -2,6 +2,7 @@ package com.github.tanxinzheng.module.system.dictionary.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.tanxinzheng.module.system.dictionary.domain.dto.DictionaryDTO;
 import com.github.tanxinzheng.module.system.dictionary.domain.entity.DictionaryDO;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @Email  tanxinzheng@139.com
  * @Date   2020-6-25 14:25:34
  */
-public interface DictionaryService {
+public interface DictionaryService extends IService<DictionaryDO> {
 
     /**
      * 新增数据字典

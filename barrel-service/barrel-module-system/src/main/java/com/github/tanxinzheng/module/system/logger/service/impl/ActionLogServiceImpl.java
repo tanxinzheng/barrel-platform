@@ -116,6 +116,7 @@ public class ActionLogServiceImpl extends ServiceImpl<ActionLogMapper, ActionLog
      */
     @Override
     public IPage<ActionLogDTO> findPage(IPage<ActionLogDO> page, QueryWrapper<ActionLogDO> queryWrapper) {
+        queryWrapper.orderByDesc("action_date");
         IPage<ActionLogDO> data = (Page<ActionLogDO>) page(page, queryWrapper);
         return BeanCopierUtils.copy(data, ActionLogDTO.class);
     }

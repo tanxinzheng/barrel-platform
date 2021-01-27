@@ -13,7 +13,7 @@ import java.util.List;
 public class AccountNotification {
 
     private int count;
-    @DictionaryTransfer(index = DictionaryIndex.NOTIFICATION_DATA_STATE)
+    @DictionaryTransfer(type = DictionaryIndex.NOTIFICATION_DATA_STATE)
     private String dataState;
     private List<NotificationModel> notificationModels;
 }
