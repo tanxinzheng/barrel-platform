@@ -40,8 +40,6 @@ public class AuthTokenFilter implements GlobalFilter, Ordered {
     @Resource
     SecureProperties secureProperties;
 
-
-
     @Resource
     RedisTemplate redisTemplate;
 

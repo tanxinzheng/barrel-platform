@@ -10,6 +10,7 @@ import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.module.system.authorization.domain.dto.PermissionDTO;
 import com.github.tanxinzheng.module.system.authorization.domain.dto.RolePermissionRelationDTO;
+import com.github.tanxinzheng.module.system.authorization.domain.entity.PermissionDO;
 import com.github.tanxinzheng.module.system.authorization.domain.entity.RolePermissionRelationDO;
 import com.github.tanxinzheng.module.system.authorization.mapper.PermissionMapper;
 import com.github.tanxinzheng.module.system.authorization.mapper.RolePermissionRelationMapper;
@@ -50,7 +51,7 @@ public class RolePermissionRelationServiceImpl extends ServiceImpl<RolePermissio
     @Override
     public RolePermissionRelationDTO createRolePermissionRelation(RolePermissionRelationDTO rolePermissionRelationDTO) {
         AssertValid.notNull(rolePermissionRelationDTO, "rolePermissionRelationDTO参数不能为空");
-        RolePermissionRelationDO rolePermissionRelation = rolePermissionRelationDTO.toDO(RolePermissionRelationDO.class);
+        RolePermissionRelationDO rolePermissionRelation = BeanCopierUtils.copy(rolePermissionRelationDTO, RolePermissionRelationDO.class);
         boolean isOk = save(rolePermissionRelation);
         if(!isOk){
             return null;

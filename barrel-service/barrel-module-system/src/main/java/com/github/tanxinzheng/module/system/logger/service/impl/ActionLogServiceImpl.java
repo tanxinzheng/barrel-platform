@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.module.system.dictionary.domain.entity.DictionaryDO;
 import com.github.tanxinzheng.module.system.logger.domain.dto.ActionLogDTO;
 import com.github.tanxinzheng.module.system.logger.domain.entity.ActionLogDO;
 import com.github.tanxinzheng.module.system.logger.mapper.ActionLogMapper;
@@ -42,7 +43,7 @@ public class ActionLogServiceImpl extends ServiceImpl<ActionLogMapper, ActionLog
     @Override
     public ActionLogDTO createActionLog(ActionLogDTO actionLogDTO) {
         AssertValid.notNull(actionLogDTO, "actionLogDTO参数不能为空");
-        ActionLogDO actionLog = actionLogDTO.toDO(ActionLogDO.class);
+        ActionLogDO actionLog = BeanCopierUtils.copy(actionLogDTO, ActionLogDO.class);
         boolean isOk = save(actionLog);
         if(!isOk){
             return null;

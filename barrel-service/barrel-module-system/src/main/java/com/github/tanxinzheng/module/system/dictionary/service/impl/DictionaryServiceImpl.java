@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.module.system.authorization.domain.entity.UserRoleRelationDO;
 import com.github.tanxinzheng.module.system.dictionary.domain.dto.DictionaryDTO;
 import com.github.tanxinzheng.module.system.dictionary.domain.entity.DictionaryDO;
 import com.github.tanxinzheng.module.system.dictionary.mapper.DictionaryMapper;
@@ -42,7 +43,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     @Override
     public DictionaryDTO createDictionary(DictionaryDTO dictionaryDTO) {
         AssertValid.notNull(dictionaryDTO, "dictionaryDTO参数不能为空");
-        DictionaryDO dictionary = dictionaryDTO.toDO(DictionaryDO.class);
+        DictionaryDO dictionary = BeanCopierUtils.copy(dictionaryDTO, DictionaryDO.class);
         boolean isOk = save(dictionary);
         if(!isOk){
             return null;

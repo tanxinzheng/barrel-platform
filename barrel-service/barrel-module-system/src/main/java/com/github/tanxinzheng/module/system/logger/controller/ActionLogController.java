@@ -49,7 +49,6 @@ public class ActionLogController {
     public IPage<ActionLogVO> findPage(QueryParams<ActionLogDO> queryParams) throws JsonProcessingException {
         IPage<ActionLogDTO> page = actionLogService.findPage(queryParams.getPage(), queryParams.getQueryWrapper());
         IPage result = BeanCopierUtils.copy(page, ActionLogVO.class);
-        String string = objectMapper.writeValueAsString(result);
         return result;
     }
 

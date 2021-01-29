@@ -8,6 +8,7 @@ import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.module.system.authorization.domain.dto.RoleDTO;
 import com.github.tanxinzheng.module.system.authorization.domain.entity.RoleDO;
+import com.github.tanxinzheng.module.system.authorization.domain.entity.RolePermissionRelationDO;
 import com.github.tanxinzheng.module.system.authorization.mapper.RoleMapper;
 import com.github.tanxinzheng.module.system.authorization.service.RoleService;
 import com.google.common.collect.Lists;
@@ -42,7 +43,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
     @Override
     public RoleDTO createRole(RoleDTO roleDTO) {
         AssertValid.notNull(roleDTO, "roleDTO参数不能为空");
-        RoleDO role = roleDTO.toDO(RoleDO.class);
+        RoleDO role = BeanCopierUtils.copy(roleDTO, RoleDO.class);
         boolean isOk = save(role);
         if(!isOk){
             return null;

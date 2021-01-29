@@ -13,6 +13,7 @@ import com.github.tanxinzheng.module.system.authorization.domain.dto.PermissionD
 import com.github.tanxinzheng.module.system.authorization.domain.entity.PermissionDO;
 import com.github.tanxinzheng.module.system.authorization.mapper.PermissionMapper;
 import com.github.tanxinzheng.module.system.authorization.service.PermissionService;
+import com.github.tanxinzheng.module.system.menu.domain.entity.MenuDO;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.models.HttpMethod;
@@ -59,7 +60,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     public PermissionDTO createPermission(PermissionDTO permissionDTO) {
         AssertValid.notNull(permissionDTO, "permissionDTO参数不能为空");
-        PermissionDO permission = permissionDTO.toDO(PermissionDO.class);
+        PermissionDO permission = BeanCopierUtils.copy(permissionDTO, PermissionDO.class);
         boolean isOk = save(permission);
         if(!isOk){
             return null;

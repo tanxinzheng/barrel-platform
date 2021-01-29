@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.system.logger.domain.vo;
 
+import com.github.tanxinzheng.framework.web.annotation.AccountField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class ActionLogVO implements Serializable {
 
     @ApiModelProperty(value = "物理主键")
     private String id;
+    @AccountField
     @ApiModelProperty(value = "用户ID")
     private String userId;
     @ApiModelProperty(value = "操作名称")
