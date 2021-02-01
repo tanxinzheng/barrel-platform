@@ -1,5 +1,7 @@
 package com.github.tanxinzheng.module.auth.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import com.github.tanxinzheng.framework.constant.TokenType;
 import com.github.tanxinzheng.framework.exception.BusinessException;
 import com.github.tanxinzheng.framework.model.Result;
@@ -9,6 +11,7 @@ import com.github.tanxinzheng.framework.secure.domain.AuthUser;
 import com.github.tanxinzheng.framework.utils.AssertValid;
 import com.github.tanxinzheng.framework.utils.PasswordHelper;
 import com.github.tanxinzheng.framework.utils.UUIDGenerator;
+import com.github.tanxinzheng.framework.web.config.WebProperties;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.auth.domain.dto.LoginRequest;
 import com.github.tanxinzheng.module.auth.mapper.AuthMapper;
@@ -20,14 +23,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +46,8 @@ public class AuthController {
 
     @Resource
     SecureProperties secureProperties;
+    @Resource
+    WebProperties webProperties;
 
     @Resource
     RedisTemplate redisTemplate;
@@ -61,18 +66,16 @@ public class AuthController {
     @ApiOperation(value = "用户登录")
     @PostMapping(value = "/login")
     public AuthToken login(@RequestBody @Validated @NotNull LoginRequest loginRequest){
-        if(secureProperties.isEnableCaptchaCheck()){
+        if(webProperties.getVerification() != null && webProperties.getVerification().isEnable()){
             AssertValid.notBlank(loginRequest.getValidCode(), "请输入验证码");
+            String code = (String) redisTemplate.opsForValue().get("login:captcha:" + loginRequest.getUsername());
+            AssertValid.isTrue(loginRequest.getValidCode().equalsIgnoreCase(code), "输入的验证码错误，请重新输入");
         }
         String errorCountKey = ACCOUNT_AUTH_ERROR_COUNT + loginRequest.getUsername();
         Integer count = (Integer) redisTemplate.opsForValue().get(errorCountKey);
-        if(count != null && count > 5){
-            throw new BusinessException("认证错误次数已超过5次，请{}分钟后重试。", ACCOUNT_AUTH_ERROR_COUNT_TIMEOUT);
-        }
+        AssertValid.isFalse(count != null && count > 5, "认证错误次数已超过5次，请{}分钟后重试。", ACCOUNT_AUTH_ERROR_COUNT_TIMEOUT);
         Result<AuthUser> result = userApiService.getUserByUsername(loginRequest.getUsername());
-        if(!result.isSuccess()){
-            throw new BusinessException(result.getMessage());
-        }
+        AssertValid.isTrue(result.isSuccess(), result.getMessage());
         AuthUser authUser = result.getData();
         AssertValid.notNull(authUser, "该用户名未注册");
         AssertValid.isTrue(!authUser.isDisable(), "该用户已被禁用，若要启用，请联系管理员。");
@@ -108,6 +111,27 @@ public class AuthController {
     public void logout(HttpServletRequest request) {
         String accessToken = request.getHeader(secureProperties.getTokenHeaderName());
         redisTemplate.delete(secureProperties.getTokenHeaderName() + ":" + accessToken);
+    }
+
+    /**
+     * 获取验证码图片
+     * @return
+     */
+    @ApiOperation(value = "获取验证码")
+    @GetMapping(value = "/captcha")
+    public void captcha(@RequestParam(value = "username") String username, HttpServletResponse response) {
+        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(100,40);
+        String code = captcha.getCode();
+        redisTemplate.opsForValue().set("login:captcha:" + username, code, 1, TimeUnit.MINUTES);
+        try {
+            OutputStream os = response.getOutputStream(); // 创建输出流
+            os.write(captcha.getImageBytes());
+            os.flush();
+            os.close();
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            e.printStackTrace();
+        }
     }
 
     private void loginSuccessHandler(AuthUser authUser, AuthToken authToken){

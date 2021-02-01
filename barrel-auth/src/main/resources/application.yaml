@@ -18,16 +18,19 @@ mybatis-plus:
     cache-enabled: false
   type-aliases-package: com.github.tanxinzheng.**.model,com.github.tanxinzheng.**.entity
   mapper-locations: classpath:com/**/mapper/*.xml
-
-spring:
-  mail:
-    nickname: IT服务助手
-    username: it-support@tanxz.com
-    password: R5sMyokE6e7p3uzRka6Rx559PhM9eHXE
-    host: smtp.tanxz.com
-    properties:
-      mail.smtp.ssl.enable: true
+#
+#spring:
+#  mail:
+#    nickname: IT服务助手
+#    username: it-support@tanxz.com
+#    password: R5sMyokE6e7p3uzRka6Rx559PhM9eHXE
+#    host: smtp.tanxz.com
+#    properties:
+#      mail.smtp.ssl.enable: true
 barrel:
+  web:
+    verification:
+      enable: true
   office-online:
     preview-server: http://192.168.83.131
     wopi-server: http://192.168.83.1:9902

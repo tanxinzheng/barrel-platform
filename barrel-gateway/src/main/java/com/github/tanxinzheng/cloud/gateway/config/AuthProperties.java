@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Data
 @RefreshScope
-@ConfigurationProperties("blade.secure")
+@ConfigurationProperties("barrel.secure")
 public class AuthProperties {
 
 	/**

@@ -33,7 +33,7 @@ services:
     env_file:
       - .env
     environment:
-      - JAVA_OPTS=--spring.profiles.active=sit,redis -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
+      - JAVA_OPTS=--spring.profiles.active=sit,redis,fss,aliyun -Dfile.encoding=utf-8 -Dspring.cloud.nacos.config.namespace=${NACOS_CONFIG_NAMESPACE} -Dspring.cloud.nacos.discovery.namespace=${NACOS_CONFIG_NAMESPACE}
 
   barrel-admin:
     networks:

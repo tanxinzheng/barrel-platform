@@ -1,5 +1,6 @@
 package com.github.tanxinzheng.module.account.controller;
 
+import com.github.tanxinzheng.framework.model.TreeNode;
 import com.github.tanxinzheng.framework.web.annotation.LoginUser;
 import com.github.tanxinzheng.framework.web.model.CurrentLoginUser;
 import com.github.tanxinzheng.module.account.model.AccountModel;
@@ -53,6 +54,18 @@ public class AccountController {
             roles = Sets.newHashSet();
         }
         return roles;
+    }
+
+    /**
+     * 当前用户菜单
+     * @return
+     */
+    @GetMapping(value = "/menus")
+    @ApiOperation(value = "我的菜单")
+    public TreeNode getAccountMenus(@LoginUser CurrentLoginUser loginUser){
+        // TODO 待开发
+        Assert.isTrue(false, "功能待开发");
+        return null;
     }
 
     /**
