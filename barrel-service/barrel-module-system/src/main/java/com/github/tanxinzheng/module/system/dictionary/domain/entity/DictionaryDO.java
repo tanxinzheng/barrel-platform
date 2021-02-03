@@ -21,19 +21,19 @@ import java.time.LocalDateTime;
 public class DictionaryDO extends BaseEntity implements Serializable {
 
     /** 主键 */
-    @TableField(value = "ID")
+    @TableId(value = "ID", type = IdType.ASSIGN_UUID)
     private String id;
     /** 字典组名称 */
     @TableField(value = "GROUP_NAME")
     private String groupName;
     /** 字典组代码 */
-    @TableId(value = "GROUP_CODE", type = IdType.UUID)
+    @TableField(value = "GROUP_CODE")
     private String groupCode;
     /** 名称 */
     @TableField(value = "DICTIONARY_NAME")
     private String dictionaryName;
     /** 代码 */
-    @TableId(value = "DICTIONARY_CODE", type = IdType.UUID)
+    @TableField(value = "DICTIONARY_CODE")
     private String dictionaryCode;
     /** 排序 */
     @TableField(value = "SORT")

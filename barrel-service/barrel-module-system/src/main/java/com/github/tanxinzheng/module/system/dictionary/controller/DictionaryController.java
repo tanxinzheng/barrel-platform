@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.tanxinzheng.framework.mybatis.domian.QueryParams;
 import com.github.tanxinzheng.framework.mybatis.utils.BeanCopierUtils;
 import com.github.tanxinzheng.framework.utils.AssertValid;
+import com.github.tanxinzheng.framework.web.validate.VInsert;
+import com.github.tanxinzheng.framework.web.validate.VUpdate;
 import com.github.tanxinzheng.module.system.dictionary.domain.dto.DictionaryDTO;
 import com.github.tanxinzheng.module.system.dictionary.domain.entity.DictionaryDO;
 import com.github.tanxinzheng.module.system.dictionary.domain.vo.DictionaryVO;
@@ -64,7 +66,7 @@ public class DictionaryController {
      */
     @ApiOperation(value = "新增数据字典")
     @PostMapping
-    public DictionaryVO create(@RequestBody @Validated DictionaryDTO dictionaryDTO) {
+    public DictionaryVO create(@RequestBody @Validated({ VInsert.class }) DictionaryDTO dictionaryDTO) {
         dictionaryDTO = dictionaryService.createDictionary(dictionaryDTO);
         return BeanCopierUtils.copy(dictionaryDTO, DictionaryVO.class);
     }
@@ -78,7 +80,7 @@ public class DictionaryController {
     @ApiOperation(value = "更新数据字典")
     @PutMapping(value = "/{id}")
     public boolean update(@PathVariable(value = "id") String id,
-                              @RequestBody @Validated DictionaryDTO dictionaryDTO){
+                              @RequestBody @Validated({ VUpdate.class }) DictionaryDTO dictionaryDTO){
         if(StringUtils.isNotBlank(id)){
             dictionaryDTO.setId(id);
         }

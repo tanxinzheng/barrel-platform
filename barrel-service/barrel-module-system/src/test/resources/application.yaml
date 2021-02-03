@@ -1,3 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://dev.ecs:3306/barrel?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: barrel_data
+    password: Putdown#exhale6#ploys#Blunt
+
+  mail:
+    nickname: IT服务助手
+    username: it-support@tanxz.com
+    password: R5sMyokE6e7p3uzRka6Rx559PhM9eHXE
+    host: smtp.tanxz.com
+    properties:
+      mail.smtp.ssl.enable: true
+
 # mybatis
 mybatis-plus:
   global-config:
@@ -24,15 +39,12 @@ management:
     web:
       exposure:
         include: '*'
-spring:
-  mail:
-    nickname: IT服务助手
-    username: it-support@tanxz.com
-    password: R5sMyokE6e7p3uzRka6Rx559PhM9eHXE
-    host: smtp.tanxz.com
-    properties:
-      mail.smtp.ssl.enable: true
 barrel:
   office-online:
     preview-server: http://192.168.83.131
     wopi-server: http://192.168.83.1:9902
+
+logging:
+  config: classpath:logback-dev.xml
+  level:
+    root: info

@@ -1,6 +1,0 @@
-logging:
-  config: classpath:logback-dev.xml
-  file:
-    path: ${project.basedir}/target/logs
-  level:
-    root: info
